@@ -1,7 +1,8 @@
 # PROJECT_STATUS — Veriva
 
 **Pradžia**: 2026-05-09
-**Statusas**: 🟡 Inicializacija
+**Paskutinis update**: 2026-05-09 (empirra-sync)
+**Statusas**: 🟡 Inicializacija — projekto sąranga pasiekta Empirra parity, deploy dar nebuvo
 **Production URL**: https://veriva.lt (dar nedeploy'inta)
 
 ---
@@ -70,19 +71,27 @@
 
 ## KNOWN ISSUES
 
-- `index.html` ~1700 eil. — viskas inline (CSS + JS), reikia išskirstyti į `assets/`
-- 6 placeholder blog kortelės (`index.html` ir `blog.html`) nukreipia į neegzistuojančius failus (`/blog/bdar-baudos-2026.html` ir kt.) → 404 production'e
-- `blog.html:467` newsletter forma rodo tik `alert()`, NĖRA POST'inimo (endpoint'as nesukurtas) — user duomenys prarandami
-- `sitemap.xml` neapima `blog.html` ir blog post URL'ų — Google neindex'uos
-- Šios sesijos pakeitimai (blog teaser + listing + template) **NIEKADA NEPATIKRINTI naršyklėje** — visi vizualiniai bug'ai galimi
-- Nei vienas API endpoint'as neturi smoke test'o — `contact.ts` ir `health.ts` parašyti, bet niekada nepaleisti
+Visi išsamiai dokumentuoti `KNOWN_ISSUES.md` (KI-001..KI-008):
+- **KI-005 🔴 Critical**: privatumas.html + slapukai.html neegzistuoja (BDAR teisinis pažeidimas)
+- **KI-008 🔴 Critical (kai bus deploy)**: Supabase migrations neištaisytos production'e (Supabase project gali būti dar nesetup'intas)
+- **KI-001 🟠 High**: 6 placeholder blog kortelės → 404
+- **KI-002 🟠 High**: `blog.html:467` newsletter forma — tik `alert()`, duomenys prarandami
+- **KI-006 🟠 High**: blog teaser/listing/template nepatikrinti naršyklėje
+- **KI-007 🟠 High**: API endpoint'ai (`contact.ts`, `health.ts`) niekada nepaleisti
+- **KI-003 🟡 Medium**: `sitemap.xml` neapima blog URL'ų
+- **KI-004 🟡 Medium**: `index.html` ~1700 eil. monolitas (CSS + JS inline)
 
 ## PRIORITETAI
 
-1. **P0**: Išskirstyti `index.html` CSS/JS į atskirus failus
-2. **P0**: Sukurti privatumas.html + slapukai.html (BDAR privaloma)
-3. **P1**: Multi-page skeletons (paslaugos, apie, kainos, kontaktai)
-4. **P1**: Kontakto formos backend (smoke test)
-5. **P1**: Blog-gen automation (`api/internal/blog-gen.ts`) — docs paruošti, kodas dar ne
-6. **P2**: ~~Blog struktūra~~ ✅ 2026-05-09 (teaser + listing + template)
-7. **P2**: ~~SEO foundation~~ 🟡 (robots/sitemap yra, OG images dar ne)
+1. **P0**: Sukurti privatumas.html + slapukai.html (BDAR privaloma — KI-005)
+2. **P0**: Vercel/Supabase/Resend setup + first deploy + contact endpoint smoke test (KI-007, KI-008)
+3. **P0**: Aktyvuoti `health-check.yml` workflow — pridėti `HEALTH_SECRET` GitHub Secrets
+4. **P0**: Išskirstyti `index.html` CSS/JS į atskirus failus (KI-004)
+5. **P1**: Multi-page skeletons (paslaugos, apie, kainos, kontaktai, 404)
+6. **P1**: Naršyklėje patikrinti blog setup (KI-006)
+7. **P1**: Pataisyti placeholder blog linkus (KI-001) — sukurti pirmą realų pillar straipsnį
+8. **P1**: Newsletter endpoint (KI-002) + sitemap auto-update (KI-003)
+9. **P2**: Blog-gen automation (`api/internal/blog-gen.ts`) — docs paruošti, kodas dar ne
+10. **P2**: ~~Empirra parity (docs/root files/.claude/.github)~~ ✅ 2026-05-09 (`93cf7b7`)
+11. **P2**: ~~Blog struktūra~~ ✅ 2026-05-09 (teaser + listing + template)
+12. **P2**: ~~SEO foundation~~ 🟡 (robots/sitemap yra, OG images dar ne)

@@ -145,6 +145,52 @@ Architektūriniai sprendimai. Kiekvienas su data, kontekstu, alternatyvomis, spr
 
 ---
 
+## 2026-05-09 — Empirra parity: pilna projekto sąranga, bet hooks/sync NEPERKELTI
+
+**Kontekstas**: User paprašė "kurk tokį patį kaip Empirra. ir kad taip pat viskas būtų nustatyta". Reikia nuspręsti, kuriuos Empirra elementus kopijuoti 1:1, kuriuos adaptuoti, kuriuos praleisti.
+
+**Alternatyvos**:
+- A) 1:1 copy iš Empirra (visi failai + struktūra)
+- B) Selective copy + adaptation (struktūra ta pati, turinys adaptuotas Veriva specifikai)
+- C) Tik docs, be `.claude/`/`.github/`
+
+**Sprendimas**: B — selective copy + adaptation.
+
+**Kas perkelta 1:1 (struktūriškai):**
+- `docs/automation-standards.md`, `services-and-limits.md`, `build-process.md`, `lib-strategy.md`
+- `INCIDENT_LOG.md`, `KNOWN_ISSUES.md`, `ROLLBACK_CHECKLIST.md`, `TEST_PROTOCOL.md`, `WORKFLOW.md` šablonai
+- `.github/dependabot.yml` (tas pats Europe/Vilnius schedule)
+- `.claude/commands/deploy.md` šablonas
+
+**Kas adaptuota (Veriva-specific):**
+- Import paths: Empirra `api/automations/[name]/route.ts` (3 lygiai į `lib/`) → Veriva `api/forms/[name].ts` (2 lygiai)
+- Per-endpoint secrets katalogas: `CONTACT_FORM_SECRET`, `AUDIT_REQUEST_SECRET`, `NEWSLETTER_SECRET`, `BLOG_GEN_SECRET`, `BLOG_APPROVE_SECRET`, `BLOG_PUBLISH_SECRET`, `HEALTH_SECRET`
+- Pridėti BDAR-specific testai `TEST_PROTOCOL.md` (Cookiebot, consent flow, DPO)
+- `KNOWN_ISSUES.md` — Veriva 8 issues (KI-001..KI-008), Empirra issues neperkelti
+- `WORKFLOW.md` — pridėtas § 11 "Veriva-specific taisyklės" (BDAR-first, LT kalba)
+
+**Kas NEPERKELTA (sąmoningai):**
+- `.claude/settings.json` PostToolUse hook (`src/pages/X.html` → root sync) — Veriva turi flat root, sync nereikalingas
+- `.claude/commands/sync-pages.md` — neaktualu (nėra `src/pages/`)
+- `.claude/commands/test-lead.md` → adaptuota į `test-contact.md` (Empirra naudoja `lead-capture` endpoint'ą, Veriva — `forms/contact`)
+- `.github/workflows/booking-check.yml` ir `weekly-digest.yml` — Empirra-specific endpoint'ai (booking-monitor, weekly-digest), Veriva tų neturi. Vietoje to: `health-check.yml` šablonas
+- Empirra incidentai (KI-001..KI-003 iš Empirra `KNOWN_ISSUES.md`) — neperkelti, nes susiję su Empirra Supabase production state'u
+
+**Priežastis (B vs A)**:
+- 1:1 copy būtų sukūręs neveikiančias pavyzdžių importus (path levels skiriasi) ir Empirra-specific endpoint'ų testus, kurie neegzistuoja Veriva
+- 1:1 copy būtų `KNOWN_ISSUES.md` užpildęs Empirra problemomis, kurios neaktualios Veriva → wrong source-of-truth
+- BDAR konteksas (Veriva = duomenų apsaugos kompanija) reikalauja pridėti specifinius reikalavimus, kurių Empirra šablonuose nėra
+
+**Priežastis (B vs C)**:
+- C praleidžia GitHub Actions automation (dependabot security updates, daily health-check) — tai yra production hygiene baseline, ne nice-to-have
+- Empirra `.claude/settings.local.json` permissions modelis (Vercel CLI, Resend WebFetch) tinka Veriva 1:1 — be to kiekvienas Vercel komandos kvietimas reikalautų patvirtinimo
+
+**Trade-off**: Adaptaciją reikia mažiau verifikuoti negu 1:1 copy, bet daugiau negu C. Specifiškai — `docs/automation-standards.md` import paths nepatikrinti vs faktinis Veriva `api/forms/contact.ts` (matomas SESSION_STATUS.md "Kas liko nepatvirtinta").
+
+**Implementacija**: commit `93cf7b7` (16 failų, +1488 / -5).
+
+---
+
 ## 2026-05-09 — Blog template'as: client-side filtras vs server-rendered
 
 **Kontekstas**: `blog/template.html` turi 19 `{{placeholder}}` laukų. Spręsta — naudoti SSR template engine (Eta/Handlebars) ar paprastą `replaceAll()`.

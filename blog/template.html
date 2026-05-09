@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<!--
+═══════════════════════════════════════════════════════
+  VERIVA BLOG POST TEMPLATE
+  Žr. taip pat: docs/blog-content-rules.md (privalomos taisyklės)
+                docs/blog-keywords.md (LT keyword'ų bankas)
+                docs/blog-system-prompt.md (Claude API prompt'as)
+═══════════════════════════════════════════════════════
+
+  KEYWORD MAP — užpildyti PRIEŠ rašant turinį
+  ─────────────────────────────────────────────
+  PRIMARY    : {{KW_PRIMARY}}    (tikslus match: "BDAR auditas", "NIS2 atitiktis")
+               → naudoti: <title>, H1, pirmi 100 žodžių, 1× H2, meta desc, slug, schema keywords
+               → tankis: 3–5× per 1000 žodžių (NIEKADA per jėgą)
+
+  SECONDARY  : {{KW_SECONDARY}}  ("duomenų apsaugos pareigūnas", "informacijos saugumo politika")
+               → naudoti: 1–2× H2, 2–3× body paragrafuose
+
+  LONG-TAIL  : {{KW_LONGTAIL}}   ("kaip pasiruošti VDAI patikrinimui", "ar smulkiam verslui reikia DPO")
+               → naudoti: 1× H2, intro arba "Kodėl tai svarbu" sekcijoje, 1× FAQ klausime
+
+  LSI/RELATED: {{KW_LSI}}        ("asmens duomenys, sutikimas, DPIA, incidentas, VDAI, baudos")
+               → įterpti natūraliai — 1× kiekvieną per body, callout, list
+
+  SLUG       : {{POST_SLUG}}     (/blog/{slug}.html — kebab-case, LT be diakritikų: bdar-auditas-vadovas)
+
+  ─────────────────────────────────────────────
+  PLACEHOLDER LAUKAI (pipeline užpildo):
+  ─────────────────────────────────────────────
+  Meta:
+    {{POST_TITLE}}              — H1 + <title> (≤60 simb. EN/LT, primary KW pirmas)
+    {{POST_DESCRIPTION}}        — meta description (140–160 simb., primary KW pirmuose 60 simb.)
+    {{POST_SLUG}}               — URL slug
+    {{POST_CATEGORY}}           — BDAR | NIS2 | Kibernetinis saugumas | DPO | Mokymai
+    {{POST_CAT_KEY}}            — bdar | nis2 | sauga | dpo | mokymai
+    {{POST_CAT_BADGE}}          — BDAR, NIS2, SAUGA, DPO, MOKYMAI (hero img)
+    {{POST_DATE}}               — YYYY-MM-DD
+    {{POST_DATE_HUMAN}}         — "2026 m. gegužės 9 d."
+    {{POST_READ_MIN}}           — skaitymo trukmė min.
+    {{POST_WORD_COUNT}}         — žodžių skaičius (schema.org)
+  Author:
+    {{POST_AUTHOR}}             — "Marina Kazlauskienė" | "Justinas Petraitis"
+    {{POST_AUTHOR_ROLE}}        — "Teisės ekspertė, BDAR" | "IT saugumo ekspertas"
+    {{POST_AUTHOR_INITIALS}}    — "MK" | "JP"
+  Content:
+    {{POST_DEFINITION}}         — featured snippet paragrafas (40–60 žodžių, atsako į primary keyword klausimą)
+    {{POST_TOC_HTML}}           — table of contents (<li><a href="#h2-id">title</a></li>...)
+    {{POST_BODY_HTML}}           — full HTML (h2/h3/p/ul/ol/blockquote/callout/stat-hl/definition)
+    {{POST_FAQ_SCHEMA_JSON}}    — FAQPage schema (5 klausimų)
+    {{POST_FAQ_HTML}}           — vizualinė FAQ sekcija (klausimas + atsakymas)
+    {{POST_KEYWORDS_CSV}}       — schema.org "keywords" laukas ("kw1, kw2, kw3, kw4, kw5")
+    {{RELATED_POSTS_HTML}}      — 2-3 related kortelės
+
+  ─────────────────────────────────────────────
+  KOMPONENTAI body'je (POST_BODY_HTML):
+  ─────────────────────────────────────────────
+    <p class="definition">…</p>           — featured snippet (po H1, prieš pirmą H2)
+    <div class="callout"><strong>SVARBU</strong><p>…</p></div>
+    <div class="stat-hl">
+      <div class="stat-hl-num">€20M</div>
+      <div class="stat-hl-body"><div class="stat-hl-label">…</div><div class="stat-hl-sub">…</div></div>
+    </div>
+    <blockquote><p>citata su autoritetu</p></blockquote>
+
+  Konvencijos:
+    - Failo path: /blog/{slug}.html (slug-only, BE datos prefix — geriau SEO)
+    - Canonical: https://veriva.lt/blog/{slug}.html
+    - Schema.org: BlogPosting + BreadcrumbList + FAQPage (jei yra FAQ sekcija)
+═══════════════════════════════════════════════════════
+-->
+<html lang="lt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="{{POST_DESCRIPTION}}">
+<title>{{POST_TITLE}} — Veriva</title>
+<meta property="og:title" content="{{POST_TITLE}}">
+<meta property="og:description" content="{{POST_DESCRIPTION}}">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://veriva.lt/blog/{{POST_SLUG}}.html">
+<meta property="og:locale" content="lt_LT">
+<meta property="article:published_time" content="{{POST_DATE}}">
+<meta property="article:author" content="{{POST_AUTHOR}}">
+<meta property="article:section" content="{{POST_CATEGORY}}">
+<meta name="robots" content="index, follow">
+<meta name="author" content="{{POST_AUTHOR}}">
+<link rel="canonical" href="https://veriva.lt/blog/{{POST_SLUG}}.html">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+<link rel="apple-touch-icon" href="/assets/img/favicon.svg">
+<meta name="theme-color" content="#07111f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://veriva.lt/blog/{{POST_SLUG}}.html#article",
+      "headline": "{{POST_TITLE}}",
+      "description": "{{POST_DESCRIPTION}}",
+      "datePublished": "{{POST_DATE}}",
+      "dateModified": "{{POST_DATE}}",
+      "inLanguage": "lt-LT",
+      "url": "https://veriva.lt/blog/{{POST_SLUG}}.html",
+      "mainEntityOfPage": "https://veriva.lt/blog/{{POST_SLUG}}.html",
+      "articleSection": "{{POST_CATEGORY}}",
+      "wordCount": {{POST_WORD_COUNT}},
+      "keywords": "{{POST_KEYWORDS_CSV}}",
+      "author": {
+        "@type": "Person",
+        "name": "{{POST_AUTHOR}}",
+        "jobTitle": "{{POST_AUTHOR_ROLE}}",
+        "worksFor": {"@id": "https://veriva.lt/#organization"}
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://veriva.lt/#organization",
+        "name": "Veriva UAB",
+        "url": "https://veriva.lt",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://veriva.lt/assets/img/favicon.svg"
+        }
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Pradžia", "item": "https://veriva.lt/"},
+        {"@type": "ListItem", "position": 2, "name": "Tinklaraštis", "item": "https://veriva.lt/blog.html"},
+        {"@type": "ListItem", "position": 3, "name": "{{POST_TITLE}}", "item": "https://veriva.lt/blog/{{POST_SLUG}}.html"}
+      ]
+    }
+  ]
+}
+</script>
+<!-- FAQ Schema (GEO/AI search optimization) -->
+<script type="application/ld+json">
+{{POST_FAQ_SCHEMA_JSON}}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#07111f;--ink2:#0c1a2e;
+  --blue:#1a47cc;--blue2:#2255e0;
+  --cyan:#00b4d8;--gold:#c8962a;--gold2:#e8b84b;
+  --white:#fff;--cream:#f8f7f4;
+  --g50:#f3f2ee;--g100:#eae8e2;--g300:#c5c2b8;--g500:#837e72;--g700:#44413b;
+  --border:rgba(7,17,31,.09);--border2:rgba(7,17,31,.15);
+  --ease:cubic-bezier(.4,0,.2,1);--t:.2s var(--ease);
+  --max:1140px;
+  --read-max:720px;
+  --ff:'Plus Jakarta Sans',system-ui,sans-serif;
+  --ffd:'Syne',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--ff);color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--blue2);text-decoration:none;transition:color var(--t)}
+a:hover{color:var(--blue)}
+ul,ol{list-style:none}
+::selection{background:rgba(26,71,204,.18)}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:50;background:rgba(7,17,31,.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06)}
+.nw{max-width:var(--max);margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.nl{display:flex;gap:28px;align-items:center}
+.nl a{color:rgba(255,255,255,.72);font-size:13.5px;font-weight:500;transition:color var(--t)}
+.nl a:hover{color:#fff}
+.nav-cta{padding:9px 18px;background:var(--blue2);color:#fff!important;border-radius:7px;font-weight:600}
+.nav-cta:hover{background:var(--blue)}
+.hamburger{display:none;background:none;border:none;color:#fff;cursor:pointer;padding:6px}
+.mob-menu{display:none;background:var(--ink);padding:18px 24px;flex-direction:column;gap:14px;border-bottom:1px solid rgba(255,255,255,.06)}
+.mob-menu a{color:rgba(255,255,255,.78);font-size:15px;font-weight:500}
+.mob-menu.open{display:flex}
+
+/* ── ARTICLE HERO ── */
+.ah{padding:64px 24px 40px;background:var(--ink);color:#fff;position:relative;overflow:hidden}
+.ah::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(26,71,204,.2),transparent 50%),radial-gradient(circle at 80% 70%,rgba(200,150,42,.1),transparent 55%);pointer-events:none}
+.ah-w{max-width:var(--read-max);margin:0 auto;position:relative;z-index:1}
+.ah-crumbs{font-size:12px;color:rgba(255,255,255,.45);margin-bottom:18px;letter-spacing:.04em}
+.ah-crumbs a{color:rgba(255,255,255,.65)}
+.ah-crumbs a:hover{color:#fff}
+.ah-meta{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+.ah-cat{color:var(--gold2)}
+.ah-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.35)}
+.ah-time{color:rgba(255,255,255,.55)}
+.ah h1{font-family:var(--ffd);font-size:clamp(28px,3.6vw,44px);line-height:1.12;letter-spacing:-.022em;margin-bottom:18px;font-weight:800}
+.ah-sub{font-size:17px;color:rgba(255,255,255,.7);line-height:1.6;font-weight:300;margin-bottom:24px}
+.ah-author{display:flex;align-items:center;gap:12px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08)}
+.ah-av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--blue2) 0%,var(--gold) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--ffd);font-size:14px;font-weight:800;color:#fff}
+.ah-an{font-size:13.5px;font-weight:700;color:#fff}
+.ah-ar{font-size:11.5px;color:rgba(255,255,255,.5)}
+
+/* ── ARTICLE BODY ── */
+.ab{padding:56px 24px 88px;background:var(--cream)}
+.ab-w{max-width:var(--read-max);margin:0 auto}
+.prose{font-size:16px;line-height:1.75;color:var(--g700)}
+.prose > * + *{margin-top:1.2em}
+.prose h2{font-family:var(--ffd);font-size:26px;line-height:1.25;letter-spacing:-.018em;color:var(--ink);margin-top:2.2em;margin-bottom:.5em;font-weight:700}
+.prose h3{font-family:var(--ffd);font-size:20px;line-height:1.3;letter-spacing:-.012em;color:var(--ink);margin-top:1.8em;margin-bottom:.4em;font-weight:700}
+.prose h2:first-child,.prose h3:first-child{margin-top:0}
+.prose p{font-size:16.5px;line-height:1.75;color:var(--g700)}
+.prose strong{color:var(--ink);font-weight:700}
+.prose em{color:var(--blue2);font-style:italic}
+.prose ul,.prose ol{padding-left:24px}
+.prose ul li{position:relative;padding-left:18px;margin-bottom:.5em;list-style:none}
+.prose ul li::before{content:'';position:absolute;left:0;top:.65em;width:8px;height:8px;background:var(--blue2);border-radius:2px;transform:rotate(45deg)}
+.prose ol{counter-reset:num}
+.prose ol li{counter-increment:num;position:relative;padding-left:32px;margin-bottom:.6em;list-style:none}
+.prose ol li::before{content:counter(num);position:absolute;left:0;top:0;width:24px;height:24px;background:var(--ink);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:800;font-family:var(--ffd)}
+.prose blockquote{padding:20px 24px;background:var(--white);border-left:3px solid var(--blue2);border-radius:0 8px 8px 0;font-style:italic;color:var(--ink);margin:1.5em 0}
+.prose blockquote p{font-size:17px;line-height:1.65}
+.prose code{background:var(--g100);padding:2px 7px;border-radius:4px;font-size:14px;font-family:'Courier New',monospace;color:var(--ink)}
+.prose pre{background:var(--ink);color:rgba(255,255,255,.9);padding:20px 22px;border-radius:8px;overflow-x:auto;font-family:'Courier New',monospace;font-size:13.5px;line-height:1.6}
+.prose pre code{background:none;padding:0;color:inherit;font-size:inherit}
+.prose a{color:var(--blue2);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.prose a:hover{color:var(--blue)}
+.prose img{max-width:100%;height:auto;border-radius:8px;margin:1.5em 0}
+.prose hr{border:none;border-top:1px solid var(--border);margin:2.5em 0}
+.prose table{width:100%;border-collapse:collapse;margin:1.5em 0;font-size:14.5px}
+.prose th,.prose td{padding:12px 14px;border-bottom:1px solid var(--border);text-align:left}
+.prose th{background:var(--g50);font-weight:700;color:var(--ink);font-size:13px;letter-spacing:.02em}
+
+/* ── DEFINITION (featured snippet) ── */
+.prose .definition{font-size:17px;color:var(--ink);font-weight:400;line-height:1.65;border-left:3px solid var(--blue2);padding:16px 22px;margin:0 0 28px;background:rgba(26,71,204,.04);border-radius:0 8px 8px 0}
+
+/* ── TABLE OF CONTENTS ── */
+.toc{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:22px 26px;margin:0 0 40px}
+.toc-label{font-family:var(--ffd);font-size:11px;font-weight:800;color:var(--blue2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;display:block}
+.toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;counter-reset:toc}
+.toc-list li{counter-increment:toc;display:flex;align-items:baseline;gap:12px;font-size:14px}
+.toc-list li::before{content:counter(toc,decimal-leading-zero);color:var(--g300);font-size:11.5px;font-weight:700;font-family:var(--ffd);min-width:20px;flex-shrink:0}
+.toc-list a{color:var(--g700);text-decoration:none;line-height:1.5;transition:color var(--t)}
+.toc-list a:hover{color:var(--blue2)}
+
+/* ── CALLOUT ── */
+.prose .callout{background:rgba(200,150,42,.06);border:1px solid rgba(200,150,42,.25);border-radius:8px;padding:20px 24px;margin:1.5em 0}
+.prose .callout strong{display:block;font-size:11px;font-weight:800;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.prose .callout p{margin:0;font-size:15px;color:var(--ink);line-height:1.65}
+
+/* ── STAT HIGHLIGHT ── */
+.prose .stat-hl{display:flex;align-items:center;gap:24px;padding:24px 28px;background:var(--white);border:1px solid var(--border);border-radius:10px;margin:1.8em 0;flex-wrap:wrap}
+.stat-hl-num{font-family:var(--ffd);font-size:44px;font-weight:800;color:var(--blue2);letter-spacing:-.03em;line-height:1;flex-shrink:0}
+.stat-hl-body{display:flex;flex-direction:column;gap:4px}
+.stat-hl-label{font-size:14.5px;font-weight:700;color:var(--ink)}
+.stat-hl-sub{font-size:13px;color:var(--g500);line-height:1.55}
+
+/* ── FAQ SECTION ── */
+.faq-sec{margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+.faq-sec-h{font-family:var(--ffd);font-size:24px;letter-spacing:-.015em;color:var(--ink);margin-bottom:24px;font-weight:700}
+.faq-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--white)}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:18px 22px;font-family:var(--ff);font-size:14.5px;font-weight:600;color:var(--ink);text-align:left;transition:background var(--t)}
+.faq-q:hover{background:var(--g50)}
+.faq-ico{width:22px;height:22px;border-radius:50%;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:300;flex-shrink:0;transition:all var(--t)}
+.faq-item.open .faq-ico{background:var(--blue2);color:#fff;transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s var(--ease)}
+.faq-item.open .faq-a{max-height:400px}
+.faq-a-in{padding:0 22px 18px;font-size:14px;line-height:1.7;color:var(--g700)}
+
+/* ── CTA INLINE ── */
+.cta-inline{margin:48px 0;padding:32px;background:var(--ink);color:#fff;border-radius:12px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden}
+.cta-inline::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 30%,rgba(26,71,204,.18),transparent 55%);pointer-events:none}
+.cta-inline > *{position:relative;z-index:1}
+.cta-inline-h{font-family:var(--ffd);font-size:22px;line-height:1.2;letter-spacing:-.015em;font-weight:700}
+.cta-inline-h em{font-style:normal;color:var(--gold2)}
+.cta-inline-p{font-size:14px;color:rgba(255,255,255,.65);line-height:1.6;font-weight:300}
+.cta-inline-btn{align-self:flex-start;padding:13px 24px;background:var(--blue2);color:#fff;border-radius:8px;font-size:13.5px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:background var(--t);margin-top:6px}
+.cta-inline-btn:hover{background:var(--blue);color:#fff}
+
+/* ── SHARE ── */
+.share{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.share-l{font-size:12px;font-weight:700;color:var(--g500);letter-spacing:.04em;text-transform:uppercase}
+.share-btn{padding:8px 14px;background:var(--white);border:1px solid var(--border);border-radius:7px;font-size:12.5px;font-weight:600;color:var(--g700);text-decoration:none;transition:all var(--t);display:inline-flex;align-items:center;gap:6px}
+.share-btn:hover{border-color:var(--ink);color:var(--ink)}
+
+/* ── RELATED ── */
+.rel{padding:64px 24px;background:var(--white);border-top:1px solid var(--border)}
+.rel-w{max-width:var(--max);margin:0 auto}
+.rel-h{font-family:var(--ffd);font-size:24px;letter-spacing:-.015em;color:var(--ink);margin-bottom:32px;font-weight:700}
+.rel-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.bc{background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:all var(--t);text-decoration:none;color:inherit}
+.bc:hover{box-shadow:0 8px 24px rgba(7,17,31,.08);transform:translateY(-2px);border-color:rgba(26,71,204,.2)}
+.bc-img{aspect-ratio:16/9;background:linear-gradient(135deg,var(--ink) 0%,var(--ink2) 100%);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.bc-img::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(26,71,204,.25),transparent 60%),radial-gradient(circle at 70% 80%,rgba(200,150,42,.15),transparent 50%)}
+.bc-img-icon{position:relative;z-index:1;font-family:var(--ffd);font-size:38px;color:rgba(255,255,255,.18);font-weight:800;letter-spacing:.04em}
+.bc-body{padding:22px 24px 24px;display:flex;flex-direction:column;flex:1}
+.bc-meta{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g500);margin-bottom:12px}
+.bc-cat{color:var(--blue2)}
+.bc-dot{width:3px;height:3px;border-radius:50%;background:var(--g300)}
+.bc-title{font-family:var(--ffd);font-size:17px;line-height:1.25;letter-spacing:-.012em;color:var(--ink);margin-bottom:10px;font-weight:700}
+.bc-excerpt{font-size:13px;color:var(--g500);line-height:1.6;margin-bottom:14px;flex:1}
+.bc-read{font-size:12px;font-weight:700;color:var(--blue2);display:inline-flex;align-items:center;gap:6px;margin-top:auto}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px}
+.ftw{max-width:var(--max);margin:0 auto}
+.ft-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.06)}
+.ft-about{font-size:13px;line-height:1.65;color:rgba(255,255,255,.55);margin-top:8px}
+.ft-ch{font-family:var(--ffd);font-size:13px;font-weight:700;color:#fff;margin-bottom:14px;letter-spacing:.02em}
+.ft-links{display:flex;flex-direction:column;gap:9px}
+.ft-links a{font-size:13px;color:rgba(255,255,255,.55);transition:color var(--t)}
+.ft-links a:hover{color:#fff}
+.ft-bot{padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:11.5px;color:rgba(255,255,255,.4)}
+.ft-leg{display:flex;gap:18px}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .nl{display:none}
+  .hamburger{display:block}
+  .ah h1{font-size:28px}
+  .prose h2{font-size:22px}
+  .prose h3{font-size:18px}
+  .rel-grid{grid-template-columns:1fr}
+  .ft-top{grid-template-columns:1fr 1fr;gap:28px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nw">
+    <a href="/" aria-label="Veriva — pradinis" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+      <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#ffffff" transform="translate(8,8)"/>
+        <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="#c8962a" transform="translate(8,8)"/>
+      </svg>
+      <span style="font-family:Syne,system-ui,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.04em">VERIVA</span>
+    </a>
+    <ul class="nl">
+      <li><a href="/#paslaugos">Paslaugos</a></li>
+      <li><a href="/#apie">Apie mus</a></li>
+      <li><a href="/#kainos">Kainos</a></li>
+      <li><a href="/blog.html" style="color:#fff">Tinklaraštis</a></li>
+      <li><a href="/#kontaktai" class="nav-cta">Susisiekti</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('mob-menu').classList.toggle('open')" aria-label="Meniu">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="mob-menu" id="mob-menu">
+  <a href="/#paslaugos">Paslaugos</a>
+  <a href="/#apie">Apie mus</a>
+  <a href="/#kainos">Kainos</a>
+  <a href="/blog.html">Tinklaraštis</a>
+  <a href="/#kontaktai">Susisiekti →</a>
+</div>
+
+<!-- ARTICLE HERO -->
+<article>
+<section class="ah">
+  <div class="ah-w">
+    <div class="ah-crumbs"><a href="/">Pradžia</a> &nbsp;/&nbsp; <a href="/blog.html">Tinklaraštis</a> &nbsp;/&nbsp; {{POST_CATEGORY}}</div>
+    <div class="ah-meta">
+      <span class="ah-cat">{{POST_CATEGORY}}</span>
+      <span class="ah-dot"></span>
+      <span class="ah-time">{{POST_DATE_HUMAN}}</span>
+      <span class="ah-dot"></span>
+      <span class="ah-time">{{POST_READ_MIN}} min skaitymo</span>
+    </div>
+    <h1>{{POST_TITLE}}</h1>
+    <p class="ah-sub">{{POST_DESCRIPTION}}</p>
+    <div class="ah-author">
+      <div class="ah-av">{{POST_AUTHOR_INITIALS}}</div>
+      <div>
+        <div class="ah-an">{{POST_AUTHOR}}</div>
+        <div class="ah-ar">{{POST_AUTHOR_ROLE}}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLE BODY -->
+<section class="ab">
+  <div class="ab-w">
+    <div class="prose">
+      <!-- Featured snippet definition (po H1, prieš pirmą H2) -->
+      <p class="definition">{{POST_DEFINITION}}</p>
+
+      <!-- Table of contents -->
+      <div class="toc">
+        <span class="toc-label">Šiame straipsnyje</span>
+        <ol class="toc-list">
+          {{POST_TOC_HTML}}
+        </ol>
+      </div>
+
+      <!-- Main body — H2/H3/p/ul/ol/blockquote/callout/stat-hl -->
+      {{POST_BODY_HTML}}
+    </div>
+
+    <!-- FAQ SECTION (GEO boost) -->
+    <div class="faq-sec">
+      <h2 class="faq-sec-h">Dažniausi klausimai</h2>
+      <div class="faq-list">
+        {{POST_FAQ_HTML}}
+      </div>
+    </div>
+
+    <!-- INLINE CTA -->
+    <div class="cta-inline">
+      <h3 class="cta-inline-h">Reikia pagalbos su <em>BDAR ar saugumu</em>?</h3>
+      <p class="cta-inline-p">Atlikite nemokamą BDAR rizikos testą per 60 sekundžių arba užsakykite konsultaciją.</p>
+      <a href="/#top" class="cta-inline-btn">
+        Atlikti rizikos testą
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4-4 4M21 12H3"/></svg>
+      </a>
+    </div>
+
+    <!-- SHARE -->
+    <div class="share">
+      <span class="share-l">Dalintis:</span>
+      <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=https://veriva.lt/blog/{{POST_SLUG}}.html" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https://veriva.lt/blog/{{POST_SLUG}}.html" target="_blank" rel="noopener">Facebook</a>
+      <a class="share-btn" href="mailto:?subject={{POST_TITLE}}&body=https://veriva.lt/blog/{{POST_SLUG}}.html">El. paštu</a>
+    </div>
+  </div>
+</section>
+</article>
+
+<!-- RELATED -->
+<section class="rel">
+  <div class="rel-w">
+    <h2 class="rel-h">Susiję straipsniai</h2>
+    <div class="rel-grid">
+      {{RELATED_POSTS_HTML}}
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ftw">
+    <div class="ft-top">
+      <div>
+        <a href="/" aria-label="Veriva" style="display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:16px">
+          <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#ffffff" transform="translate(8,8)"/>
+            <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="#c8962a" transform="translate(8,8)"/>
+          </svg>
+          <span style="font-family:Syne,system-ui,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.04em">VERIVA</span>
+        </a>
+        <p class="ft-about">BDAR atitiktis ir kibernetinis saugumas. Teisė + IT vienoje komandoje. 120+ klientų, €0 VDAI baudų — nuo 2017 m.</p>
+      </div>
+      <div>
+        <div class="ft-ch">Paslaugos</div>
+        <ul class="ft-links">
+          <li><a href="/#paslaugos">BDAR atitiktis</a></li>
+          <li><a href="/#paslaugos">Kibernetinis saugumas</a></li>
+          <li><a href="/#paslaugos">Mokymai</a></li>
+          <li><a href="/#paslaugos">DPO outsourcing</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-ch">Įmonė</div>
+        <ul class="ft-links">
+          <li><a href="/#atsiliepimai">Rezultatai</a></li>
+          <li><a href="/#kainos">Kainos</a></li>
+          <li><a href="/blog.html">Tinklaraštis</a></li>
+          <li><a href="/#top">BDAR rizikos testas</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-ch">Kontaktai</div>
+        <ul class="ft-links">
+          <li><a href="mailto:info@veriva.lt">info@veriva.lt</a></li>
+          <li><a href="tel:+37061061981">+370 610 61981</a></li>
+          <li><span style="color:rgba(255,255,255,.38)">Švitrigailos g. 11K-109</span></li>
+          <li><span style="color:rgba(255,255,255,.38)">LT-03228 Vilnius</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span>© 2025 Veriva UAB · Įmonės kodas: 306162111</span>
+      <div class="ft-leg">
+        <a href="/privatumas.html">Privatumo politika</a>
+        <a href="/slapukai.html">Slapukų politika</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.parentElement.classList.toggle('open');
+  });
+});
+</script>
+
+</body>
+</html>

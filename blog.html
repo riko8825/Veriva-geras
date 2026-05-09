@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Veriva tinklaraštis — BDAR, NIS2, kibernetinio saugumo aktualijos. Praktiniai vadovai iš teisės ir IT ekspertų komandos.">
+<title>Tinklaraštis — Veriva | BDAR, NIS2, kibernetinis saugumas</title>
+<meta property="og:title" content="Veriva tinklaraštis — BDAR, NIS2, kibernetinis saugumas">
+<meta property="og:description" content="Praktiniai vadovai ir įžvalgos: BDAR atitiktis, NIS2 direktyva, kibernetinis saugumas, DPO funkcija.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://veriva.lt/blog.html">
+<meta property="og:locale" content="lt_LT">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Veriva UAB">
+<link rel="canonical" href="https://veriva.lt/blog.html">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+<link rel="apple-touch-icon" href="/assets/img/favicon.svg">
+<meta name="theme-color" content="#07111f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://veriva.lt/#organization",
+      "name": "Veriva UAB",
+      "url": "https://veriva.lt"
+    },
+    {
+      "@type": "Blog",
+      "@id": "https://veriva.lt/blog.html#blog",
+      "url": "https://veriva.lt/blog.html",
+      "name": "Veriva tinklaraštis",
+      "description": "BDAR, NIS2 ir kibernetinio saugumo aktualijos Lietuvos verslui.",
+      "inLanguage": "lt-LT",
+      "publisher": {"@id": "https://veriva.lt/#organization"}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Pradžia", "item": "https://veriva.lt/"},
+        {"@type": "ListItem", "position": 2, "name": "Tinklaraštis", "item": "https://veriva.lt/blog.html"}
+      ]
+    }
+  ]
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#07111f;--ink2:#0c1a2e;
+  --blue:#1a47cc;--blue2:#2255e0;
+  --cyan:#00b4d8;--gold:#c8962a;--gold2:#e8b84b;
+  --white:#fff;--cream:#f8f7f4;
+  --g50:#f3f2ee;--g100:#eae8e2;--g300:#c5c2b8;--g500:#837e72;--g700:#44413b;
+  --border:rgba(7,17,31,.09);--border2:rgba(7,17,31,.15);
+  --ease:cubic-bezier(.4,0,.2,1);--t:.2s var(--ease);
+  --max:1140px;
+  --ff:'Plus Jakarta Sans',system-ui,sans-serif;
+  --ffd:'Syne',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--ff);color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+::selection{background:rgba(26,71,204,.18)}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:50;background:rgba(7,17,31,.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06)}
+.nw{max-width:var(--max);margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.nl{display:flex;gap:28px;align-items:center}
+.nl a{color:rgba(255,255,255,.72);font-size:13.5px;font-weight:500;transition:color var(--t)}
+.nl a:hover{color:#fff}
+.nav-cta{padding:9px 18px;background:var(--blue2);color:#fff!important;border-radius:7px;font-weight:600}
+.nav-cta:hover{background:var(--blue)}
+.hamburger{display:none;background:none;border:none;color:#fff;cursor:pointer;padding:6px}
+.mob-menu{display:none;background:var(--ink);padding:18px 24px;flex-direction:column;gap:14px;border-bottom:1px solid rgba(255,255,255,.06)}
+.mob-menu a{color:rgba(255,255,255,.78);font-size:15px;font-weight:500}
+.mob-menu.open{display:flex}
+
+/* ── BLOG HERO ── */
+.bh{padding:72px 24px 48px;background:var(--ink);color:#fff;position:relative;overflow:hidden}
+.bh::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(26,71,204,.2),transparent 50%),radial-gradient(circle at 80% 70%,rgba(200,150,42,.1),transparent 55%);pointer-events:none}
+.bh-w{max-width:var(--max);margin:0 auto;position:relative;z-index:1}
+.bh-crumbs{font-size:12px;color:rgba(255,255,255,.45);margin-bottom:18px;letter-spacing:.04em}
+.bh-crumbs a{color:rgba(255,255,255,.65);transition:color var(--t)}
+.bh-crumbs a:hover{color:#fff}
+.bh-tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gold2);margin-bottom:14px}
+.bh-tag::before{content:'';width:16px;height:2px;background:currentColor;border-radius:2px}
+.bh h1{font-family:var(--ffd);font-size:clamp(34px,4.4vw,56px);line-height:1.05;letter-spacing:-.025em;margin-bottom:16px;font-weight:800}
+.bh h1 em{font-style:normal;color:var(--gold2)}
+.bh-sub{font-size:17px;color:rgba(255,255,255,.65);line-height:1.6;font-weight:300;max-width:620px}
+
+/* ── FILTERS ── */
+.bf{padding:32px 24px 0;background:var(--cream)}
+.bf-w{max-width:var(--max);margin:0 auto;display:flex;flex-wrap:wrap;gap:8px}
+.bf-btn{padding:9px 18px;background:var(--white);border:1px solid var(--border);border-radius:100px;font-family:var(--ff);font-size:12.5px;font-weight:600;color:var(--g700);cursor:pointer;transition:all var(--t)}
+.bf-btn:hover{border-color:var(--border2);color:var(--ink)}
+.bf-btn.active{background:var(--ink);border-color:var(--ink);color:#fff}
+
+/* ── POSTS GRID ── */
+.bp{padding:40px 24px 88px;background:var(--cream)}
+.bp-w{max-width:var(--max);margin:0 auto}
+.bp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.bc{background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:all var(--t)}
+.bc:hover{box-shadow:0 8px 24px rgba(7,17,31,.08);transform:translateY(-2px);border-color:rgba(26,71,204,.2)}
+.bc.hidden{display:none}
+.bc-img{aspect-ratio:16/9;background:linear-gradient(135deg,var(--ink) 0%,var(--ink2) 100%);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.bc-img::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(26,71,204,.25),transparent 60%),radial-gradient(circle at 70% 80%,rgba(200,150,42,.15),transparent 50%)}
+.bc-img-icon{position:relative;z-index:1;font-family:var(--ffd);font-size:42px;color:rgba(255,255,255,.18);font-weight:800;letter-spacing:.04em}
+.bc-body{padding:22px 24px 24px;display:flex;flex-direction:column;flex:1}
+.bc-meta{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g500);margin-bottom:12px}
+.bc-cat{color:var(--blue2)}
+.bc-dot{width:3px;height:3px;border-radius:50%;background:var(--g300)}
+.bc-title{font-family:var(--ffd);font-size:18px;line-height:1.25;letter-spacing:-.015em;color:var(--ink);margin-bottom:10px;font-weight:700}
+.bc-excerpt{font-size:13.5px;color:var(--g500);line-height:1.65;margin-bottom:16px;flex:1}
+.bc-read{font-size:12.5px;font-weight:700;color:var(--blue2);display:inline-flex;align-items:center;gap:6px;margin-top:auto}
+.bc-read-arrow{transition:transform var(--t)}
+.bc:hover .bc-read-arrow{transform:translateX(4px)}
+
+.bp-empty{text-align:center;padding:60px 0;color:var(--g500);font-size:14px;display:none}
+.bp-empty.show{display:block}
+
+/* ── NEWSLETTER CTA ── */
+.nlw{margin-top:64px;background:var(--ink);color:#fff;border-radius:14px;padding:48px 40px;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center;position:relative;overflow:hidden}
+.nlw::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(26,71,204,.18),transparent 55%);pointer-events:none}
+.nlw>*{position:relative;z-index:1}
+.nlw-h{font-family:var(--ffd);font-size:26px;line-height:1.2;letter-spacing:-.018em;margin-bottom:10px;font-weight:700}
+.nlw-h em{font-style:normal;color:var(--gold2)}
+.nlw-p{font-size:14px;color:rgba(255,255,255,.6);line-height:1.6;font-weight:300}
+.nlw-form{display:flex;gap:8px;flex-wrap:wrap}
+.nlw-input{flex:1;min-width:0;padding:13px 16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:#fff;font-family:var(--ff);font-size:14px;transition:all var(--t)}
+.nlw-input::placeholder{color:rgba(255,255,255,.4)}
+.nlw-input:focus{outline:none;border-color:var(--blue2);background:rgba(255,255,255,.08)}
+.nlw-btn{padding:13px 22px;background:var(--blue2);color:#fff;border:none;border-radius:8px;font-family:var(--ff);font-size:13.5px;font-weight:700;cursor:pointer;transition:background var(--t);white-space:nowrap}
+.nlw-btn:hover{background:var(--blue)}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px}
+.ftw{max-width:var(--max);margin:0 auto}
+.ft-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.06)}
+.ft-about{font-size:13px;line-height:1.65;color:rgba(255,255,255,.55);margin-top:8px}
+.ft-ch{font-family:var(--ffd);font-size:13px;font-weight:700;color:#fff;margin-bottom:14px;letter-spacing:.02em}
+.ft-links{display:flex;flex-direction:column;gap:9px}
+.ft-links a{font-size:13px;color:rgba(255,255,255,.55);transition:color var(--t)}
+.ft-links a:hover{color:#fff}
+.ft-bot{padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:11.5px;color:rgba(255,255,255,.4)}
+.ft-leg{display:flex;gap:18px}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .nl{display:none}
+  .hamburger{display:block}
+  .bh h1{font-size:32px}
+  .bp-grid{grid-template-columns:1fr}
+  .nlw{grid-template-columns:1fr;padding:32px 24px}
+  .ft-top{grid-template-columns:1fr 1fr;gap:28px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nw">
+    <a href="/" aria-label="Veriva — pradinis" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+      <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#ffffff" transform="translate(8,8)"/>
+        <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="#c8962a" transform="translate(8,8)"/>
+      </svg>
+      <span style="font-family:Syne,system-ui,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.04em">VERIVA</span>
+    </a>
+    <ul class="nl">
+      <li><a href="/#paslaugos">Paslaugos</a></li>
+      <li><a href="/#apie">Apie mus</a></li>
+      <li><a href="/#kainos">Kainos</a></li>
+      <li><a href="/blog.html" style="color:#fff">Tinklaraštis</a></li>
+      <li><a href="/#kontaktai" class="nav-cta">Susisiekti</a></li>
+    </ul>
+    <button class="hamburger" onclick="document.getElementById('mob-menu').classList.toggle('open')" aria-label="Meniu">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="mob-menu" id="mob-menu">
+  <a href="/#paslaugos">Paslaugos</a>
+  <a href="/#apie">Apie mus</a>
+  <a href="/#kainos">Kainos</a>
+  <a href="/blog.html">Tinklaraštis</a>
+  <a href="/#kontaktai">Susisiekti →</a>
+</div>
+
+<!-- HERO -->
+<section class="bh">
+  <div class="bh-w">
+    <div class="bh-crumbs"><a href="/">Pradžia</a> &nbsp;/&nbsp; Tinklaraštis</div>
+    <span class="bh-tag">Tinklaraštis</span>
+    <h1>BDAR, NIS2 ir<br><em>kibernetinis saugumas</em></h1>
+    <p class="bh-sub">Praktiniai vadovai ir įžvalgos iš teisės ir IT ekspertų. Be teorinio žargono — tik tai, ką realiai reikia žinoti Lietuvos verslui.</p>
+  </div>
+</section>
+
+<!-- FILTERS -->
+<section class="bf">
+  <div class="bf-w">
+    <button class="bf-btn active" data-cat="all" onclick="filterPosts(this)">Visi</button>
+    <button class="bf-btn" data-cat="bdar" onclick="filterPosts(this)">BDAR</button>
+    <button class="bf-btn" data-cat="nis2" onclick="filterPosts(this)">NIS2</button>
+    <button class="bf-btn" data-cat="sauga" onclick="filterPosts(this)">Kibernetinis saugumas</button>
+    <button class="bf-btn" data-cat="dpo" onclick="filterPosts(this)">DPO</button>
+    <button class="bf-btn" data-cat="mokymai" onclick="filterPosts(this)">Mokymai</button>
+  </div>
+</section>
+
+<!-- POSTS -->
+<section class="bp">
+  <div class="bp-w">
+    <div class="bp-grid" id="bp-grid">
+
+      <a href="/blog/bdar-baudos-2026.html" class="bc" data-cat="bdar">
+        <div class="bc-img"><span class="bc-img-icon">BDAR</span></div>
+        <div class="bc-body">
+          <div class="bc-meta"><span class="bc-cat">BDAR</span><span class="bc-dot"></span><span>5 min</span></div>
+          <h3 class="bc-title">BDAR baudų tendencijos 2026 m.: ko tikėtis Lietuvos įmonėms</h3>
+          <p class="bc-excerpt">VDAI suaktyvėjo. Analizuojame paskutines baudas, dažniausius pažeidimus ir kaip jų išvengti praktiškai.</p>
+          <span class="bc-read">Skaityti straipsnį <svg class="bc-read-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4-4 4M21 12H3"/></svg></span>
+        </div>
+      </a>
+
+      <a href="/blog/nis2-direktyva-praktiskai.html" class="bc" data-cat="nis2">
+        <div class="bc-img"><span class="bc-img-icon">NIS2</span></div>
+        <div class="bc-body">
+          <div class="bc-meta"><span class="bc-cat">NIS2</span><span class="bc-dot"></span><span>7 min</span></div>
+          <h3 class="bc-title">NIS2 direktyva praktiškai: kam taikoma ir ką reikia padaryti</h3>
+          <p class="bc-excerpt">Nuo 2024 m. NIS2 keičia žaidimo taisykles. Kas privalo atitikti, kokios baudos ir kaip pradėti pasiruošimą.</p>
+          <span class="bc-read">Skaityti straipsnį <svg class="bc-read-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4-4 4M21 12H3"/></svg></span>
+        </div>
+      </a>
+
+      <a href="/blog/phishing-darbuotoju-mokymai.html" class="bc" data-cat="sauga">
+        <div class="bc-img"><span class="bc-img-icon">SAUGA</span></div>
+        <div class="bc-body">
+          <div class="bc-meta"><span class="bc-cat">Kibernetinis saugumas</span><span class="bc-dot"></span><span>6 min</span></div>
+          <h3 class="bc-title">Phishing atakos: kodėl 90% pažeidimų prasideda nuo darbuotojo</h3>
+          <p class="bc-excerpt">Realūs atvejai iš mūsų patirties. Kaip mokymai ir simuliacijos sumažina riziką nuo 34% iki 4%.</p>
+          <span class="bc-read">Skaityti straipsnį <svg class="bc-read-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4-4 4M21 12H3"/></svg></span>
+        </div>
+      </a>
+
+      <a href="/blog/dpo-funkcija-kada-reikia.html" class="bc" data-cat="dpo">
+        <div class="bc-img"><span class="bc-img-icon">DPO</span></div>
+        <div class="bc-body">
+          <div class="bc-meta"><span class="bc-cat">DPO</span><span class="bc-dot"></span><span>4 min</span></div>
+          <h3 class="bc-title">Duomenų apsaugos pareigūnas: kada jo reikia ir kaip jį pasirinkti</h3>
+          <p class="bc-excerpt">Vidinis ar outsourcing? Kokie kvalifikaciniai reikalavimai ir kuo skiriasi DPO funkcija nuo BDAR konsultanto.</p>
+          <span class="bc-read">Skaityti straipsnį <svg class="bc-read-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4-4 4M21 12H3"/></svg></span>
+        </div>
+      </a>
+
+      <a href="/blog/incidentu-valdymas-72h.html" class="bc" data-cat="sauga">
+        <div class="bc-img"><span class="bc-img-icon">INCIDENTAI</span></div>
+        <div class="bc-body">
+          <div class="bc-meta"><span class="bc-cat">Kibernetinis saugumas</span><span class="bc-dot"></span><span>8 min</span></div>
+          <h3 class="bc-title">72 valandos: kaip reaguoti į duomenų pažeidimą pagal BDAR</h3>
+          <p class="bc-excerpt">Detalus protokolas — nuo aptikimo iki pranešimo VDAI. Realūs šablonai ir checklist'ai.</p>
+          <span class="bc-read">Skaityti straipsnį <svg class="bc-read-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4-4 4M21 12H3"/></svg></span>
+        </div>
+      </a>
+
+      <a href="/blog/darbuotoju-bdar-mokymai.html" class="bc" data-cat="mokymai">
+        <div class="bc-img"><span class="bc-img-icon">MOKYMAI</span></div>
+        <div class="bc-body">
+          <div class="bc-meta"><span class="bc-cat">Mokymai</span><span class="bc-dot"></span><span>5 min</span></div>
+          <h3 class="bc-title">Darbuotojų BDAR mokymai: ką privalu žinoti kiekvienam</h3>
+          <p class="bc-excerpt">Praktinė programa: nuo asmens duomenų apibrėžimo iki incidento atpažinimo. Be teorinio bullshit'o.</p>
+          <span class="bc-read">Skaityti straipsnį <svg class="bc-read-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4-4 4M21 12H3"/></svg></span>
+        </div>
+      </a>
+
+    </div>
+    <div class="bp-empty" id="bp-empty">Pasirinktoje kategorijoje straipsnių dar nėra.</div>
+
+    <!-- NEWSLETTER -->
+    <div class="nlw">
+      <div>
+        <h3 class="nlw-h">Gaukite <em>BDAR ir saugumo</em> aktualijas tiesiai į el. paštą</h3>
+        <p class="nlw-p">Vienas laiškas per mėnesį. Be spam'o. Atsisakyti — vienu paspaudimu.</p>
+      </div>
+      <form class="nlw-form" onsubmit="subscribeNL(event)">
+        <input type="email" class="nlw-input" id="nl-email" placeholder="jusu@pastas.lt" required>
+        <button type="submit" class="nlw-btn">Prenumeruoti</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ftw">
+    <div class="ft-top">
+      <div>
+        <a href="/" aria-label="Veriva" style="display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:16px">
+          <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#ffffff" transform="translate(8,8)"/>
+            <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="#c8962a" transform="translate(8,8)"/>
+          </svg>
+          <span style="font-family:Syne,system-ui,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.04em">VERIVA</span>
+        </a>
+        <p class="ft-about">BDAR atitiktis ir kibernetinis saugumas. Teisė + IT vienoje komandoje. 120+ klientų, €0 VDAI baudų — nuo 2017 m.</p>
+      </div>
+      <div>
+        <div class="ft-ch">Paslaugos</div>
+        <ul class="ft-links">
+          <li><a href="/#paslaugos">BDAR atitiktis</a></li>
+          <li><a href="/#paslaugos">Kibernetinis saugumas</a></li>
+          <li><a href="/#paslaugos">Mokymai</a></li>
+          <li><a href="/#paslaugos">DPO outsourcing</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-ch">Įmonė</div>
+        <ul class="ft-links">
+          <li><a href="/#atsiliepimai">Rezultatai</a></li>
+          <li><a href="/#kainos">Kainos</a></li>
+          <li><a href="/blog.html">Tinklaraštis</a></li>
+          <li><a href="/#top">BDAR rizikos testas</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-ch">Kontaktai</div>
+        <ul class="ft-links">
+          <li><a href="mailto:info@veriva.lt">info@veriva.lt</a></li>
+          <li><a href="tel:+37061061981">+370 610 61981</a></li>
+          <li><span style="color:rgba(255,255,255,.38)">Švitrigailos g. 11K-109</span></li>
+          <li><span style="color:rgba(255,255,255,.38)">LT-03228 Vilnius</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span>© 2025 Veriva UAB · Įmonės kodas: 306162111</span>
+      <div class="ft-leg">
+        <a href="/privatumas.html">Privatumo politika</a>
+        <a href="/slapukai.html">Slapukų politika</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function filterPosts(btn){
+  document.querySelectorAll('.bf-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const cat = btn.dataset.cat;
+  const cards = document.querySelectorAll('.bc');
+  let visible = 0;
+  cards.forEach(c=>{
+    const show = (cat === 'all' || c.dataset.cat === cat);
+    c.classList.toggle('hidden', !show);
+    if(show) visible++;
+  });
+  document.getElementById('bp-empty').classList.toggle('show', visible === 0);
+}
+
+function subscribeNL(e){
+  e.preventDefault();
+  const email = document.getElementById('nl-email').value;
+  // TODO: connect to /api/forms/newsletter when backend ready
+  alert('Ačiū! Patvirtinimo laiškas išsiųstas į: ' + email);
+  e.target.reset();
+}
+</script>
+
+</body>
+</html>

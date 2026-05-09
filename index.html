@@ -13,6 +13,9 @@
 <meta name="robots" content="index, follow">
 <meta name="author" content="Veriva UAB">
 <link rel="canonical" href="https://veriva.lt">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+<link rel="apple-touch-icon" href="/assets/img/favicon.svg">
+<meta name="theme-color" content="#07111f">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -391,6 +394,27 @@ nav{
 .btn-pb:hover{background:var(--blue);transform:translateY(-1px)}
 
 /* ─── FAQ ─── */
+/* ── BLOG TEASER ── */
+.blog-bg{background:var(--white)}
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
+.bc{background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:all var(--t);text-decoration:none;color:inherit}
+.bc:hover{box-shadow:0 8px 24px rgba(7,17,31,.08);transform:translateY(-2px);border-color:rgba(26,71,204,.2)}
+.bc-img{aspect-ratio:16/9;background:linear-gradient(135deg,var(--ink) 0%,var(--ink2) 100%);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.bc-img::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(26,71,204,.25),transparent 60%),radial-gradient(circle at 70% 80%,rgba(200,150,42,.15),transparent 50%)}
+.bc-img-icon{position:relative;z-index:1;font-family:var(--ffd);font-size:42px;color:rgba(255,255,255,.18);font-weight:800;letter-spacing:.04em}
+.bc-body{padding:22px 24px 24px;display:flex;flex-direction:column;flex:1}
+.bc-meta{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g500);margin-bottom:12px}
+.bc-cat{color:var(--blue2)}
+.bc-dot{width:3px;height:3px;border-radius:50%;background:var(--g300)}
+.bc-title{font-family:var(--ffd);font-size:18px;line-height:1.25;letter-spacing:-.015em;color:var(--ink);margin-bottom:10px;font-weight:700}
+.bc-excerpt{font-size:13.5px;color:var(--g500);line-height:1.65;margin-bottom:16px;flex:1}
+.bc-read{font-size:12.5px;font-weight:700;color:var(--blue2);display:inline-flex;align-items:center;gap:6px;margin-top:auto}
+.bc-read-arrow{transition:transform var(--t)}
+.bc:hover .bc-read-arrow{transform:translateX(4px)}
+.blog-all{display:flex;justify-content:center;margin-top:40px}
+.btn-blog-all{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;background:var(--white);border:1px solid var(--border2);border-radius:8px;font-size:13px;font-weight:700;color:var(--ink);text-decoration:none;transition:all var(--t)}
+.btn-blog-all:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+
 .faq-bg{background:var(--white)}
 .faq-inner{max-width:720px;margin:0 auto}
 .faq-list{border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:40px}
@@ -571,7 +595,7 @@ footer{background:#030b17;padding:56px 24px 32px}
   .hero h1{font-size:32px}
   .hero-sub{font-size:15px}
   .s2col{grid-template-columns:1fr;gap:20px}
-  .svc-grid,.testi-grid,.pgrid{grid-template-columns:1fr}
+  .svc-grid,.testi-grid,.pgrid,.blog-grid{grid-template-columns:1fr}
   .pc.hi{transform:none}
   .wug-w{grid-template-columns:1fr}
   .ft-top{grid-template-columns:1fr 1fr;gap:28px}
@@ -609,13 +633,12 @@ footer{background:#030b17;padding:56px 24px 32px}
 <!-- NAV -->
 <nav id="nav">
   <div class="nw">
-    <a href="#top" id="nav-logo-wrap" style="display:flex;align-items:center;gap:10px;text-decoration:none">
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M18 2L32 8V18C32 25.5 25.5 31.5 18 34C10.5 31.5 4 25.5 4 18V8Z" fill="#1a47cc" opacity="0.15"/>
-        <path d="M18 2L32 8V18C32 25.5 25.5 31.5 18 34C10.5 31.5 4 25.5 4 18V8Z" fill="none" stroke="#00b4d8" stroke-width="1.5"/>
-        <path d="M12 18L16.5 22.5L24 13.5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <a href="#top" id="nav-logo-wrap" aria-label="Veriva — pradinis" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+      <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#ffffff" transform="translate(8,8)"/>
+        <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="#c8962a" transform="translate(8,8)"/>
       </svg>
-      <span style="font-family:Syne,system-ui,sans-serif;font-size:18px;font-weight:800;color:#fff;letter-spacing:-.02em">Veriva</span>
+      <span style="font-family:Syne,system-ui,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.04em">VERIVA</span>
     </a>
     <ul class="nl">
       <li><a href="#paslaugos">Paslaugos</a></li>
@@ -624,6 +647,7 @@ footer{background:#030b17;padding:56px 24px 32px}
       <li><a href="#auditas">Kaip dirbame</a></li>
       <li><a href="#atsiliepimai">Rezultatai</a></li>
       <li><a href="#kainos">Kainos</a></li>
+      <li><a href="#blog">Tinklaraštis</a></li>
       <li><a href="#kontaktai" class="nav-cta">Susisiekti</a></li>
     </ul>
     <button class="hamburger" onclick="toggleMob()" aria-label="Meniu">
@@ -637,6 +661,7 @@ footer{background:#030b17;padding:56px 24px 32px}
   <a href="#auditas" onclick="closeMob()">Kaip dirbame</a>
   <a href="#atsiliepimai" onclick="closeMob()">Rezultatai</a>
   <a href="#kainos" onclick="closeMob()">Kainos</a>
+  <a href="#blog" onclick="closeMob()">Tinklaraštis</a>
   <a href="#kontaktai" onclick="closeMob()">Susisiekti →</a>
 </div>
 
@@ -1104,6 +1129,54 @@ footer{background:#030b17;padding:56px 24px 32px}
   </div>
 </section>
 
+<!-- ══ BLOG TEASER ══ -->
+<section class="s blog-bg" id="blog">
+  <div class="sw">
+    <div class="s2col" data-r>
+      <div>
+        <span class="stag">Tinklaraštis</span>
+        <h2 class="sh">Aktualijos —<br><em>BDAR, NIS2, kibernetinis saugumas</em></h2>
+      </div>
+      <p class="sp">Praktiniai vadovai ir įžvalgos iš mūsų ekspertų. Be teorinio žargono — tik tai, ką realiai reikia žinoti.</p>
+    </div>
+    <div class="blog-grid">
+      <a href="/blog/bdar-baudos-2026.html" class="bc" data-r>
+        <div class="bc-img"><span class="bc-img-icon">BDAR</span></div>
+        <div class="bc-body">
+          <div class="bc-meta"><span class="bc-cat">BDAR</span><span class="bc-dot"></span><span>5 min skaitymo</span></div>
+          <h3 class="bc-title">BDAR baudų tendencijos 2026 m.: ko tikėtis Lietuvos įmonėms</h3>
+          <p class="bc-excerpt">VDAI suaktyvėjo. Analizuojame paskutines baudas, dažniausius pažeidimus ir kaip jų išvengti praktiškai.</p>
+          <span class="bc-read">Skaityti straipsnį <svg class="bc-read-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4-4 4M21 12H3"/></svg></span>
+        </div>
+      </a>
+      <a href="/blog/nis2-direktyva-praktiskai.html" class="bc" data-r="1">
+        <div class="bc-img"><span class="bc-img-icon">NIS2</span></div>
+        <div class="bc-body">
+          <div class="bc-meta"><span class="bc-cat">NIS2</span><span class="bc-dot"></span><span>7 min skaitymo</span></div>
+          <h3 class="bc-title">NIS2 direktyva praktiškai: kam taikoma ir ką reikia padaryti</h3>
+          <p class="bc-excerpt">Nuo 2024 m. NIS2 keičia žaidimo taisykles. Kas privalo atitikti, kokios baudos ir kaip pradėti pasiruošimą.</p>
+          <span class="bc-read">Skaityti straipsnį <svg class="bc-read-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4-4 4M21 12H3"/></svg></span>
+        </div>
+      </a>
+      <a href="/blog/phishing-darbuotoju-mokymai.html" class="bc" data-r="2">
+        <div class="bc-img"><span class="bc-img-icon">SAUGA</span></div>
+        <div class="bc-body">
+          <div class="bc-meta"><span class="bc-cat">Kibernetinis saugumas</span><span class="bc-dot"></span><span>6 min skaitymo</span></div>
+          <h3 class="bc-title">Phishing atakos: kodėl 90% pažeidimų prasideda nuo darbuotojo</h3>
+          <p class="bc-excerpt">Realūs atvejai iš mūsų patirties. Kaip mokymai ir simuliacijos sumažina riziką nuo 34% iki 4%.</p>
+          <span class="bc-read">Skaityti straipsnį <svg class="bc-read-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4-4 4M21 12H3"/></svg></span>
+        </div>
+      </a>
+    </div>
+    <div class="blog-all" data-r>
+      <a href="/blog.html" class="btn-blog-all">
+        Visi straipsniai
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4-4 4M21 12H3"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- ══ FAQ ══ -->
 <section class="s faq-bg">
   <div class="sw">
@@ -1208,11 +1281,13 @@ footer{background:#030b17;padding:56px 24px 32px}
   <div class="ftw">
     <div class="ft-top">
       <div>
-        <svg width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
-          <path d="M18 2L32 8V18C32 25.5 25.5 31.5 18 34C10.5 31.5 4 25.5 4 18V8Z" fill="#1a47cc" opacity="0.15"/>
-          <path d="M18 2L32 8V18C32 25.5 25.5 31.5 18 34C10.5 31.5 4 25.5 4 18V8Z" fill="none" stroke="#00b4d8" stroke-width="1.5"/>
-          <path d="M12 18L16.5 22.5L24 13.5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <a href="#top" aria-label="Veriva" style="display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:16px">
+          <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:block">
+            <path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#ffffff" transform="translate(8,8)"/>
+            <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="#c8962a" transform="translate(8,8)"/>
+          </svg>
+          <span style="font-family:Syne,system-ui,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.04em">VERIVA</span>
+        </a>
         <p class="ft-about">BDAR atitiktis ir kibernetinis saugumas. Teisė + IT vienoje komandoje. 120+ klientų, €0 VDAI baudų — nuo 2017 m.</p>
         <div class="ft-soc">
           <a href="https://www.linkedin.com/company/23317014/" target="_blank" rel="noopener">in</a>
@@ -1233,6 +1308,7 @@ footer{background:#030b17;padding:56px 24px 32px}
         <ul class="ft-links">
           <li><a href="#atsiliepimai">Rezultatai</a></li>
           <li><a href="#kainos">Kainos</a></li>
+          <li><a href="/blog.html">Tinklaraštis</a></li>
           <li><a href="#top">BDAR rizikos testas</a></li>
         </ul>
       </div>

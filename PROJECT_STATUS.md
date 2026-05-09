@@ -70,8 +70,12 @@
 
 ## KNOWN ISSUES
 
-- `index.html` 354KB — viskas inline (CSS + JS), reikia išskirstyti
-- Nėra dokumentacijos apie esamą turinį (kas yra section'uose)
+- `index.html` ~1700 eil. — viskas inline (CSS + JS), reikia išskirstyti į `assets/`
+- 6 placeholder blog kortelės (`index.html` ir `blog.html`) nukreipia į neegzistuojančius failus (`/blog/bdar-baudos-2026.html` ir kt.) → 404 production'e
+- `blog.html:467` newsletter forma rodo tik `alert()`, NĖRA POST'inimo (endpoint'as nesukurtas) — user duomenys prarandami
+- `sitemap.xml` neapima `blog.html` ir blog post URL'ų — Google neindex'uos
+- Šios sesijos pakeitimai (blog teaser + listing + template) **NIEKADA NEPATIKRINTI naršyklėje** — visi vizualiniai bug'ai galimi
+- Nei vienas API endpoint'as neturi smoke test'o — `contact.ts` ir `health.ts` parašyti, bet niekada nepaleisti
 
 ## PRIORITETAI
 

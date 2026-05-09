@@ -1,0 +1,29 @@
+name: Health Check
+
+# Daily health check į /api/internal/health endpoint'ą.
+# Adaptuota iš Empirra booking-check.yml workflow šablono.
+# Aktyvuoti kai Vercel deploy'inta ir HEALTH_SECRET sukonfigūruotas GitHub Secrets.
+
+on:
+  schedule:
+    - cron: '0 7 * * *'   # 07:00 UTC = 09:00 LT (Europe/Vilnius)
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Call /api/internal/health endpoint
+        run: |
+          response=$(curl -sS -w "\n%{http_code}" -X GET \
+            -H "x-api-key: ${{ secrets.HEALTH_SECRET }}" \
+            https://veriva.lt/api/internal/health)
+          body=$(echo "$response" | head -n -1)
+          status=$(echo "$response" | tail -n 1)
+          echo "Status: $status"
+          echo "Body: $body"
+          if [ "$status" != "200" ]; then
+            echo "::error::health endpoint returned $status"
+            exit 1
+          fi

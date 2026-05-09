@@ -49,6 +49,21 @@
 - Backend: paruoštas folder, `lib/` wrapperiai vietoje, contact + health endpoint'ai sukurti
 - Blog pipeline: docs paruošti (`blog-content-rules.md`, `blog-keywords.md`, `blog-system-prompt.md`), automatizacija (`api/internal/blog-gen.ts`) — DAR NESUKURTA
 - Multi-page: dar nesukurti puslapiai (paslaugos.html, apie.html, kainos.html, kontaktai.html, privatumas.html, slapukai.html, 404.html)
+- Git: 2 commit'ai push'inti į `origin/main` (`48e6830` chore: init, `879af1f` feat: blog system)
+
+## KAS LIKO NEPATVIRTINTA (šios sesijos)
+
+⚠️ **Naršyklėje neištestuota** — joks dev server'is nepaleistas, joks Vercel preview nedeploy'intas:
+- `index.html` blog teaser sekcija — ar `.blog-grid` 3-col gridas teisingai veikia desktop'e ir griūna į 1-col mobile (≤768px)
+- `blog.html` filtrai — ar `filterPosts()` JS teisingai slepia/rodo `.bc.hidden` korteles po kategorijų pasirinkimo
+- `blog.html` newsletter forma — paspaudus rodo `alert()`, NĖRA POST'inimo (endpoint'as nesukurtas)
+- `blog/template.html` — visiškai netestuotas su realiu turiniu (placeholder'iai dar neužpildyti)
+- FAQ accordion `blog/template.html:441` — JS toggle'as parašytas, bet vizualiai netikrintas
+
+⚠️ **Žinomos problemos**:
+- 6 placeholder blog kortelės (`/blog/bdar-baudos-2026.html` ir kt.) — failai NEEGZISTUOJA, paspaudus → 404
+- `sitemap.xml` neapima `blog.html` ir blog post URL'ų — Google neindexuos
+- `blog/template.html` neturi sanitizacijos sluoksnio `{{POST_BODY_HTML}}` — paliekama blog-gen pipeline'ui
 
 ## KAS LIKO
 
@@ -86,8 +101,21 @@
 - [ ] Cron / Vercel scheduled function (4-6 straipsniai/mėn.)
 - [ ] Newsletter form prijungimas (`/api/forms/newsletter`)
 
-## SEKANTI SESIJA
+## KITAS ŽINGSNIS (sekanti sesija — 1-3 konkretūs žingsniai)
 
-Pradėti nuo: **Etapas 1 — frontend** (likusių puslapių sukūrimas: paslaugos.html, apie.html, kainos.html, kontaktai.html, privatumas.html, slapukai.html, 404.html)
+1. **Pataisyti placeholder linkus** — arba sukurti vieną realų pillar straipsnį (`/blog/bdar-auditas-vadovas.html` su `blog/template.html`), arba `index.html` blog kortelėms uždėti `aria-disabled="true"` + `pointer-events:none` (kad neproduktytų 404)
+2. **Naršyklėje patikrinti šios sesijos darbus** — paleisti dev server (`npx vercel dev` arba paprastas python http server), patikrinti: blog teaser desktop/mobile, blog.html filtrus, FAQ accordion template'e
+3. **Pasirinkti šaką**:
+   - 🅰️ **Likę puslapiai** (paslaugos / apie / kainos / kontaktai / privatumas / slapukai / 404) — P0 dėl BDAR (privatumas + slapukai privalomi)
+   - 🅱️ **blog-gen automation** (`api/internal/blog-gen.ts` + `api/internal/blog-publish.ts`) — docs paruošti, kodas dar ne
 
-ARBA: **Etapas 4 — blog-gen automation** (jei prioritetas turinys prieš multi-page).
+**Rekomendacija**: 🅰️ pirmiau (BDAR teisinis reikalavimas), tada 🅱️.
+
+---
+
+## ISTORIJA
+
+| Data | Sesijos tikslas | Komitai | Atlikta |
+|---|---|---|---|
+| 2026-05-09 (init) | Projekto inicializacija | `48e6830` | Folder struktūra, `lib/` iš Empirra, config files, contact + health endpoint'ai, migrations, `docs/structure.md` + brand + SEO + env docs |
+| 2026-05-09 (blog) | Blog sistemos paruošimas | `879af1f` | index teaser + `blog.html` listing + `blog/template.html` (19 placeholder'ių) + 3 docs (`blog-content-rules.md`, `blog-keywords.md`, `blog-system-prompt.md`) + docs sync |

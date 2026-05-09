@@ -1,0 +1,3 @@
+{
+  "$comment": "Project-shared Claude Code settings. Empirra naudoja src/pages/ + sync hook'us — Veriva flat root, todėl hook'ų nereikia."
+}

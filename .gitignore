@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+.vercel/
+.next/
+dist/
+build/
+
+# Env files
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+
+# Claude Code lokalios
+.claude/settings.local.json
+.claude/cache/
+
+# Sesijos screenshots / debug
+*-mobile-full.png
+ab-*.png
+debug-*.png

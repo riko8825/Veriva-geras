@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" role="img" aria-label="Veriva">
+  <title>Veriva</title>
+  <!-- V mark: kairė pusė balta, dešinė auksinė -->
+  <g>
+    <!-- Kairė V pusė (balta) -->
+    <path d="M 8 12 L 28 12 L 40 56 L 40 68 L 32 68 Z" fill="#ffffff"/>
+    <!-- Dešinė V pusė (auksinė) -->
+    <path d="M 40 56 L 52 12 L 72 12 L 48 68 L 40 68 Z" fill="#c8962a"/>
+  </g>
+  <!-- VERIVA tekstas -->
+  <text x="92" y="52"
+        font-family="Syne, system-ui, sans-serif"
+        font-size="36"
+        font-weight="800"
+        letter-spacing="2"
+        fill="#ffffff">VERIVA</text>
+</svg>

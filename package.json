@@ -1,0 +1,24 @@
+{
+  "name": "veriva-website",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Veriva — Duomenų apsauga ir kibernetinis saugumas Lietuvoje",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static site — no build step'",
+    "deploy": "vercel --prod",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.4.0",
+    "vercel": "^39.0.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "resend": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

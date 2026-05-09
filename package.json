@@ -12,7 +12,7 @@
   "devDependencies": {
     "@types/node": "^20.11.0",
     "typescript": "^5.4.0",
-    "vercel": "^39.0.0"
+    "vercel": "^53.3.1"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",

@@ -151,14 +151,13 @@ Uždarytus issues perkelti į `## Išspręsta` skyrių (ne trinti).
 
 ---
 
-### KI-011 — Apex SSL sertifikatas (`https://veriva.lt/`) dar neissued
-- **SLA:** 🟡 Medium
+### KI-011 — Apex SSL sertifikatas (`https://veriva.lt/`) dar neissued ✅ FIXED
+- **SLA:** ~~🟡 Medium~~ → ✅ FIXED (2026-05-10 ~09:20 UTC)
 - **Paveiktas blokas:** Vercel SSL, apex domain
-- **Statusas:** Open (auto-fix laukiama)
-- **Aprašas:** Po DNS migration (Hostinger A/CNAME → Vercel) `www.veriva.lt` gavo Let's Encrypt SSL sertifikatą per ~5 min. Bet apex `veriva.lt` (be www) sertifikato dar neturi — naršyklė rodo `SEC_E_WRONG_PRINCIPAL` warning'ą. HTTP atsako Vercel 307 → www.veriva.lt, bet TLS handshake fail'ina.
-- **Workaround:** Naudoti `https://www.veriva.lt/` — apex 307 redirect veiks po SSL issue'o
-- **Fix:** Vercel automatiškai išduos kai DNS pilnai propaguosis (per 1-24h). Jei per 24h ne — Vercel UI Domains → veriva.lt → "Refresh" mygtukas. Jei dar fail — ištrinti ir pridėti domain'ą iš naujo.
-- **Atidarytas:** 2026-05-10
+- **Statusas:** ✅ FIXED — Let's Encrypt sertifikatas išduotas auto per ~1.5h po DNS migration
+- **Aprašas:** Po DNS migration (~07:50 UTC) `www.veriva.lt` gavo SSL per ~5 min, bet apex `veriva.lt` (be www) sertifikato dar neturėjo — Vercel laukė pilno DNS propagation. Naršyklė rodė `SEC_E_WRONG_PRINCIPAL` warning'ą.
+- **Resolution (auto, 09:20 UTC):** Vercel auto-issued Let's Encrypt sertifikatą `CN=veriva.lt`. Verify: `https://veriva.lt/` → 307 redirect → `https://www.veriva.lt/` su `Server: Vercel`, HSTS `max-age=63072000`, jokio TLS warning'o.
+- **Atidarytas:** 2026-05-10 | **Uždarytas:** 2026-05-10 (~1.5h trukmė)
 
 ---
 

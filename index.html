@@ -425,10 +425,12 @@ nav{
 .btn-blog-all:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
 
 .faq-bg{background:var(--white)}
-.faq-inner{max-width:720px;margin:0 auto}
-.faq-list{border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:40px}
+.faq-inner{max-width:1100px;margin:0 auto}
+.faq-list{display:grid;grid-template-columns:1fr 1fr;gap:0 24px;margin-top:40px;align-items:start}
+.faq-col{border:1px solid var(--border);border-radius:10px;overflow:hidden}
 .fi{border-bottom:1px solid var(--border)}
 .fi:last-child{border-bottom:none}
+@media (max-width:760px){.faq-list{grid-template-columns:1fr;gap:12px 0}}
 .fq{width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:18px 22px;font-family:var(--ff);font-size:14px;font-weight:600;color:var(--ink);text-align:left;transition:background var(--t)}
 .fq:hover{background:var(--g50)}
 .fi-ico{width:22px;height:22px;border-radius:50%;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:300;flex-shrink:0;transition:all var(--t)}
@@ -896,7 +898,7 @@ footer{background:#030b17;padding:56px 24px 32px}
         <div class="w-fine" id="w-fine">
           <div class="w-fine-label">⚠️ Galima BDAR bauda</div>
           <div class="w-fine-amt" id="w-fine-amt">—</div>
-          <div class="w-fine-note">Apskaičiuota pagal BDAR 83 str.</div>
+          <div class="w-fine-note" id="w-fine-note">Pagal VDAI 2018–2025 baudų statistiką</div>
         </div>
         <div class="w-breakdown" id="w-breakdown"></div>
         <div class="w-cta-wrap">
@@ -1354,53 +1356,57 @@ footer{background:#030b17;padding:56px 24px 32px}
         <h2 class="sh" style="text-align:center;max-width:380px;margin:0 auto">Atsakymai į klausimus,<br><em>kuriuos visi galvoja</em></h2>
       </div>
       <div class="faq-list" data-r>
-        <div class="fi">
-          <button class="fq" onclick="faq(this)">Kas nutinka, jei VDAI ateina tikrinti?<span class="fi-ico">+</span></button>
-          <div class="fa"><div class="fa-in">VDAI tikrinimas dažniausiai prasideda raštišku klausimynu — ne staigiu vizitu. Jei BDAR atitiktis sutvarkyta ir dokumentacija pilna, procedūra baigiasi be pastabų. Jei ne — gaunate terminą trūkumams pašalinti. Baudos skiriamos tik už aiškius, kartotinius pažeidimus arba nepraneštą duomenų saugumo incidentą. Mūsų klientų rezultatas nuo 2017 m.: €0 VDAI baudų.</div></div>
+        <div class="faq-col">
+          <div class="fi">
+            <button class="fq" onclick="faq(this)">Kas nutinka, jei VDAI ateina tikrinti?<span class="fi-ico">+</span></button>
+            <div class="fa"><div class="fa-in">VDAI tikrinimas dažniausiai prasideda raštišku klausimynu — ne staigiu vizitu. Jei BDAR atitiktis sutvarkyta ir dokumentacija pilna, procedūra baigiasi be pastabų. Jei ne — gaunate terminą trūkumams pašalinti. Baudos skiriamos tik už aiškius, kartotinius pažeidimus arba nepraneštą duomenų saugumo incidentą. Mūsų klientų rezultatas nuo 2017 m.: €0 VDAI baudų.</div></div>
+          </div>
+          <div class="fi">
+            <button class="fq" onclick="faq(this)">Ar BDAR taikoma smulkiam verslui?<span class="fi-ico">+</span></button>
+            <div class="fa"><div class="fa-in">Taip — BDAR reikalavimai įmonėms galioja nepriklausomai nuo dydžio, jei tvarkomi ES gyventojų asmens duomenys. Net el. pašto prenumeratų sąrašas yra asmens duomenys. Smulkus verslas turi šiek tiek mažesnes administracines pareigas (pvz., nereikalaujama veiklos įrašų registro mažesniems duomenų srautams), tačiau pagrindinės prievolės ir baudų grėsmė lieka tos pačios.</div></div>
+          </div>
+          <div class="fi">
+            <button class="fq" onclick="faq(this)">Kokios baudos gresia už BDAR pažeidimus Lietuvoje?<span class="fi-ico">+</span></button>
+            <div class="fa"><div class="fa-in">BDAR numato dvi baudų pakopas. Lengvesni pažeidimai — iki 10 mln. EUR arba 2% metinės apyvartos. Šiurkštūs (duomenų subjektų teisių neužtikrinimas, neteisėtas tvarkymas) — iki 20 mln. EUR arba 4% apyvartos. VDAI Lietuvoje baudas skiria atsižvelgdama į žalą, bendradarbiavimą ir prevencines priemones. Dokumentuota BDAR atitiktis — geriausia apsauga nuo baudų.</div></div>
+          </div>
+          <div class="fi">
+            <button class="fq" onclick="faq(this)">Kada įmonei privalomas duomenų apsaugos pareigūnas (DPO)?<span class="fi-ico">+</span></button>
+            <div class="fa"><div class="fa-in">Duomenų apsaugos pareigūnas privalomas: valstybės ir savivaldybių institucijoms; įmonėms, kurios sistemingai ir dideliu mastu stebi fizinius asmenis (vaizdo stebėjimas, profiliavimas); įmonėms, dideliu mastu tvarkančioms specialiąsias kategorijas (sveikata, biometrija, religiniai įsitikinimai). Kitoms — rekomenduojama kaip geroji praktika. DPO outsourcing Lietuvoje suteikia visas funkcijas be etatinio darbuotojo išlaidų.</div></div>
+          </div>
+          <div class="fi">
+            <button class="fq" onclick="faq(this)">Ką daryti, jei įvyko asmens duomenų saugumo pažeidimas?<span class="fi-ico">+</span></button>
+            <div class="fa"><div class="fa-in">BDAR reikalauja apie asmens duomenų saugumo pažeidimą pranešti VDAI per 72 valandas nuo aptikimo, jei kyla rizika fizinių asmenų teisėms. Jei rizika didelė — papildomai informuoti paveiktus duomenų subjektus. Reikalinga: incidento dokumentacija, poveikio vertinimas, prevencinių priemonių aprašymas. Vėluojant pranešti, baudų grėsmė ženkliai išauga. Veriva padeda parengti pranešimą per 24 val. nuo incidento fiksacijos.</div></div>
+          </div>
+          <div class="fi">
+            <button class="fq" onclick="faq(this)">Ar svetainės slapukai (cookies) priklauso BDAR reguliavimui?<span class="fi-ico">+</span></button>
+            <div class="fa"><div class="fa-in">Taip. Slapukai, kurie identifikuoja vartotoją arba stebi elgseną (Google Analytics, Meta Pixel, reklamos slapukai), yra asmens duomenų tvarkymas pagal BDAR ir e-Privatumo direktyvą. Reikalinga: aiški sutikimo sistema prieš ne būtinuosius slapukus, slapukų politika, galimybė atsisakyti vienu paspaudimu. Paprastas „Naudojame slapukus — gerai?" baneris neatitinka BDAR standartų — reikalinga tikra sutikimo valdymo platforma (CMP).</div></div>
+          </div>
         </div>
-        <div class="fi">
-          <button class="fq" onclick="faq(this)">Ar BDAR taikoma smulkiam verslui?<span class="fi-ico">+</span></button>
-          <div class="fa"><div class="fa-in">Taip — BDAR reikalavimai įmonėms galioja nepriklausomai nuo dydžio, jei tvarkomi ES gyventojų asmens duomenys. Net el. pašto prenumeratų sąrašas yra asmens duomenys. Smulkus verslas turi šiek tiek mažesnes administracines pareigas (pvz., nereikalaujama veiklos įrašų registro mažesniems duomenų srautams), tačiau pagrindinės prievolės ir baudų grėsmė lieka tos pačios.</div></div>
-        </div>
-        <div class="fi">
-          <button class="fq" onclick="faq(this)">Kokios baudos gresia už BDAR pažeidimus Lietuvoje?<span class="fi-ico">+</span></button>
-          <div class="fa"><div class="fa-in">BDAR numato dvi baudų pakopas. Lengvesni pažeidimai — iki 10 mln. EUR arba 2% metinės apyvartos. Šiurkštūs (duomenų subjektų teisių neužtikrinimas, neteisėtas tvarkymas) — iki 20 mln. EUR arba 4% apyvartos. VDAI Lietuvoje baudas skiria atsižvelgdama į žalą, bendradarbiavimą ir prevencines priemones. Dokumentuota BDAR atitiktis — geriausia apsauga nuo baudų.</div></div>
-        </div>
-        <div class="fi">
-          <button class="fq" onclick="faq(this)">Kada įmonei privalomas duomenų apsaugos pareigūnas (DPO)?<span class="fi-ico">+</span></button>
-          <div class="fa"><div class="fa-in">Duomenų apsaugos pareigūnas privalomas: valstybės ir savivaldybių institucijoms; įmonėms, kurios sistemingai ir dideliu mastu stebi fizinius asmenis (vaizdo stebėjimas, profiliavimas); įmonėms, dideliu mastu tvarkančioms specialiąsias kategorijas (sveikata, biometrija, religiniai įsitikinimai). Kitoms — rekomenduojama kaip geroji praktika. DPO outsourcing Lietuvoje suteikia visas funkcijas be etatinio darbuotojo išlaidų.</div></div>
-        </div>
-        <div class="fi">
-          <button class="fq" onclick="faq(this)">Ką daryti, jei įvyko asmens duomenų saugumo pažeidimas?<span class="fi-ico">+</span></button>
-          <div class="fa"><div class="fa-in">BDAR reikalauja apie asmens duomenų saugumo pažeidimą pranešti VDAI per 72 valandas nuo aptikimo, jei kyla rizika fizinių asmenų teisėms. Jei rizika didelė — papildomai informuoti paveiktus duomenų subjektus. Reikalinga: incidento dokumentacija, poveikio vertinimas, prevencinių priemonių aprašymas. Vėluojant pranešti, baudų grėsmė ženkliai išauga. Veriva padeda parengti pranešimą per 24 val. nuo incidento fiksacijos.</div></div>
-        </div>
-        <div class="fi">
-          <button class="fq" onclick="faq(this)">Ar svetainės slapukai (cookies) priklauso BDAR reguliavimui?<span class="fi-ico">+</span></button>
-          <div class="fa"><div class="fa-in">Taip. Slapukai, kurie identifikuoja vartotoją arba stebi elgseną (Google Analytics, Meta Pixel, reklamos slapukai), yra asmens duomenų tvarkymas pagal BDAR ir e-Privatumo direktyvą. Reikalinga: aiški sutikimo sistema prieš ne būtinuosius slapukus, slapukų politika, galimybė atsisakyti vienu paspaudimu. Paprastas „Naudojame slapukus — gerai?" baneris neatitinka BDAR standartų — reikalinga tikra sutikimo valdymo platforma (CMP).</div></div>
-        </div>
-        <div class="fi">
-          <button class="fq" onclick="faq(this)">Ką NIS2 direktyva reiškia mano įmonei?<span class="fi-ico">+</span></button>
-          <div class="fa"><div class="fa-in">NIS2 direktyva Lietuvoje galioja nuo 2024 m. spalio. Taikoma esminiams ir svarbiems sektoriams: energetika, transportas, bankininkystė, sveikatos apsauga, skaitmeninė infrastruktūra, gamyba ir kt. Reikalauja kibernetinio saugumo rizikos valdymo, incidentų pranešimo procedūrų ir tiekimo grandinės saugumo užtikrinimo. Baudos — iki 10 mln. EUR arba 2% metinės apyvartos. Patikrinkite, ar jūsų įmonė patenka į NIS2 taikymo sritį.</div></div>
-        </div>
-        <div class="fi">
-          <button class="fq" onclick="faq(this)">Kas yra IT saugumo auditas ir ar jis privalomas?<span class="fi-ico">+</span></button>
-          <div class="fa"><div class="fa-in">IT saugumo auditas — sisteminga organizacijos techninės infrastruktūros, prieigos valdymo, duomenų srautų ir saugumo politikų peržiūra. Privalomas NIS2 reguliuojamiems sektoriams. Kitoms įmonėms — stipriai rekomenduojamas tiek BDAR atitikties, tiek verslo rizikos valdymo tikslais: dauguma duomenų pažeidimų prasideda nuo nepataisytų techninių spragų. Audito rezultatas — konkrečių veiksmų sąrašas su prioritetais ir terminais.</div></div>
-        </div>
-        <div class="fi">
-          <button class="fq" onclick="faq(this)">Kiek kainuoja BDAR atitikties sutvarkymas smulkiai įmonei?<span class="fi-ico">+</span></button>
-          <div class="fa"><div class="fa-in">Kaina priklauso nuo duomenų tvarkymo apimties ir esamos situacijos. Standartinis smulkaus verslo projektas (iki 50 darbuotojų, vienas-du duomenų srautai) — paketas prasideda nuo kelių šimtų eurų ir apima dokumentų rinkinį, procesų aprašą bei darbuotojų instrukciją. DPO outsourcing mėnesinis mokestis ženkliai mažesnis nei etatinio pareigūno išlaikymas. Tikslią kainą pateikiame po nemokamo pirminio vertinimo.</div></div>
-        </div>
-        <div class="fi">
-          <button class="fq" onclick="faq(this)">Kaip dirbate su medicinos ar finansų įstaigomis?<span class="fi-ico">+</span></button>
-          <div class="fa"><div class="fa-in">Sveikatos ir finansų sektoriai turi papildomus reikalavimus: NIS2, ISO 27001, EBA gairės, specialiosios kategorijos duomenų (sveikatos duomenų) tvarkymo taisyklės. Turime patirties su klinikomis, laboratorijomis, kredito unijomis ir fintech įmonėmis. Pirmojo pokalbio metu įvertiname sektoriaus specifiką ir parengiame individualų BDAR ir kibernetinio saugumo atitikties planą.</div></div>
-        </div>
-        <div class="fi">
-          <button class="fq" onclick="faq(this)">Kuo Veriva skiriasi nuo advokatų kontoros?<span class="fi-ico">+</span></button>
-          <div class="fa"><div class="fa-in">Advokato kontora parengia dokumentus. Veriva įdiegia veikiančią sistemą: teisinis pagrindas + techniniai procesai + darbuotojų mokymas. Mūsų specialistai dirba tiek teisės, tiek IT saugumo srityje — retas derinys Lietuvoje. Jei reikia sukonfigūruoti saugų el. paštą, atlikti IT saugumo auditą Vilniuje ar diegti DPO outsourcing funkciją — tai ne advokatų darbas. Tai mūsų darbas.</div></div>
-        </div>
-        <div class="fi">
-          <button class="fq" onclick="faq(this)">Ar galiu nutraukti sutartį bet kada?<span class="fi-ico">+</span></button>
-          <div class="fa"><div class="fa-in">Taip. Vienkartiniai projektai neturi minimaliojo termino. Tęstinio aptarnavimo (DPO outsourcing, mėnesiniai planai) atveju — 30 dienų išankstinis pranešimas. Jei per pirmąjį mėnesį kokybė neatitinka sutartų kriterijų, grąžiname visą apmokėjimą. Klientų išlaikyti prievartiniu sutarties mechanizmu nesinori.</div></div>
+        <div class="faq-col">
+          <div class="fi">
+            <button class="fq" onclick="faq(this)">Ką NIS2 direktyva reiškia mano įmonei?<span class="fi-ico">+</span></button>
+            <div class="fa"><div class="fa-in">NIS2 direktyva Lietuvoje galioja nuo 2024 m. spalio. Taikoma esminiams ir svarbiems sektoriams: energetika, transportas, bankininkystė, sveikatos apsauga, skaitmeninė infrastruktūra, gamyba ir kt. Reikalauja kibernetinio saugumo rizikos valdymo, incidentų pranešimo procedūrų ir tiekimo grandinės saugumo užtikrinimo. Baudos — iki 10 mln. EUR arba 2% metinės apyvartos. Patikrinkite, ar jūsų įmonė patenka į NIS2 taikymo sritį.</div></div>
+          </div>
+          <div class="fi">
+            <button class="fq" onclick="faq(this)">Kas yra IT saugumo auditas ir ar jis privalomas?<span class="fi-ico">+</span></button>
+            <div class="fa"><div class="fa-in">IT saugumo auditas — sisteminga organizacijos techninės infrastruktūros, prieigos valdymo, duomenų srautų ir saugumo politikų peržiūra. Privalomas NIS2 reguliuojamiems sektoriams. Kitoms įmonėms — stipriai rekomenduojamas tiek BDAR atitikties, tiek verslo rizikos valdymo tikslais: dauguma duomenų pažeidimų prasideda nuo nepataisytų techninių spragų. Audito rezultatas — konkrečių veiksmų sąrašas su prioritetais ir terminais.</div></div>
+          </div>
+          <div class="fi">
+            <button class="fq" onclick="faq(this)">Kiek kainuoja BDAR atitikties sutvarkymas smulkiai įmonei?<span class="fi-ico">+</span></button>
+            <div class="fa"><div class="fa-in">Kaina priklauso nuo duomenų tvarkymo apimties ir esamos situacijos. Standartinis smulkaus verslo projektas (iki 50 darbuotojų, vienas-du duomenų srautai) — paketas prasideda nuo kelių šimtų eurų ir apima dokumentų rinkinį, procesų aprašą bei darbuotojų instrukciją. DPO outsourcing mėnesinis mokestis ženkliai mažesnis nei etatinio pareigūno išlaikymas. Tikslią kainą pateikiame po nemokamo pirminio vertinimo.</div></div>
+          </div>
+          <div class="fi">
+            <button class="fq" onclick="faq(this)">Kaip dirbate su medicinos ar finansų įstaigomis?<span class="fi-ico">+</span></button>
+            <div class="fa"><div class="fa-in">Sveikatos ir finansų sektoriai turi papildomus reikalavimus: NIS2, ISO 27001, EBA gairės, specialiosios kategorijos duomenų (sveikatos duomenų) tvarkymo taisyklės. Turime patirties su klinikomis, laboratorijomis, kredito unijomis ir fintech įmonėmis. Pirmojo pokalbio metu įvertiname sektoriaus specifiką ir parengiame individualų BDAR ir kibernetinio saugumo atitikties planą.</div></div>
+          </div>
+          <div class="fi">
+            <button class="fq" onclick="faq(this)">Kuo Veriva skiriasi nuo advokatų kontoros?<span class="fi-ico">+</span></button>
+            <div class="fa"><div class="fa-in">Advokato kontora parengia dokumentus. Veriva įdiegia veikiančią sistemą: teisinis pagrindas + techniniai procesai + darbuotojų mokymas. Mūsų specialistai dirba tiek teisės, tiek IT saugumo srityje — retas derinys Lietuvoje. Jei reikia sukonfigūruoti saugų el. paštą, atlikti IT saugumo auditą Vilniuje ar diegti DPO outsourcing funkciją — tai ne advokatų darbas. Tai mūsų darbas.</div></div>
+          </div>
+          <div class="fi">
+            <button class="fq" onclick="faq(this)">Ar galiu nutraukti sutartį bet kada?<span class="fi-ico">+</span></button>
+            <div class="fa"><div class="fa-in">Taip. Vienkartiniai projektai neturi minimaliojo termino. Tęstinio aptarnavimo (DPO outsourcing, mėnesiniai planai) atveju — 30 dienų išankstinis pranešimas. Jei per pirmąjį mėnesį kokybė neatitinka sutartų kriterijų, grąžiname visą apmokėjimą. Klientų išlaikyti prievartiniu sutarties mechanizmu nesinori.</div></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1466,7 +1472,7 @@ footer{background:#030b17;padding:56px 24px 32px}
           Susisiekti su ekspertu →
         </button>
         <p class="cf-note">🔒 Duomenys saugomi pagal BDAR. Susisieksime per 24h darbo dienomis.<br>⏰ Darbo laikas: I–V 9:00–18:00 | Skubūs incidentai: 24/7<br>
-        <a href="/cdn-cgi/l/email-protection#f59c9b939ab58390879c8394db9981" style="color:rgba(255,255,255,.38)"><span class="__cf_email__" data-cfemail="01686f676e417764736877602f6d75">[email&#160;protected]</span></a> · <a href="tel:+37064003632" style="color:rgba(255,255,255,.38)">+370 640 03632</a></p>
+        <a href="mailto:info@veriva.lt" style="color:rgba(255,255,255,.38)">info@veriva.lt</a> · <a href="tel:+37064003632" style="color:rgba(255,255,255,.38)">+370 640 03632</a></p>
       </div>
     </div>
   </div>
@@ -1511,7 +1517,7 @@ footer{background:#030b17;padding:56px 24px 32px}
       <div>
         <div class="ft-ch">Kontaktai</div>
         <ul class="ft-links">
-          <li><a href="/cdn-cgi/l/email-protection#bed7d0d8d1fec8dbccd7c8df90d2ca"><span class="__cf_email__" data-cfemail="620b0c040d221407100b14034c0e16">[email&#160;protected]</span></a></li>
+          <li><a href="mailto:info@veriva.lt">info@veriva.lt</a></li>
           <li><a href="tel:+37061061981">+370 610 61981 (Marina)</a></li>
           <li><a href="tel:+37063082634">+370 630 82634 (Justinas)</a></li>
           <li><span style="color:rgba(255,255,255,.38)">Švitrigailos g. 11K-109</span></li>
@@ -1561,37 +1567,40 @@ const ro=new IntersectionObserver(e=>{
 document.querySelectorAll('[data-r]').forEach(el=>ro.observe(el));
 
 // ─ WIDGET ─
+// fineBase reikšmės paremtos VDAI 2018-2025 baudų statistika (be Vinted outlier)
+// Šaltiniai: vdai.lrv.lt, edpb.europa.eu, enforcementtracker.com
+// Reference cases: CityBee €110K (2021), MisterTango €61.5K (2019), NVSC €12K, SportGates €6K
 const QS=[
   {q:'Kiek žmonių dirba jūsų įmonėje?',opts:[
-    {i:'👤',t:'1–10 darbuotojų',s:1,f:5000},
-    {i:'👥',t:'11–50 darbuotojų',s:2,f:25000},
-    {i:'🏢',t:'51–250 darbuotojų',s:3,f:120000},
-    {i:'🏛️',t:'250+ darbuotojų',s:4,f:600000},
+    {i:'👤',t:'1–10 darbuotojų',s:1,f:3000},   // LT SME mediana €2-6K
+    {i:'👥',t:'11–50 darbuotojų',s:2,f:12000}, // NVSC €12K, Užimt. tarn. €9K
+    {i:'🏢',t:'51–250 darbuotojų',s:3,f:75000},// CityBee €110K, MisterTango €61K
+    {i:'🏛️',t:'250+ darbuotojų',s:4,f:350000},// Realus LT max ne-platformoms
   ]},
   {q:'Ar tvarkote jautrius asmens duomenis?',opts:[
-    {i:'📋',t:'Tik kontaktai ir el. paštai',s:1,bad:false},
-    {i:'💳',t:'Finansinius duomenis',s:2,bad:true},
-    {i:'🏥',t:'Sveikatos ar biometrinius',s:4,bad:true},
+    {i:'📋',t:'Tik kontaktai ir el. paštai',s:1,bad:false,m:1.0},
+    {i:'💳',t:'Finansinius duomenis',s:2,bad:true,m:1.5},
+    {i:'🏥',t:'Sveikatos ar biometrinius',s:4,bad:true,m:3.0}, // BDAR 9 str. — SportGates 3x
   ]},
   {q:'Kokia dabartinė BDAR dokumentacijos būklė?',opts:[
-    {i:'✅',t:'Pilna ir atnaujinta',s:0,bad:false},
-    {i:'⚠️',t:'Dalinė arba pasenusi',s:3,bad:true},
-    {i:'❌',t:'Praktiškai nėra',s:5,bad:true},
+    {i:'✅',t:'Pilna ir atnaujinta',s:0,bad:false,m:1.0},
+    {i:'⚠️',t:'Dalinė arba pasenusi',s:3,bad:true,m:1.2},
+    {i:'❌',t:'Praktiškai nėra',s:5,bad:true,m:1.5}, // BDAR 30 str. trūkumas
   ]},
   {q:'Ar buvo kibernetinių incidentų per 2 metus?',opts:[
-    {i:'🟢',t:'Ne, jokių',s:0,bad:false},
-    {i:'🟡',t:'Buvo smulkių (phishing, virusai)',s:2,bad:true},
-    {i:'🔴',t:'Taip, rimtų incidentų',s:4,bad:true},
+    {i:'🟢',t:'Ne, jokių',s:0,bad:false,m:1.0},
+    {i:'🟡',t:'Buvo smulkių (phishing, virusai)',s:2,bad:true,m:1.5},
+    {i:'🔴',t:'Taip, rimtų incidentų',s:4,bad:true,m:2.5}, // BDAR 32 str. — CityBee 2.5x
   ]},
   {q:'Ar darbuotojai mokomi kibernetinio saugumo?',opts:[
-    {i:'🎓',t:'Taip, reguliariai',s:0,bad:false},
-    {i:'📄',t:'Tik onboardingo metu',s:2,bad:true},
-    {i:'🚫',t:'Visai nemokomi',s:3,bad:true},
+    {i:'🎓',t:'Taip, reguliariai',s:0,bad:false,m:1.0},
+    {i:'📄',t:'Tik onboardingo metu',s:2,bad:true,m:1.1},
+    {i:'🚫',t:'Visai nemokomi',s:3,bad:true,m:1.3},
   ]},
 ];
 
 const LABELS=['Įmonės dydis','Duomenų jautrumas','Dokumentacija','Incidentai','Mokymai'];
-let cur=0, total=0, fineBase=5000, answers=[];
+let cur=0, total=0, fineBase=3000, fineMult=1.0, answers=[];
 
 function buildProgress(){
   const p=document.getElementById('w-progress');
@@ -1624,6 +1633,7 @@ function pick(idx,opt){
   document.querySelectorAll('.w-opt')[idx].classList.add(opt.bad?'pick-bad':'pick');
   total+=opt.s;
   if(opt.f)fineBase=opt.f;
+  if(opt.m)fineMult*=opt.m;
   answers.push({label:LABELS[cur],score:opt.s,bad:opt.bad});
   setTimeout(()=>{
     cur++;
@@ -1660,10 +1670,23 @@ function showResult(){
   document.getElementById('w-rlabel').textContent=label;
   document.getElementById('w-rsub').textContent=sub;
 
-  // Fine
-  const mult=pct>0.65?3:pct>0.35?1.5:0.4;
-  const fine=Math.round(fineBase*mult);
+  // Fine: fineBase (LT VDAI mediana pagal įmonės dydį) × fineMult (pažeidimų koeficientai)
+  // Šaltinis: vdai.lrv.lt 2018-2025 baudų statistika
+  const riskMult=pct<.35?0.5:pct<.65?1.0:1.5;
+  // Cap pagal LT realybę: SME max ~€110K (CityBee), didelės ~€350K, cross-border outlier €2.4M (Vinted)
+  const fineCap=fineBase<=12000?fineBase*4:fineBase<=75000?fineBase*3:fineBase*2.5;
+  const fineRaw=Math.min(fineBase*fineMult*riskMult, fineCap);
+  // Round to nearest €500 for cleaner display
+  const fine=Math.round(fineRaw/500)*500;
   document.getElementById('w-fine-amt').textContent='€'+fine.toLocaleString('lt-LT');
+
+  // Disclaimer note — Vinted outlier paminimas tik jei 250+ įmonė + kritinė rizika
+  const noteEl=document.getElementById('w-fine-note');
+  if(fineBase>=350000 && pct>=.65){
+    noteEl.innerHTML='Cross-border platformoms gali siekti €2M+ (Vinted, 2024)';
+  } else {
+    noteEl.textContent='Pagal VDAI 2018–2025 baudų statistiką';
+  }
 
   // Breakdown
   const bd=document.getElementById('w-breakdown');
@@ -1680,7 +1703,7 @@ function showResult(){
 }
 
 function resetWidget(){
-  cur=0;total=0;fineBase=5000;answers=[];
+  cur=0;total=0;fineBase=3000;fineMult=1.0;answers=[];
   document.getElementById('w-qscreen').style.display='block';
   document.getElementById('w-result').classList.remove('show');
   renderQ();
@@ -1772,7 +1795,7 @@ function submitForm(e){
 
       <h2>1. Duomenų valdytojas</h2>
       <p><strong><strong>Veriva UAB</strong>, įmonės kodas: 306162111, registruotos buveinės adresas: Švitrigailos g. 11K-109, LT-03228 Vilnius, Lietuva.<br>
-      El. paštas: <a href="/cdn-cgi/l/email-protection#92fbfcf4fdd2e4f7e0fbe4f3bcfee6"><span class="__cf_email__" data-cfemail="bbd2d5ddd4fbcddec9d2cdda95d7cf">[email&#160;protected]</span></a> · Tel.: <a href="tel:+37064003632">+370 640 03632</a></p>
+      El. paštas: <a href="mailto:info@veriva.lt">info@veriva.lt</a> · Tel.: <a href="tel:+37064003632">+370 640 03632</a></p>
 
       <h2>2. Kokius duomenis renkame</h2>
       <p>Jūsų asmens duomenis renkame tik tada, kai juos pateikiate savanoriškai:</p>
@@ -1817,7 +1840,7 @@ function submitForm(e){
         <li><strong>Perkelti</strong> duomenis (BDAR 20 str.)</li>
         <li><strong>Nesutikti</strong> su duomenų tvarkymu (BDAR 21 str.)</li>
       </ul>
-      <p>Norėdami pasinaudoti savo teisėmis, kreipkitės: <a href="/cdn-cgi/l/email-protection#3950575f56794f5c4b504f5817554d"><span class="__cf_email__" data-cfemail="2c45424a436c5a495e455a4d024058">[email&#160;protected]</span></a></p>
+      <p>Norėdami pasinaudoti savo teisėmis, kreipkitės: <a href="mailto:info@veriva.lt">info@veriva.lt</a></p>
 
       <h2>7. Skundų teikimas</h2>
       <p>Jei manote, kad jūsų duomenys tvarkomi pažeidžiant BDAR, galite pateikti skundą Valstybinei duomenų apsaugos inspekcijai (VDAI): <a href="https://vdai.lrv.lt" target="_blank" rel="noopener">vdai.lrv.lt</a></p>
@@ -1826,7 +1849,7 @@ function submitForm(e){
       <p>Ši svetainė naudoja būtinus techninius slapukus svetainės funkcionavimui užtikrinti ir analitinius slapukus (Google Analytics) lankytojų skaičiui matuoti. Analitiniai slapukai aktyvuojami tik gavus jūsų sutikimą.</p>
 
       <h2>9. Kontaktai dėl duomenų apsaugos</h2>
-      <p>Klausimus dėl šios privatumo politikos siųskite: <a href="/cdn-cgi/l/email-protection#771e191118370112051e0116591b03"><span class="__cf_email__" data-cfemail="31585f575e714754435847501f5d45">[email&#160;protected]</span></a><br>
+      <p>Klausimus dėl šios privatumo politikos siųskite: <a href="mailto:info@veriva.lt">info@veriva.lt</a><br>
       Atsakysime per <strong>30 kalendorinių dienų</strong> pagal BDAR reikalavimus.</p>
     </div>
   </div>
@@ -1859,7 +1882,7 @@ function submitForm(e){
       <p>Slapukus galite valdyti naršyklės nustatymuose. Jei išjungsite visus slapukus, kai kurios svetainės funkcijos gali neveikti tinkamai. Daugiau informacijos: <a href="https://www.allaboutcookies.org" target="_blank" rel="noopener">allaboutcookies.org</a></p>
 
       <h2>Kontaktai</h2>
-      <p>Klausimais dėl slapukų rašykite: <a href="/cdn-cgi/l/email-protection#bbd2d5ddd4fbcddec9d2cdda95d7cf"><span class="__cf_email__" data-cfemail="620b0c040d221407100b14034c0e16">[email&#160;protected]</span></a></p>
+      <p>Klausimais dėl slapukų rašykite: <a href="mailto:info@veriva.lt">info@veriva.lt</a></p>
     </div>
   </div>
 </div>
@@ -1893,7 +1916,7 @@ function submitForm(e){
       <p>Šioms taisyklėms taikoma Lietuvos Respublikos teisė. Ginčai sprendžiami Lietuvos Respublikos teismuose pagal Veriva UAB registruotos buveinės vietą.</p>
 
       <h2>6. Kontaktai</h2>
-      <p>Klausimais dėl šių taisyklių: <a href="/cdn-cgi/l/email-protection#c2abaca4ad82b4a7b0abb4a3ecaeb6"><span class="__cf_email__" data-cfemail="10797e767f506675627966713e7c64">[email&#160;protected]</span></a> · <a href="tel:+37064003632">+370 640 03632</a></p>
+      <p>Klausimais dėl šių taisyklių: <a href="mailto:info@veriva.lt">info@veriva.lt</a> · <a href="tel:+37064003632">+370 640 03632</a></p>
     </div>
   </div>
 </div>

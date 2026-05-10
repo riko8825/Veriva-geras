@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 480" role="img" aria-labelledby="img2-title img2-desc">
+  <title id="img2-title">Phishing simuliacijų rezultatai per 12 mėnesių — 34% → 4% click rate</title>
+  <desc id="img2-desc">Vizualinė schema vaizduoja phishing simuliacijų programos rezultatus per 12 mėnesių: pradinė click rate 34% (be mokymų) sumažėja iki 4% po reguliarių mėnesinių simuliacijų ir kvartalinių mokymų. Duomenys pagal KnowBe4, Proofpoint ir Veriva klientų atvejus.</desc>
+
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8f7f4"/>
+      <stop offset="100%" stop-color="#eae8e2"/>
+    </linearGradient>
+    <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#dc2626"/>
+      <stop offset="100%" stop-color="#7d1d1d"/>
+    </linearGradient>
+    <linearGradient id="barGradGreen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1100" height="480" fill="url(#bg3)"/>
+
+  <!-- Title -->
+  <text x="40" y="40" fill="#07111f" font-family="system-ui, sans-serif" font-size="18" font-weight="800">Phishing click rate per 12 mėnesių mokymų programos</text>
+  <text x="40" y="60" fill="#5a564c" font-family="system-ui, sans-serif" font-size="12" font-weight="500">Mėnesinės simuliacijos + kvartaliniai 30 min. mokymai · Pagal KnowBe4 ir Proofpoint duomenis</text>
+
+  <!-- Y axis -->
+  <g stroke="rgba(7,17,31,0.15)" stroke-width="1">
+    <line x1="80" y1="100" x2="80" y2="350"/>
+    <line x1="80" y1="350" x2="1040" y2="350"/>
+  </g>
+
+  <!-- Y axis labels -->
+  <g fill="#5a564c" font-family="system-ui, sans-serif" font-size="10" text-anchor="end">
+    <text x="72" y="105">40%</text>
+    <text x="72" y="167">30%</text>
+    <text x="72" y="230">20%</text>
+    <text x="72" y="292">10%</text>
+    <text x="72" y="355">0%</text>
+  </g>
+
+  <!-- Y grid -->
+  <g stroke="rgba(7,17,31,0.06)" stroke-width="1">
+    <line x1="80" y1="100" x2="1040" y2="100"/>
+    <line x1="80" y1="163" x2="1040" y2="163"/>
+    <line x1="80" y1="225" x2="1040" y2="225"/>
+    <line x1="80" y1="288" x2="1040" y2="288"/>
+  </g>
+
+  <!-- Bars -->
+  <g>
+    <!-- Mėn 0 -->
+    <rect x="120" y="138" width="50" height="212" rx="3" fill="url(#barGrad)"/>
+    <text x="145" y="130" text-anchor="middle" fill="#dc2626" font-family="system-ui, sans-serif" font-size="13" font-weight="800">34%</text>
+    <text x="145" y="370" text-anchor="middle" fill="#5a564c" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Mėn. 0</text>
+
+    <!-- Mėn 1 -->
+    <rect x="200" y="180" width="50" height="170" rx="3" fill="url(#barGrad)"/>
+    <text x="225" y="172" text-anchor="middle" fill="#dc2626" font-family="system-ui, sans-serif" font-size="12" font-weight="800">28%</text>
+    <text x="225" y="370" text-anchor="middle" fill="#5a564c" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Mėn. 1</text>
+
+    <!-- Mėn 2 -->
+    <rect x="280" y="200" width="50" height="150" rx="3" fill="url(#barGrad)"/>
+    <text x="305" y="192" text-anchor="middle" fill="#dc2626" font-family="system-ui, sans-serif" font-size="12" font-weight="800">22%</text>
+    <text x="305" y="370" text-anchor="middle" fill="#5a564c" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Mėn. 2</text>
+
+    <!-- Mėn 3 -->
+    <rect x="360" y="225" width="50" height="125" rx="3" fill="url(#barGrad)"/>
+    <text x="385" y="217" text-anchor="middle" fill="#dc2626" font-family="system-ui, sans-serif" font-size="12" font-weight="800">18%</text>
+    <text x="385" y="370" text-anchor="middle" fill="#5a564c" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Mėn. 3</text>
+
+    <!-- Mėn 4 -->
+    <rect x="440" y="248" width="50" height="102" rx="3" fill="#c8962a"/>
+    <text x="465" y="240" text-anchor="middle" fill="#7d5b14" font-family="system-ui, sans-serif" font-size="12" font-weight="800">14%</text>
+    <text x="465" y="370" text-anchor="middle" fill="#5a564c" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Mėn. 4</text>
+
+    <!-- Mėn 6 -->
+    <rect x="520" y="270" width="50" height="80" rx="3" fill="#c8962a"/>
+    <text x="545" y="262" text-anchor="middle" fill="#7d5b14" font-family="system-ui, sans-serif" font-size="12" font-weight="800">10%</text>
+    <text x="545" y="370" text-anchor="middle" fill="#5a564c" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Mėn. 6</text>
+
+    <!-- Mėn 8 -->
+    <rect x="600" y="290" width="50" height="60" rx="3" fill="#c8962a"/>
+    <text x="625" y="282" text-anchor="middle" fill="#7d5b14" font-family="system-ui, sans-serif" font-size="12" font-weight="800">7%</text>
+    <text x="625" y="370" text-anchor="middle" fill="#5a564c" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Mėn. 8</text>
+
+    <!-- Mėn 10 -->
+    <rect x="680" y="306" width="50" height="44" rx="3" fill="url(#barGradGreen)"/>
+    <text x="705" y="298" text-anchor="middle" fill="#047857" font-family="system-ui, sans-serif" font-size="12" font-weight="800">5%</text>
+    <text x="705" y="370" text-anchor="middle" fill="#5a564c" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Mėn. 10</text>
+
+    <!-- Mėn 12 -->
+    <rect x="760" y="313" width="50" height="37" rx="3" fill="url(#barGradGreen)"/>
+    <text x="785" y="305" text-anchor="middle" fill="#047857" font-family="system-ui, sans-serif" font-size="12" font-weight="800">4%</text>
+    <text x="785" y="370" text-anchor="middle" fill="#5a564c" font-family="system-ui, sans-serif" font-size="10" font-weight="600">Mėn. 12</text>
+  </g>
+
+  <!-- Right side annotation -->
+  <g transform="translate(870,130)">
+    <rect x="0" y="0" width="170" height="200" rx="10" fill="#07111f"/>
+    <text x="85" y="28" text-anchor="middle" fill="#e8b84b" font-family="system-ui, sans-serif" font-size="10" font-weight="800" letter-spacing="2">REZULTATAS</text>
+    <text x="85" y="62" text-anchor="middle" fill="#fff" font-family="system-ui, sans-serif" font-size="32" font-weight="800">−88%</text>
+    <text x="85" y="86" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-family="system-ui, sans-serif" font-size="11">click rate</text>
+
+    <line x1="20" y1="105" x2="150" y2="105" stroke="rgba(255,255,255,0.15)"/>
+
+    <text x="85" y="128" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-family="system-ui, sans-serif" font-size="10">Pradžia</text>
+    <text x="85" y="146" text-anchor="middle" fill="#fca5a5" font-family="system-ui, sans-serif" font-size="14" font-weight="700">34%</text>
+
+    <text x="85" y="170" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-family="system-ui, sans-serif" font-size="10">Po 12 mėn.</text>
+    <text x="85" y="188" text-anchor="middle" fill="#86efac" font-family="system-ui, sans-serif" font-size="14" font-weight="700">4%</text>
+  </g>
+
+  <!-- Bottom callout -->
+  <g transform="translate(40,400)">
+    <rect width="1020" height="60" rx="8" fill="rgba(34,85,224,0.06)" stroke="rgba(34,85,224,0.25)" stroke-width="1"/>
+    <text x="20" y="25" fill="#2255e0" font-family="system-ui, sans-serif" font-size="11" font-weight="800" letter-spacing="2">SVARBU</text>
+    <text x="20" y="48" fill="#07111f" font-family="system-ui, sans-serif" font-size="13" font-weight="500">Vienkartiniai mokymai (1× per metus) duoda −15% efektą. Reguliarios simuliacijos kas mėnesį + trumpi 5 min. mikromokymai duoda −88% per 12 mėn.</text>
+  </g>
+</svg>

@@ -50,6 +50,17 @@
     </image:image>
   </url>
   <url>
+    <loc>https://veriva.lt/blog/phishing-darbuotoju-mokymai.html</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://veriva.lt/assets/img/blog/phishing-mokymai-hero.svg</image:loc>
+      <image:title>Phishing atakos: kodėl 90% pažeidimų prasideda nuo darbuotojo</image:title>
+      <image:caption>Phishing statistika 2026 — be mokymų 34% darbuotojų atidaro phishing nuorodą</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://veriva.lt/kontaktai</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>

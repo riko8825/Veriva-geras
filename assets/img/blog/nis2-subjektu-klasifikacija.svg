@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 360" role="img" aria-labelledby="img-title img-desc">
+  <title id="img-title">NIS2 subjektų klasifikacija — esminiai vs svarbūs</title>
+  <desc id="img-desc">Schema vaizduoja, kaip NIS2 direktyva Lietuvoje skirsto įmones į esminius (≥250 darbuotojų ir ≥50 mln. EUR apyvartos) ir svarbius (50–249 darbuotojai arba 10–50 mln. EUR apyvartos) subjektus pagal sektorių ir dydį.</desc>
+
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8f7f4"/>
+      <stop offset="100%" stop-color="#eae8e2"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1100" height="360" fill="url(#bg2)"/>
+
+  <!-- Title -->
+  <text x="40" y="40" fill="#07111f" font-family="system-ui, sans-serif" font-size="18" font-weight="800">NIS2 subjektų klasifikacija — Lietuva</text>
+  <text x="40" y="60" fill="#5a564c" font-family="system-ui, sans-serif" font-size="12" font-weight="500">Pagal NKSC ir LR Kibernetinio saugumo įstatymą (galioja nuo 2025-10-17)</text>
+
+  <!-- Esminiai subjektai (kairė) -->
+  <g transform="translate(40,90)">
+    <rect x="0" y="0" width="500" height="240" rx="12" fill="#fff" stroke="rgba(220,38,38,0.4)" stroke-width="2"/>
+
+    <rect x="0" y="0" width="500" height="44" rx="12" fill="#dc2626"/>
+    <rect x="0" y="32" width="500" height="12" fill="#dc2626"/>
+    <text x="20" y="29" fill="#fff" font-family="system-ui, sans-serif" font-size="14" font-weight="800" letter-spacing="1">ESMINIAI SUBJEKTAI</text>
+    <text x="480" y="29" text-anchor="end" fill="rgba(255,255,255,0.9)" font-family="system-ui, sans-serif" font-size="12" font-weight="700">Bauda: iki €10 mln. arba 2%</text>
+
+    <text x="20" y="80" fill="#07111f" font-family="system-ui, sans-serif" font-size="13" font-weight="700">Kriterijai (visi privalomi):</text>
+
+    <g transform="translate(20,95)" fill="#44413b" font-family="system-ui, sans-serif" font-size="12.5">
+      <circle cx="6" cy="14" r="3" fill="#dc2626"/>
+      <text x="20" y="18">≥ 250 darbuotojų</text>
+      <circle cx="6" cy="38" r="3" fill="#dc2626"/>
+      <text x="20" y="42">≥ €50 mln. metinės apyvartos</text>
+      <circle cx="6" cy="62" r="3" fill="#dc2626"/>
+      <text x="20" y="66">Veikia 11 itin svarbių sektorių</text>
+    </g>
+
+    <text x="20" y="200" fill="#07111f" font-family="system-ui, sans-serif" font-size="13" font-weight="700">Sektoriai (pavyzdžiai):</text>
+    <text x="20" y="222" fill="#5a564c" font-family="system-ui, sans-serif" font-size="11.5">Energetika · Bankai · Sveikata · Vandens tiekimas</text>
+  </g>
+
+  <!-- Svarbūs subjektai (dešinė) -->
+  <g transform="translate(560,90)">
+    <rect x="0" y="0" width="500" height="240" rx="12" fill="#fff" stroke="rgba(34,85,224,0.4)" stroke-width="2"/>
+
+    <rect x="0" y="0" width="500" height="44" rx="12" fill="#2255e0"/>
+    <rect x="0" y="32" width="500" height="12" fill="#2255e0"/>
+    <text x="20" y="29" fill="#fff" font-family="system-ui, sans-serif" font-size="14" font-weight="800" letter-spacing="1">SVARBŪS SUBJEKTAI</text>
+    <text x="480" y="29" text-anchor="end" fill="rgba(255,255,255,0.9)" font-family="system-ui, sans-serif" font-size="12" font-weight="700">Bauda: iki €7 mln. arba 1,4%</text>
+
+    <text x="20" y="80" fill="#07111f" font-family="system-ui, sans-serif" font-size="13" font-weight="700">Kriterijai (bent vienas):</text>
+
+    <g transform="translate(20,95)" fill="#44413b" font-family="system-ui, sans-serif" font-size="12.5">
+      <circle cx="6" cy="14" r="3" fill="#2255e0"/>
+      <text x="20" y="18">50–249 darbuotojų</text>
+      <circle cx="6" cy="38" r="3" fill="#2255e0"/>
+      <text x="20" y="42">€10–50 mln. apyvartos</text>
+      <circle cx="6" cy="62" r="3" fill="#2255e0"/>
+      <text x="20" y="66">Veikia 7 svarbių sektorių</text>
+    </g>
+
+    <text x="20" y="200" fill="#07111f" font-family="system-ui, sans-serif" font-size="13" font-weight="700">Sektoriai (pavyzdžiai):</text>
+    <text x="20" y="222" fill="#5a564c" font-family="system-ui, sans-serif" font-size="11.5">IT paslaugos · Pašto paslaugos · Maisto gamyba · Chemija</text>
+  </g>
+</svg>

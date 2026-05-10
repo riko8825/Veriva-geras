@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://veriva.lt/</loc>
     <changefreq>weekly</changefreq>
@@ -21,9 +22,32 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/blog</loc>
+    <loc>https://veriva.lt/blog.html</loc>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/blog/bdar-baudos-lietuvoje.html</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://veriva.lt/assets/img/blog/bdar-baudos-hero.svg</image:loc>
+      <image:title>BDAR baudos Lietuvoje 2026 — pakopų schema</image:title>
+      <image:caption>BDAR 83 straipsnio baudų pakopos ir didžiausia LT bauda iki 2026 m.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://veriva.lt/blog/nis2-direktyva-praktiskai.html</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://veriva.lt/assets/img/blog/nis2-direktyva-hero.svg</image:loc>
+      <image:title>NIS2 direktyva Lietuvoje 2026 — kam taikoma ir baudų dydžiai</image:title>
+      <image:caption>NIS2 taikymo sritis Lietuvoje — esminiai ir svarbūs subjektai 18 sektorių</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://veriva.lt/kontaktai</loc>

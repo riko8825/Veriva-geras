@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 480" role="img" aria-labelledby="img2-title img2-desc">
+  <title id="img2-title">10 NIS2 privalomų saugumo priemonių</title>
+  <desc id="img2-desc">Vizualinė schema vaizduoja 10 NIS2 21 straipsnio privalomų kibernetinio saugumo priemonių, kurias turi įgyvendinti esminiai ir svarbūs subjektai Lietuvoje: rizikos valdymas, incidentų reagavimas, veiklos tęstinumas, tiekimo grandinės saugumas, prieigos kontrolė, šifravimas, autentifikavimas, mokymai, kriptografija, atskleidimo politika.</desc>
+
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8f7f4"/>
+      <stop offset="100%" stop-color="#eae8e2"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1100" height="480" fill="url(#bg3)"/>
+
+  <!-- Title -->
+  <text x="40" y="40" fill="#07111f" font-family="system-ui, sans-serif" font-size="18" font-weight="800">10 NIS2 privalomų kibernetinio saugumo priemonių</text>
+  <text x="40" y="60" fill="#5a564c" font-family="system-ui, sans-serif" font-size="12" font-weight="500">Pagal NIS2 21 str. — visi esminiai ir svarbūs subjektai</text>
+
+  <!-- Grid 5x2 -->
+  <g font-family="system-ui, sans-serif">
+    <!-- Row 1 -->
+    <g transform="translate(40,90)">
+      <rect width="200" height="80" rx="8" fill="#fff" stroke="rgba(7,17,31,0.1)" stroke-width="1"/>
+      <circle cx="22" cy="22" r="14" fill="#2255e0"/>
+      <text x="22" y="27" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">1</text>
+      <text x="46" y="27" fill="#07111f" font-size="12.5" font-weight="700">Rizikos valdymas</text>
+      <text x="14" y="55" fill="#5a564c" font-size="10.5">Politika · vertinimas ·</text>
+      <text x="14" y="68" fill="#5a564c" font-size="10.5">grėsmių analizė</text>
+    </g>
+
+    <g transform="translate(252,90)">
+      <rect width="200" height="80" rx="8" fill="#fff" stroke="rgba(7,17,31,0.1)" stroke-width="1"/>
+      <circle cx="22" cy="22" r="14" fill="#2255e0"/>
+      <text x="22" y="27" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">2</text>
+      <text x="46" y="27" fill="#07111f" font-size="12.5" font-weight="700">Incidentų valdymas</text>
+      <text x="14" y="55" fill="#5a564c" font-size="10.5">Aptikimas · reagavimas ·</text>
+      <text x="14" y="68" fill="#5a564c" font-size="10.5">pranešimai (24/72h)</text>
+    </g>
+
+    <g transform="translate(464,90)">
+      <rect width="200" height="80" rx="8" fill="#fff" stroke="rgba(7,17,31,0.1)" stroke-width="1"/>
+      <circle cx="22" cy="22" r="14" fill="#2255e0"/>
+      <text x="22" y="27" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">3</text>
+      <text x="46" y="27" fill="#07111f" font-size="12.5" font-weight="700">Veiklos tęstinumas</text>
+      <text x="14" y="55" fill="#5a564c" font-size="10.5">Atsarginės kopijos ·</text>
+      <text x="14" y="68" fill="#5a564c" font-size="10.5">DR planai · krizė</text>
+    </g>
+
+    <g transform="translate(676,90)">
+      <rect width="200" height="80" rx="8" fill="#fff" stroke="rgba(7,17,31,0.1)" stroke-width="1"/>
+      <circle cx="22" cy="22" r="14" fill="#2255e0"/>
+      <text x="22" y="27" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">4</text>
+      <text x="46" y="27" fill="#07111f" font-size="12.5" font-weight="700">Tiekimo grandinė</text>
+      <text x="14" y="55" fill="#5a564c" font-size="10.5">Tiekėjų vertinimas ·</text>
+      <text x="14" y="68" fill="#5a564c" font-size="10.5">sutartys · auditai</text>
+    </g>
+
+    <g transform="translate(888,90)">
+      <rect width="172" height="80" rx="8" fill="#fff" stroke="rgba(7,17,31,0.1)" stroke-width="1"/>
+      <circle cx="22" cy="22" r="14" fill="#2255e0"/>
+      <text x="22" y="27" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">5</text>
+      <text x="46" y="27" fill="#07111f" font-size="12.5" font-weight="700">Saugumas IT</text>
+      <text x="14" y="55" fill="#5a564c" font-size="10.5">Tinklai · sistemos ·</text>
+      <text x="14" y="68" fill="#5a564c" font-size="10.5">įsigijimas · priežiūra</text>
+    </g>
+
+    <!-- Row 2 -->
+    <g transform="translate(40,200)">
+      <rect width="200" height="80" rx="8" fill="#fff" stroke="rgba(7,17,31,0.1)" stroke-width="1"/>
+      <circle cx="22" cy="22" r="14" fill="#c8962a"/>
+      <text x="22" y="27" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">6</text>
+      <text x="46" y="27" fill="#07111f" font-size="12.5" font-weight="700">Efektyvumo testai</text>
+      <text x="14" y="55" fill="#5a564c" font-size="10.5">Pen-testai · vulnerability</text>
+      <text x="14" y="68" fill="#5a564c" font-size="10.5">scan · audito ataskaitos</text>
+    </g>
+
+    <g transform="translate(252,200)">
+      <rect width="200" height="80" rx="8" fill="#fff" stroke="rgba(7,17,31,0.1)" stroke-width="1"/>
+      <circle cx="22" cy="22" r="14" fill="#c8962a"/>
+      <text x="22" y="27" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">7</text>
+      <text x="46" y="27" fill="#07111f" font-size="12.5" font-weight="700">Higienos praktika</text>
+      <text x="14" y="55" fill="#5a564c" font-size="10.5">Mokymai darbuotojams ·</text>
+      <text x="14" y="68" fill="#5a564c" font-size="10.5">phishing simuliacijos</text>
+    </g>
+
+    <g transform="translate(464,200)">
+      <rect width="200" height="80" rx="8" fill="#fff" stroke="rgba(7,17,31,0.1)" stroke-width="1"/>
+      <circle cx="22" cy="22" r="14" fill="#c8962a"/>
+      <text x="22" y="27" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">8</text>
+      <text x="46" y="27" fill="#07111f" font-size="12.5" font-weight="700">Kriptografija</text>
+      <text x="14" y="55" fill="#5a564c" font-size="10.5">Šifravimas · raktų</text>
+      <text x="14" y="68" fill="#5a564c" font-size="10.5">valdymas · TLS/VPN</text>
+    </g>
+
+    <g transform="translate(676,200)">
+      <rect width="200" height="80" rx="8" fill="#fff" stroke="rgba(7,17,31,0.1)" stroke-width="1"/>
+      <circle cx="22" cy="22" r="14" fill="#c8962a"/>
+      <text x="22" y="27" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">9</text>
+      <text x="46" y="27" fill="#07111f" font-size="12.5" font-weight="700">Žmoniškieji ištekliai</text>
+      <text x="14" y="55" fill="#5a564c" font-size="10.5">Prieigų kontrolė ·</text>
+      <text x="14" y="68" fill="#5a564c" font-size="10.5">turto valdymas · rolės</text>
+    </g>
+
+    <g transform="translate(888,200)">
+      <rect width="172" height="80" rx="8" fill="#fff" stroke="rgba(7,17,31,0.1)" stroke-width="1"/>
+      <circle cx="22" cy="22" r="14" fill="#c8962a"/>
+      <text x="22" y="27" text-anchor="middle" fill="#fff" font-size="13" font-weight="800">10</text>
+      <text x="46" y="27" fill="#07111f" font-size="12.5" font-weight="700">MFA + SSO</text>
+      <text x="14" y="55" fill="#5a564c" font-size="10.5">Daugiapakopis</text>
+      <text x="14" y="68" fill="#5a564c" font-size="10.5">autentifikavimas</text>
+    </g>
+  </g>
+
+  <!-- Bottom warning callout -->
+  <g transform="translate(40,320)">
+    <rect width="1020" height="120" rx="10" fill="#07111f" stroke="rgba(232,184,75,0.4)" stroke-width="1.5"/>
+    <text x="30" y="35" fill="#e8b84b" font-family="system-ui, sans-serif" font-size="11" font-weight="800" letter-spacing="2">SVARBU · NIS2 21(2) STR.</text>
+    <text x="30" y="65" fill="#fff" font-family="system-ui, sans-serif" font-size="15" font-weight="700">Visos 10 priemonių — privalomos. Ne pasirinktinės. Ne rekomendacijos.</text>
+    <text x="30" y="89" fill="rgba(255,255,255,0.7)" font-family="system-ui, sans-serif" font-size="12.5">Vadovybė asmeniškai atsako už įgyvendinimą (NIS2 20 str.). Bauda gali būti skirta ir įmonei, ir vadovui.</text>
+    <text x="30" y="106" fill="rgba(255,255,255,0.55)" font-family="system-ui, sans-serif" font-size="11.5">Šaltinis: ES 2022/2555 direktyva · NKSC gairės · LR Kibernetinio saugumo įstatymas (2025-10-17)</text>
+  </g>
+</svg>

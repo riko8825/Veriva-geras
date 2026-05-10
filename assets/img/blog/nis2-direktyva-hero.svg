@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="hero-title hero-desc">
+  <title id="hero-title">NIS2 direktyva Lietuvoje 2026 — kam taikoma ir baudų dydžiai</title>
+  <desc id="hero-desc">Iliustracija vaizduoja NIS2 direktyvos taikymo sritį Lietuvoje: 18 sektorių, du subjektų klasės (esminiai ir svarbūs) bei baudų ribos iki 10 mln. EUR arba 2% apyvartos.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#07111f"/>
+      <stop offset="100%" stop-color="#0c1a2e"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0.2" cy="0.3" r="0.6">
+      <stop offset="0%" stop-color="#2255e0" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#2255e0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0.85" cy="0.75" r="0.5">
+      <stop offset="0%" stop-color="#c8962a" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#c8962a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="shieldGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a47cc"/>
+      <stop offset="100%" stop-color="#0c1a2e"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow1)"/>
+  <rect width="1200" height="630" fill="url(#glow2)"/>
+
+  <g stroke="rgba(255,255,255,0.04)" stroke-width="1" fill="none">
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="200" x2="1200" y2="200"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="0" y1="400" x2="1200" y2="400"/>
+    <line x1="0" y1="500" x2="1200" y2="500"/>
+    <line x1="200" y1="0" x2="200" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="800" y1="0" x2="800" y2="630"/>
+    <line x1="1000" y1="0" x2="1000" y2="630"/>
+  </g>
+
+  <!-- Shield mockup left side -->
+  <g transform="translate(140,135)">
+    <!-- Shield base -->
+    <path d="M 190 0 L 380 60 L 380 240 Q 380 380 190 460 Q 0 380 0 240 L 0 60 Z" fill="url(#shieldGrad)" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
+    <!-- Inner shield highlight -->
+    <path d="M 190 28 L 354 78 L 354 240 Q 354 360 190 432 Q 26 360 26 240 L 26 78 Z" fill="none" stroke="rgba(34,85,224,0.4)" stroke-width="1.5"/>
+
+    <!-- NIS2 lock icon center -->
+    <g transform="translate(155,150)">
+      <rect x="0" y="32" width="70" height="55" rx="6" fill="#e8b84b"/>
+      <path d="M 12 32 L 12 18 Q 12 0 35 0 Q 58 0 58 18 L 58 32" fill="none" stroke="#e8b84b" stroke-width="6"/>
+      <circle cx="35" cy="56" r="6" fill="#07111f"/>
+      <rect x="32" y="56" width="6" height="14" fill="#07111f"/>
+    </g>
+
+    <!-- NIS2 label -->
+    <text x="190" y="290" text-anchor="middle" fill="#fff" font-family="system-ui, sans-serif" font-size="36" font-weight="800" letter-spacing="2">NIS2</text>
+    <text x="190" y="316" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-family="system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="3">DIREKTYVA · ES 2022/2555</text>
+
+    <!-- Compliance stamp -->
+    <g transform="translate(95,360)">
+      <rect x="0" y="0" width="190" height="42" rx="6" fill="rgba(220,38,38,0.15)" stroke="rgba(220,38,38,0.5)" stroke-width="1.5"/>
+      <text x="95" y="18" text-anchor="middle" fill="#fca5a5" font-family="system-ui, sans-serif" font-size="9" font-weight="700" letter-spacing="2">DEADLINE PRAĖJO</text>
+      <text x="95" y="34" text-anchor="middle" fill="#fff" font-family="system-ui, sans-serif" font-size="13" font-weight="800">2025-10-17</text>
+    </g>
+  </g>
+
+  <!-- Right side: scope + fines -->
+  <g transform="translate(620,120)">
+    <text x="0" y="0" fill="#e8b84b" font-family="system-ui, sans-serif" font-size="13" font-weight="800" letter-spacing="3">NIS2 · KAM TAIKOMA</text>
+    <text x="0" y="50" fill="#fff" font-family="system-ui, sans-serif" font-size="42" font-weight="800" letter-spacing="-1">18 sektorių · LT</text>
+    <text x="0" y="84" fill="rgba(255,255,255,0.55)" font-family="system-ui, sans-serif" font-size="16">Energetika · Sveikata · Bankai · IT · Logistika · Maistas...</text>
+
+    <!-- Tier 1 — Esminiai -->
+    <g transform="translate(0,140)">
+      <rect x="0" y="0" width="430" height="74" rx="8" fill="rgba(220,38,38,0.12)" stroke="rgba(220,38,38,0.5)" stroke-width="1.5"/>
+      <text x="22" y="28" fill="#fca5a5" font-family="system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="2">ESMINIAI SUBJEKTAI</text>
+      <text x="22" y="58" fill="#fff" font-family="system-ui, sans-serif" font-size="22" font-weight="800">Bauda iki €10 mln. / 2%</text>
+    </g>
+
+    <!-- Tier 2 — Svarbus -->
+    <g transform="translate(0,234)">
+      <rect x="0" y="0" width="430" height="74" rx="8" fill="rgba(34,85,224,0.1)" stroke="rgba(34,85,224,0.4)" stroke-width="1.5"/>
+      <text x="22" y="28" fill="#93c5fd" font-family="system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="2">SVARBŪS SUBJEKTAI</text>
+      <text x="22" y="58" fill="#fff" font-family="system-ui, sans-serif" font-size="22" font-weight="800">Bauda iki €7 mln. / 1,4%</text>
+    </g>
+
+    <!-- Stat -->
+    <g transform="translate(0,344)">
+      <text x="0" y="0" fill="rgba(255,255,255,0.5)" font-family="system-ui, sans-serif" font-size="12" font-weight="600">LT įmonių, kurios dar nepasiruošusios:</text>
+      <text x="0" y="30" fill="#e8b84b" font-family="system-ui, sans-serif" font-size="32" font-weight="800">~50% · NKSC duomenys</text>
+    </g>
+  </g>
+
+  <g transform="translate(110,580)">
+    <text x="0" y="0" fill="rgba(255,255,255,0.4)" font-family="system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="3">VERIVA · BDAR ATITIKTIS · KIBERNETINIS SAUGUMAS</text>
+  </g>
+</svg>

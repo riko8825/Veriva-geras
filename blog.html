@@ -330,6 +330,28 @@ nav{
 }
 .bp-empty.show{display:block}
 
+/* Soon-to-publish (placeholder, no link) */
+.bc--soon{cursor:default;opacity:.55}
+.bc--soon .bc-img-icon{color:rgba(255,255,255,.1)}
+.bc--soon .bc-title{color:rgba(255,255,255,.7)}
+.bc--soon .bc-read{color:rgba(255,255,255,.45);border-top-color:rgba(255,255,255,.05)}
+.bc-soon-badge{
+  position:absolute;top:14px;right:14px;z-index:2;
+  font-family:var(--ffm);
+  font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.7);
+  background:rgba(7,17,31,.7);
+  border:1px solid rgba(255,255,255,.12);
+  padding:6px 10px;border-radius:100px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+@media (hover:hover) and (pointer:fine){
+  .bp-grid:has(.bc:hover) .bc--soon:not(:hover){opacity:.35}
+  .bc--soon:hover{transform:none;border-color:rgba(255,255,255,.07);box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 30px 60px -50px rgba(0,0,0,.7)}
+  .bc--soon:hover::before{opacity:.5}
+  .bc--soon:hover .bc-img-icon{transform:none}
+}
+
 /* ── NEWSLETTER CTA ── */
 .nlw{
   margin-top:64px;
@@ -535,35 +557,38 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
         </div>
       </a>
 
-      <a href="/blog/dpo-funkcija-kada-reikia.html" class="bc" data-cat="dpo">
+      <div class="bc bc--soon" data-cat="dpo" aria-disabled="true">
+        <span class="bc-soon-badge">Netrukus</span>
         <div class="bc-img"><span class="bc-img-icon">DPO</span></div>
         <div class="bc-body">
           <div class="bc-meta"><span class="bc-cat">DPO</span><span class="bc-dot"></span><span class="bc-time">4 min</span></div>
           <h3 class="bc-title">Duomenų apsaugos pareigūnas: kada jo reikia ir kaip jį pasirinkti</h3>
           <p class="bc-excerpt">Vidinis ar outsourcing? Kokie kvalifikaciniai reikalavimai ir kuo skiriasi DPO funkcija nuo BDAR konsultanto.</p>
-          <span class="bc-read">Skaityti straipsnį <svg class="bc-read-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4-4 4M21 12H3"/></svg></span>
+          <span class="bc-read">Netrukus</span>
         </div>
-      </a>
+      </div>
 
-      <a href="/blog/incidentu-valdymas-72h.html" class="bc" data-cat="sauga">
+      <div class="bc bc--soon" data-cat="sauga" aria-disabled="true">
+        <span class="bc-soon-badge">Netrukus</span>
         <div class="bc-img"><span class="bc-img-icon">INCIDENTAI</span></div>
         <div class="bc-body">
           <div class="bc-meta"><span class="bc-cat">Kibernetinis saugumas</span><span class="bc-dot"></span><span class="bc-time">8 min</span></div>
           <h3 class="bc-title">72 valandos: kaip reaguoti į duomenų pažeidimą pagal BDAR</h3>
           <p class="bc-excerpt">Detalus protokolas — nuo aptikimo iki pranešimo VDAI. Realūs šablonai ir checklist'ai.</p>
-          <span class="bc-read">Skaityti straipsnį <svg class="bc-read-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4-4 4M21 12H3"/></svg></span>
+          <span class="bc-read">Netrukus</span>
         </div>
-      </a>
+      </div>
 
-      <a href="/blog/darbuotoju-bdar-mokymai.html" class="bc" data-cat="mokymai">
+      <div class="bc bc--soon" data-cat="mokymai" aria-disabled="true">
+        <span class="bc-soon-badge">Netrukus</span>
         <div class="bc-img"><span class="bc-img-icon">MOKYMAI</span></div>
         <div class="bc-body">
           <div class="bc-meta"><span class="bc-cat">Mokymai</span><span class="bc-dot"></span><span class="bc-time">5 min</span></div>
           <h3 class="bc-title">Darbuotojų BDAR mokymai: ką privalu žinoti kiekvienam</h3>
           <p class="bc-excerpt">Praktinė programa: nuo asmens duomenų apibrėžimo iki incidento atpažinimo. Be teorinio bullshit'o.</p>
-          <span class="bc-read">Skaityti straipsnį <svg class="bc-read-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4-4 4M21 12H3"/></svg></span>
+          <span class="bc-read">Netrukus</span>
         </div>
-      </a>
+      </div>
 
     </div>
     <div class="bp-empty" id="bp-empty">Pasirinktoje kategorijoje straipsnių dar nėra.</div>

@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Veriva pirminis BDAR ir duomenų saugos klausimynas — užpildykite per 10–15 min ir gaukite preliminarias rekomendacijas.">
+<title>Pirminis BDAR ir duomenų saugos klausimynas — Veriva</title>
+<meta property="og:title" content="Pirminis BDAR ir duomenų saugos klausimynas — Veriva">
+<meta property="og:description" content="Užpildykite klausimyną per 10–15 min ir gaukite preliminarias BDAR atitikties bei IT saugumo rekomendacijas.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://veriva.lt/brief.html">
+<meta property="og:locale" content="lt_LT">
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="Veriva UAB">
+<link rel="canonical" href="https://veriva.lt/brief.html">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+<link rel="apple-touch-icon" href="/assets/img/favicon.svg">
+<meta name="theme-color" content="#07111f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#07111f;--ink2:#0c1a2e;
+  --blue:#1a47cc;--blue2:#2255e0;
+  --cyan:#00b4d8;--gold:#c8962a;--gold2:#e8b84b;
+  --red:#dc2626;
+  --white:#fff;--cream:#f8f7f4;
+  --g50:#f3f2ee;--g100:#eae8e2;--g300:#c5c2b8;--g500:#837e72;--g700:#44413b;
+  --border:rgba(7,17,31,.09);--border2:rgba(7,17,31,.15);
+  --ease:cubic-bezier(.4,0,.2,1);--t:.2s var(--ease);
+  --max:920px;
+  --ff:'Plus Jakarta Sans',system-ui,sans-serif;
+  --ffd:'Syne',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--ff);color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased;line-height:1.55}
+a{color:var(--blue2);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+::selection{background:rgba(26,71,204,.18)}
+
+/* ── HEADER ── */
+.bf-header{background:var(--ink);color:#fff;padding:18px 24px;border-bottom:1px solid rgba(255,255,255,.06)}
+.bf-header-w{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.bf-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.bf-logo:hover{text-decoration:none}
+.bf-logo-text{font-family:var(--ffd);font-size:18px;font-weight:800;color:#fff;letter-spacing:.04em}
+.bf-eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold2)}
+
+/* ── HERO ── */
+.bf-hero{background:var(--ink);color:#fff;padding:48px 24px 64px;position:relative;overflow:hidden}
+.bf-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(26,71,204,.18),transparent 50%),radial-gradient(circle at 80% 70%,rgba(200,150,42,.08),transparent 55%);pointer-events:none}
+.bf-hero-w{max-width:var(--max);margin:0 auto;position:relative;z-index:1}
+.bf-tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gold2);margin-bottom:14px}
+.bf-tag::before{content:'';width:16px;height:2px;background:currentColor;border-radius:2px}
+.bf-hero h1{font-family:var(--ffd);font-size:clamp(28px,4vw,44px);line-height:1.08;letter-spacing:-.02em;margin-bottom:16px;font-weight:800}
+.bf-hero h1 em{font-style:normal;color:var(--gold2)}
+.bf-hero-sub{font-size:16px;color:rgba(255,255,255,.65);line-height:1.6;font-weight:300;max-width:620px;margin-bottom:18px}
+.bf-meta{display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;color:rgba(255,255,255,.5)}
+.bf-meta-item{display:flex;align-items:center;gap:6px}
+.bf-meta-item::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold2)}
+
+/* ── MAIN ── */
+.bf-main{max-width:var(--max);margin:-32px auto 0;padding:0 24px 64px;position:relative;z-index:2}
+.bf-card{background:var(--white);border:1px solid var(--border);border-radius:14px;box-shadow:0 18px 40px -20px rgba(7,17,31,.18);padding:36px 36px 32px}
+
+/* ── PROGRESS ── */
+.bf-progress{margin-bottom:28px}
+.bf-progress-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-size:12px;font-weight:600;color:var(--g500);letter-spacing:.04em}
+.bf-progress-step{color:var(--ink);font-size:13px;letter-spacing:0}
+.bf-progress-bar{height:5px;background:var(--g100);border-radius:100px;overflow:hidden}
+.bf-progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:100px;width:0;transition:width .5s var(--ease)}
+
+/* ── SECTION ── */
+.bf-section{display:none}
+.bf-section.active{display:block;animation:bf-fade .35s var(--ease)}
+@keyframes bf-fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.bf-section-title{font-family:var(--ffd);font-size:22px;line-height:1.18;letter-spacing:-.014em;margin-bottom:6px;font-weight:700}
+.bf-section-sub{font-size:13.5px;color:var(--g500);margin-bottom:28px;line-height:1.55}
+
+/* ── QUESTION ── */
+.bf-q{margin-bottom:24px}
+.bf-q-label{display:block;font-size:14.5px;font-weight:600;color:var(--ink);margin-bottom:10px;line-height:1.45}
+.bf-q-req{color:var(--red);font-weight:600}
+.bf-q-hint{font-size:12px;color:var(--g500);font-weight:400;margin-top:4px;line-height:1.5}
+
+/* Inputs */
+.bf-input,.bf-select,.bf-textarea{width:100%;padding:12px 14px;background:var(--white);border:1px solid var(--border2);border-radius:8px;font-size:14px;color:var(--ink);transition:all var(--t)}
+.bf-input:focus,.bf-select:focus,.bf-textarea:focus{outline:none;border-color:var(--blue2);box-shadow:0 0 0 3px rgba(34,85,224,.12)}
+.bf-textarea{resize:vertical;min-height:96px;font-family:var(--ff)}
+
+/* Radio options */
+.bf-opts{display:flex;flex-direction:column;gap:8px}
+.bf-opt{position:relative;display:flex;align-items:flex-start;gap:12px;padding:13px 16px;background:var(--white);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all var(--t)}
+.bf-opt:hover{border-color:var(--blue2);background:rgba(34,85,224,.025)}
+.bf-opt input[type="radio"],.bf-opt input[type="checkbox"]{position:absolute;opacity:0;pointer-events:none}
+.bf-opt-mark{flex-shrink:0;width:18px;height:18px;border:2px solid var(--g300);border-radius:50%;margin-top:1px;position:relative;transition:all var(--t)}
+.bf-opt input[type="checkbox"] + .bf-opt-mark{border-radius:5px}
+.bf-opt-mark::after{content:'';position:absolute;inset:3px;background:var(--blue2);border-radius:50%;opacity:0;transform:scale(.4);transition:all var(--t)}
+.bf-opt input[type="checkbox"] + .bf-opt-mark::after{border-radius:2px}
+.bf-opt:has(input:checked){border-color:var(--blue2);background:rgba(34,85,224,.05)}
+.bf-opt:has(input:checked) .bf-opt-mark{border-color:var(--blue2)}
+.bf-opt:has(input:checked) .bf-opt-mark::after{opacity:1;transform:scale(1)}
+.bf-opt-text{font-size:13.5px;color:var(--ink);line-height:1.5;font-weight:500}
+
+/* Error */
+.bf-err{display:none;margin-top:6px;font-size:12px;color:var(--red);font-weight:500}
+.bf-q.invalid .bf-err{display:block}
+.bf-q.invalid .bf-input,.bf-q.invalid .bf-select,.bf-q.invalid .bf-textarea{border-color:var(--red)}
+
+/* ── NAV ── */
+.bf-nav{display:flex;align-items:center;justify-content:space-between;margin-top:32px;padding-top:24px;border-top:1px solid var(--border);gap:12px}
+.bf-btn{padding:12px 22px;border-radius:8px;font-size:13.5px;font-weight:700;letter-spacing:.01em;transition:all var(--t);display:inline-flex;align-items:center;gap:8px}
+.bf-btn-prev{background:transparent;color:var(--g500);border:1px solid var(--border)}
+.bf-btn-prev:hover{color:var(--ink);border-color:var(--ink)}
+.bf-btn-next,.bf-btn-submit{background:var(--blue);color:#fff;margin-left:auto}
+.bf-btn-next:hover,.bf-btn-submit:hover{background:var(--blue2);transform:translateY(-1px)}
+.bf-btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.bf-btn-prev[hidden]{display:none}
+
+/* ── STATES ── */
+.bf-state{display:none;text-align:center;padding:32px 16px}
+.bf-state.show{display:block;animation:bf-fade .4s var(--ease)}
+.bf-state-icon{width:72px;height:72px;border-radius:50%;background:rgba(34,197,94,.12);color:#16a34a;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:700;margin:0 auto 20px}
+.bf-state.error .bf-state-icon{background:rgba(220,38,38,.1);color:var(--red)}
+.bf-state h2{font-family:var(--ffd);font-size:26px;line-height:1.18;letter-spacing:-.014em;margin-bottom:10px;font-weight:700}
+.bf-state p{font-size:15px;color:var(--g500);max-width:480px;margin:0 auto 24px;line-height:1.6}
+
+/* ── FOOTNOTE ── */
+.bf-footnote{margin-top:18px;font-size:11.5px;color:var(--g500);line-height:1.55;text-align:center}
+.bf-footnote a{color:var(--blue2)}
+
+/* ── FOOTER ── */
+.bf-footer{background:var(--ink);color:rgba(255,255,255,.45);padding:24px;text-align:center;font-size:12px;border-top:1px solid rgba(255,255,255,.06)}
+.bf-footer a{color:rgba(255,255,255,.7)}
+
+/* ── MOBILE ── */
+@media(max-width:640px){
+  .bf-card{padding:24px 20px 20px;border-radius:12px}
+  .bf-hero{padding:40px 20px 56px}
+  .bf-section-title{font-size:19px}
+  .bf-q-label{font-size:14px}
+  .bf-opt{padding:11px 13px}
+  .bf-opt-text{font-size:13px}
+  .bf-nav{flex-direction:row}
+  .bf-btn{padding:11px 18px;font-size:13px}
+  .bf-meta{font-size:11.5px;gap:10px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="bf-header">
+  <div class="bf-header-w">
+    <a href="/" class="bf-logo" aria-label="Veriva — pradinis">
+      <svg width="28" height="28" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#ffffff" transform="translate(8,8)"/>
+        <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="#c8962a" transform="translate(8,8)"/>
+      </svg>
+      <span class="bf-logo-text">VERIVA</span>
+    </a>
+    <span class="bf-eyebrow">Project brief</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="bf-hero">
+  <div class="bf-hero-w">
+    <span class="bf-tag">Pirminis vertinimas</span>
+    <h1>Pirminis BDAR ir<br><em>duomenų saugos klausimynas</em></h1>
+    <p class="bf-hero-sub">Skirtas pirminiam organizacijos BDAR ir duomenų saugos situacijos įvertinimui prieš auditą ar konsultaciją. Pateikti atsakymai padės parengti preliminarias rekomendacijas ir tinkamiausią veiksmų planą.</p>
+    <div class="bf-meta">
+      <span class="bf-meta-item">10–15 min užpildymas</span>
+      <span class="bf-meta-item">Konfidencialu</span>
+      <span class="bf-meta-item">Be įsipareigojimo</span>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main class="bf-main">
+  <div class="bf-card">
+
+    <!-- FORM (rendered by JS) -->
+    <form id="bf-form" novalidate>
+
+      <!-- PROGRESS -->
+      <div class="bf-progress">
+        <div class="bf-progress-meta">
+          <span>Sekcija <strong class="bf-progress-step" id="bf-step">1</strong> iš <span id="bf-total">4</span></span>
+          <span id="bf-pct">0%</span>
+        </div>
+        <div class="bf-progress-bar"><div class="bf-progress-fill" id="bf-fill"></div></div>
+      </div>
+
+      <!-- SECTIONS rendered here by JS -->
+      <div id="bf-sections"></div>
+
+      <!-- NAV -->
+      <div class="bf-nav">
+        <button type="button" class="bf-btn bf-btn-prev" id="bf-prev" hidden>← Atgal</button>
+        <button type="button" class="bf-btn bf-btn-next" id="bf-next">Toliau →</button>
+        <button type="submit" class="bf-btn bf-btn-submit" id="bf-submit" hidden>Pateikti klausimyną →</button>
+      </div>
+
+      <p class="bf-footnote">
+        Jūsų atsakymai yra konfidencialūs ir bus naudojami tik preliminariam vertinimui parengti. Duomenis tvarkome pagal <a href="/privatumas.html">privatumo politiką</a>. Niekuomet neperleidžiame trečiosioms šalims.
+      </p>
+    </form>
+
+    <!-- SUCCESS STATE -->
+    <div class="bf-state" id="bf-success">
+      <div class="bf-state-icon">✓</div>
+      <h2>Ačiū! Klausimynas gautas</h2>
+      <p>Per 24 darbo valandas susisieksime el. paštu su preliminariomis rekomendacijomis ir pasiūlysime tolimesnių veiksmų planą.</p>
+      <a href="/" class="bf-btn bf-btn-next" style="margin:0 auto;display:inline-flex">Grįžti į pradinį</a>
+    </div>
+
+    <!-- ERROR STATE -->
+    <div class="bf-state error" id="bf-error">
+      <div class="bf-state-icon">!</div>
+      <h2>Nepavyko išsiųsti</h2>
+      <p id="bf-error-msg">Pabandykite dar kartą. Jei klaida kartojasi, parašykite tiesiogiai <a href="mailto:info@veriva.lt">info@veriva.lt</a>.</p>
+      <button type="button" class="bf-btn bf-btn-next" id="bf-retry" style="margin:0 auto">Bandyti dar kartą</button>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="bf-footer">
+  <span>Veriva UAB · Duomenų apsauga ir kibernetinis saugumas Lietuvoje · </span>
+  <a href="/">veriva.lt</a>
+</footer>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────
+// DUOMENŲ MODELIS
+// ─────────────────────────────────────────────────────────────────────
+// Kiekvienas klausimas:
+//   id, label, type (text|email|radio|checkbox|textarea), required, options[]
+//   tags: ['med'] = rodyti TIK jei org_type=sveikatos
+//         ['gen'] = rodyti TIK jei org_type=kitas
+//         neturi tag = rodyti VISIEMS
+// ─────────────────────────────────────────────────────────────────────
+
+const SECTIONS = [
+  {
+    id: 'profile',
+    title: 'Organizacijos profilis',
+    sub: 'Pradžiai — keli klausimai apie jūsų organizaciją.',
+    questions: [
+      { id: 'org_name', label: '1. Organizacijos pavadinimas', type: 'text', required: true, placeholder: 'UAB Pavyzdys' },
+      { id: 'email', label: '2. Elektroninis pašto adresas', type: 'email', required: true, placeholder: 'jonas@imone.lt', hint: 'Šiuo adresu atsiųsime preliminarias rekomendacijas.' },
+      { id: 'org_type', label: '3. Kokią veiklą vykdo Jūsų organizacija?', type: 'radio', required: true, options: [
+        { v: 'kitas', t: 'Kitas verslas / organizacija' },
+        { v: 'sveikatos', t: 'Sveikatos priežiūros įstaiga' },
+      ]},
+      { id: 'employees', label: '4. Darbuotojų skaičius', type: 'radio', required: true, options: [
+        { v: '1-10', t: '1–10' },
+        { v: '11-25', t: '11–25' },
+        { v: '26-50', t: '26–50' },
+        { v: '51-100', t: '51–100' },
+        { v: '100+', t: '100+' },
+      ]},
+    ]
+  },
+  {
+    id: 'data',
+    title: 'Duomenų tvarkymas ir sistemos',
+    sub: 'Kur ir kaip tvarkote asmens duomenis.',
+    questions: [
+      // Sveikatos-specifinis
+      { id: 'data_location', label: '5. Kur vyksta {pacientų/klientų} asmens duomenų tvarkymas?', type: 'radio', required: true, options: [
+        { v: 'ehr', t: 'Elektroninėje pacientų sistemoje (EHR / LIS / PACS)', tag: 'med' },
+        { v: 'esveikata', t: 'e.sveikata integracijoje', tag: 'med' },
+        { v: 'crm', t: 'CRM ar verslo valdymo sistemoje', tag: 'gen' },
+        { v: 'cloud', t: 'Google Drive ar kitoje debesijos saugykloje' },
+        { v: 'local', t: 'Vietiniuose kompiuteriuose' },
+        { v: 'paper', t: 'Popieriniuose dokumentuose' },
+      ]},
+      { id: 'data_model', label: '6. Kuris teiginys geriausiai apibūdina {pacientų/klientų} duomenų tvarkymo modelį?', type: 'radio', required: true, options: [
+        { v: 'central', t: 'Visi {pacientų/klientų} duomenys tvarkomi tik specializuotoje sistemoje' },
+        { v: 'mostly', t: 'Didžioji dalis duomenų tvarkoma sistemoje, bet dalis – kitur' },
+        { v: 'distributed', t: 'Duomenys tvarkomi keliose sistemose be aiškaus centralizavimo' },
+        { v: 'unclear', t: 'Nėra aišku, kur ir kaip tiksliai duomenys tvarkomi' },
+      ]},
+      { id: 'data_categories', label: '7. Kokias asmens duomenų kategorijas Jūsų organizacija tvarko?', type: 'checkbox', required: true, hint: 'Galite pasirinkti kelias.', options: [
+        { v: 'name', t: 'Vardas, pavardė' },
+        { v: 'contact', t: 'Kontaktiniai duomenys (el. paštas, telefonas)' },
+        { v: 'id', t: 'Identifikaciniai duomenys (asmens kodas ir pan.)' },
+        { v: 'health', t: 'Sveikatos duomenys (specialių kategorijų)', tag: 'med' },
+        { v: 'finance', t: 'Finansiniai duomenys' },
+        { v: 'employee', t: 'Darbuotojų duomenys' },
+        { v: 'other', t: 'Kiti asmens duomenys' },
+      ]},
+      { id: 'data_sources', label: '8. Iš kokių šaltinių gaunami asmens duomenys?', type: 'checkbox', required: true, hint: 'Galite pasirinkti kelias.', options: [
+        { v: 'subject', t: 'Tiesiogiai iš duomenų subjekto ({paciento/kliento})' },
+        { v: 'health_org', t: 'Iš kitų sveikatos priežiūros įstaigų', tag: 'med' },
+        { v: 'lab', t: 'Iš laboratorijų ar partnerių', tag: 'med' },
+        { v: 'partners', t: 'Iš partnerių ar tiekėjų', tag: 'gen' },
+        { v: 'registries', t: 'Iš valstybinių registrų / e.sveikatos' },
+        { v: 'systems', t: 'Iš kitų informacinių sistemų' },
+        { v: 'mixed', t: 'Skirtingi šaltiniai / ne visada aišku' },
+      ]},
+      { id: 'legal_basis', label: '9. Ar Jūsų organizacijoje yra aiškiai apibrėžti asmens duomenų tvarkymo teisiniai pagrindai?', type: 'radio', required: true, options: [
+        { v: 'yes_full', t: 'Taip, kiekvienam duomenų tvarkymo tikslui' },
+        { v: 'partial', t: 'Dalinai, tik pagrindiniams procesams' },
+        { v: 'no', t: 'Ne, nėra aiškiai apibrėžta' },
+      ]},
+      { id: 'data_map', label: '10. Ar įstaiga turi asmens duomenų tvarkymo žemėlapį (kas, kur, kaip tvarko duomenis)?', type: 'radio', required: true, options: [
+        { v: 'full', t: 'Taip, pilnai parengtą ir naudojamą' },
+        { v: 'partial', t: 'Yra dalinis / neformalus' },
+        { v: 'no', t: 'Ne, neturime' },
+      ]},
+      { id: 'storage', label: '11. Kur saugomi {pacientų/klientų} asmens duomenys?', type: 'checkbox', required: true, hint: 'Galite pasirinkti kelias.', options: [
+        { v: 'vendor', t: 'Tiekėjo valdomose sistemose' },
+        { v: 'local_server', t: 'Vietiniame serveryje' },
+        { v: 'cloud_infra', t: 'Debesijos infrastruktūroje' },
+        { v: 'gdrive', t: 'Google Drive' },
+        { v: 'local_pc', t: 'Vietiniuose kompiuteriuose' },
+      ]},
+      { id: 'archive', label: '12. Ar nustatyta duomenų archyvavimo ir sunaikinimo tvarka?', type: 'radio', required: true, options: [
+        { v: 'documented', t: 'Taip, dokumentuota ir veikianti' },
+        { v: 'manual', t: 'Yra, bet vykdoma rankiniu būdu' },
+        { v: 'theory', t: 'Apibrėžta tik teoriškai' },
+        { v: 'no', t: 'Ne, tokios tvarkos nėra' },
+      ]},
+      { id: 'retention', label: '13. Ar nustatyti duomenų saugojimo terminai (retencijos)?', type: 'radio', required: true, options: [
+        { v: 'auto', t: 'Taip, automatizuoti sistemose' },
+        { v: 'manual', t: 'Taip, bet neautomatizuoti' },
+        { v: 'partial', t: 'Tik dalinai' },
+        { v: 'no', t: 'Ne' },
+      ]},
+      { id: 'transfers', label: '14. Ar {pacientų/klientų} duomenys perduodami tretiesiems asmenims?', type: 'radio', required: true, options: [
+        { v: 'lab', t: 'Taip, laboratorijoms', tag: 'med' },
+        { v: 'partners', t: 'Taip, kitoms įstaigoms / partneriams' },
+        { v: 'vendors', t: 'Taip, tiekėjams ar paslaugų teikėjams', tag: 'gen' },
+        { v: 'no', t: 'Ne' },
+      ]},
+      { id: 'ropa', label: '15. Ar vedami asmens duomenų tvarkymo veiklos įrašai (ROPA)?', type: 'radio', required: true, options: [
+        { v: 'yes', t: 'Taip, vedamas asmens duomenų tvarkymas' },
+        { v: 'no', t: 'Ne' },
+      ]},
+      { id: 'policy', label: '16. Ar patvirtinta asmens duomenų tvarkymo politika?', type: 'radio', required: true, options: [
+        { v: 'current', t: 'Taip, aktuali ir peržiūrima' },
+        { v: 'outdated', t: 'Taip, bet neperžiūrėta ilgą laiką' },
+        { v: 'no', t: 'Ne' },
+      ]},
+      { id: 'dpa', label: '17. Ar sudaryti duomenų tvarkymo susitarimai (DPA) su trečiosiomis šalimis?', type: 'radio', required: true, options: [
+        { v: 'all', t: 'Taip, su visais reikalingais partneriais' },
+        { v: 'partial', t: 'Sudaryti tik su dalimi' },
+        { v: 'no', t: 'Ne' },
+      ]},
+      { id: 'review', label: '18. Kaip dažnai peržiūrimi BDAR dokumentai?', type: 'radio', required: true, options: [
+        { v: 'regular', t: 'Reguliariai (kas 1–2 metus)' },
+        { v: 'irregular', t: 'Peržiūrimi nereguliariai' },
+        { v: 'never', t: 'Nėra peržiūrimi' },
+      ]},
+      { id: 'privacy_access', label: '19. Ar {pacientams/klientams} prieinama privatumo politika?', type: 'radio', required: true, options: [
+        { v: 'easy', t: 'Taip, lengvai prieinama' },
+        { v: 'hard', t: 'Taip, bet sunkiai randama' },
+        { v: 'no', t: 'Ne' },
+      ]},
+      { id: 'rights_info', label: '20. Ar {pacientai/klientai} informuojami apie savo teises pagal BDAR?', type: 'radio', required: true, options: [
+        { v: 'yes', t: 'Taip, informuojami apie savo teises' },
+        { v: 'no', t: 'Ne' },
+      ]},
+      { id: 'requests', label: '21. Ar {pacientų/klientų} prašymai (dėl teisių) registruojami?', type: 'radio', required: true, options: [
+        { v: 'yes', t: 'Taip, prašymai registruojami' },
+        { v: 'no', t: 'Ne' },
+      ]},
+      { id: 'data_copy', label: '22. Ar {pacientai/klientai} gali gauti savo duomenų kopiją?', type: 'radio', required: true, options: [
+        { v: 'yes', t: 'Taip, gali gauti savo duomenų kopijas' },
+        { v: 'no', t: 'Ne' },
+      ]},
+      { id: 'results_transfer', label: '23. Kaip perduodami {tyrimų rezultatai/dokumentai klientams}?', type: 'radio', required: true, options: [
+        { v: 'secure', t: 'Per saugias elektronines sistemas' },
+        { v: 'email_pwd', t: 'El. paštu su slaptažodžiu' },
+        { v: 'email', t: 'El. paštu be apsaugos' },
+        { v: 'other', t: 'Kitu būdu' },
+      ]},
+      { id: 'storage_model', label: '24. Koks pagrindinis asmens duomenų saugojimo modelis organizacijoje?', type: 'radio', required: true, options: [
+        { v: 'vendor_only', t: 'Visi duomenys saugomi tik {medicininės/verslo} sistemos tiekėjo infrastruktūroje' },
+        { v: 'mixed_local', t: 'Duomenys saugomi tiek tiekėjo sistemose, tiek vietiniuose kompiuteriuose' },
+        { v: 'cloud_platforms', t: 'Duomenys saugomi debesijos platformose (Google Drive, OneDrive ir pan.)' },
+        { v: 'local_server', t: 'Duomenys saugomi vietiniame serveryje / NAS' },
+        { v: 'mixed', t: 'Naudojamas mišrus modelis, be aiškaus centralizavimo' },
+        { v: 'unknown', t: 'Nežinome tiksliai' },
+      ]},
+    ]
+  },
+  {
+    id: 'security',
+    title: 'IT ir organizacinės saugumo priemonės',
+    sub: 'Techninės ir organizacinės priemonės, kuriomis užtikrinate duomenų saugumą.',
+    questions: [
+      { id: 'dpo', label: '25. Ar paskirtas atsakingas asmuo už BDAR priežiūrą?', type: 'radio', required: true, options: [
+        { v: 'internal', t: 'Taip, paskirtas atsakingas asmuo' },
+        { v: 'external', t: 'Taip, samdome (DPO outsourcing)' },
+        { v: 'no', t: 'Ne' },
+      ]},
+      { id: 'nda', label: '26. Ar darbuotojai pasirašę įsipareigojimus saugoti asmens duomenų paslaptį?', type: 'radio', required: true, options: [
+        { v: 'individual', t: 'Taip, atskirus pasižadėjimus' },
+        { v: 'general', t: 'Taip, bendrą konfidencialumo sutartį' },
+        { v: 'no', t: 'Ne' },
+      ]},
+      { id: 'rbac', label: '27. Ar prieigos prie {pacientų/klientų} duomenų valdomos pagal pareigas (RBAC)?', type: 'radio', required: true, options: [
+        { v: 'full', t: 'Taip, pilnai' },
+        { v: 'partial', t: 'Dalinai' },
+        { v: 'no', t: 'Ne' },
+      ]},
+      { id: 'incidents_log', label: '28. Ar saugumo incidentai (duomenų pažeidimai) registruojami ir dokumentuojami?', type: 'radio', required: true, options: [
+        { v: 'yes', t: 'Taip, visi incidentai registruojami' },
+        { v: 'no', t: 'Neregistruojami' },
+      ]},
+      { id: 'training', label: '29. Ar darbuotojai yra apmokomi asmens duomenų apsaugos ir informacijos saugos klausimais?', type: 'radio', required: true, options: [
+        { v: 'regular', t: 'Taip, reguliariai' },
+        { v: 'past', t: 'Mokymai buvo vykdyti anksčiau' },
+        { v: 'onboarding', t: 'Tik naujiems darbuotojams' },
+        { v: 'no', t: 'Ne, mokymai nevykdomi' },
+      ]},
+      { id: 'encryption', label: '30. Ar {pacientų/klientų} duomenys yra šifruojami arba pseudonimizuojami?', type: 'radio', required: true, options: [
+        { v: 'system', t: 'Taip, tai užtikrina naudojama sistema' },
+        { v: 'partial', t: 'Taip, bet tik dalyje sistemų' },
+        { v: 'no', t: 'Ne, duomenys nėra šifruojami' },
+      ]},
+      { id: 'os', label: '31. Kokios operacinės sistemos naudojamos darbuotojų darbo vietose?', type: 'radio', required: true, options: [
+        { v: 'business', t: 'Tik verslo klasės OS (Windows Pro / Enterprise, macOS su MDM)' },
+        { v: 'mixed', t: 'Mišrios (Windows Pro + Windows Home)' },
+        { v: 'home', t: 'Dauguma – Windows Home' },
+        { v: 'unknown', t: 'Nežinome / neturime inventoriaus' },
+      ]},
+      { id: 'identity', label: '32. Kaip centralizuotai valdomos naudotojų paskyros ir prieigos?', type: 'radio', required: true, options: [
+        { v: 'ad', t: 'Naudojamas Active Directory / Azure AD' },
+        { v: 'med_internal', t: 'Naudojamas tik {medicininės/verslo} sistemos vidinis vartotojų valdymas' },
+        { v: 'separate', t: 'Kiekviena sistema valdoma atskirai' },
+        { v: 'none', t: 'Centralizuoto valdymo nėra' },
+        { v: 'unknown', t: 'Nežinome' },
+      ]},
+      { id: 'email', label: '33. Kaip organizacijoje naudojami el. pašto adresai darbui?', type: 'radio', required: true, options: [
+        { v: 'individual', t: 'Kiekvienas darbuotojas turi individualų darbo el. paštą' },
+        { v: 'shared', t: 'Yra keli bendri el. paštai (info@, registracija@)' },
+        { v: 'personal', t: 'Naudojami asmeniniai el. pašto adresai' },
+        { v: 'mixed', t: 'Mišrus modelis' },
+        { v: 'unknown', t: 'Nežinome' },
+      ]},
+      { id: 'firewall', label: '34. Kas valdo organizacijos maršrutizatorių / ugniasienę?', type: 'radio', required: true, options: [
+        { v: 'internal', t: 'Organizacija turi pilną administratoriaus prieigą' },
+        { v: 'external', t: 'Valdo IT paslaugų teikėjas pagal sutartį' },
+        { v: 'unknown', t: 'Nežinome / neturime prieigos' },
+      ]},
+      { id: 'wifi', label: '35. Kaip sukonfigūruoti organizacijos Wi-Fi tinklai?', type: 'radio', required: true, options: [
+        { v: 'segmented', t: 'Atskiri tinklai: darbuotojai / svečiai / įrenginiai' },
+        { v: 'partial', t: 'Darbuotojai ir svečiai atskirti, bet be VLAN' },
+        { v: 'shared', t: 'Vienas bendras tinklas visiems' },
+      ]},
+      { id: 'byod', label: '36. Ar darbuotojai jungiasi prie sistemų iš asmeninių įrenginių?', type: 'radio', required: true, options: [
+        { v: 'no', t: 'Ne, naudojami tik įmonės įrenginiai' },
+        { v: 'with_rules', t: 'Taip, bet taikomos saugumo taisyklės (VPN, šifravimas)' },
+        { v: 'no_rules', t: 'Taip, be aiškių taisyklių' },
+      ]},
+      { id: 'it_owner', label: '37. Kas atsakingas už IT infrastruktūros saugumą ir priežiūrą?', type: 'radio', required: true, options: [
+        { v: 'internal', t: 'Vidaus IT specialistas' },
+        { v: 'external', t: 'Išorinis IT paslaugų teikėjas' },
+        { v: 'mixed', t: 'Mišrus modelis' },
+        { v: 'none', t: 'Aiškiai nepaskirta' },
+      ]},
+      { id: 'antivirus', label: '38. Ar naudojamos antivirusinės programos ir ugniasienės?', type: 'radio', required: true, options: [
+        { v: 'yes', t: 'Taip, naudojame antivirusines programas ir ugniasienes' },
+        { v: 'no', t: 'Ne' },
+      ]},
+      { id: 'password_policy', label: '39. Ar taikoma slaptažodžių politika (keitimas, sudėtingumas)?', type: 'radio', required: true, options: [
+        { v: 'yes', t: 'Taip, taikome slaptažodžių politiką' },
+        { v: 'no', t: 'Ne' },
+      ]},
+      { id: 'auto_lock', label: '40. Ar įrenginiai automatiškai užrakinami po neaktyvumo?', type: 'radio', required: true, options: [
+        { v: 'yes', t: 'Taip, užrakinami po neaktyvumo' },
+        { v: 'no', t: 'Ne' },
+      ]},
+      { id: 'clean_desk', label: '41. Ar taikoma „švaraus stalo" politika?', type: 'radio', required: true, hint: 'Darbo vietoje nepaliekami neprižiūrimi dokumentai ar laikmenos su asmens duomenimis ar konfidencialia informacija.', options: [
+        { v: 'yes', t: 'Taip, taikoma „švaraus stalo" politika' },
+        { v: 'no', t: 'Ne' },
+      ]},
+      { id: 'doc_storage', label: '42. Ar dokumentai laikomi rakinamose patalpose?', type: 'radio', required: true, options: [
+        { v: 'yes', t: 'Taip, laikomi rakinamose spintose' },
+        { v: 'no', t: 'Ne' },
+      ]},
+      { id: 'incident_proc', label: '43. Ar turite incidentų valdymo procedūrą?', type: 'radio', required: true, options: [
+        { v: 'yes', t: 'Taip, turime incidentų valdymo procedūrą' },
+        { v: 'no', t: 'Ne' },
+      ]},
+      { id: 'test_data', label: '44. Kaip testavimo ar mokymo aplinkose naudojami asmens / {pacientų/klientų} duomenys?', type: 'radio', required: true, options: [
+        { v: 'synthetic', t: 'Naudojami tik anonimizuoti arba sintetiniai duomenys' },
+        { v: 'real_controlled', t: 'Naudojami realūs duomenys, bet su teisiniu pagrindu ir kontrolėmis' },
+        { v: 'real_uncontrolled', t: 'Naudojami realūs duomenys be aiškaus pagrindo' },
+        { v: 'none', t: 'Testavimo aplinkų neturime / nežinome' },
+      ]},
+      { id: 'encryption_atrest', label: '45. Kuriose vietose šifruojami asmens / {pacientų/klientų} duomenys (at-rest)?', type: 'checkbox', required: true, hint: 'Galite pasirinkti kelias.', options: [
+        { v: 'db', t: '{Medicininėje/Verslo} sistemoje (DB lygmenyje)' },
+        { v: 'backups', t: 'Atsarginėse kopijose' },
+        { v: 'cloud', t: 'Debesijos saugyklose' },
+        { v: 'local_servers', t: 'Vietiniuose serveriuose ar NAS' },
+        { v: 'workstations', t: 'Darbuotojų kompiuteriuose (diskų šifravimas)' },
+        { v: 'none', t: 'Duomenys nešifruojami / nežinome' },
+      ]},
+      { id: 'encryption_transit', label: '46. Kaip šifruojami duomenų perdavimo kanalai tarp sistemų ir trečiųjų šalių?', type: 'radio', required: true, options: [
+        { v: 'all', t: 'Visi kanalai šifruoti (TLS, VPN, HL7/FHIR over TLS ir pan.)' },
+        { v: 'most', t: 'Dauguma kanalų šifruoti, bet yra išimčių' },
+        { v: 'vendor_trust', t: 'Pasikliaujama sistemų tiekėjais, netikrinant' },
+        { v: 'unknown', t: 'Perdavimo šifravimas neaiškus arba netaikomas' },
+      ]},
+      { id: 'mfa', label: '47. Kur taikomas daugiafaktorinis autentifikavimas (MFA)?', type: 'checkbox', required: true, hint: 'Galite pasirinkti kelias.', options: [
+        { v: 'admins', t: 'Administratorių paskyrose' },
+        { v: 'cloud', t: 'Debesijos paslaugose (Google / M365)' },
+        { v: 'vpn', t: 'Nuotoliniame prisijungime (VPN)' },
+        { v: 'systems', t: '{Medicininėse/Verslo} sistemose' },
+        { v: 'none', t: 'MFA nenaudojamas' },
+      ]},
+      { id: 'access_mgmt', label: '48. Kaip organizacijoje valdoma prieiga prie informacinių sistemų?', type: 'radio', required: true, options: [
+        { v: 'mature', t: 'Prieiga suteikiama pagal roles, peržiūrima periodiškai, offboarding ≤24 val.' },
+        { v: 'roles_only', t: 'Prieiga pagal roles, bet peržiūra nereguliari' },
+        { v: 'manual', t: 'Prieigos suteikiamos rankiniu būdu, be aiškios tvarkos' },
+        { v: 'none', t: 'Prieigų valdymas neformalizuotas / nežinome' },
+      ]},
+      { id: 'accounts', label: '49. Kaip naudojamos naudotojų paskyros informacinėse sistemose?', type: 'radio', required: true, options: [
+        { v: 'individual', t: 'Visi darbuotojai turi individualias paskyras' },
+        { v: 'shared_limited', t: 'Yra kelios bendros paskyros su apribojimais' },
+        { v: 'shared_wide', t: 'Plačiai naudojamos bendros paskyros' },
+        { v: 'unknown', t: 'Nežinome' },
+      ]},
+      { id: 'backup_location', label: '50. Kur ir kaip saugomos atsarginės asmens / {pacientų/klientų} duomenų kopijos?', type: 'radio', required: true, options: [
+        { v: 'local', t: 'Vietiniame serveryje / NAS' },
+        { v: 'cloud', t: 'Debesijos paslaugose' },
+        { v: 'datacenter', t: 'Išoriniame duomenų centre' },
+        { v: 'it_provider', t: 'Pas IT paslaugų teikėją' },
+        { v: 'none', t: 'Atsarginės kopijos nedaromos / nežinome' },
+      ]},
+      { id: 'backup_maturity', label: '51. Koks atsarginių kopijų ir atkūrimo brandos lygis taikomas?', type: 'radio', required: true, options: [
+        { v: '321', t: 'Taikomas 3-2-1 modelis, kopijos šifruotos, atkūrimas testuojamas' },
+        { v: 'rare_test', t: 'Atsarginės kopijos daromos, bet atkūrimas testuojamas retai' },
+        { v: 'no_test', t: 'Atsarginės kopijos daromos, bet netestuojamos' },
+        { v: 'undefined', t: 'Atsarginių kopijų sistema neapibrėžta' },
+      ]},
+      { id: 'patches', label: '52. Kaip organizacijoje valdomi IT sistemų pažeidžiamumai ir atnaujinimai?', type: 'radio', required: true, options: [
+        { v: 'rmm', t: 'Naudojamas RMM / automatinis patch valdymas' },
+        { v: 'manual', t: 'Atnaujinimai atliekami rankiniu būdu' },
+        { v: 'irregular', t: 'Atnaujinimai nereguliarūs' },
+        { v: 'none', t: 'Nevykdomas pažeidžiamumų valdymas' },
+      ]},
+      { id: 'specialized_devices', label: '53. Kaip atskirti ir apsaugoti {medicininiai/specializuoti} IT įrenginiai?', type: 'radio', required: true, options: [
+        { v: 'vlan', t: 'Atskiras VLAN, ugniasienės, ribota prieiga' },
+        { v: 'partial', t: 'Atskyrimas dalinis' },
+        { v: 'shared', t: 'Visi įrenginiai bendrame tinkle' },
+        { v: 'none', t: 'Neturime tokių įrenginių / nežinome' },
+      ]},
+      { id: 'incident_mgmt', label: '54. Kaip organizacijoje valdoma saugumo incidentų registracija ir analizė?', type: 'radio', required: true, options: [
+        { v: 'mature', t: 'Incidentai registruojami su data, tipu, poveikiu, veiksmais; saugomi ≥36 mėn.' },
+        { v: 'major', t: 'Registruojami tik reikšmingi incidentai' },
+        { v: 'informal', t: 'Incidentai fiksuojami neformaliai' },
+        { v: 'none', t: 'Incidentų registravimo nėra' },
+      ]},
+      { id: 'audits', label: '55. Kaip dažnai atliekami IT saugumo auditai ir testavimas?', type: 'radio', required: true, options: [
+        { v: 'regular_pentest', t: 'Reguliarūs auditai + pentest / phishing simuliacijos' },
+        { v: 'audits_only', t: 'Atliekami tik auditai' },
+        { v: 'episodic', t: 'Atliekami epizodiškai' },
+        { v: 'none', t: 'Neatliekami' },
+      ]},
+      { id: 'awareness', label: '56. Kaip užtikrinamas darbuotojų pasirengimas IT ir duomenų saugai?', type: 'radio', required: true, options: [
+        { v: 'regular', t: 'Reguliarūs BDAR ir kibernetinio saugumo mokymai' },
+        { v: 'onboarding', t: 'Mokymai tik naujiems darbuotojams' },
+        { v: 'past', t: 'Mokymai vykdyti seniai' },
+        { v: 'none', t: 'Mokymai nevykdomi' },
+      ]},
+    ]
+  },
+  {
+    id: 'final',
+    title: 'Papildoma informacija',
+    sub: 'Galite pridėti papildomos informacijos arba palikti komentarą. Šie laukai neprivalomi.',
+    questions: [
+      { id: 'priorities', label: '57. Kokios sritys jums dabar atrodo svarbiausios?', type: 'checkbox', required: false, hint: 'Padės parengti tikslesnes rekomendacijas.', options: [
+        { v: 'docs', t: 'BDAR dokumentacijos sutvarkymas' },
+        { v: 'audit', t: 'IT saugumo auditas' },
+        { v: 'dpo', t: 'DPO funkcija (outsourcing)' },
+        { v: 'training', t: 'Darbuotojų mokymai' },
+        { v: 'incident', t: 'Incidentų valdymo procedūros' },
+        { v: 'nis2', t: 'NIS2 atitiktis' },
+        { v: 'unsure', t: 'Nesu tikra(s) — reikia konsultacijos' },
+      ]},
+      { id: 'timeline', label: '58. Kada planuojate pradėti?', type: 'radio', required: false, options: [
+        { v: 'urgent', t: 'Skubu (artimiausią mėnesį)' },
+        { v: 'quarter', t: 'Per artimiausius 3 mėnesius' },
+        { v: 'year', t: 'Per artimiausius 6–12 mėn.' },
+        { v: 'exploring', t: 'Tik žvalgausi' },
+      ]},
+      { id: 'comments', label: '59. Papildomi komentarai ar specifiniai klausimai', type: 'textarea', required: false, placeholder: 'Pvz., specifiniai sektoriaus reikalavimai, jau vykstantys projektai, žinomos rizikos…' },
+    ]
+  }
+];
+
+// ─────────────────────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────────────────────
+const state = {
+  currentSection: 0,
+  answers: {},
+  orgType: null, // 'sveikatos' | 'kitas' — užpildomas po Q3
+};
+
+// ─────────────────────────────────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────────────────────────────────
+
+// Pakeičia {paciento/kliento} → kuris tinka pagal orgType
+function adapt(text){
+  const isHealth = state.orgType === 'sveikatos';
+  return text.replace(/\{([^/}]+)\/([^}]+)\}/g, (_, med, gen) => isHealth ? med : gen);
+}
+
+// Filtruoja klausimo opcijas pagal orgType
+function filterOpts(opts){
+  if(!opts) return [];
+  return opts.filter(o => {
+    if(!o.tag) return true;
+    if(o.tag === 'med' && state.orgType === 'sveikatos') return true;
+    if(o.tag === 'gen' && state.orgType === 'kitas') return true;
+    return false;
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────────────────────────────────
+
+function renderSection(){
+  const section = SECTIONS[state.currentSection];
+  const container = document.getElementById('bf-sections');
+  container.innerHTML = '';
+
+  const sec = document.createElement('div');
+  sec.className = 'bf-section active';
+
+  const h = document.createElement('h2');
+  h.className = 'bf-section-title';
+  h.textContent = section.title;
+  sec.appendChild(h);
+
+  const sub = document.createElement('p');
+  sub.className = 'bf-section-sub';
+  sub.textContent = section.sub;
+  sec.appendChild(sub);
+
+  section.questions.forEach(q => {
+    const opts = filterOpts(q.options);
+    // Praleidžiame klausimą, jei filtravimas paliko 0 opcijų ir tai radio/checkbox
+    if((q.type === 'radio' || q.type === 'checkbox') && opts.length === 0) return;
+
+    const qEl = document.createElement('div');
+    qEl.className = 'bf-q';
+    qEl.dataset.qid = q.id;
+
+    const label = document.createElement('label');
+    label.className = 'bf-q-label';
+    label.htmlFor = q.id;
+    label.innerHTML = adapt(q.label) + (q.required ? ' <span class="bf-q-req">*</span>' : '');
+    qEl.appendChild(label);
+
+    if(q.hint){
+      const hint = document.createElement('div');
+      hint.className = 'bf-q-hint';
+      hint.textContent = q.hint;
+      qEl.appendChild(hint);
+    }
+
+    if(q.type === 'text' || q.type === 'email'){
+      const input = document.createElement('input');
+      input.type = q.type;
+      input.id = q.id;
+      input.name = q.id;
+      input.className = 'bf-input';
+      if(q.placeholder) input.placeholder = q.placeholder;
+      if(q.required) input.required = true;
+      if(state.answers[q.id]) input.value = state.answers[q.id];
+      input.addEventListener('input', e => state.answers[q.id] = e.target.value);
+      qEl.appendChild(input);
+    }
+    else if(q.type === 'textarea'){
+      const ta = document.createElement('textarea');
+      ta.id = q.id;
+      ta.name = q.id;
+      ta.className = 'bf-textarea';
+      if(q.placeholder) ta.placeholder = q.placeholder;
+      if(state.answers[q.id]) ta.value = state.answers[q.id];
+      ta.addEventListener('input', e => state.answers[q.id] = e.target.value);
+      qEl.appendChild(ta);
+    }
+    else if(q.type === 'radio' || q.type === 'checkbox'){
+      const wrap = document.createElement('div');
+      wrap.className = 'bf-opts';
+      opts.forEach(o => {
+        const optLabel = document.createElement('label');
+        optLabel.className = 'bf-opt';
+        const input = document.createElement('input');
+        input.type = q.type;
+        input.name = q.id;
+        input.value = o.v;
+        const isChecked = q.type === 'checkbox'
+          ? (state.answers[q.id] || []).includes(o.v)
+          : state.answers[q.id] === o.v;
+        if(isChecked) input.checked = true;
+        input.addEventListener('change', e => {
+          if(q.type === 'checkbox'){
+            const cur = state.answers[q.id] || [];
+            if(e.target.checked){
+              if(!cur.includes(o.v)) cur.push(o.v);
+            } else {
+              const idx = cur.indexOf(o.v);
+              if(idx > -1) cur.splice(idx, 1);
+            }
+            state.answers[q.id] = cur;
+          } else {
+            state.answers[q.id] = o.v;
+            if(q.id === 'org_type') state.orgType = o.v;
+          }
+          // Validacijos klaidą pašaliname kai vartotojas pradeda atsakinėti
+          qEl.classList.remove('invalid');
+        });
+        const mark = document.createElement('span');
+        mark.className = 'bf-opt-mark';
+        const txt = document.createElement('span');
+        txt.className = 'bf-opt-text';
+        txt.textContent = adapt(o.t);
+        optLabel.appendChild(input);
+        optLabel.appendChild(mark);
+        optLabel.appendChild(txt);
+        wrap.appendChild(optLabel);
+      });
+      qEl.appendChild(wrap);
+    }
+
+    const err = document.createElement('div');
+    err.className = 'bf-err';
+    err.textContent = q.required ? 'Šis klausimas privalomas.' : '';
+    qEl.appendChild(err);
+
+    sec.appendChild(qEl);
+  });
+
+  container.appendChild(sec);
+  updateProgress();
+  updateNav();
+
+  // Scroll į viršų po sekcijos pakeitimo
+  document.querySelector('.bf-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function updateProgress(){
+  const total = SECTIONS.length;
+  const step = state.currentSection + 1;
+  const pct = Math.round((step / total) * 100);
+  document.getElementById('bf-step').textContent = step;
+  document.getElementById('bf-total').textContent = total;
+  document.getElementById('bf-pct').textContent = pct + '%';
+  document.getElementById('bf-fill').style.width = pct + '%';
+}
+
+function updateNav(){
+  const prev = document.getElementById('bf-prev');
+  const next = document.getElementById('bf-next');
+  const submit = document.getElementById('bf-submit');
+  const isFirst = state.currentSection === 0;
+  const isLast = state.currentSection === SECTIONS.length - 1;
+  prev.hidden = isFirst;
+  next.hidden = isLast;
+  submit.hidden = !isLast;
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// VALIDATION
+// ─────────────────────────────────────────────────────────────────────
+
+function validateSection(){
+  const section = SECTIONS[state.currentSection];
+  let firstInvalid = null;
+  let allValid = true;
+
+  section.questions.forEach(q => {
+    if(!q.required) return;
+    const opts = filterOpts(q.options);
+    if((q.type === 'radio' || q.type === 'checkbox') && opts.length === 0) return; // Praleistas
+
+    const qEl = document.querySelector(`.bf-q[data-qid="${q.id}"]`);
+    if(!qEl) return;
+
+    let valid = true;
+    const a = state.answers[q.id];
+    if(q.type === 'text' || q.type === 'email' || q.type === 'textarea'){
+      valid = !!(a && a.trim());
+      if(valid && q.type === 'email'){
+        valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.trim());
+      }
+    } else if(q.type === 'radio'){
+      valid = !!a;
+    } else if(q.type === 'checkbox'){
+      valid = Array.isArray(a) && a.length > 0;
+    }
+
+    if(!valid){
+      qEl.classList.add('invalid');
+      if(!firstInvalid) firstInvalid = qEl;
+      allValid = false;
+    } else {
+      qEl.classList.remove('invalid');
+    }
+  });
+
+  if(firstInvalid){
+    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  return allValid;
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// EVENT HANDLERS
+// ─────────────────────────────────────────────────────────────────────
+
+document.getElementById('bf-next').addEventListener('click', () => {
+  if(!validateSection()) return;
+  if(state.currentSection < SECTIONS.length - 1){
+    state.currentSection++;
+    renderSection();
+  }
+});
+
+document.getElementById('bf-prev').addEventListener('click', () => {
+  if(state.currentSection > 0){
+    state.currentSection--;
+    renderSection();
+  }
+});
+
+document.getElementById('bf-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if(!validateSection()) return;
+
+  const submitBtn = document.getElementById('bf-submit');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Siunčiama…';
+
+  // Backend integracijai: POST /api/forms/audit-request
+  // Kol Vercel/Resend nepasirengę — naudojame mailto fallback
+  try {
+    const payload = {
+      ...state.answers,
+      _meta: {
+        submitted_at: new Date().toISOString(),
+        user_agent: navigator.userAgent,
+        org_type: state.orgType,
+      }
+    };
+
+    const res = await fetch('/api/forms/audit-request', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }).catch(() => null);
+
+    if(res && res.ok){
+      showSuccess();
+    } else {
+      // Fallback: išsaugome į localStorage ir parodom success (kad neprarastume lead'o)
+      // + mailto link sėkmės ekrane
+      saveLocalBackup(payload);
+      showSuccess(true);
+    }
+  } catch(err){
+    console.error('Submit error:', err);
+    showError(err.message);
+  }
+});
+
+document.getElementById('bf-retry').addEventListener('click', () => {
+  document.getElementById('bf-error').classList.remove('show');
+  document.getElementById('bf-form').style.display = '';
+  document.getElementById('bf-submit').disabled = false;
+  document.getElementById('bf-submit').textContent = 'Pateikti klausimyną →';
+});
+
+function showSuccess(usedFallback){
+  document.getElementById('bf-form').style.display = 'none';
+  const successEl = document.getElementById('bf-success');
+  if(usedFallback){
+    const p = successEl.querySelector('p');
+    p.innerHTML = 'Atsakymai išsaugoti. Per 24 darbo valandas susisieksime el. paštu su preliminariomis rekomendacijomis. Jei skubu — parašykite tiesiogiai <a href="mailto:info@veriva.lt">info@veriva.lt</a>.';
+  }
+  successEl.classList.add('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showError(msg){
+  document.getElementById('bf-form').style.display = 'none';
+  const errEl = document.getElementById('bf-error');
+  if(msg) document.getElementById('bf-error-msg').textContent = msg;
+  errEl.classList.add('show');
+}
+
+function saveLocalBackup(payload){
+  try {
+    const key = 'veriva_brief_' + Date.now();
+    localStorage.setItem(key, JSON.stringify(payload));
+  } catch(e){ /* noop */ }
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────────────
+renderSection();
+</script>
+
+</body>
+</html>

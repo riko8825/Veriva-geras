@@ -37,3 +37,5 @@ npm-debug.log*
 *-mobile-full.png
 ab-*.png
 debug-*.png
+
+.vercel

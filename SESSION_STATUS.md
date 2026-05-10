@@ -1,11 +1,63 @@
 # SESSION_STATUS
 
 **Data**: 2026-05-10
-**Sesijos tikslas**: Premium dark tier perdirbimas — 7 sekcijų (Komanda · Apie · Paslaugos · Procesas · Rezultatai · Kainos · Hero) brand consistency į €20k+ tier (Stripe/Linear/Mercury lygis)
+**Sesijos tikslas**: Cookiebot CMP integracija (BDAR/e-Privatumo atitiktis) + slapukai.html + paskutinės sesijos #8 (premium dark tier 9 sekcijų) bundle commit į production
 
 ---
 
-## ATLIKTA ŠIOJE SESIJOJE (2026-05-10 — premium-dark-tier-redesign)
+## ATLIKTA ŠIOJE SESIJOJE (2026-05-10 — cookiebot-integration)
+
+### Cookiebot CMP įdiegtas (auto-blocking modelis)
+- **Domain group ID**: `bc31b2c9-a2b7-44e8-a3a2-624b027ba646`
+- **Mode**: Auto blocking (visi ne-būtinieji slapukai blokuojami iki sutikimo)
+- **Įdėtas į 6 puslapius** (kaip pirmas script `<head>`):
+  - `index.html`, `slapukai.html`, `blog.html`, `brief.html`, `blog/template.html`
+  - 3 blog post'ai: bdar-baudos, nis2-direktyva, phishing-mokymai
+- **Cookiebot CDN verified**: uc.js 200 OK, cd.js 200 OK
+
+### `slapukai.html` NEW (KI-005 BDAR partial fix)
+- **9-skyrių slapukų politika** (LT, BDAR/e-Privatumo direktyvos atitiktis)
+- **CookieDeclaration script** (auto-generuoja realių slapukų sąrašą per Cookiebot CMP)
+- **"Atnaujinti slapukų sutikimą" mygtukas** via `Cookiebot.renew()`
+- Nav + footer sync su `blog.html` (toks pat stilius)
+- Hero sekcija: dark theme + crumbs + meta info
+- Skyriai: 1) Kas yra slapukai, 2) Tipai (4 kategorijos), 3) Sąrašas (Cookiebot), 4) Valdymas (per skydą + naršyklę), 5) Trečiosios šalys, 6) Teisinis pagrindas (BDAR + e-Privatumo + LR ERĮ 73 str.), 7) Teisės, 8) Pakeitimai, 9) Kontaktai
+
+### Pašalinta (custom cookie banner — XSS rizika)
+- **HTML**: `#cookie-banner` div'as (16 lines, inline `onmouseover` rizika)
+- **JS**: `acceptCookies()` + auto-show timer + localStorage logic (14 lines)
+- **CSS**: `@keyframes slideUp` (2 lines)
+- **Modal**: `#modal-cookies` orphan (32 lines, niekam nebereikalingas)
+
+### Atnaujinta
+- Footer linkas `Slapukų politika`: `openModal('modal-cookies')` → `/slapukai.html`
+- Cache-buster: `v=20260510` → `v=20260510b`
+
+### Bundle commit `0e51dcf` (push'intas į main)
+Vienas commit'as su:
+- Cookiebot integracija (šios sesijos darbu)
+- Sesijos #8 premium dark tier 9 sekcijų darbu (uncommitted nuo 2026-05-10 vakar)
+- Sesijos #8 docs (PROJECT_STATUS, SESSION_STATUS, structure.md)
+
+**Failai**: 13 changed, +3516 / -571 lines | NEW: `slapukai.html`
+
+### Production verifikacija (po push)
+- Vercel build: 🟢 Ready 15s
+- `https://www.veriva.lt/` — 200 OK su Cookiebot script
+- `https://www.veriva.lt/slapukai` (Vercel clean URL) — 200 OK
+- `/blog`, `/brief`, 3 blog post'ai — visi 200 OK (308→200 redirect)
+- CSS asset (83KB) + JS asset (12KB) — 200 OK
+- Custom cookie banner — production neturi (XSS pašalinta)
+- Footer linkas — `/slapukai.html` veikia
+
+### Tools naudoti
+- `AskUserQuestion` ×2 (custom banner sprendimas, GCM, declaration page; bundle commit scope)
+- `Grep` × 12, `Edit` × 11, `Read` × 9, `Bash` × 14
+- Lokalus HTTP servas (port 5174) prieš commit verifikacijai
+
+---
+
+## ATLIKTA ANKSČIAU (2026-05-10 — premium-dark-tier-redesign)
 
 ### Brand language: premium dark tier (taikoma visose perdirbtose sekcijose)
 - `--ink` background + radial mesh (cyan + blue blobs)

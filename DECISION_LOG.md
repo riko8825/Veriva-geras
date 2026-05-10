@@ -376,3 +376,67 @@ Architektūriniai sprendimai. Kiekvienas su data, kontekstu, alternatyvomis, spr
 **Trade-off**: turime palaikyti DNS valdymą dviejuose vietose (Vercel Domains + Hostinger DNS Zone) — bet praktikoje DNS keitimas vyksta retai (~1× per metus).
 
 **Implementacija**: vartotojas per Hostinger UI ištrynė 2 WP record'us, pridėjo 2 Vercel record'us. 6 email DNS record'ai NEPALIESTI. Verify: 6 globalūs DNS resolvers'ai propaguoti per ~30 min, MX `mx{1,2,3}.zoho.eu` rodo toliau.
+
+---
+
+## 2026-05-10 — Cookiebot CMP vietoj custom cookie banner
+
+**Kontekstas**: `index.html` turėjo custom `#cookie-banner` su localStorage logika ir 2 mygtukais ("Tik būtinieji" / "Sutinku su visais"). Pseudo-sutikimo banner — neatitiko BDAR/e-Privatumo direktyvos reikalavimų:
+- Negalėjo blokuoti realių slapukų (tik vizualinis baner'is)
+- Nebuvo tiekėjų sąrašo (TCF/IAB framework)
+- Inline `onmouseover`/`onmouseout` = XSS rizika
+- Visiems lankytojams to paties statuso (jokio per-kategorijų sutikimo)
+
+**Alternatyvos**:
+- A) Custom CMP iš nulio (privacy-by-design, bet ~5-10 dienų darbas, reikia auto-blocking JS)
+- B) Cookiebot (Usercentrics) — komercinė CMP, įdiegta 2 minutės
+- C) Klaro / OneTrust open-source variantas — vidutinis darbo kiekis
+
+**Sprendimas**: B — Cookiebot.
+
+**Priežastis**:
+- Veriva = duomenų apsaugos kompanija → savo svetainė turi BŪTI etalonas (ne tik atitikti minimumą)
+- Cookiebot pritaikytas ES + LT rinkai (LT lokalizacija, BDAR-templates)
+- Auto-blocking režimas — nereikia rankiniu būdu pažymėti scripts (Cookiebot pats blokuoja iki sutikimo)
+- TCF v2.2 + Google Consent Mode v2 ready (kai bus GA4)
+- Vartotojas jau turėjo Premium prenumeratą — €0 papildomai
+- Auto-generuojamas slapukų sąrašas (`CookieDeclaration` script) — nereikia rankiniu būdu palaikyti
+- Pasirinktas `data-blockingmode="auto"` (vs `manual`) — manual reikalautų `data-cookieconsent="statistics"` ant kiekvieno script'o
+
+**Trade-off**: vendor lock-in (jei keisim CMP, reikia perdiegti); recurring fee.
+
+**Implementacija**: 
+- Cookiebot script (`<script id="Cookiebot">`) įdėtas kaip PIRMAS script `<head>` 6 puslapiuose (auto-blocking reikalauja first-position)
+- Custom `#cookie-banner` HTML + JS + CSS pašalintas (16+14+2 lines)
+- `modal-cookies` orphan modal pašalintas (32 lines)
+- `slapukai.html` NEW — 9-skyrių BDAR politika + `<script id="CookieDeclaration">` cd.js (auto-generuoja realių slapukų sąrašą su pavadinimais, paskirtimi, saugojimo trukme)
+- Footer linkas `Slapukų politika` → `/slapukai.html` (vietoj modal)
+- "Atnaujinti slapukų sutikimą" mygtukas via `Cookiebot.renew()`
+
+**Trūkumai (sekantis sprendimas)**:
+- Cookiebot dashboard config: kalba LT, domeno whitelisting (`veriva.lt` + `www.veriva.lt`), GCM aktyvuoti kai bus GA4
+
+---
+
+## 2026-05-10 — Bundle commit: Cookiebot + sesijos #8 premium dark tier kartu
+
+**Kontekstas**: Pradedant cookiebot-integration sesiją, repo turėjo 5 uncommitted failus iš sesijos #8 (premium-dark-tier-redesign): `index.html` (9 sekcijos perdarytos), `assets/css/index.css` (590→2571 lines), `assets/js/index.js` (276→324 lines), `SESSION_STATUS.md`, `docs/structure.md`. Cookiebot integracija lietė tuos pačius 3 kodo failus → diff'o izoliuoti negalima.
+
+**Alternatyvos**:
+- A) Stash sesijos #8, padaryti tik Cookiebot commit, unstash, padaryti antrą commit (sudėtinga, didelė konflikto rizika `index.html` ir `index.css`)
+- B) Vienas bundle commit: sesija #8 + Cookiebot kartu
+- C) Atskiri commits per failą (ne'atomic, lūžę intermediate state'ai)
+
+**Sprendimas**: B — vienas bundle commit `0e51dcf`.
+
+**Priežastis**:
+- Sesijos #8 darbas jau patikrintas CSS token'ais (705/705 braces, 2571 lines), JS syntax OK
+- Stash konfliktai būtų užtrukę ilgiau, nei pati Cookiebot integracija
+- Production buvo "senas" jau 8h — leisti vienam commit'ui go-live yra greičiau ir saugiau nei dvi atskiri push'ai
+- Commit message aiškiai dokumentuoja abu darbus (Cookiebot + premium dark tier)
+
+**Trade-off**: didelis commit (+3516/-571 lines, 13 failų), atrast bug'ą būtų sudėtingiau git bisect'u. Mitigation: gerai paaiškintas commit message, žinau kas kur pridėta.
+
+**Verifikacija po push**: Vercel build READY 15s, 7/7 production URL'ai 200 OK, Cookiebot script veikia, custom banner pašalintas, footer linkas → `/slapukai.html`.
+
+**Pamoka ateičiai**: nepradėti naujos sesijos jei yra uncommitted darbas iš ankstesnės. Workflow: `/close-session` → commit → push prieš `/start-task`.

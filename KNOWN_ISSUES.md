@@ -68,17 +68,16 @@ Uždarytus issues perkelti į `## Išspręsta` skyrių (ne trinti).
 
 ---
 
-### KI-005 — Privatumas.html ir slapukai.html neegzistuoja
-- **SLA:** 🔴 Critical
+### KI-005 — Privatumas.html ir slapukai.html neegzistuoja (PARTIAL FIX 2026-05-10)
+- **SLA:** 🟠 High (downgrade'inta — slapukai.html ✅, liko privatumas.html)
 - **Paveiktas blokas:** BDAR atitiktis
-- **Statusas:** Open
+- **Statusas:** Partial fix
 - **Aprašas:** Veriva = duomenų apsaugos kompanija. Savo svetainė BE Privacy Policy ir Cookie Policy = brand'ui kritinė problema + teisinis pažeidimas.
-- **Workaround:** Negalima deploy'inti į production be šių puslapių
-- **Fix:**
-  - `privatumas.html` — duomenų valdytojas, tikslai, teisinis pagrindas, saugojimo terminai, teisės, DPO kontaktas
-  - `slapukai.html` — visi naudojami cookies + Cookiebot consent flow
-  - Cookie consent banneris (Cookiebot) prieš GA4
-- **Atidarytas:** 2026-05-09
+- **Fix progress:**
+  - ✅ `slapukai.html` — LIVE (commit `0e51dcf`, 2026-05-10): 9-skyrių BDAR-compliant politika + Cookiebot CookieDeclaration auto-list + `Cookiebot.renew()` mygtukas
+  - ✅ Cookiebot CMP — LIVE auto-blocking režimu (Domain group ID `bc31b2c9-a2b7-44e8-a3a2-624b027ba646`), 6 puslapiuose
+  - ⬜ `privatumas.html` — duomenų valdytojas, tikslai, teisinis pagrindas, saugojimo terminai, teisės, DPO kontaktas
+- **Atidarytas:** 2026-05-09 | **Partial fix:** 2026-05-10 (cookiebot-integration sesija)
 
 ---
 

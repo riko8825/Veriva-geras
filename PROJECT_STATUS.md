@@ -1,10 +1,10 @@
 # PROJECT_STATUS — Veriva
 
 **Pradžia**: 2026-05-09
-**Paskutinis update**: 2026-05-10 (premium-dark-tier-redesign)
-**Statusas**: 🟢 PRODUCTION LIVE — DNS migration WP→Vercel ✅, 10 URL 200 OK ant www.veriva.lt
-**Lokali būsena**: 9 sekcijos perdarytos premium dark tier (uncommitted, nepush'inta)
+**Paskutinis update**: 2026-05-10 (cookiebot-integration)
+**Statusas**: 🟢 PRODUCTION LIVE — Cookiebot CMP įdiegtas, premium dark tier 9 sekcijų LIVE, BDAR slapukų politika LIVE
 **Production URL**: https://www.veriva.lt (LIVE su Vercel SSL) | https://veriva.lt (apex SSL ✅)
+**Paskutinis commit**: `0e51dcf` (Cookiebot + premium dark tier bundle, +3516/-571 lines)
 
 ---
 
@@ -12,9 +12,9 @@
 
 | Puslapis | Statusas | Pastabos |
 |---|---|---|
-| `index.html` | 🟢 LIVE (production senas) + 🟡 lokaliai 9 sekcijų premium dark tier remake (2026-05-10) | 1127 → ~1500 lines, 0 inline styles perdirbtose sekcijose, Schema.org enhanced (Person ×2, ItemList Service ×3, Organization +3 fields) |
-| `assets/css/index.css` | 🟢 NEW + 🟡 lokaliai 2573 lines | 590 → 2573 lines (~83KB), 708/708 braces; premium dark tier (.about/.team/.svc/.proc/.case/.price/.blog/.faq/.contact + plan-* Empirra remake) |
-| `assets/js/index.js` | 🟢 NEW + 🟡 324 lines | 276 → 324 lines (count-up + cursor-follow + faq() rewrite su a11y aria-expanded) |
+| `index.html` | 🟢 LIVE (premium dark tier 9 sekcijų + Cookiebot) | ~1500 lines, 0 inline styles perdirbtose sekcijose, Cookiebot script `<head>`, Schema.org enhanced (Person ×2, ItemList Service ×3, Organization +3 fields) |
+| `assets/css/index.css` | 🟢 LIVE 2571 lines | 590 → 2571 lines (~83KB), 705/705 braces; premium dark tier + cookie banner CSS pašalinta |
+| `assets/js/index.js` | 🟢 LIVE 12KB | count-up + cursor-follow + faq() a11y aria-expanded; cookie banner JS pašalintas |
 | `blog.html` | 🟢 LIVE + nav parity | Listing + filtrai + newsletter CTA; nav 8 punktų sync su index.html (`position:fixed`, mobile 900px breakpoint) |
 | `brief.html` | 🟢 NEW + LIVE | 4 sekcijos × 59 klausimai, konditional logika sveikatos vs verslo, multi-step progress, validation, 3 states (2026-05-10) |
 | `blog/template.html` | 🟢 v2 (post-polish) | 24 placeholder'iai, polished CSS, a11y, 4 schema slotai (2026-05-10) |
@@ -26,7 +26,7 @@
 | `kainos.html` | ⬜ Nesukurtas | |
 | `kontaktai.html` | ⬜ Nesukurtas | |
 | `privatumas.html` | ⬜ Nesukurtas | BDAR privaloma |
-| `slapukai.html` | ⬜ Nesukurtas | BDAR privaloma |
+| `slapukai.html` | 🟢 LIVE | 9-skyrių BDAR-compliant politika + Cookiebot CookieDeclaration script + `Cookiebot.renew()` mygtukas (2026-05-10) |
 | `404.html` | ⬜ Nesukurtas | |
 
 ## BACKEND STATUSAS
@@ -50,7 +50,7 @@
 | Supabase | ⬜ | Leads DB |
 | Resend | ⬜ | Email notifications |
 | GA4 + GTM | ⬜ | Analytics |
-| Cookiebot | ⬜ | Consent management |
+| Cookiebot | 🟢 LIVE | CMP auto-blocking, Domain group ID `bc31b2c9-a2b7-44e8-a3a2-624b027ba646`, įdiegtas 6 puslapiuose, slapukai.html turi CookieDeclaration script (2026-05-10) |
 
 ## SEO / CONTENT
 
@@ -73,8 +73,8 @@
 
 | Element | Statusas |
 |---|---|
-| Privacy Policy (BDAR) | ⬜ Privaloma |
-| Cookie Policy | ⬜ Privaloma |
+| Privacy Policy (BDAR) | ⬜ Privaloma — `privatumas.html` nesukurtas |
+| Cookie Policy | 🟢 LIVE — `slapukai.html` (Cookiebot CMP + 9-skyrių politika, 2026-05-10) |
 | RLS politikos Supabase | ⬜ |
 | `x-api-key` ant webhook'ų | ⬜ |
 | Rate limiting | ⬜ |
@@ -83,13 +83,13 @@
 ## KNOWN ISSUES
 
 Visi išsamiai dokumentuoti `KNOWN_ISSUES.md` (KI-001..KI-010):
-- **KI-005 🔴 Critical**: privatumas.html + slapukai.html neegzistuoja (BDAR teisinis pažeidimas) — svetainė LIVE be jų
+- **KI-005 🟠 High (partial fix 2026-05-10)**: `slapukai.html` ✅ LIVE su Cookiebot CMP. Liko `privatumas.html` (Privacy Policy — BDAR privaloma)
 - **KI-008 🟠 High**: Supabase project'as nesetup'intas, migrations neištaisytos
 - **KI-001 🟠 High**: 3/6 placeholder blog kortelės → 404 (3 padaryta: bdar-baudos-lietuvoje, nis2-direktyva-lietuvoje, phishing-mokymai-darbuotojams)
 - **KI-002 🟠 High**: `blog.html:467` newsletter forma — tik `alert()`, duomenys prarandami
 - **KI-007 🟠 High**: API endpoint'ai (`contact.ts`, `health.ts`) niekada nepaleisti production'e
 - **KI-009 🟡 Medium**: 8 P1 audit fixes nepatraukti naujuose blog postuose
-- **KI-011 🟡 Medium (NEW)**: apex SSL sertifikatas (`https://veriva.lt/`) dar neissued — `www.veriva.lt` veikia, apex 307→www
+- ~~**KI-011 ✅ FIXED**~~ (2026-05-10): apex SSL auto-issued ~1.5h after DNS migration
 - ~~**KI-003 ✅ FIXED**~~ (2026-05-10): sitemap.xml su blog post URL + image:image namespace
 - ~~**KI-004 ✅ FIXED**~~ (2026-05-10): index.html split → assets/css/index.css + assets/js/index.js (-43% lines)
 - ~~**KI-006 ✅ FIXED**~~ (2026-05-10): blog naršyklėje 200 OK
@@ -97,9 +97,9 @@ Visi išsamiai dokumentuoti `KNOWN_ISSUES.md` (KI-001..KI-010):
 
 ## PRIORITETAI
 
-1. **P0**: Apex SSL + naršyklės verifikacija — `https://veriva.lt/` (be www) atsidaro be SSL warning'o, FAQ 2 cols veikia, brief.html progress bar, BDAR widget realūs duomenys
+1. **P0**: Cookiebot dashboard config — kalba LT, domeno whitelisting (veriva.lt + www.veriva.lt), GCM (kai bus GA4)
 2. **P0**: Test email į `info@veriva.lt` (Zoho) — patvirtinti DNS migration nesulaužė email'o
-3. **P0**: Sukurti `privatumas.html` + `slapukai.html` (BDAR privaloma — KI-005)
+3. **P0**: Sukurti `privatumas.html` (BDAR Privacy Policy — KI-005 likęs blocker)
 4. **P0**: Google Search Console — add property, submit sitemap, request indexing 3 blog URL'us
 5. **P0**: Multi-page skeletons (paslaugos, apie, kainos, kontaktai, 404)
 6. **P0**: Vercel/Supabase/Resend backend setup (KI-007, KI-008) + contact endpoint smoke test

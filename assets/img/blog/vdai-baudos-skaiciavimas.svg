@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 360" role="img" aria-labelledby="calc-title calc-desc">
+  <title id="calc-title">VDAI baudos apskaičiavimas: 5 žingsnių EDPB metodologija</title>
+  <desc id="calc-desc">Schema vaizduoja, kaip VDAI Lietuvoje apskaičiuoja BDAR baudą pagal Europos duomenų apsaugos valdybos gaires GL 04/2022. Penki žingsniai: pažeidimo klasifikacija, sunkumas, apyvartos koregavimas, sunkinančios ir lengvinančios aplinkybės, atgrasomojo poveikio testas.</desc>
+
+  <defs>
+    <linearGradient id="step1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a47cc"/>
+      <stop offset="100%" stop-color="#2255e0"/>
+    </linearGradient>
+    <linearGradient id="step5" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#c8962a"/>
+      <stop offset="100%" stop-color="#e8b84b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1100" height="360" fill="#f8f7f4"/>
+
+  <!-- Title -->
+  <text x="48" y="50" fill="#07111f" font-family="system-ui, sans-serif" font-size="22" font-weight="800" letter-spacing="-0.5">Kaip VDAI apskaičiuoja BDAR baudą</text>
+  <text x="48" y="74" fill="#837e72" font-family="system-ui, sans-serif" font-size="13" font-weight="500">EDPB gairės 04/2022 · 5 žingsnių metodologija</text>
+
+  <!-- Steps row -->
+  <g transform="translate(48,120)">
+
+    <!-- Step 1 -->
+    <g>
+      <rect x="0" y="0" width="180" height="180" rx="10" fill="#fff" stroke="rgba(7,17,31,0.09)" stroke-width="1"/>
+      <circle cx="32" cy="32" r="18" fill="url(#step1)"/>
+      <text x="32" y="38" text-anchor="middle" fill="#fff" font-family="system-ui, sans-serif" font-size="13" font-weight="800">1</text>
+      <text x="62" y="38" fill="#07111f" font-family="system-ui, sans-serif" font-size="13" font-weight="800" letter-spacing="0.3">KLASIFIKACIJA</text>
+      <text x="20" y="76" fill="#44413b" font-family="system-ui, sans-serif" font-size="13" font-weight="700">Pažeidimo</text>
+      <text x="20" y="93" fill="#44413b" font-family="system-ui, sans-serif" font-size="13" font-weight="700">tipo nustatymas</text>
+      <text x="20" y="124" fill="#837e72" font-family="system-ui, sans-serif" font-size="11.5">BDAR 83(4) ar</text>
+      <text x="20" y="140" fill="#837e72" font-family="system-ui, sans-serif" font-size="11.5">83(5) straipsnis.</text>
+      <text x="20" y="156" fill="#837e72" font-family="system-ui, sans-serif" font-size="11.5">Maksimali riba.</text>
+    </g>
+
+    <!-- Arrow -->
+    <path d="M188 90 L196 90 L196 86 L208 90 L196 94 L196 90" fill="#c5c2b8"/>
+
+    <!-- Step 2 -->
+    <g transform="translate(216,0)">
+      <rect x="0" y="0" width="180" height="180" rx="10" fill="#fff" stroke="rgba(7,17,31,0.09)" stroke-width="1"/>
+      <circle cx="32" cy="32" r="18" fill="url(#step1)"/>
+      <text x="32" y="38" text-anchor="middle" fill="#fff" font-family="system-ui, sans-serif" font-size="13" font-weight="800">2</text>
+      <text x="62" y="38" fill="#07111f" font-family="system-ui, sans-serif" font-size="13" font-weight="800" letter-spacing="0.3">SUNKUMAS</text>
+      <text x="20" y="76" fill="#44413b" font-family="system-ui, sans-serif" font-size="13" font-weight="700">Pradinis taškas</text>
+      <text x="20" y="93" fill="#44413b" font-family="system-ui, sans-serif" font-size="13" font-weight="700">% nuo ribos</text>
+      <text x="20" y="124" fill="#837e72" font-family="system-ui, sans-serif" font-size="11.5">Mastas, paveikti</text>
+      <text x="20" y="140" fill="#837e72" font-family="system-ui, sans-serif" font-size="11.5">asmenys, žala,</text>
+      <text x="20" y="156" fill="#837e72" font-family="system-ui, sans-serif" font-size="11.5">tyčia ar ne.</text>
+    </g>
+
+    <path d="M404 90 L412 90 L412 86 L424 90 L412 94 L412 90" fill="#c5c2b8"/>
+
+    <!-- Step 3 -->
+    <g transform="translate(432,0)">
+      <rect x="0" y="0" width="180" height="180" rx="10" fill="#fff" stroke="rgba(7,17,31,0.09)" stroke-width="1"/>
+      <circle cx="32" cy="32" r="18" fill="url(#step1)"/>
+      <text x="32" y="38" text-anchor="middle" fill="#fff" font-family="system-ui, sans-serif" font-size="13" font-weight="800">3</text>
+      <text x="62" y="38" fill="#07111f" font-family="system-ui, sans-serif" font-size="13" font-weight="800" letter-spacing="0.3">APYVARTA</text>
+      <text x="20" y="76" fill="#44413b" font-family="system-ui, sans-serif" font-size="13" font-weight="700">Sumos</text>
+      <text x="20" y="93" fill="#44413b" font-family="system-ui, sans-serif" font-size="13" font-weight="700">koregavimas</text>
+      <text x="20" y="124" fill="#837e72" font-family="system-ui, sans-serif" font-size="11.5">Bauda</text>
+      <text x="20" y="140" fill="#837e72" font-family="system-ui, sans-serif" font-size="11.5">proporcinga</text>
+      <text x="20" y="156" fill="#837e72" font-family="system-ui, sans-serif" font-size="11.5">įmonės dydžiui.</text>
+    </g>
+
+    <path d="M620 90 L628 90 L628 86 L640 90 L628 94 L628 90" fill="#c5c2b8"/>
+
+    <!-- Step 4 -->
+    <g transform="translate(648,0)">
+      <rect x="0" y="0" width="180" height="180" rx="10" fill="#fff" stroke="rgba(7,17,31,0.09)" stroke-width="1"/>
+      <circle cx="32" cy="32" r="18" fill="url(#step1)"/>
+      <text x="32" y="38" text-anchor="middle" fill="#fff" font-family="system-ui, sans-serif" font-size="13" font-weight="800">4</text>
+      <text x="62" y="38" fill="#07111f" font-family="system-ui, sans-serif" font-size="13" font-weight="800" letter-spacing="0.3">APLINKYBĖS</text>
+      <text x="20" y="76" fill="#44413b" font-family="system-ui, sans-serif" font-size="13" font-weight="700">Sunkinančios</text>
+      <text x="20" y="93" fill="#44413b" font-family="system-ui, sans-serif" font-size="13" font-weight="700">ir lengvinančios</text>
+      <text x="20" y="124" fill="#837e72" font-family="system-ui, sans-serif" font-size="11.5">11 kriterijų pagal</text>
+      <text x="20" y="140" fill="#837e72" font-family="system-ui, sans-serif" font-size="11.5">BDAR 83(2) str.</text>
+      <text x="20" y="156" fill="#837e72" font-family="system-ui, sans-serif" font-size="11.5">Auditas: −30–60%.</text>
+    </g>
+
+    <path d="M836 90 L844 90 L844 86 L856 90 L844 94 L844 90" fill="#c5c2b8"/>
+
+    <!-- Step 5 (highlighted gold) -->
+    <g transform="translate(864,0)">
+      <rect x="0" y="0" width="140" height="180" rx="10" fill="#fff" stroke="rgba(200,150,42,0.5)" stroke-width="2"/>
+      <circle cx="32" cy="32" r="18" fill="url(#step5)"/>
+      <text x="32" y="38" text-anchor="middle" fill="#fff" font-family="system-ui, sans-serif" font-size="13" font-weight="800">5</text>
+      <text x="62" y="38" fill="#07111f" font-family="system-ui, sans-serif" font-size="13" font-weight="800" letter-spacing="0.3">TESTAS</text>
+      <text x="20" y="76" fill="#44413b" font-family="system-ui, sans-serif" font-size="13" font-weight="700">Galutinė</text>
+      <text x="20" y="93" fill="#44413b" font-family="system-ui, sans-serif" font-size="13" font-weight="700">bauda</text>
+      <text x="20" y="124" fill="#837e72" font-family="system-ui, sans-serif" font-size="11.5">Efektyvi,</text>
+      <text x="20" y="140" fill="#837e72" font-family="system-ui, sans-serif" font-size="11.5">proporcinga,</text>
+      <text x="20" y="156" fill="#837e72" font-family="system-ui, sans-serif" font-size="11.5">atgrasanti.</text>
+    </g>
+  </g>
+
+  <!-- Footer note -->
+  <text x="48" y="334" fill="rgba(7,17,31,0.4)" font-family="system-ui, sans-serif" font-size="11" font-style="italic">Šaltinis: EDPB Guidelines 04/2022 · veriva.lt</text>
+</svg>

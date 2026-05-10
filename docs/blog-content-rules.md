@@ -299,8 +299,8 @@ Tikslas — **ChatGPT, Perplexity, Claude, Gemini cituoja veriva.lt** kaip šalt
 
 | Vardas | Sritis | Initials | Role |
 |---|---|---|---|
-| Marina Kazlauskienė | BDAR, teisė | MK | Teisės ekspertė, BDAR |
-| Justinas Petraitis | IT saugumas, NIS2 | JP | IT saugumo ekspertas |
+| Marina | BDAR, teisė | M | Teisės ekspertė, BDAR |
+| Justinas | IT saugumas, NIS2 | J | IT saugumo ekspertas |
 | Veriva komanda | Bendro pobūdžio | V | Veriva ekspertų komanda |
 
 **Taisyklė**: BDAR / DPO / teisės straipsniai → Marina. NIS2 / kibernetinis saugumas / IT auditas → Justinas. Mokymai / bendro pobūdžio → komanda.

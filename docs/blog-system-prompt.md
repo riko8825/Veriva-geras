@@ -6,6 +6,9 @@ System prompt'as Claude API blog-gen automatizacijai. Naudojama `/api/internal/b
 **Max tokens**: 8192 (cluster), 16384 (pillar)
 **Temperature**: 0.3 (faktiniam turiniui) / 0.6 (intro/CTA)
 
+**Reference implementation**: `blog/bdar-baudos-lietuvoje.html` (pillar pattern, audit health 19/20)
+**Template**: `blog/template.html` (placeholders + standartas)
+
 ---
 
 ## SYSTEM PROMPT (full)
@@ -49,25 +52,58 @@ Generuok ŠIA TVARKA:
 
 (B) TABLE OF CONTENTS (4-7 H2 punktų)
 
-(C) MAIN BODY (5-8 H2 sekcijos)
+(C) FEATURED IMAGE (privaloma — po definition, prieš TOC ARBA po H1 prieš definition)
+   <figure class="figure-dark">
+     <img src="/assets/img/blog/{slug}-hero.svg" width="1200" height="630"
+          alt="[180-300 chr alt su keyword'ais]" loading="eager" decoding="async">
+     <figcaption>[1 sakinys, kontekstas]</figcaption>
+   </figure>
+
+(D) MAIN BODY (5-8 H2 sekcijos cluster, 8-12 pillar)
    Privaloma:
-   - 5-8 H2 (kiekvienas su keyword variantu)
+   - 5-8 H2 (cluster) arba 8-12 H2 (pillar) — kiekvienas su keyword variantu
+   - H2 turi `id` atributą (pvz. `id="kokios-baudos"`) TOC anchor'iams
    - Bent 1× <p class="definition"> (kitur tekste, ne tik viršuje)
    - Bent 1× <div class="callout"><strong>SVARBU</strong><p>...</p></div>
    - Bent 1× <div class="stat-hl"><div class="stat-hl-num">€20M</div><div class="stat-hl-body">...</div></div>
    - Bent 1× <blockquote><p>citata</p></blockquote>
-   - 2-4 vidiniai linkai (į kitus blog'us, /#paslaugos, /#kainos, /#top)
-   - 1× išorinis link su autoritetu (vdai.lrv.lt, eur-lex.europa.eu, e-tar.lt)
+   - 1-2× <figure> body image'ai (1100×360 schemos arba 1100×480 procesai) — pillar tipui
+   - 1× <figure class="testimonial">...</figure> (jei yra realus klientas/case)
+   - 2-4 vidiniai linkai (į kitus blog'us, /#paslaugos, /#kainos, /#kontaktai)
+   - 1× išorinis link su autoritetu (vdai.lrv.lt, eur-lex.europa.eu, e-tar.lt, edpb.europa.eu)
+   - Anchor text DIVERSIFIKACIJA — niekada to paties keyword 3+ kartus
 
-(D) INLINE CTA BLOKAS
+(E) INLINE CTA BLOKAS (bent 1×, idealu 2× — vidury + pabaigoje)
    <div class="cta-inline">
      <h3 class="cta-inline-h">Reikia pagalbos su <em>[tema]</em>?</h3>
-     <p class="cta-inline-p">[1 sakinys]</p>
-     <a href="/#top" class="cta-inline-btn">[Veiksmas] →</a>
+     <p class="cta-inline-p">[1-2 sakiniai. PRIVALOMA: 120+ klientų, €0 VDAI baudų. Pirmoji konsultacija — nemokama.]</p>
+     <a href="/#kontaktai" class="cta-inline-btn">[Veiksmas] →</a>
    </div>
 
-(E) FAQ SEKCIJA (5 klausimai)
+(F) TESTIMONIAL BLOKAS (rekomenduojama jei pillar — social proof)
+   <figure class="testimonial" itemscope itemtype="https://schema.org/Review">
+     <meta itemprop="reviewRating" content="5">
+     <div class="testimonial-stars" aria-label="Įvertinimas: 5 iš 5">
+       [5× SVG žvaigždutės su aria-hidden="true"]
+     </div>
+     <blockquote class="testimonial-quote" itemprop="reviewBody">[Kliento citata]</blockquote>
+     <figcaption class="testimonial-attr">
+       <div class="testimonial-av" aria-hidden="true">[Initial]</div>
+       <div class="testimonial-meta">
+         <span class="testimonial-name" itemprop="author">[Tomas K.]</span>
+         <span class="testimonial-role">[Rolė, sektorius · Data]</span>
+       </div>
+       <span class="testimonial-result">[Rezultatas: VDAI €0 baudų]</span>
+     </figcaption>
+   </figure>
+
+(G) FAQ SEKCIJA — 12 klausimų 2 stulpeliuose (pillar) arba 5-6 (cluster)
+   <div class="faq-grid">
+     <div class="faq-list">[6 .faq-item — kairė kolona]</div>
+     <div class="faq-list">[6 .faq-item — dešinė kolona]</div>
+   </div>
    Klausimai turi atsakyti į long-tail užklausas (žr. brief'ą).
+   Atsakymai 50-80 žodžių, su konkrečiais skaičiais ir teisės aktų str.
 
 ## 3. SEO TAISYKLĖS
 
@@ -121,18 +157,26 @@ Grąžink JSON objektą su šiais laukais (visi PRIVALOMI):
   "post_slug": "kebab-case-be-diakritiku",
   "post_category": "BDAR | NIS2 | Kibernetinis saugumas | DPO | Mokymai",
   "post_cat_key": "bdar | nis2 | sauga | dpo | mokymai",
-  "post_cat_badge": "BDAR | NIS2 | SAUGA | DPO | MOKYMAI",
+  "post_date": "YYYY-MM-DD",
+  "post_date_human": "2026 m. gegužės 9 d.",
   "post_read_min": 7,
   "post_word_count": 1850,
-  "post_author": "Marina Kazlauskienė | Justinas Petraitis",
-  "post_author_role": "Teisės ekspertė, BDAR | IT saugumo ekspertas",
-  "post_author_initials": "MK | JP",
-  "post_keywords_csv": "kw1, kw2, kw3, kw4, kw5",
+  "post_author": "Marina | Justinas | Veriva komanda",
+  "post_author_role": "Teisės ekspertė, BDAR | IT saugumo ekspertas | Veriva ekspertų komanda",
+  "post_author_initial": "M | J | V",
+  "post_hero_img": "/assets/img/blog/{slug}-hero.svg",
+  "post_hero_alt": "180-300 chr descriptive alt su keyword'ais",
+  "post_hero_caption": "1 sakinys, image kontekstas",
+  "post_keywords_csv": "kw1, kw2, kw3, kw4, kw5 (schema.org)",
+  "post_keywords_meta": "kw1, kw2, ..., kw12 (meta tag, 10+ KW)",
   "post_definition": "Featured snippet paragrafas 40-60 žodžių",
   "post_toc_html": "<li><a href=\"#h2-1\">H2 title 1</a></li><li><a href=\"#h2-2\">H2 title 2</a></li>...",
   "post_body_html": "<h2 id=\"h2-1\">...</h2><p>...</p><h3>...</h3>... (full HTML)",
-  "post_faq_html": "<div class=\"faq-item\"><button class=\"faq-q\">Klausimas?<span class=\"faq-ico\">+</span></button><div class=\"faq-a\"><div class=\"faq-a-in\">Atsakymas</div></div></div>... (5 items)",
-  "post_faq_schema_json": "{\"@context\":\"https://schema.org\",\"@type\":\"FAQPage\",\"mainEntity\":[{...}]} (5 questions)"
+  "post_faq_html": "<div class=\"faq-list\"><div class=\"faq-item\">...</div>...(6)</div><div class=\"faq-list\">...(6)</div> (12 items 2 columns pillar)",
+  "post_faq_schema_json": "{\"@context\":\"https://schema.org\",\"@type\":\"FAQPage\",\"inLanguage\":\"lt-LT\",\"mainEntity\":[{...}]} (5-12 questions)",
+  "post_howto_schema_json": "{HowTo schema if step-by-step, else null}",
+  "post_review_schema_json": "{Review schema if testimonial included, else null}",
+  "post_testimonial_html": "<figure class=\"testimonial\" itemscope...>...</figure> (or empty string)"
 }
 
 NIEKADA negrąžink markdown — tik HTML body'je. NIEKADA negrąžink ```html``` code block. Tik raw JSON.
@@ -143,20 +187,44 @@ KOKYBĖS PATIKRA PRIEŠ GRĄŽINANT
 
 Prieš grąžindamas atsakymą, patikrink:
 
+SEO META:
 [ ] post_title ≤60 simb. ir primary KW pirmuose 30 simb.
 [ ] post_description 140-160 simb. ir primary KW pirmuose 60 simb.
 [ ] post_slug be diakritikų, kebab-case, 3-6 žodžiai
-[ ] post_definition 40-60 žodžių
-[ ] post_body_html turi 5-8 H2 (su id atributais)
+[ ] post_keywords_csv (schema) 5+ KW; post_keywords_meta (meta tag) 10+ KW
+[ ] post_hero_img path = /assets/img/blog/{slug}-hero.svg (1200×630 SVG)
+[ ] post_hero_alt 180-300 chr, su 2-3 keyword'ais natural
+
+STRUKTŪRA:
+[ ] post_definition 40-60 žodžių (featured snippet)
+[ ] post_body_html turi 5-8 H2 (cluster) arba 8-12 H2 (pillar) — visi su `id`
 [ ] post_body_html turi bent 1× callout, 1× stat-hl, 1× blockquote
-[ ] post_body_html turi 2-4 vidinius linkus + 1 išorinį
-[ ] post_body_html turi 1× <div class="cta-inline">...</div>
-[ ] post_faq_html turi tiksliai 5 <div class="faq-item">
-[ ] post_faq_schema_json turi tiksliai 5 mainEntity items
-[ ] Žodžių skaičius post_body_html — 1500-2500 (default cluster)
+[ ] post_body_html turi bent 1× <figure> body image (pillar) ARBA hero figure (cluster)
+[ ] post_body_html turi 1-2× <div class="cta-inline"> (1 cluster, 2 pillar)
+[ ] post_body_html turi 2-4 vidinius linkus + 1 išorinį (autoritetingą)
+[ ] Anchor text DIVERSIFIKACIJA — niekada to paties anchor 3+ kartus
+[ ] post_faq_html turi 5-6 .faq-item (cluster) arba 12 (pillar — .faq-grid 2 columns)
+[ ] post_faq_schema_json mainEntity matches HTML count
+[ ] post_faq_schema_json turi `"inLanguage": "lt-LT"`
+
+A11Y (privaloma):
+[ ] H1 vienintelis (template `<h1>{{POST_TITLE}}</h1>` + `<title>` matching)
+[ ] Visi <figure><img alt="..."> alt 100+ chr, ne "image1.jpg"
+[ ] Visi išoriniai linkai turi rel="noopener" jei target="_blank"
+[ ] Tabelės turi <th> (table headers)
+
+KALBA:
+[ ] Žodžių skaičius post_body_html — 1500-2500 cluster, 2800-3500 pillar
 [ ] Visi sakiniai ≤20 žodžių (>80%)
 [ ] Jokio "mūsų patyrę specialistai", "efektyvūs sprendimai"
-[ ] LT diakritikai teisingi visur
+[ ] LT diakritikai teisingi visur (ą č ę ė į š ų ū ž)
+[ ] post_author yra "Marina" / "Justinas" / "Veriva komanda" — NE pavardės
+[ ] post_author_initial yra 1 simbolis (M, J, V)
+
+BRAND CONTENT:
+[ ] cta-inline-p turi paminėti: 120+ klientų, €0 VDAI baudų nuo 2017 m.
+[ ] "Veriva 5-7 dienos" tipo claim'ai — MAKS 2× per straipsnį
+[ ] Konkretūs skaičiai vietoj prieveiksmių ("€20M", "72 val.", "+48%")
 
 Jei kuris nors checkbox FAIL — perrašyk TĄ sekciją, ne visą atsakymą.
 ```

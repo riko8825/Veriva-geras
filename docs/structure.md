@@ -19,9 +19,14 @@ Detalus kiekvieno puslapio aprašymas — kas yra, kokios sekcijos, kokia paskir
 8. Atsiliepimai / Rezultatai (`#atsiliepimai`) — `testi-bg` + sektorių strip
 9. Kainos (`#kainos`) — 3 paketai (Shy / Standard / Advance)
 10. **Tinklaraštis (`#blog`) — `blog-bg` — 3 latest posts + "Visi straipsniai" → `/blog.html`**
-11. FAQ (`faq-bg`)
+    - Pirma kortelė (2026-05): `/blog/bdar-baudos-lietuvoje.html` (PUBLISHED)
+11. FAQ (`faq-bg`) — **12 klausimų (5 pagerinti + 7 nauji su SEO/GEO)** + FAQPage schema (12 Q&A)
 12. Kontaktai (`#kontaktai`) — `contact-bg` — minimal form
 13. Footer
+
+**Schema.org** (head): `ProfessionalService` (21 laukai — geo coords, addressRegion, areaServed Country+City, priceRange, taxID/vatID, knowsAbout, contactPoint) + `FAQPage` (12 Q&A, `inLanguage: lt-LT`)
+
+**GEO meta**: `geo.region=LT-VL`, `geo.placename=Vilnius`, `geo.position=54.6800;25.2643`, `ICBM`
 
 **CTA**: Pradėti konsultaciją → `#kontaktai` (primary), Atlikti BDAR rizikos testą → `#main-widget` (secondary)
 
@@ -106,38 +111,100 @@ Detalus kiekvieno puslapio aprašymas — kas yra, kokios sekcijos, kokia paskir
 
 ---
 
-## `/blog/template.html` — Blog post template
+## `/blog/template.html` — Blog post template (v2 post-polish)
 
-**Tikslas**: Vienas template'as visiems blog post'ams. Naudojamas `blog-gen` automatizacijos (TODO: dar nesukurta).
+**Tikslas**: Vienas template'as visiems blog post'ams. Reference implementation: `/blog/bdar-baudos-lietuvoje.html` (audit health 19/20).
 
 **Placeholder sintaksė**: `{{KEY}}` — pipeline'as `replaceAll()` keičia į turinį.
 
-**Privalomi placeholder laukai** (pilnas sąrašas template komentaruose):
-- Meta: `{{POST_TITLE}}`, `{{POST_DESCRIPTION}}`, `{{POST_SLUG}}`, `{{POST_CATEGORY}}`, `{{POST_CAT_KEY}}`, `{{POST_CAT_BADGE}}`, `{{POST_DATE}}`, `{{POST_DATE_HUMAN}}`, `{{POST_READ_MIN}}`, `{{POST_WORD_COUNT}}`
-- Author: `{{POST_AUTHOR}}`, `{{POST_AUTHOR_ROLE}}`, `{{POST_AUTHOR_INITIALS}}`
-- Content: `{{POST_DEFINITION}}`, `{{POST_TOC_HTML}}`, `{{POST_BODY_HTML}}`, `{{POST_FAQ_HTML}}`, `{{POST_FAQ_SCHEMA_JSON}}`, `{{POST_KEYWORDS_CSV}}`, `{{RELATED_POSTS_HTML}}`
+**Privalomi placeholder laukai** (24 unikalūs, pilnas sąrašas template komentaruose):
+- Meta: `{{POST_TITLE}}`, `{{POST_DESCRIPTION}}`, `{{POST_SLUG}}`, `{{POST_CATEGORY}}`, `{{POST_DATE}}`, `{{POST_DATE_HUMAN}}`, `{{POST_READ_MIN}}`, `{{POST_WORD_COUNT}}`
+- Author: `{{POST_AUTHOR}}`, `{{POST_AUTHOR_ROLE}}`, `{{POST_AUTHOR_INITIAL}}` (vienas simbolis — M/J/V, NE pavardės)
+- Image: `{{POST_HERO_IMG}}`, `{{POST_HERO_ALT}}` (180-300 chr), `{{POST_HERO_CAPTION}}`
+- Content: `{{POST_DEFINITION}}`, `{{POST_TOC_HTML}}`, `{{POST_BODY_HTML}}`, `{{POST_FAQ_HTML}}`, `{{POST_TESTIMONIAL_HTML}}`
+- Schema: `{{POST_FAQ_SCHEMA_JSON}}`, `{{POST_HOWTO_SCHEMA_JSON}}`, `{{POST_REVIEW_SCHEMA_JSON}}`
+- SEO: `{{POST_KEYWORDS_CSV}}` (5+ schema), `{{POST_KEYWORDS_META}}` (10+ meta tag)
+- Related: `{{RELATED_POSTS_HTML}}`
 
 **Sekcijos**:
-1. Nav (dark, paveldi iš index)
-2. Article hero (`ah`) — breadcrumbs + meta + H1 + sub + author block
-3. Article body (`ab`) — `prose` klasė viduje:
-   - `<p class="definition">` — featured snippet (po H1)
-   - `<div class="toc">` — auto-numbered TOC
-   - Main body — H2/H3/p/ul/ol/blockquote/callout/stat-hl
-4. Inline CTA blokas (`cta-inline`) — kvietimas atlikti rizikos testą
-5. Share mygtukai (LinkedIn / Facebook / Email)
-6. FAQ sekcija (`faq-sec`) — 5 klausimai (accordion JS) + `FAQPage` schema
-7. Related posts (`rel`) — 2-3 susiję straipsniai
-8. Footer
+1. Nav (`<nav aria-label="Pagrindinis meniu">`, fixed top:0, height:60px) — 1:1 su index.html
+2. Skip-to-content link (a11y, focus-visible only)
+3. `<main id="main" tabindex="-1">` (a11y landmark)
+4. Article header (`<header class="ah">` — buvo `<section>`) — breadcrumbs + meta + H1 + sub + author block
+5. Article body (`ab`) — `prose` klasė viduje:
+   - `<figure class="figure-dark">` — featured hero image (1200×630 SVG, eager loading)
+   - `<p class="definition">` — featured snippet (po hero)
+   - `<div class="toc">` — auto-numbered TOC (lt: "Šiame straipsnyje")
+   - Main body — H2/H3/p/ul/ol/blockquote/callout/stat-hl/figure/testimonial
+6. FAQ sekcija (`faq-sec` su `.faq-grid` 2 stulpeliai) — 5-12 klausimų + FAQPage schema
+7. Inline CTA blokas (`cta-inline`) pabaigoje — privalomas
+8. Share mygtukai (LinkedIn / Facebook / Email) — touch target 40-44px
+9. Related posts (`rel`) — 2-3 susiję straipsniai
+10. Footer
 
-**Schema.org**: `BlogPosting` (su `wordCount` + `keywords` + `articleSection`) + `BreadcrumbList` + `FAQPage`
+**Schema.org** (4-5 blokai):
+- `BlogPosting` (su `image` array, `wordCount`, `keywords`, `articleSection`, `inLanguage: lt-LT`)
+- `BreadcrumbList`
+- `FAQPage` (5-12 Q&A)
+- `HowTo` (jei step-by-step — optional)
+- `Review` (jei testimonial — optional)
 
-**Komponentai body'je**:
-- `.definition` — featured snippet paragrafas
-- `.callout` — su `<strong>SVARBU</strong>` header'iu
-- `.stat-hl` — skaičiaus paryškinimas
-- `<blockquote>` — citata
-- `.cta-inline` — vidury straipsnio CTA blokas
+**Komponentai body'je** (CSS klasės):
+- `.definition` — featured snippet paragrafas (privaloma)
+- `.callout` su `<strong>SVARBU</strong>` (bent 1×, color: `--gold-strong` 5.96:1 kontrastui)
+- `.stat-hl` — skaičiaus paryškinimas (bent 1×)
+- `<blockquote>` — citata (bent 1×)
+- `<figure>` body images (1100×360 schemos, 1100×480 procesai) su aspect-ratio fallbacks
+- `<figure class="testimonial">` — social proof (Review microdata)
+- `.cta-inline` — 1× cluster, 2× pillar (privaloma pabaigoje)
+
+**Design tokens** (4 nauji po polish):
+- `--gold-strong: #7d5b14` (5.96:1 contrast — WCAG AA)
+- `--red: #dc2626`
+- `--g500: #6f6a5e` (5.03:1 — ankstesnė versija buvo 3.78)
+- `--g600: #5a564c`
+
+**Easing tokens** (Kowalski patterns):
+- `--ease-out-quint: cubic-bezier(.23,1,.32,1)`
+- `--ease-out-cubic: cubic-bezier(.33,1,.68,1)`
+- `--ease-in-out-cubic: cubic-bezier(.645,.045,.355,1)`
+
+**A11Y privaloma**:
+- `<main>` landmark + skip-link
+- `:focus-visible` global (2px outline, blue2 / gold2 CTA'ams)
+- FAQ `aria-expanded` + `aria-controls` (per JS dinamiškai)
+- Hamburger `aria-expanded` toggle
+- Image `width`/`height` + aspect-ratio fallbacks (CLS prevention)
+- `(hover: hover)` media wrap visiems hover'iams
+- `prefers-reduced-motion` respect
+
+**JS funkcijos**:
+- `toggleMob()` / `closeMob()` — mob menu su `aria-expanded` sync
+- FAQ accordion forEach — pridėta `aria-expanded` toggle + dinaminiai `aria-controls`/`id`
+- IntersectionObserver — scroll-triggered fade-in/slide-up (`.reveal` klasė)
+
+**Author'ių sistema**:
+| Vardas | Initial | Rolė | Sritis |
+|---|---|---|---|
+| Marina | M | Teisės ekspertė, BDAR | BDAR, DPO, teisė |
+| Justinas | J | IT saugumo ekspertas | NIS2, kibernetinis saugumas, IT auditas |
+| Veriva komanda | V | Veriva ekspertų komanda | Bendro pobūdžio |
+
+---
+
+## `/blog/bdar-baudos-lietuvoje.html` — Pirmas pillar postas (PUBLISHED)
+
+**Status**: 🟢 PUBLISHED (2026-05-09), `index, follow`
+
+**Specs**:
+- Word count: 2846 | Reading: 15 min
+- Audit Health: 19/20 (post-polish)
+- Author: Marina (M)
+- Hero image: `/assets/img/blog/bdar-baudos-hero.svg` (1200×630)
+- Body images: `vdai-baudos-skaiciavimas.svg` (1100×360), `bdar-atitiktis-5-zingsniai.svg` (1100×480)
+- 4 JSON-LD blocks: BlogPosting + BreadcrumbList + FAQPage (12) + HowTo (5 steps) + Review
+
+**Linkavimas**: nuoroda iš `index.html` (#blog kortelė) ir `blog.html` (pirma kortelė) + `sitemap.xml`
 
 ---
 

@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <!--
 ═══════════════════════════════════════════════════════
-  VERIVA BLOG POST TEMPLATE
+  VERIVA BLOG POST TEMPLATE — v2 (post-polish standard)
   Žr. taip pat: docs/blog-content-rules.md (privalomos taisyklės)
                 docs/blog-keywords.md (LT keyword'ų bankas)
                 docs/blog-system-prompt.md (Claude API prompt'as)
+                blog/bdar-baudos-lietuvoje.html (reference implementation)
+
+  ŠIS TEMPLATE'AS YRA STANDARTAS — VISI BUSIMI BLOG POST'AI PRIVALO ATITIKTI:
+    ✓ A11y: <main> landmark, skip-link, :focus-visible, FAQ aria-expanded/aria-controls
+    ✓ SEO: BlogPosting + BreadcrumbList + FAQPage + (HowTo jei step-by-step)
+    ✓ GEO: Featured snippet definition po H1, FAQ klausimai, schema.org
+    ✓ Komponentai: callout, stat-hl, blockquote, testimonial, cta-inline, share
+    ✓ Šriftai: Syne (display) + Plus Jakarta Sans (body) — NIEKADA kitokie
+    ✓ Spalvos: --ink, --blue2, --gold2 + variations — NE hardcoded
+    ✓ Mobile-first responsive, prefers-reduced-motion, hover:hover wraps
 ═══════════════════════════════════════════════════════
 
   KEYWORD MAP — užpildyti PRIEŠ rašant turinį
@@ -25,47 +35,68 @@
   SLUG       : {{POST_SLUG}}     (/blog/{slug}.html — kebab-case, LT be diakritikų: bdar-auditas-vadovas)
 
   ─────────────────────────────────────────────
-  PLACEHOLDER LAUKAI (pipeline užpildo):
+  PLACEHOLDER LAUKAI:
   ─────────────────────────────────────────────
   Meta:
     {{POST_TITLE}}              — H1 + <title> (≤60 simb. EN/LT, primary KW pirmas)
     {{POST_DESCRIPTION}}        — meta description (140–160 simb., primary KW pirmuose 60 simb.)
-    {{POST_SLUG}}               — URL slug
+    {{POST_SLUG}}               — URL slug (kebab-case)
     {{POST_CATEGORY}}           — BDAR | NIS2 | Kibernetinis saugumas | DPO | Mokymai
-    {{POST_CAT_KEY}}            — bdar | nis2 | sauga | dpo | mokymai
-    {{POST_CAT_BADGE}}          — BDAR, NIS2, SAUGA, DPO, MOKYMAI (hero img)
     {{POST_DATE}}               — YYYY-MM-DD
     {{POST_DATE_HUMAN}}         — "2026 m. gegužės 9 d."
-    {{POST_READ_MIN}}           — skaitymo trukmė min.
+    {{POST_READ_MIN}}           — skaitymo trukmė (~200 wpm)
     {{POST_WORD_COUNT}}         — žodžių skaičius (schema.org)
   Author:
-    {{POST_AUTHOR}}             — "Marina Kazlauskienė" | "Justinas Petraitis"
+    {{POST_AUTHOR}}             — "Marina" | "Justinas" | "Veriva komanda"
     {{POST_AUTHOR_ROLE}}        — "Teisės ekspertė, BDAR" | "IT saugumo ekspertas"
-    {{POST_AUTHOR_INITIALS}}    — "MK" | "JP"
+    {{POST_AUTHOR_INITIAL}}     — "M" | "J" | "V"  (vienas simbolis, NE pavardės)
+  Images:
+    {{POST_HERO_IMG}}           — /assets/img/blog/{slug}-hero.svg (1200×630)
+    {{POST_HERO_ALT}}           — descriptive alt (180–300 chr, su keyword'ais)
+    {{POST_HERO_CAPTION}}       — figcaption po hero image
   Content:
-    {{POST_DEFINITION}}         — featured snippet paragrafas (40–60 žodžių, atsako į primary keyword klausimą)
-    {{POST_TOC_HTML}}           — table of contents (<li><a href="#h2-id">title</a></li>...)
-    {{POST_BODY_HTML}}           — full HTML (h2/h3/p/ul/ol/blockquote/callout/stat-hl/definition)
-    {{POST_FAQ_SCHEMA_JSON}}    — FAQPage schema (5 klausimų)
-    {{POST_FAQ_HTML}}           — vizualinė FAQ sekcija (klausimas + atsakymas)
-    {{POST_KEYWORDS_CSV}}       — schema.org "keywords" laukas ("kw1, kw2, kw3, kw4, kw5")
+    {{POST_DEFINITION}}         — featured snippet paragrafas (40–60 žodžių)
+    {{POST_TOC_HTML}}           — <li><a href="#h2-id">title</a></li>... (8-12)
+    {{POST_BODY_HTML}}          — full HTML su komponentais
+    {{POST_FAQ_SCHEMA_JSON}}    — FAQPage schema (5–12 klausimų)
+    {{POST_HOWTO_SCHEMA_JSON}}  — HowTo schema (jei step-by-step) — galima palikti tuščią
+    {{POST_REVIEW_SCHEMA_JSON}} — Review schema (testimonial) — galima palikti tuščią
+    {{POST_FAQ_HTML}}           — vizualinė FAQ sekcija (12 Q&A grid'e)
+    {{POST_TESTIMONIAL_HTML}}   — social proof blokas (kliento atsiliepimas)
+    {{POST_KEYWORDS_CSV}}       — schema.org "keywords" (5+ KW)
+    {{POST_KEYWORDS_META}}      — <meta name="keywords"> (10+ KW)
     {{RELATED_POSTS_HTML}}      — 2-3 related kortelės
 
   ─────────────────────────────────────────────
   KOMPONENTAI body'je (POST_BODY_HTML):
   ─────────────────────────────────────────────
     <p class="definition">…</p>           — featured snippet (po H1, prieš pirmą H2)
-    <div class="callout"><strong>SVARBU</strong><p>…</p></div>
-    <div class="stat-hl">
+    <div class="callout"><strong>SVARBU</strong><p>…</p></div>    — bent 1×
+    <div class="stat-hl">                                          — bent 1× (svarbus skaičius)
       <div class="stat-hl-num">€20M</div>
       <div class="stat-hl-body"><div class="stat-hl-label">…</div><div class="stat-hl-sub">…</div></div>
     </div>
-    <blockquote><p>citata su autoritetu</p></blockquote>
+    <blockquote><p>citata su autoritetu</p></blockquote>           — bent 1× (jei yra ekspertinis cituotinas)
+    <figure>                                                       — body image #1, #2 (NE hero)
+      <img src="…" width="1100" height="360" alt="…" loading="lazy" decoding="async">
+      <figcaption>…</figcaption>
+    </figure>
+    <figure class="figure-dark">                                   — kai SVG turi dark fone
+    <div class="cta-inline">                                       — bent 2× (vidury + pabaigoje)
+      <h3 class="cta-inline-h">… <em>highlight</em> …</h3>
+      <p class="cta-inline-p">…</p>
+      <a href="/#kontaktai" class="cta-inline-btn">… →</a>
+    </div>
+    <figure class="testimonial" itemscope itemtype="https://schema.org/Review">
+      … (žr. blog/bdar-baudos-lietuvoje.html testimonial blokas)
+    </figure>
 
   Konvencijos:
     - Failo path: /blog/{slug}.html (slug-only, BE datos prefix — geriau SEO)
     - Canonical: https://veriva.lt/blog/{slug}.html
-    - Schema.org: BlogPosting + BreadcrumbList + FAQPage (jei yra FAQ sekcija)
+    - Schema.org: BlogPosting + BreadcrumbList + FAQPage (privaloma); HowTo + Review (jei aktualu)
+    - Hero image: 1200×630 SVG, dark fone, brand spalvos
+    - Body images: 1100×360 (info-graphics) arba 1100×480 (proceso schemos)
 ═══════════════════════════════════════════════════════
 -->
 <html lang="lt">
@@ -73,21 +104,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="{{POST_DESCRIPTION}}">
-<title>{{POST_TITLE}} — Veriva</title>
+<title>{{POST_TITLE}}</title>
 <meta property="og:title" content="{{POST_TITLE}}">
 <meta property="og:description" content="{{POST_DESCRIPTION}}">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://veriva.lt/blog/{{POST_SLUG}}.html">
 <meta property="og:locale" content="lt_LT">
+<meta property="og:site_name" content="Veriva">
 <meta property="article:published_time" content="{{POST_DATE}}">
+<meta property="article:modified_time" content="{{POST_DATE}}">
 <meta property="article:author" content="{{POST_AUTHOR}}">
 <meta property="article:section" content="{{POST_CATEGORY}}">
-<meta name="robots" content="index, follow">
+<meta property="og:image" content="https://veriva.lt{{POST_HERO_IMG}}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/svg+xml">
+<meta property="og:image:alt" content="{{POST_HERO_ALT}}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{POST_TITLE}}">
+<meta name="twitter:description" content="{{POST_DESCRIPTION}}">
+<meta name="twitter:image" content="https://veriva.lt{{POST_HERO_IMG}}">
+<meta name="twitter:image:alt" content="{{POST_HERO_ALT}}">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="author" content="{{POST_AUTHOR}}">
+<meta name="keywords" content="{{POST_KEYWORDS_META}}">
+<meta name="theme-color" content="#07111f">
+<meta name="color-scheme" content="light">
 <link rel="canonical" href="https://veriva.lt/blog/{{POST_SLUG}}.html">
 <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
 <link rel="apple-touch-icon" href="/assets/img/favicon.svg">
-<meta name="theme-color" content="#07111f">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -100,6 +145,15 @@
       "@id": "https://veriva.lt/blog/{{POST_SLUG}}.html#article",
       "headline": "{{POST_TITLE}}",
       "description": "{{POST_DESCRIPTION}}",
+      "image": [
+        {
+          "@type": "ImageObject",
+          "url": "https://veriva.lt{{POST_HERO_IMG}}",
+          "width": 1200,
+          "height": 630,
+          "caption": "{{POST_HERO_CAPTION}}"
+        }
+      ],
       "datePublished": "{{POST_DATE}}",
       "dateModified": "{{POST_DATE}}",
       "inLanguage": "lt-LT",
@@ -136,70 +190,108 @@
   ]
 }
 </script>
-<!-- FAQ Schema (GEO/AI search optimization) -->
 <script type="application/ld+json">
 {{POST_FAQ_SCHEMA_JSON}}
+</script>
+<!-- HowTo schema — jei straipsnis yra step-by-step. Jei ne, pašalink visą bloką. -->
+<script type="application/ld+json">
+{{POST_HOWTO_SCHEMA_JSON}}
+</script>
+<!-- Review schema — jei yra testimonial. Jei ne, pašalink visą bloką. -->
+<script type="application/ld+json">
+{{POST_REVIEW_SCHEMA_JSON}}
 </script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --ink:#07111f;--ink2:#0c1a2e;
   --blue:#1a47cc;--blue2:#2255e0;
-  --cyan:#00b4d8;--gold:#c8962a;--gold2:#e8b84b;
+  --cyan:#00b4d8;--gold:#c8962a;--gold-strong:#7d5b14;--gold2:#e8b84b;
+  --red:#dc2626;
   --white:#fff;--cream:#f8f7f4;
-  --g50:#f3f2ee;--g100:#eae8e2;--g300:#c5c2b8;--g500:#837e72;--g700:#44413b;
+  --g50:#f3f2ee;--g100:#eae8e2;--g300:#c5c2b8;--g500:#6f6a5e;--g600:#5a564c;--g700:#44413b;
   --border:rgba(7,17,31,.09);--border2:rgba(7,17,31,.15);
   --ease:cubic-bezier(.4,0,.2,1);--t:.2s var(--ease);
+  --ease-out-quint:cubic-bezier(.23,1,.32,1);
+  --ease-out-cubic:cubic-bezier(.33,1,.68,1);
+  --ease-in-out-cubic:cubic-bezier(.645,.045,.355,1);
   --max:1140px;
   --read-max:720px;
   --ff:'Plus Jakarta Sans',system-ui,sans-serif;
   --ffd:'Syne',system-ui,sans-serif;
 }
 html{scroll-behavior:smooth;font-size:16px}
-body{font-family:var(--ff);color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{font-family:var(--ff);color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:60px}
 a{color:var(--blue2);text-decoration:none;transition:color var(--t)}
 a:hover{color:var(--blue)}
 ul,ol{list-style:none}
+
+/* === A11Y: focus-visible + skip-link === */
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--blue2);outline-offset:3px;border-radius:4px}
+.nav-cta:focus-visible,.cta-inline-btn:focus-visible{outline-color:var(--gold2);outline-offset:3px}
+.faq-q:focus-visible{outline-offset:-2px;border-radius:0}
+.skip-link{position:absolute;top:-100px;left:16px;background:var(--ink);color:#fff;padding:12px 18px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;z-index:300;transition:top .2s var(--ease-out-cubic)}
+.skip-link:focus{top:8px}
+
+/* === REVEAL ON SCROLL (Kowalski pattern) === */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease-out-quint),transform .6s var(--ease-out-quint);will-change:opacity,transform}
+.reveal.in{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
 ::selection{background:rgba(26,71,204,.18)}
 
-/* ── NAV ── */
-nav{position:sticky;top:0;z-index:50;background:rgba(7,17,31,.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06)}
-.nw{max-width:var(--max);margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
-.nl{display:flex;gap:28px;align-items:center}
-.nl a{color:rgba(255,255,255,.72);font-size:13.5px;font-weight:500;transition:color var(--t)}
-.nl a:hover{color:#fff}
-.nav-cta{padding:9px 18px;background:var(--blue2);color:#fff!important;border-radius:7px;font-weight:600}
-.nav-cta:hover{background:var(--blue)}
+/* NAV — 1:1 su index.html */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(7,17,31,.95);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.nw{max-width:var(--max);margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nl{display:flex;align-items:center;gap:2px;list-style:none}
+.nl a{display:block;padding:7px 13px;font-size:13px;font-weight:500;color:rgba(255,255,255,.55);text-decoration:none;border-radius:7px;transition:all var(--t)}
+.nl a:hover{color:#fff;background:rgba(255,255,255,.07)}
+.nav-cta{
+  background:var(--blue)!important;color:#fff!important;
+  padding:8px 18px!important;border-radius:8px!important;font-weight:700!important;font-size:13px!important;
+  transition:all var(--t)!important;
+}
+.nav-cta:hover{background:var(--blue2)!important;transform:translateY(-1px)!important}
 .hamburger{display:none;background:none;border:none;color:#fff;cursor:pointer;padding:6px}
-.mob-menu{display:none;background:var(--ink);padding:18px 24px;flex-direction:column;gap:14px;border-bottom:1px solid rgba(255,255,255,.06)}
-.mob-menu a{color:rgba(255,255,255,.78);font-size:15px;font-weight:500}
+.mob-menu{display:none;position:fixed;inset:0;top:60px;background:var(--ink);z-index:199;padding:24px;flex-direction:column;gap:4px}
 .mob-menu.open{display:flex}
+.mob-menu a{font-size:17px;font-weight:600;color:rgba(255,255,255,.75);text-decoration:none;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.mob-menu a:last-child{color:var(--gold2);font-weight:800;border:none;margin-top:8px}
 
-/* ── ARTICLE HERO ── */
+/* ARTICLE HERO */
 .ah{padding:64px 24px 40px;background:var(--ink);color:#fff;position:relative;overflow:hidden}
-.ah::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(26,71,204,.2),transparent 50%),radial-gradient(circle at 80% 70%,rgba(200,150,42,.1),transparent 55%);pointer-events:none}
+.ah::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(26,71,204,.1),transparent 50%),radial-gradient(circle at 80% 70%,rgba(200,150,42,.05),transparent 55%);pointer-events:none}
 .ah-w{max-width:var(--read-max);margin:0 auto;position:relative;z-index:1}
-.ah-crumbs{font-size:12px;color:rgba(255,255,255,.45);margin-bottom:18px;letter-spacing:.04em}
+.ah-crumbs{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:18px;letter-spacing:.04em}
 .ah-crumbs a{color:rgba(255,255,255,.65)}
 .ah-crumbs a:hover{color:#fff}
-.ah-meta{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+.ah-meta{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
 .ah-cat{color:var(--gold2)}
 .ah-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.35)}
 .ah-time{color:rgba(255,255,255,.55)}
-.ah h1{font-family:var(--ffd);font-size:clamp(28px,3.6vw,44px);line-height:1.12;letter-spacing:-.022em;margin-bottom:18px;font-weight:800}
-.ah-sub{font-size:17px;color:rgba(255,255,255,.7);line-height:1.6;font-weight:300;margin-bottom:24px}
+.ah h1{font-family:var(--ffd);font-size:clamp(32px,4.2vw,52px);line-height:1.08;letter-spacing:-.025em;margin-bottom:20px;font-weight:700}
+.ah-sub{font-size:17px;color:rgba(255,255,255,.7);line-height:1.7;font-weight:300;margin-bottom:24px}
 .ah-author{display:flex;align-items:center;gap:12px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08)}
-.ah-av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--blue2) 0%,var(--gold) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--ffd);font-size:14px;font-weight:800;color:#fff}
+.ah-av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--blue2) 0%,var(--gold) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--ffd);font-size:13px;font-weight:700;color:#fff}
 .ah-an{font-size:13.5px;font-weight:700;color:#fff}
-.ah-ar{font-size:11.5px;color:rgba(255,255,255,.5)}
+.ah-ar{font-size:11.5px;color:rgba(255,255,255,.6)}
 
-/* ── ARTICLE BODY ── */
+/* ARTICLE BODY */
 .ab{padding:56px 24px 88px;background:var(--cream)}
 .ab-w{max-width:var(--read-max);margin:0 auto}
 .prose{font-size:16px;line-height:1.75;color:var(--g700)}
 .prose > * + *{margin-top:1.2em}
-.prose h2{font-family:var(--ffd);font-size:26px;line-height:1.25;letter-spacing:-.018em;color:var(--ink);margin-top:2.2em;margin-bottom:.5em;font-weight:700}
-.prose h3{font-family:var(--ffd);font-size:20px;line-height:1.3;letter-spacing:-.012em;color:var(--ink);margin-top:1.8em;margin-bottom:.4em;font-weight:700}
+.prose h2{font-family:var(--ffd);font-size:clamp(22px,2.4vw,28px);line-height:1.14;letter-spacing:-.022em;color:var(--ink);margin-top:2.2em;margin-bottom:.5em;font-weight:700;scroll-margin-top:120px}
+.prose h3{font-family:var(--ffd);font-size:19px;line-height:1.2;letter-spacing:-.018em;color:var(--ink);margin-top:1.8em;margin-bottom:.4em;font-weight:700}
 .prose h2:first-child,.prose h3:first-child{margin-top:0}
 .prose p{font-size:16.5px;line-height:1.75;color:var(--g700)}
 .prose strong{color:var(--ink);font-weight:700}
@@ -209,93 +301,129 @@ nav{position:sticky;top:0;z-index:50;background:rgba(7,17,31,.96);backdrop-filte
 .prose ul li::before{content:'';position:absolute;left:0;top:.65em;width:8px;height:8px;background:var(--blue2);border-radius:2px;transform:rotate(45deg)}
 .prose ol{counter-reset:num}
 .prose ol li{counter-increment:num;position:relative;padding-left:32px;margin-bottom:.6em;list-style:none}
-.prose ol li::before{content:counter(num);position:absolute;left:0;top:0;width:24px;height:24px;background:var(--ink);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:800;font-family:var(--ffd)}
+.prose ol li::before{content:counter(num);position:absolute;left:0;top:0;width:24px;height:24px;background:var(--ink);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;font-family:var(--ffd)}
 .prose blockquote{padding:20px 24px;background:var(--white);border-left:3px solid var(--blue2);border-radius:0 8px 8px 0;font-style:italic;color:var(--ink);margin:1.5em 0}
-.prose blockquote p{font-size:17px;line-height:1.65}
+.prose blockquote p{font-size:17px;line-height:1.7}
 .prose code{background:var(--g100);padding:2px 7px;border-radius:4px;font-size:14px;font-family:'Courier New',monospace;color:var(--ink)}
-.prose pre{background:var(--ink);color:rgba(255,255,255,.9);padding:20px 22px;border-radius:8px;overflow-x:auto;font-family:'Courier New',monospace;font-size:13.5px;line-height:1.6}
-.prose pre code{background:none;padding:0;color:inherit;font-size:inherit}
-.prose a{color:var(--blue2);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
-.prose a:hover{color:var(--blue)}
-.prose img{max-width:100%;height:auto;border-radius:8px;margin:1.5em 0}
+.prose a{color:var(--blue2);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;transition:color .2s var(--ease-out-cubic),text-decoration-thickness .2s var(--ease-out-cubic),text-underline-offset .2s var(--ease-out-cubic)}
+.prose a:hover{color:var(--blue);text-decoration-thickness:2px;text-underline-offset:4px}
 .prose hr{border:none;border-top:1px solid var(--border);margin:2.5em 0}
+.prose figure{margin:2em 0;padding:0}
+.prose figure img{width:100%;height:auto;display:block;border-radius:10px;border:1px solid var(--border);background:var(--white);aspect-ratio:attr(width) / attr(height)}
+.prose figure figcaption{margin-top:12px;font-size:13px;color:var(--g700);text-align:center;line-height:1.5;font-style:italic}
+.prose figure.figure-dark img{border-color:rgba(7,17,31,.15);background:transparent}
+.prose figure img[width="1200"][height="630"]{aspect-ratio:1200/630}
+.prose figure img[width="1100"][height="360"]{aspect-ratio:1100/360}
+.prose figure img[width="1100"][height="480"]{aspect-ratio:1100/480}
 .prose table{width:100%;border-collapse:collapse;margin:1.5em 0;font-size:14.5px}
 .prose th,.prose td{padding:12px 14px;border-bottom:1px solid var(--border);text-align:left}
 .prose th{background:var(--g50);font-weight:700;color:var(--ink);font-size:13px;letter-spacing:.02em}
 
-/* ── DEFINITION (featured snippet) ── */
-.prose .definition{font-size:17px;color:var(--ink);font-weight:400;line-height:1.65;border-left:3px solid var(--blue2);padding:16px 22px;margin:0 0 28px;background:rgba(26,71,204,.04);border-radius:0 8px 8px 0}
+/* DEFINITION (featured snippet) */
+.prose .definition{font-size:17px;color:var(--ink);font-weight:400;line-height:1.7;border-left:3px solid var(--blue2);padding:16px 22px;margin:0 0 28px;background:rgba(26,71,204,.04);border-radius:0 8px 8px 0}
 
-/* ── TABLE OF CONTENTS ── */
+/* TOC */
 .toc{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:22px 26px;margin:0 0 40px}
-.toc-label{font-family:var(--ffd);font-size:11px;font-weight:800;color:var(--blue2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;display:block}
+.toc-label{font-family:var(--ff);font-size:11px;font-weight:800;color:var(--blue2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;display:block}
 .toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;counter-reset:toc}
-.toc-list li{counter-increment:toc;display:flex;align-items:baseline;gap:12px;font-size:14px}
+.toc-list li{counter-increment:toc;display:flex;align-items:baseline;gap:12px;font-size:14px;transition:transform .25s var(--ease-out-quint)}
 .toc-list li::before{content:counter(toc,decimal-leading-zero);color:var(--g300);font-size:11.5px;font-weight:700;font-family:var(--ffd);min-width:20px;flex-shrink:0}
-.toc-list a{color:var(--g700);text-decoration:none;line-height:1.5;transition:color var(--t)}
+.toc-list li:hover{transform:translateX(3px)}
+.toc-list a{color:var(--g700);text-decoration:none;line-height:1.5;transition:color .2s var(--ease-out-cubic)}
 .toc-list a:hover{color:var(--blue2)}
 
-/* ── CALLOUT ── */
+/* CALLOUT */
 .prose .callout{background:rgba(200,150,42,.06);border:1px solid rgba(200,150,42,.25);border-radius:8px;padding:20px 24px;margin:1.5em 0}
-.prose .callout strong{display:block;font-size:11px;font-weight:800;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
-.prose .callout p{margin:0;font-size:15px;color:var(--ink);line-height:1.65}
+.prose .callout strong{display:block;font-size:11px;font-weight:800;color:var(--gold-strong);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.prose .callout p{margin:0;font-size:15.5px;color:var(--ink);line-height:1.7}
 
-/* ── STAT HIGHLIGHT ── */
+/* STAT HL */
 .prose .stat-hl{display:flex;align-items:center;gap:24px;padding:24px 28px;background:var(--white);border:1px solid var(--border);border-radius:10px;margin:1.8em 0;flex-wrap:wrap}
-.stat-hl-num{font-family:var(--ffd);font-size:44px;font-weight:800;color:var(--blue2);letter-spacing:-.03em;line-height:1;flex-shrink:0}
+.stat-hl-num{font-family:var(--ffd);font-size:44px;font-weight:700;color:var(--blue2);letter-spacing:-.025em;line-height:1;flex-shrink:0}
 .stat-hl-body{display:flex;flex-direction:column;gap:4px}
 .stat-hl-label{font-size:14.5px;font-weight:700;color:var(--ink)}
 .stat-hl-sub{font-size:13px;color:var(--g500);line-height:1.55}
 
-/* ── FAQ SECTION ── */
-.faq-sec{margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
-.faq-sec-h{font-family:var(--ffd);font-size:24px;letter-spacing:-.015em;color:var(--ink);margin-bottom:24px;font-weight:700}
-.faq-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--white)}
-.faq-item{border-bottom:1px solid var(--border)}
-.faq-item:last-child{border-bottom:none}
-.faq-q{width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:18px 22px;font-family:var(--ff);font-size:14.5px;font-weight:600;color:var(--ink);text-align:left;transition:background var(--t)}
-.faq-q:hover{background:var(--g50)}
-.faq-ico{width:22px;height:22px;border-radius:50%;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:300;flex-shrink:0;transition:all var(--t)}
-.faq-item.open .faq-ico{background:var(--blue2);color:#fff;transform:rotate(45deg)}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .3s var(--ease)}
-.faq-item.open .faq-a{max-height:400px}
-.faq-a-in{padding:0 22px 18px;font-size:14px;line-height:1.7;color:var(--g700)}
+/* TESTIMONIAL (social proof) */
+.testimonial{margin:2.5em 0;padding:28px 32px;background:var(--white);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:10px;position:relative}
+.testimonial-stars{display:flex;gap:3px;margin-bottom:14px;color:var(--gold)}
+.testimonial-stars svg{width:16px;height:16px;flex-shrink:0}
+.testimonial-quote{font-size:16px;line-height:1.7;color:var(--ink);font-weight:400;margin-bottom:18px;font-style:italic}
+.testimonial-quote::before{content:'"';font-family:var(--ffd);font-size:48px;color:var(--gold);font-weight:800;float:left;line-height:.8;margin:8px 14px 0 -4px}
+.testimonial-attr{display:flex;align-items:center;gap:14px;padding-top:16px;border-top:1px solid var(--border)}
+.testimonial-av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--blue2) 0%,var(--gold) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--ffd);font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.testimonial-meta{display:flex;flex-direction:column;gap:2px}
+.testimonial-name{font-size:13.5px;font-weight:700;color:var(--ink)}
+.testimonial-role{font-size:12px;color:var(--g500)}
+.testimonial-result{display:inline-flex;align-items:center;gap:6px;margin-left:auto;font-size:11.5px;font-weight:700;color:var(--blue2);background:rgba(34,85,224,.08);padding:6px 12px;border-radius:100px;letter-spacing:.02em}
+@media(max-width:768px){
+  .testimonial{padding:22px 24px}
+  .testimonial-quote{font-size:15px}
+  .testimonial-result{display:none}
+}
 
-/* ── CTA INLINE ── */
+/* CTA INLINE */
 .cta-inline{margin:48px 0;padding:32px;background:var(--ink);color:#fff;border-radius:12px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden}
 .cta-inline::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 30%,rgba(26,71,204,.18),transparent 55%);pointer-events:none}
 .cta-inline > *{position:relative;z-index:1}
-.cta-inline-h{font-family:var(--ffd);font-size:22px;line-height:1.2;letter-spacing:-.015em;font-weight:700}
-.cta-inline-h em{font-style:normal;color:var(--gold2)}
-.cta-inline-p{font-size:14px;color:rgba(255,255,255,.65);line-height:1.6;font-weight:300}
-.cta-inline-btn{align-self:flex-start;padding:13px 24px;background:var(--blue2);color:#fff;border-radius:8px;font-size:13.5px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:background var(--t);margin-top:6px}
-.cta-inline-btn:hover{background:var(--blue);color:#fff}
+.cta-inline .cta-inline-h,.cta-inline-h{font-family:var(--ffd);font-size:22px;line-height:1.14;letter-spacing:-.02em;font-weight:700;color:#fff!important}
+.cta-inline .cta-inline-h em,.cta-inline-h em{font-style:normal;color:var(--gold2)!important}
+.cta-inline .cta-inline-p,.cta-inline-p{font-size:15px!important;color:rgba(255,255,255,.92)!important;line-height:1.65!important;font-weight:400!important}
+.prose .cta-inline-btn,.cta-inline-btn{align-self:flex-start;padding:13px 24px;background:var(--blue2);color:#fff!important;border-radius:8px;font-size:13.5px;font-weight:700;text-decoration:none!important;display:inline-flex;align-items:center;gap:8px;transition:background .25s var(--ease-out-cubic),transform .2s var(--ease-out-cubic),box-shadow .25s var(--ease-out-cubic);margin-top:6px;will-change:transform}
+@media(hover:hover){
+  .prose .cta-inline-btn:hover,.cta-inline-btn:hover{background:var(--blue);color:#fff!important;transform:translateY(-1px);box-shadow:0 8px 20px rgba(34,85,224,.3);text-decoration:none!important}
+}
+.cta-inline-btn:active{transform:translateY(0) scale(.98);transition-duration:.1s}
+.cta-inline-btn svg{transition:transform .25s var(--ease-out-quint)}
+.cta-inline-btn:hover svg{transform:translateX(3px)}
 
-/* ── SHARE ── */
+/* FAQ */
+.faq-sec{margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+.faq-sec-h{font-family:var(--ffd);font-size:24px;letter-spacing:-.022em;color:var(--ink);margin-bottom:24px;font-weight:700}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.faq-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--white)}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-item:last-child{border-bottom:none}
+@media(max-width:768px){
+  .faq-grid{grid-template-columns:1fr;gap:0}
+}
+.faq-q{width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:18px 22px;font-family:var(--ff);font-size:14.5px;font-weight:600;color:var(--ink);text-align:left;transition:background .25s var(--ease-out-cubic)}
+.faq-q:hover{background:var(--g50)}
+.faq-ico{width:22px;height:22px;border-radius:50%;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:300;flex-shrink:0;transition:background .3s var(--ease-out-quint),color .3s var(--ease-out-quint),transform .35s var(--ease-out-quint)}
+.faq-item.open .faq-ico{background:var(--blue2);color:#fff;transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .45s var(--ease-in-out-cubic)}
+.faq-item.open .faq-a{max-height:600px}
+.faq-a-in{padding:0 22px 18px;font-size:14px;line-height:1.7;color:var(--g700)}
+
+/* SHARE */
 .share{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .share-l{font-size:12px;font-weight:700;color:var(--g500);letter-spacing:.04em;text-transform:uppercase}
-.share-btn{padding:8px 14px;background:var(--white);border:1px solid var(--border);border-radius:7px;font-size:12.5px;font-weight:600;color:var(--g700);text-decoration:none;transition:all var(--t);display:inline-flex;align-items:center;gap:6px}
-.share-btn:hover{border-color:var(--ink);color:var(--ink)}
+.share-btn{min-height:40px;padding:10px 16px;background:var(--white);border:1px solid var(--border);border-radius:7px;font-size:12.5px;font-weight:600;color:var(--g700);text-decoration:none;transition:border-color .2s var(--ease-out-cubic),color .2s var(--ease-out-cubic),transform .2s var(--ease-out-quint);display:inline-flex;align-items:center;gap:6px}
+@media(hover:hover){
+  .share-btn:hover{border-color:var(--ink);color:var(--ink);transform:translateY(-1px)}
+}
+.share-btn:active{transform:translateY(0);transition-duration:.1s}
+@media(max-width:768px){.share-btn{min-height:44px}}
 
-/* ── RELATED ── */
+/* RELATED */
 .rel{padding:64px 24px;background:var(--white);border-top:1px solid var(--border)}
 .rel-w{max-width:var(--max);margin:0 auto}
-.rel-h{font-family:var(--ffd);font-size:24px;letter-spacing:-.015em;color:var(--ink);margin-bottom:32px;font-weight:700}
+.rel-h{font-family:var(--ffd);font-size:24px;letter-spacing:-.022em;color:var(--ink);margin-bottom:32px;font-weight:700}
 .rel-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
 .bc{background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:all var(--t);text-decoration:none;color:inherit}
-.bc:hover{box-shadow:0 8px 24px rgba(7,17,31,.08);transform:translateY(-2px);border-color:rgba(26,71,204,.2)}
+@media(hover:hover){
+  .bc:hover{box-shadow:0 8px 24px rgba(7,17,31,.08);transform:translateY(-2px);border-color:rgba(26,71,204,.2)}
+}
 .bc-img{aspect-ratio:16/9;background:linear-gradient(135deg,var(--ink) 0%,var(--ink2) 100%);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.bc-img::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(26,71,204,.25),transparent 60%),radial-gradient(circle at 70% 80%,rgba(200,150,42,.15),transparent 50%)}
 .bc-img-icon{position:relative;z-index:1;font-family:var(--ffd);font-size:38px;color:rgba(255,255,255,.18);font-weight:800;letter-spacing:.04em}
 .bc-body{padding:22px 24px 24px;display:flex;flex-direction:column;flex:1}
 .bc-meta{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g500);margin-bottom:12px}
 .bc-cat{color:var(--blue2)}
-.bc-dot{width:3px;height:3px;border-radius:50%;background:var(--g300)}
 .bc-title{font-family:var(--ffd);font-size:17px;line-height:1.25;letter-spacing:-.012em;color:var(--ink);margin-bottom:10px;font-weight:700}
-.bc-excerpt{font-size:13px;color:var(--g500);line-height:1.6;margin-bottom:14px;flex:1}
+.bc-excerpt{font-size:13px;color:var(--g700);line-height:1.6;margin-bottom:14px;flex:1}
 .bc-read{font-size:12px;font-weight:700;color:var(--blue2);display:inline-flex;align-items:center;gap:6px;margin-top:auto}
 
-/* ── FOOTER ── */
+/* FOOTER */
 footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px}
 .ftw{max-width:var(--max);margin:0 auto}
 .ft-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.06)}
@@ -307,13 +435,16 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px}
 .ft-bot{padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:11.5px;color:rgba(255,255,255,.4)}
 .ft-leg{display:flex;gap:18px}
 
-/* ── RESPONSIVE ── */
+/* RESPONSIVE */
 @media(max-width:768px){
   .nl{display:none}
   .hamburger{display:block}
-  .ah h1{font-size:28px}
-  .prose h2{font-size:22px}
-  .prose h3{font-size:18px}
+  .ah h1{font-size:30px;letter-spacing:-.022em}
+  .ah-sub{font-size:15.5px}
+  .prose h2{font-size:22px;line-height:1.18}
+  .prose h3{font-size:17px}
+  .stat-hl-num{font-size:36px}
+  .cta-inline-h{font-size:19px}
   .rel-grid{grid-template-columns:1fr}
   .ft-top{grid-template-columns:1fr 1fr;gap:28px}
 }
@@ -321,10 +452,13 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px}
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="nav">
+<!-- Skip to main content (a11y) -->
+<a href="#main" class="skip-link">Pereiti prie turinio</a>
+
+<!-- NAV — 1:1 su index.html -->
+<nav id="nav" aria-label="Pagrindinis meniu">
   <div class="nw">
-    <a href="/" aria-label="Veriva — pradinis" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+    <a href="/" id="nav-logo-wrap" aria-label="Veriva — pradinis" style="display:flex;align-items:center;gap:10px;text-decoration:none">
       <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#ffffff" transform="translate(8,8)"/>
         <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="#c8962a" transform="translate(8,8)"/>
@@ -334,26 +468,34 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px}
     <ul class="nl">
       <li><a href="/#paslaugos">Paslaugos</a></li>
       <li><a href="/#apie">Apie mus</a></li>
+      <li><a href="/#komanda">Komanda</a></li>
+      <li><a href="/#auditas">Kaip dirbame</a></li>
+      <li><a href="/#atsiliepimai">Rezultatai</a></li>
       <li><a href="/#kainos">Kainos</a></li>
-      <li><a href="/blog.html" style="color:#fff">Tinklaraštis</a></li>
+      <li><a href="/blog.html">Tinklaraštis</a></li>
       <li><a href="/#kontaktai" class="nav-cta">Susisiekti</a></li>
     </ul>
-    <button class="hamburger" onclick="document.getElementById('mob-menu').classList.toggle('open')" aria-label="Meniu">
+    <button class="hamburger" onclick="toggleMob()" aria-label="Meniu" aria-expanded="false" aria-controls="mob-menu">
       <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
   </div>
 </nav>
 <div class="mob-menu" id="mob-menu">
-  <a href="/#paslaugos">Paslaugos</a>
-  <a href="/#apie">Apie mus</a>
-  <a href="/#kainos">Kainos</a>
-  <a href="/blog.html">Tinklaraštis</a>
-  <a href="/#kontaktai">Susisiekti →</a>
+  <a href="/#paslaugos" onclick="closeMob()">Paslaugos</a>
+  <a href="/#apie" onclick="closeMob()">Apie mus</a>
+  <a href="/#auditas" onclick="closeMob()">Kaip dirbame</a>
+  <a href="/#atsiliepimai" onclick="closeMob()">Rezultatai</a>
+  <a href="/#kainos" onclick="closeMob()">Kainos</a>
+  <a href="/blog.html" onclick="closeMob()">Tinklaraštis</a>
+  <a href="/#kontaktai" onclick="closeMob()">Susisiekti →</a>
 </div>
+
+<!-- MAIN CONTENT (a11y landmark) -->
+<main id="main" tabindex="-1">
 
 <!-- ARTICLE HERO -->
 <article>
-<section class="ah">
+<header class="ah">
   <div class="ah-w">
     <div class="ah-crumbs"><a href="/">Pradžia</a> &nbsp;/&nbsp; <a href="/blog.html">Tinklaraštis</a> &nbsp;/&nbsp; {{POST_CATEGORY}}</div>
     <div class="ah-meta">
@@ -366,23 +508,30 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px}
     <h1>{{POST_TITLE}}</h1>
     <p class="ah-sub">{{POST_DESCRIPTION}}</p>
     <div class="ah-author">
-      <div class="ah-av">{{POST_AUTHOR_INITIALS}}</div>
+      <div class="ah-av">{{POST_AUTHOR_INITIAL}}</div>
       <div>
         <div class="ah-an">{{POST_AUTHOR}}</div>
         <div class="ah-ar">{{POST_AUTHOR_ROLE}}</div>
       </div>
     </div>
   </div>
-</section>
+</header>
 
 <!-- ARTICLE BODY -->
 <section class="ab">
   <div class="ab-w">
     <div class="prose">
-      <!-- Featured snippet definition (po H1, prieš pirmą H2) -->
+
+      <!-- FEATURED IMAGE (privaloma) -->
+      <figure class="figure-dark">
+        <img src="{{POST_HERO_IMG}}" width="1200" height="630" alt="{{POST_HERO_ALT}}" loading="eager" decoding="async">
+        <figcaption>{{POST_HERO_CAPTION}}</figcaption>
+      </figure>
+
+      <!-- DEFINITION (featured snippet — privaloma, po hero, prieš TOC) -->
       <p class="definition">{{POST_DEFINITION}}</p>
 
-      <!-- Table of contents -->
+      <!-- TABLE OF CONTENTS (privaloma) -->
       <div class="toc">
         <span class="toc-label">Šiame straipsnyje</span>
         <ol class="toc-list">
@@ -390,29 +539,30 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px}
         </ol>
       </div>
 
-      <!-- Main body — H2/H3/p/ul/ol/blockquote/callout/stat-hl -->
+      <!-- MAIN BODY — H2/H3/p/ul/ol/blockquote/callout/stat-hl/figure/cta-inline/testimonial -->
       {{POST_BODY_HTML}}
+
     </div>
 
-    <!-- FAQ SECTION (GEO boost) -->
+    <!-- FAQ SECTION (privaloma — bent 5, geriausia 12 klausimų) -->
     <div class="faq-sec">
       <h2 class="faq-sec-h">Dažniausi klausimai</h2>
-      <div class="faq-list">
+      <div class="faq-grid">
         {{POST_FAQ_HTML}}
       </div>
     </div>
 
-    <!-- INLINE CTA -->
+    <!-- INLINE CTA (privaloma — pabaigoje) -->
     <div class="cta-inline">
       <h3 class="cta-inline-h">Reikia pagalbos su <em>BDAR ar saugumu</em>?</h3>
-      <p class="cta-inline-p">Atlikite nemokamą BDAR rizikos testą per 60 sekundžių arba užsakykite konsultaciją.</p>
-      <a href="/#top" class="cta-inline-btn">
-        Atlikti rizikos testą
+      <p class="cta-inline-p">120+ klientų, €0 VDAI baudų nuo 2017 m. Teisė + IT vienoje komandoje. Pirmoji konsultacija — nemokama, atsakymas per 24 val. darbo dienomis.</p>
+      <a href="/#kontaktai" class="cta-inline-btn">
+        Susisiekti su ekspertu
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4-4 4M21 12H3"/></svg>
       </a>
     </div>
 
-    <!-- SHARE -->
+    <!-- SHARE (privaloma) -->
     <div class="share">
       <span class="share-l">Dalintis:</span>
       <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=https://veriva.lt/blog/{{POST_SLUG}}.html" target="_blank" rel="noopener">LinkedIn</a>
@@ -422,6 +572,8 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px}
   </div>
 </section>
 </article>
+
+</main>
 
 <!-- RELATED -->
 <section class="rel">
@@ -445,7 +597,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px}
           </svg>
           <span style="font-family:Syne,system-ui,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.04em">VERIVA</span>
         </a>
-        <p class="ft-about">BDAR atitiktis ir kibernetinis saugumas. Teisė + IT vienoje komandoje. 120+ klientų, €0 VDAI baudų — nuo 2017 m.</p>
+        <p class="ft-about">BDAR atitiktis ir kibernetinis saugumas. Teisė + IT vienoje komandoje. 120+ klientų, €0 VDAI baudų nuo 2017 m.</p>
       </div>
       <div>
         <div class="ft-ch">Paslaugos</div>
@@ -462,14 +614,14 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px}
           <li><a href="/#atsiliepimai">Rezultatai</a></li>
           <li><a href="/#kainos">Kainos</a></li>
           <li><a href="/blog.html">Tinklaraštis</a></li>
-          <li><a href="/#top">BDAR rizikos testas</a></li>
+          <li><a href="/#kontaktai">Kontaktai</a></li>
         </ul>
       </div>
       <div>
         <div class="ft-ch">Kontaktai</div>
         <ul class="ft-links">
           <li><a href="mailto:info@veriva.lt">info@veriva.lt</a></li>
-          <li><a href="tel:+37061061981">+370 610 61981</a></li>
+          <li><a href="tel:+37064003632">+370 640 03632</a></li>
           <li><span style="color:rgba(255,255,255,.38)">Švitrigailos g. 11K-109</span></li>
           <li><span style="color:rgba(255,255,255,.38)">LT-03228 Vilnius</span></li>
         </ul>
@@ -478,20 +630,62 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px}
     <div class="ft-bot">
       <span>© 2025 Veriva UAB · Įmonės kodas: 306162111</span>
       <div class="ft-leg">
-        <a href="/privatumas.html">Privatumo politika</a>
-        <a href="/slapukai.html">Slapukų politika</a>
+        <a href="/#kontaktai">Privatumo politika</a>
+        <a href="/#kontaktai">Slapukų politika</a>
       </div>
     </div>
   </div>
 </footer>
 
 <script>
-// FAQ accordion
-document.querySelectorAll('.faq-q').forEach(btn => {
-  btn.addEventListener('click', () => {
-    btn.parentElement.classList.toggle('open');
+// Mobile nav (1:1 su index.html)
+function toggleMob(){
+  var menu = document.getElementById('mob-menu');
+  var btn = document.querySelector('.hamburger');
+  var isOpen = menu.classList.toggle('open');
+  if (btn) btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+}
+function closeMob(){
+  var menu = document.getElementById('mob-menu');
+  var btn = document.querySelector('.hamburger');
+  menu.classList.remove('open');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+}
+
+// FAQ accordion (with a11y aria-expanded + aria-controls)
+document.querySelectorAll('.faq-item').forEach(function(item, idx){
+  var btn = item.querySelector('.faq-q');
+  var ans = item.querySelector('.faq-a');
+  if (!btn || !ans) return;
+  var id = 'faq-answer-' + (idx + 1);
+  ans.id = id;
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', id);
+  btn.addEventListener('click', function(){
+    var isOpen = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   });
 });
+
+// Scroll-triggered reveal (Kowalski pattern)
+(function(){
+  var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var targets = document.querySelectorAll('.prose h2, .prose h3, .toc, .callout, .stat-hl, blockquote, .cta-inline, .faq-sec, .share, .definition, .testimonial, .prose figure');
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    targets.forEach(function(el){ el.classList.add('in'); });
+    return;
+  }
+  targets.forEach(function(el){ el.classList.add('reveal'); });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  targets.forEach(function(el){ io.observe(el); });
+})();
 </script>
 
 </body>

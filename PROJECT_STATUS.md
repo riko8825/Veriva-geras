@@ -1,10 +1,10 @@
 # PROJECT_STATUS — Veriva
 
 **Pradžia**: 2026-05-09
-**Paskutinis update**: 2026-05-10 (cookiebot-integration)
-**Statusas**: 🟢 PRODUCTION LIVE — Cookiebot CMP įdiegtas, premium dark tier 9 sekcijų LIVE, BDAR slapukų politika LIVE
+**Paskutinis update**: 2026-05-10 (privatumas-html)
+**Statusas**: 🟢 PRODUCTION LIVE — KI-005 BDAR FULL FIX (slapukai.html + privatumas.html LIVE), 6 footer link sync, Cookiebot CMP, premium dark tier 9 sekcijų
 **Production URL**: https://www.veriva.lt (LIVE su Vercel SSL) | https://veriva.lt (apex SSL ✅)
-**Paskutinis commit**: `0e51dcf` (Cookiebot + premium dark tier bundle, +3516/-571 lines)
+**Paskutinis commit**: `9efb0d0` (privatumas.html NEW + 6 footer link fix, +468/-12 lines)
 
 ---
 
@@ -25,7 +25,7 @@
 | `apie.html` | ⬜ Nesukurtas | |
 | `kainos.html` | ⬜ Nesukurtas | |
 | `kontaktai.html` | ⬜ Nesukurtas | |
-| `privatumas.html` | ⬜ Nesukurtas | BDAR privaloma |
+| `privatumas.html` | 🟢 LIVE | 10 skyrių BDAR Privacy Policy (454 lines): duomenų valdytojas, renkami duomenys (kontakto forma, brief.html, susirašinėjimas, techniniai), tikslai+pagrindas (lentelė), saugojimo terminai, sub-processors lentelė (Vercel/Resend/Cookiebot/Hostinger/Zoho), perdavimas už ES (SCC), 8 BDAR teisės, slapukų sutikimo CTA, VDAI skundai (2026-05-10) |
 | `slapukai.html` | 🟢 LIVE | 9-skyrių BDAR-compliant politika + Cookiebot CookieDeclaration script + `Cookiebot.renew()` mygtukas (2026-05-10) |
 | `404.html` | ⬜ Nesukurtas | |
 

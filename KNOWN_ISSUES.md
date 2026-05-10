@@ -68,16 +68,18 @@ Uždarytus issues perkelti į `## Išspręsta` skyrių (ne trinti).
 
 ---
 
-### KI-005 — Privatumas.html ir slapukai.html neegzistuoja (PARTIAL FIX 2026-05-10)
-- **SLA:** 🟠 High (downgrade'inta — slapukai.html ✅, liko privatumas.html)
+### KI-005 — Privatumas.html ir slapukai.html neegzistuoja ✅ FIXED
+- **SLA:** 🟠 High → ✅ resolved
 - **Paveiktas blokas:** BDAR atitiktis
-- **Statusas:** Partial fix
+- **Statusas:** ✅ FIXED 2026-05-10 (privatumas-html sesija, commit `9efb0d0`)
 - **Aprašas:** Veriva = duomenų apsaugos kompanija. Savo svetainė BE Privacy Policy ir Cookie Policy = brand'ui kritinė problema + teisinis pažeidimas.
-- **Fix progress:**
-  - ✅ `slapukai.html` — LIVE (commit `0e51dcf`, 2026-05-10): 9-skyrių BDAR-compliant politika + Cookiebot CookieDeclaration auto-list + `Cookiebot.renew()` mygtukas
+- **Full fix progress:**
+  - ✅ `slapukai.html` — LIVE (commit `0e51dcf`, 2026-05-10 cookiebot-integration): 9-skyrių BDAR-compliant politika + Cookiebot CookieDeclaration auto-list + `Cookiebot.renew()` mygtukas
   - ✅ Cookiebot CMP — LIVE auto-blocking režimu (Domain group ID `bc31b2c9-a2b7-44e8-a3a2-624b027ba646`), 6 puslapiuose
-  - ⬜ `privatumas.html` — duomenų valdytojas, tikslai, teisinis pagrindas, saugojimo terminai, teisės, DPO kontaktas
-- **Atidarytas:** 2026-05-09 | **Partial fix:** 2026-05-10 (cookiebot-integration sesija)
+  - ✅ `privatumas.html` — LIVE (commit `9efb0d0`, 2026-05-10 privatumas-html): 10 skyrių BDAR Privacy Policy (454 lines) — duomenų valdytojas, renkami duomenys (kontakto forma + brief.html + susirašinėjimas + techniniai), tikslai+pagrindas (lentelė: 7 tikslai × BDAR 6 str.), saugojimo terminai (7 kategorijos), sub-processors lentelė (Vercel/Resend/Cookiebot/Hostinger/Zoho), perdavimas už ES (SCC 2021/914), 8 BDAR teisės (15-22 str.), Cookiebot.renew CTA, VDAI skundai
+  - ✅ 6 footer link sync: index.html modal-privacy + cf-privacy → `/privatumas.html`; 4 blog files (3 post + template) `/#kontaktai` → `/privatumas.html` + `/slapukai.html`
+- **Production verify:** `https://veriva.lt/privatumas` 200 OK, Vercel build Ready 12s
+- **Atidarytas:** 2026-05-09 | **Partial fix:** 2026-05-10 cookiebot | **FULL FIX:** 2026-05-10 privatumas-html
 
 ---
 

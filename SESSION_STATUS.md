@@ -1,11 +1,69 @@
 # SESSION_STATUS
 
 **Data**: 2026-05-10
-**Sesijos tikslas**: blog.html premium dark tier sync su index.html brand language + 3 placeholder kortelių 404 link'ų pašalinimas (KI-001 partial fix)
+**Sesijos tikslas**: `privatumas.html` (KI-005 paskutinis BDAR blocker) + 6 footer link sync (broken `/#kontaktai` → `/privatumas.html` + `/slapukai.html`)
 
 ---
 
-## ATLIKTA ŠIOJE SESIJOJE (2026-05-10 — blog-dark-tier-sync)
+## Paskutinė sesija: 2026-05-10 — privatumas-html
+
+### Ką padarėme
+
+**`privatumas.html` NEW (454 lines, commit `9efb0d0`)**
+- 10 skyrių BDAR Privacy Policy (LT, BDAR + LR ADTAĮ atitiktis)
+- Hero su crumbs + meta info, dark theme identiškas `slapukai.html`
+- **Skyriai**: 1) Duomenų valdytojas, 2) Renkami duomenys (kontakto forma, brief.html 59 atsakymai, susirašinėjimas, techniniai duomenys), 3) Tikslai+pagrindas (lentelė: 7 tikslai × BDAR 6 str. punktai), 4) Saugojimo terminai (7 kategorijos), 5) Sub-processors (Vercel Inc. JAV/SCC, Resend Inc. JAV/SCC, Cybot A/S Danija, Hostinger Kipras, Zoho EU), 6) Perdavimas už ES (SCC 2021/914 + DPF), 7) 8 BDAR teisės (15-22 str.), 8) Slapukai (Cookiebot.renew CTA), 9) VDAI skundai (kontaktai), 10) Pakeitimai+kontaktai
+- `.proc-table` responsive (mobile cards via `data-label` pattern)
+- Cookiebot CMP įdėtas (consistency su slapukai.html)
+- Callout box: aktyviai vengiame BDAR 9 str. specialių kategorijų
+
+**6 footer link sync** (uniform su `/privatumas.html` + `/slapukai.html`):
+- `index.html` × 2: footer modal `openModal('modal-privacy')` → `/privatumas.html`; cf-privacy `<a href="#" onclick="return false">` → `/privatumas.html` (broken link fix)
+- `blog/bdar-baudos-lietuvoje.html`: footer `/#kontaktai` × 2 → `/privatumas.html` + `/slapukai.html`
+- `blog/nis2-direktyva-lietuvoje.html`: tas pats pattern
+- `blog/phishing-mokymai-darbuotojams.html`: tas pats pattern
+- `blog/template.html`: tas pats pattern (būsimi blog post'ai inherit'ins)
+
+**`sitemap.xml` patobulinimas**
+- `https://veriva.lt/privatumas` ir `/slapukai` entries: pridėta `lastmod 2026-05-10`, priority `0.3 → 0.4`
+
+### Testai atlikti
+
+- HTML struktūra balansuota: h2 10/10, div 18/18, ul 15/15, table 2/2, tr 14/14
+- Internal links verify: 9 nuorodos (blog, slapukai, brief, kontaktai, javascript:Cookiebot.renew())
+- HTTP verify production: `https://www.veriva.lt/privatumas.html` → 308 → `/privatumas` → 200 OK
+- Title verify: `<title>Privatumo politika — Veriva</title>` rendered
+- Hero markup verify: `class="bh-crumbs"` matched
+
+### Deploy
+
+- Commit `9efb0d0` push'inta į origin/main
+- Vercel build: ✅ Ready 12s (no errors, no warnings)
+- Production URL LIVE: `https://veriva.lt/privatumas`
+
+### Kas liko / nepatvirtinta
+
+- **Modal `#modal-privacy` block neištrinta** iš `index.html` (eil. 1367-1440, ~75 lines dead code) — funkcija `openModal('modal-privacy')` daugiau nešaukiama, bet HTML lieka
+- **Pre-publish 4-agent ratas nedarytas** privatumas.html — privacy puslapiui galbūt overkill (legal turinys), bet standartas yra (DECISION_LOG)
+- **Naršyklės QA nepadarytas** — privatumas.html mobile/desktop vizualiai neperžiūrėtas (curl HTTP only)
+- **Cookiebot dashboard verify** carry-over iš ankstesnės sesijos
+- **Hero sekcija index.html dark tier sync** carry-over
+
+### Kitas žingsnis
+
+1. **Hero sekcija index.html premium dark tier sync** — vienintelė sekcija, kuri liko ankstesnio stiliaus (radial mesh + mono kicker + Syne 800 + cyan accent), kad svetainė būtų 100% vientisa.
+2. **Cleanup `index.html` modal-privacy + modal-terms blocks** — ~150 lines dead code, jei nei vienas link'as jų nešaukia (greitas grep verify).
+3. **Cookiebot dashboard config + naršyklės verify** — LT kalba, domeno whitelist, incognito test.
+
+### Tools naudoti
+
+- `Read` × 4, `Edit` × 7, `Write` × 1, `Bash` × 14, `Grep` × 4, `Glob` × 0
+- AskUserQuestion × 3 (next task pick, plan approval, footer link strategy)
+- TodoWrite × 4
+
+---
+
+## ATLIKTA ANKSČIAU (2026-05-10 — blog-dark-tier-sync)
 
 ### blog.html premium dark tier perdirbimas (commit `2ca8177`)
 - **Visa puslapio body** dark (`--ink`) — buvo light (`--cream`)

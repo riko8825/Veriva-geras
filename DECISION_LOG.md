@@ -4,6 +4,36 @@ Architektūriniai sprendimai. Kiekvienas su data, kontekstu, alternatyvomis, spr
 
 ---
 
+## 2026-05-10 — Privacy Policy: real sub-processors lentelė, ne generic copy-paste
+
+**Kontekstas**: `privatumas.html` turinys — ankstesnis modal'as `index.html` turėjo netikslius sub-processors (Formspree, Google Analytics, Cloudflare), kurie realiai NIEKADA neegzistavo Veriva stack'e. Klaidingas Privacy Policy = BDAR pažeidimas pats savaime (BDAR 13 str. 1 d. e p. — duomenų gavėjai turi būti tiksliai nurodyti).
+
+**Alternatyvos**:
+- A) Copy-paste iš modal'o (greita, bet teisinis pažeidimas — Formspree/GA/Cloudflare nenaudojami)
+- B) Generic Privacy Policy template (greita, bet ne-mūsų teisinė padėtis — sub-processors privalomi BDAR 13 str.)
+- C) Sub-processors lentelė pagal realią architektūrą — Vercel Inc. (JAV/SCC), Resend Inc. (JAV/SCC), Cybot A/S (Danija), Hostinger (Kipras), Zoho (EU)
+
+**Sprendimas**: C — sub-processors lentelė atspindi realią architektūrą šiandien. Callout box: "Šiuo metu nenaudojame Google Analytics, Meta Pixel, LinkedIn Insight Tag" — eksplicitiškai aiškus, kas NĖRA naudojama (apsauga nuo „o kodėl GA neminite?" klausimo).
+
+**Pasekmė**: Kai įdiegsime GA4 (P0 prioritetas) ar Supabase (KI-008) — privatumas.html sub-processors lentelė reikės atnaujinti per tą pačią sesiją. NIEKADA nedeploy'inti naujo tracker'io be Privacy Policy update'o.
+
+---
+
+## 2026-05-10 — Footer link uniformity: visi 5 puslapiai → /privatumas.html + /slapukai.html
+
+**Kontekstas**: 4 blog files (3 post + template) turėjo footer'yje `<a href="/#kontaktai">Privatumo politika</a>` — totally broken (rodė į kontaktų sekciją vietoj privacy puslapio). Index.html turėjo modal `openModal('modal-privacy')` + cf-privacy `<a href="#" onclick="return false">` (taip pat broken).
+
+**Alternatyvos**:
+- A) Tik nauji blog post'ai naudoja `/privatumas.html`, seni blog post'ai paliekami su modal/broken
+- B) Visi puslapiai (5 footers + 1 cf-privacy form'a) sync'inami į `/privatumas.html` + `/slapukai.html`
+- C) Modal'ai dinamiškai įkrauna privatumas.html turinį (komplikuotas JS, dubliuotas turinys)
+
+**Sprendimas**: B — bundle commit'as su 6 footer/link fix'ais kartu su nauju puslapiu. Vienas autoritetas (`/privatumas.html`), nereikia maintain'inti modal turinio. `index.html` `#modal-privacy` block (~75 lines) liko kaip dead code — bus išvalytas vėliau, kai bus tikras potencialas naudoti modal'us kažkam kitkam.
+
+**Pasekmė**: `blog/template.html` taisymas reiškia kad visi būsimi blog post'ai inherit'ins teisingus footer link'us automatiškai.
+
+---
+
 ## 2026-05-09 — Stack: Vercel + Supabase + Resend
 
 **Kontekstas**: Reikia parinkti backend stack naujam Veriva projektui.

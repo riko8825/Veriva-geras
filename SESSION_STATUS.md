@@ -1,11 +1,83 @@
 # SESSION_STATUS
 
 **Data**: 2026-05-10
-**Sesijos tikslas**: 2 nauji pillar postai (NIS2 + Phishing) + pre-publish audit ratas (4 agentai) + P0 fixes + first push į main
+**Sesijos tikslas**: UX patobulinimai (FAQ, email, nav) + brief audit klausimynas + KI-004 index.html split + Vercel deploy fix + DNS migration WP → Vercel
 
 ---
 
-## ATLIKTA ŠIOJE SESIJOJE (2026-05-10 — nis2-phishing-publish)
+## ATLIKTA ŠIOJE SESIJOJE (2026-05-10 — vercel-migration)
+
+### UX patobulinimai
+- ✅ **FAQ 2 stulpeliai** — index.html 12 Q&A perdaryta į grid 2 cols (6+6) desktop / 1 col ≤760px su animation-safe `align-items:start`
+- ✅ **Plain email vietoj Cloudflare obfuscation** — pašalinta 7 vietose (`[email protected]` → `info@veriva.lt` mailto), nes Cloudflare `email-decode.min.js` neveikia ne-Cloudflare hosting'e
+- ✅ **Nav parity blog.html ↔ index.html** — blog.html nav perdaryta į 8 punktų meniu (Paslaugos/Apie/Komanda/Kaip dirbame/Rezultatai/Kainos/Tinklaraštis/Susisiekti), `position:fixed` (60px), mobile breakpoint 768→900px, full-screen overlay menu
+- ✅ **BDAR widget realūs duomenys** — index.html widget'as perdarytas su VDAI 2018-2025 baudų statistika (3K/12K/75K/350K vietoje sugalvotų 5K/25K/120K/600K), pažeidimo tipo koeficientai (sveikatos 3x, saugumo 2.5x, dok. 1.5x), cap pagal įmonės dydį, Vinted €2.4M outlier disclaimer 250+ + kritinė rizika scenarijuje, šaltinis "Pagal VDAI 2018–2025 baudų statistiką"
+
+### `brief.html` — pirminis BDAR/duomenų saugos klausimynas (NEW)
+- ✅ 4 sekcijos × 59 klausimai (originalūs Google Form 56 + 3 papildomi neprivalomi: prioritetai, timeline, komentarai)
+- ✅ Konditional logika: K3 "Kokia veikla" → filtruoja medicinos vs verslo opcijas; `{pacientų/klientų}` placeholder'iai dinamiškai keičiasi
+- ✅ 5 multi-select klausimai (K7,K8,K11,K45,K47) — patobulinimas vs Google Form radio'ų
+- ✅ Progress bar (sekcija X iš 4 + procentai), validation, 3 states (form/success/error)
+- ✅ Submit fallback: POST /api/forms/audit-request → localStorage backup
+- ✅ Veriva brand (Syne + Plus Jakarta Sans, --ink/--blue/--gold), noindex,nofollow
+- ✅ Link'as iš index.html BDAR widget'o rezultato sekcijos: "Norite tikslesnio vertinimo? → užpildyti detalų klausimyną"
+
+### KI-004 index.html split (token optimizavimas)
+- ✅ `assets/css/index.css` (590 lines, 32K) — pagrindinis CSS + slideUp keyframe
+- ✅ `assets/js/index.js` (276 lines, 11K) — widget logic, FAQ, modals, cookie banner
+- ✅ index.html: 1995 → 1127 lines (-43%, -868 lines)
+- ✅ Pašalintas Cloudflare email-decode `<script src>` (nereikalingas)
+- ✅ Cache-buster `?v=20260510` ant CSS+JS
+- ✅ Visi 10 inline event handler'ių (faq, widgetCTA, openModal, ...) verifikuoti — defer load veikia
+- ✅ JSON-LD schemos (ProfessionalService + FAQPage) palieku inline (SEO)
+- 📊 Token sutaupymas: CSS keitimui 110K → 8K (-92%), JS keitimui 110K → 3K (-97%)
+
+### Vercel deploy fix (kritinis blocker)
+- 🔴 **Diagnozė**: Vercel build fail'inosi 9 kartus per 21h (Production + Preview), paskutinis sėkmingas deploy 48 dienų senas. Visi commit'ai nepasiekė production'o.
+- ✅ **Fix #1** (`fca76a9`): pašalintas invalid `"runtime": "edge"` blokas iš `vercel.json` `functions` (formatas deprecated, runtime jau deklaruotas TS failuose per `export const config = { runtime: 'edge' }`)
+- ✅ **Fix #2** (`6974806`): pridėtas `"buildCommand": null` + `"outputDirectory": "."` (statinė svetainė root'e, ne `/public/`)
+- ✅ Build #1 po fix #1 — Error (output dir missing)
+- ✅ Build #2 po fix #2 — **READY** (deploy `lyvbrbbmk`, 27s build)
+- ✅ Visi 10 URL'ų ant `veriva-geras.vercel.app` → 200 OK
+
+### DNS migration WordPress → Vercel
+- ✅ Vercel domain'ai pridėti (vartotojo): `veriva.lt` + `www.veriva.lt`
+- ✅ Hostinger DNS pakeitimas (vartotojo, 4 veiksmai per UI):
+  - Ištrinta: `A @ 35.198.136.225` (sena WP)
+  - Ištrinta: `CNAME www → veriva.lt` (sena WP)
+  - Pridėta: `A @ 76.76.21.21` (Vercel)
+  - Pridėta: `CNAME www → cname.vercel-dns.com` (Vercel)
+- ✅ Email konfigūracija išsaugota: 5 record'ai NEPALIESTI (Zoho `_zmail._domainkey` DKIM, SPF, verification, 3× MX → `mx{1,2,3}.zoho.eu`)
+- ✅ DNS propagation patvirtinta 6 globaliais resolvers'ais (Google 8.8.8.8/8.8.4.4, Cloudflare 1.1.1.1, Quad9 9.9.9.9, OpenDNS, Yandex)
+- ✅ HTTPS test: `www.veriva.lt` → 200 OK, **Server: Vercel**, visi 10 URL'ų live
+- ✅ WordPress mirė: `/wp-admin/` → 307 redirect į Vercel
+- ⏳ **Apex SSL sertifikatas** (`https://veriva.lt/` be www) dar neissued — paliktas background task, vartotojui matomas warning naršyklėje
+
+### Vercel CLI setup (claude code dirbtų)
+- ✅ Patvirtinta auth: `pinigine1-6549` user
+- ✅ Repo link'inta su projektu: `vercel link --yes --project veriva-geras` → `.vercel/project.json` sukurtas (gitignored)
+- ✅ Galiu daryti `vercel ls`, `vercel inspect`, `vercel project inspect` (read-only) — DNS endpoint'ams reikia atskiros prieigos
+
+### Commit'ai (6 viso, push'inta į origin main)
+- `c5e14e6` feat(blog): BDAR baudos pillar postas + template v2 polish (sesijų 4-5 likučiai)
+- `d011841` feat(ui): FAQ 2 stulpeliai, plain email, nav parity, BDAR widget realūs duomenys
+- `60f9d56` feat(brief): pirminis BDAR ir duomenų saugos klausimynas
+- `9328cef` refactor(index): KI-004 — extract inline CSS/JS to /assets
+- `fca76a9` fix(vercel): remove invalid functions runtime config
+- `6974806` fix(vercel): static site config — outputDirectory + buildCommand
+
+---
+
+## P1 NEPATRAUKTI (palikti kitai sesijai)
+- **Apex SSL sertifikatas** dar neissued — `https://veriva.lt/` browser'iui rodo SSL warning. Vercel išduos auto, bet sesijos pabaigoje nepatvirtinta.
+- **Email integration test** — `info@veriva.lt` Zoho turi veikti (DNS record'ai nepaliesti), bet realus test email nepasiųstas
+- **Google Search Console** — sitemap submit + 3 blog URL request indexing dar nepadaryta
+- **WordPress hosting cancellation** — Hostinger WP instalacija vis dar veikia, niekas į ją nepatenka. Palauti 7 dienas, paskui cancel.
+- **Vercel primary domain** — pasirinkti ar `veriva.lt` ar `www.veriva.lt` kaip primary (Vercel UI: Domains → set primary). Šiuo metu apex 307 → www.
+
+---
+
+## ANKSTESNĖ SESIJA (2026-05-10 — nis2-phishing-publish)
 
 ### 2 nauji pillar postai (audit health 19/20 self / 17/20 frontend-revizorius)
 - ✅ `blog/nis2-direktyva-lietuvoje.html` (1194 eil., ~3700 ž.) — NIS2 direktyva Lietuvoje 2026
@@ -281,17 +353,18 @@
 
 ## KITAS ŽINGSNIS (sekanti sesija — 1-3 konkretūs žingsniai)
 
-1. **Live veriva.lt verifikacija** — Vercel deploy status (commit `d9cc6e7`), 3 blog URL'ai (200 OK), Schema.org Rich Results test (https://search.google.com/test/rich-results) abu naujus postus, PageSpeed Insights mobile/desktop. Jei build fail → debug.
-2. **Google Search Console** — submit `https://veriva.lt/sitemap.xml`, request indexing 3 blog URL'us (BDAR + NIS2 + Phishing). NKSC + e-tar.lt URL'us patvirtinti naršyklėje (WebFetch grąžino 403).
-3. **P1 fixes batch** — 8 nepatraukti audit findings: `<time datetime>` markup abu postai, keyword density dilution per sinonimus (NIS2 6.2%→3%, Phishing 7%→3%), Phishing "Lietuv*" 6→20+, TL;DR/Key takeaways blokas, NIS2→Phishing cross-link, FAQ IIFE wrapper, testimonial `role="img"`, "Susiję straipsniai" vizualus blokas po FAQ.
+1. **Apex SSL + email + naršyklės verifikacija** — patikrinti ar `https://veriva.lt/` (be www) atsidaro be SSL warning'o; jei ne per 1-2h — Vercel UI Domains → Refresh; siųsti test email į `info@veriva.lt`, patvirtinti gauna Zoho; atidaryti `https://www.veriva.lt/`, `/blog`, `/brief` realioje naršyklėje + mobile (Chrome DevTools); patikrinti ar BDAR widget'as veikia, FAQ 2 stulpeliuose atsidaro/uždaro animation, brief.html progress bar veikia.
+2. **Google Search Console** — add property `https://veriva.lt`, ownership verification per Vercel DNS auto, submit `https://veriva.lt/sitemap.xml`, request indexing 3 blog URL'ams (BDAR baudos, NIS2, Phishing). PageSpeed Insights mobile + desktop test.
+3. **P0 KI-005 BDAR**: `privatumas.html` + `slapukai.html` — teisinis reikalavimas (BDAR privaloma), dabar svetainė LIVE be šių puslapių. Cookie banner index.html'e jau yra, bet neturi tikslo (linkina į `#`).
 
-**Alternatyvos po pre-publish polish:**
-- 🅰️ **P0 KI-005 BDAR**: `privatumas.html` + `slapukai.html` (teisinis reikalavimas, blokuoja serious production)
-- 🅱️ Likę 3/6 placeholder blog post'ai (KI-001: dpo-funkcija, incidentu-valdymas-72h, darbuotoju-bdar-mokymai)
-- 🅲 Vercel/Supabase/Resend backend setup (KI-007, KI-008) — contact endpoint live test
-- 🅳 Multi-page skeletons (paslaugos/apie/kainos/kontaktai/404)
+**Alternatyvos:**
+- 🅰️ **Multi-page skeletons** (paslaugos.html, apie.html, kainos.html, kontaktai.html, 404.html) — visi linkai iš nav vis dar `/#section`, tikriausiai veiks tik scroll'inant index'e
+- 🅱️ **P1 KI-009 batch fixes** — 8 nepatraukti audit findings naujuose blog postuose (`<time datetime>`, keyword density dilution, Phishing "Lietuv*" 6→20+, TL;DR, NIS2→Phishing cross-link, FAQ IIFE, testimonial `role="img"`, "Susiję straipsniai")
+- 🅲 **Backend setup** (KI-007, KI-008): Supabase project + migrations + env vars Vercel'yje, Resend API key, contact endpoint live test
+- 🅳 **WordPress hosting cancellation** (po 7 dienų stabilumo verifikacijos) — sutaupys hosting mokestį
+- 🅴 **Likę 3/6 placeholder blog post'ai** (KI-001): dpo-funkcija, incidentu-valdymas-72h, darbuotoju-bdar-mokymai
 
-**Rekomendacija**: 1 (pirmiausia patikrinti, kad deploy nesulūžo) → 2 → 3. Po to — 🅰️ KI-005 BDAR puslapiai (teisinis blocker).
+**Rekomendacija**: 1 (svetainė LIVE — pirma patvirtinti veikimą) → 2 (SEO indexing) → 3 (teisinis BDAR blocker). Po to — 🅰️ multi-page skeletons.
 
 ---
 
@@ -305,3 +378,4 @@
 | 2026-05-09 (seo-faq-blog) | index.html FAQ SEO/GEO + pirmasis blog draft | uncommitted | index FAQ 5→12 Q&A + ProfessionalService schema (21 laukai) + GEO meta + 12 keywords; `blog/bdar-baudos-lietuvoje.html` pillar 2846ž. (DRAFT, noindex); 40 LT keywords + WebSearch (Vinted €2,38M, MisterTango €61,5K, ES €1,15 mlrd.) |
 | 2026-05-10 (blog-polish-publish) | Audit→polish workflow, template v2, publish-ready | uncommitted | 3 SVG iliustracijos (21KB), FAQ 12Q 2 cols, HowTo + Review schemas, testimonial blokas, 12 selector typography sync su index, Kowalski animations (IntersectionObserver, FAQ smooth, hover wraps); `/audit` 16/20 → `/polish` P0+P1+P2 → 19/20 health; DRAFT/noindex pašalinti, sitemap + image:image; template v2 + atnaujinti docs; 3 nauji skills (audit/polish/emil-design-eng) iš Empirra |
 | 2026-05-10 (nis2-phishing-publish) | 2 nauji pillar postai + pre-publish audit ratas + first push į main | `fa35e51`, `e382d2e`, `d9cc6e7` | 2 nauji pillar postai (NIS2 1194 eil. 3700ž., Phishing 1118 eil. 3100ž.), 6 nauji SVG (~46KB), 4 nepriklausomi audit'ai (SEO 7→8.5/10, QA PASS, Frontend 17/20, Marketing 8/10), 6 P0 fixes (JSON parse bug, meta desc abu, NIS2 title, Phishing H1+title KW alignment, CTA #2 mygtukai, slug rename), atnaujinta sitemap.xml + index.html + blog.html, push origin main → Vercel auto-deploy (live veriva.lt nepatvirtintas) |
+| 2026-05-10 (vercel-migration) | UX patobulinimai + brief klausimynas + KI-004 split + Vercel deploy fix + DNS WP→Vercel | `c5e14e6`, `d011841`, `60f9d56`, `9328cef`, `fca76a9`, `6974806` | UX: FAQ 2 cols, plain email (7 vietos), nav parity (8 punktai blog.html), BDAR widget realūs VDAI duomenys; NEW brief.html (4 sek × 59 kl, konditional logika sveikatos vs verslo); KI-004 index.html split → assets/css/index.css (590 lines) + assets/js/index.js (276 lines), -43% lines, -92% token cost CSS keitimui; Vercel build fix #1 (invalid runtime:edge) + #2 (outputDirectory) → Production READY; DNS migration: Hostinger A 35.198.136.225 → Vercel 76.76.21.21 + CNAME www → cname.vercel-dns.com (vartotojo per UI, Zoho email DNS nepaliesti); 10 URL'ų LIVE ant www.veriva.lt 200 OK; apex SSL pending |

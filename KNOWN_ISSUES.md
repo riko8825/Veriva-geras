@@ -53,14 +53,18 @@ Uždarytus issues perkelti į `## Išspręsta` skyrių (ne trinti).
 
 ---
 
-### KI-004 — index.html monolitas (~1700 eil.)
-- **SLA:** 🟡 Medium
-- **Paveiktas blokas:** maintainability, page load time
-- **Statusas:** Open
-- **Aprašas:** `index.html` turi visą CSS ir JS inline. Reikia išskirti į `assets/css/` + `assets/js/`.
-- **Workaround:** Veikia, bet sunku maintain'inti
-- **Fix:** Išskirti CSS į `base.css` + `components.css` + `pages/index.css`; JS į `main.js`. Pasiremti `CLAUDE.md` "Niekada inline CSS/JS" taisykle.
-- **Atidarytas:** 2026-05-09
+### KI-004 — index.html monolitas (~1700 eil.) ✅ FIXED
+- **SLA:** ~~🟡 Medium~~ → ✅ FIXED (2026-05-10 vercel-migration)
+- **Paveiktas blokas:** maintainability, token cost
+- **Statusas:** ✅ FIXED — CSS+JS extract'inta į /assets, index.html 1995 → 1127 lines (-43%)
+- **Implementacija (commit `9328cef`):**
+  - `assets/css/index.css` (590 lines, 32K) — pagrindinis CSS + slideUp keyframe
+  - `assets/js/index.js` (276 lines, 11K) — widget logic, FAQ, modals, cookie banner
+  - Cache-buster `?v=20260510` ant CSS+JS
+  - JSON-LD schemos palikau inline (SEO geriau)
+- **Token sutaupymas:** CSS keitimui 110K → 8K (-92%), JS keitimui 110K → 3K (-97%)
+- **Liko (žemo prioriteto):** index.html dar 339K (1127 lines) — viršija Read 25K limit'ą. HTML kontento (modal'ų) extract'inimas reikalautų JS fetch'inio infrastruktūros — out of scope. Žr. DECISION_LOG.
+- **Atidarytas:** 2026-05-09 | **Uždarytas:** 2026-05-10
 
 ---
 
@@ -134,19 +138,26 @@ Uždarytus issues perkelti į `## Išspręsta` skyrių (ne trinti).
 
 ---
 
-### KI-010 — Live veriva.lt po pirmo deploy (`d9cc6e7`) NEPATVIRTINTAS
-- **SLA:** 🟠 High
-- **Paveiktas blokas:** Vercel deploy, 3 blog URL'ai, schema.org Rich Results
-- **Statusas:** Open
-- **Aprašas:** Po `git push origin main` (commit `d9cc6e7`, 3 commits) Vercel auto-deploy paleistas, bet sesijos pabaigoje NEPATVIRTINTA:
-  - Vercel build status (sėkmingas / fail)
-  - 3 blog URL'ų HTTP 200 (`https://veriva.lt/blog/{bdar,nis2,phishing}-...html`)
-  - Schema.org Rich Results test (FAQ + HowTo + Review schemos atpažintos)
-  - PageSpeed Insights mobile/desktop scores
-  - SSL/HTTPS handshake
-  - NKSC + e-tar.lt ext URL'us reikia patikrinti naršyklėje (WebFetch grąžino 403)
-- **Workaround:** Lokalus HTTP server testas (port 8000) — visi 4 URL'ai 200 OK lokaliai
-- **Fix:** Sekanti sesija — 1 žingsnis: `https://search.google.com/test/rich-results` su 3 URL'ais + PageSpeed test + Vercel dashboard build log peržiūra
+### KI-010 — Live veriva.lt po pirmo deploy (`d9cc6e7`) NEPATVIRTINTAS ✅ FIXED
+- **SLA:** ~~🟠 High~~ → ✅ FIXED (2026-05-10 vercel-migration)
+- **Paveiktas blokas:** Vercel deploy, DNS, SSL
+- **Statusas:** ✅ FIXED — root cause: Vercel build fail'inosi 9× per 21h dėl invalid `runtime: edge` config
+- **Aprašas (originalus):** Po `git push origin main` (commit `d9cc6e7`) deploy buvo paleistas, bet patikrinus per Vercel CLI rasta — visi 9 paskutiniai deploy'ai (Production + Preview) → Error per 2-3s. Paskutinis sėkmingas deploy 48 dienų senas (commit'ai nepasiekė production'o).
+- **Root cause:** `vercel.json` `functions` blokas su `"runtime": "edge"` — formatas deprecated, Vercel reikalauja arba pilnos versijos arba runtime'o per-file
+- **Fix #1 (`fca76a9`):** Pašalintas `functions` blokas iš `vercel.json` (TS failai jau turi `export const config = { runtime: 'edge' }`)
+- **Fix #2 (`6974806`):** Pridėtas `"buildCommand": null` + `"outputDirectory": "."` (statinė svetainė root'e, ne `/public/`)
+- **Verify:** Build #2 (`lyvbrbbmk`) READY 27s, 10 URL 200 OK ant `veriva-geras.vercel.app`, DNS propagated, `www.veriva.lt` LIVE su Vercel SSL
+- **Atidarytas:** 2026-05-10 | **Uždarytas:** 2026-05-10
+
+---
+
+### KI-011 — Apex SSL sertifikatas (`https://veriva.lt/`) dar neissued
+- **SLA:** 🟡 Medium
+- **Paveiktas blokas:** Vercel SSL, apex domain
+- **Statusas:** Open (auto-fix laukiama)
+- **Aprašas:** Po DNS migration (Hostinger A/CNAME → Vercel) `www.veriva.lt` gavo Let's Encrypt SSL sertifikatą per ~5 min. Bet apex `veriva.lt` (be www) sertifikato dar neturi — naršyklė rodo `SEC_E_WRONG_PRINCIPAL` warning'ą. HTTP atsako Vercel 307 → www.veriva.lt, bet TLS handshake fail'ina.
+- **Workaround:** Naudoti `https://www.veriva.lt/` — apex 307 redirect veiks po SSL issue'o
+- **Fix:** Vercel automatiškai išduos kai DNS pilnai propaguosis (per 1-24h). Jei per 24h ne — Vercel UI Domains → veriva.lt → "Refresh" mygtukas. Jei dar fail — ištrinti ir pridėti domain'ą iš naujo.
 - **Atidarytas:** 2026-05-10
 
 ---

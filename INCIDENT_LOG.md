@@ -16,7 +16,27 @@ Production incidentų istorija. Atnaujinti po kiekvieno rollback'o, downtime'o, 
 
 ## Aktyvūs incidentai
 
-*Nėra. Production dar nedeploy'inta (2026-05-09).*
+*Nėra šiuo metu.*
+
+---
+
+## INC-001 — Vercel auto-deploy fail'inosi 9× per 21h (silent)
+
+**Kada:** 2026-05-09 ~10:00 UTC – 2026-05-10 08:30 UTC (~21h trukmės silent failure)
+**Sukėlęs commit/deploy:** Pirmas push `c2bd4ff` (2026-05-09) — bet tikra priežastis senesnė: `vercel.json` `functions` blokas su `"runtime": "edge"` egzistavo nuo projekto inicializacijos (`48e6830`, 2026-05-09 init)
+**Simptomas:** Visi `git push origin main` commit'ai (6+) nepasiekė `veriva-geras.vercel.app`. Production rodo seną deploy'ą iš 2026-03-23 (48 dienų senas). User'iui — niekas nesikeitė.
+**Detection:** 2026-05-10 (vercel-migration sesija) — vartotojas pranešė, kad veriva.lt vis dar rodo WordPress. Curl test'ai parodė `Last-Modified: 2026-05-04`, `Age: 506261s`. Vercel CLI `vercel ls` parodė 9 paskutinius deploy'us → ❌ Error per 2-3s.
+**Impact:** 0 production user'ių (DNS dar rodė WordPress, niekas nepateko į Vercel). 6 commit'ai sėdėjo GitHub'e be deploy'o ~21h. Brand image risk minimalus, bet vidinio darbo waste reikšmingas.
+**Resolution:**
+- Fix #1 (`fca76a9`): pašalintas `functions` blokas iš `vercel.json` (deprecated runtime format)
+- Fix #2 (`6974806`): pridėtas `"buildCommand": null` + `"outputDirectory": "."` (statinė svetainė root'e)
+- Build #2 → Ready 27s
+**Root cause:** `vercel.json` turėjo `"functions": { "api/**/*.ts": { "runtime": "edge" } }`. Vercel reikalauja arba pilno semver'o (`@vercel/edge@1.0.0`) arba per-file deklaracijos TS faile per `export const config`. TS failai jau turėjo per-file config, bet `vercel.json` blokas perrašė ir fail'ino build'ą su klaida `Function Runtimes must have a valid version`. Build trukmė 2-3s atspindėjo, kad failure'as įvyko prieš install/build steps, todėl jokio output'o naudotojui nebuvo (silent fail).
+**Prevention:**
+- ❌ NIEKADA neturėk tos pačios konfigūracijos dviejose vietose (`vercel.json` + per-file `export const config`) — vienos iš jų pašalink
+- ✅ Po kiekvieno push'o tikrinti `vercel ls` (CLI) — automatinis darbo flow turi įtraukti šią patikrą prieš pereinant į kitą task'ą
+- ✅ Pridėti `vercel inspect <url> --logs` patikrą į `WORKFLOW.md` deploy step'ą
+- ✅ Health-check workflow (`.github/workflows/health-check.yml`) reikia įjungti — jis būtų pranešęs apie production seną state'ą per cron run
 
 ---
 

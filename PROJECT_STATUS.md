@@ -1,9 +1,9 @@
 # PROJECT_STATUS — Veriva
 
 **Pradžia**: 2026-05-09
-**Paskutinis update**: 2026-05-10 (nis2-phishing-publish)
-**Statusas**: 🟢 First deploy — 3 pillar postai live (BDAR + NIS2 + Phishing), Vercel auto-deploy iš `d9cc6e7`
-**Production URL**: https://veriva.lt (live, deploy nepatvirtintas naršyklėje šios sesijos pabaigoje)
+**Paskutinis update**: 2026-05-10 (vercel-migration)
+**Statusas**: 🟢 PRODUCTION LIVE — DNS migration WP→Vercel ✅, 10 URL 200 OK ant www.veriva.lt, apex SSL pending
+**Production URL**: https://www.veriva.lt (LIVE su Vercel SSL) | https://veriva.lt (apex 307 → www, SSL dar laukia)
 
 ---
 
@@ -11,8 +11,11 @@
 
 | Puslapis | Statusas | Pastabos |
 |---|---|---|
-| `index.html` | 🟢 Yra + FAQ 12Q (SEO/GEO) + blog teaser | Monolitas; reikia išskirstyti CSS/JS (KI-004); FAQPage + ProfessionalService schema (2026-05-09) |
-| `blog.html` | 🟢 Sukurtas | Listing + filtrai + newsletter CTA; pirma kortelė rodo realų postą (2026-05-10) |
+| `index.html` | 🟢 LIVE + KI-004 split done | 1127 lines (was 1995, -43%); CSS+JS extract'inta į /assets; FAQ 2 cols, plain email, BDAR widget realūs duomenys, brief.html link (2026-05-10) |
+| `assets/css/index.css` | 🟢 NEW | 590 lines, 32K — pagrindinis CSS + slideUp keyframe (2026-05-10) |
+| `assets/js/index.js` | 🟢 NEW | 276 lines, 11K — widget logic, FAQ, modals, cookie banner (2026-05-10) |
+| `blog.html` | 🟢 LIVE + nav parity | Listing + filtrai + newsletter CTA; nav 8 punktų sync su index.html (`position:fixed`, mobile 900px breakpoint) |
+| `brief.html` | 🟢 NEW + LIVE | 4 sekcijos × 59 klausimai, konditional logika sveikatos vs verslo, multi-step progress, validation, 3 states (2026-05-10) |
 | `blog/template.html` | 🟢 v2 (post-polish) | 24 placeholder'iai, polished CSS, a11y, 4 schema slotai (2026-05-10) |
 | `blog/bdar-baudos-lietuvoje.html` | 🟢 PUBLISHED | Pillar 2846ž., audit health 19/20, 4 schemas, 3 SVG (2026-05-10) |
 | `blog/nis2-direktyva-lietuvoje.html` | 🟢 PUBLISHED | Pillar 3700ž., audit 19/20 self / 17/20 frontend, 5 schemas, 3 SVG, Author Justinas (2026-05-10) |
@@ -40,7 +43,9 @@
 
 | Servisas | Statusas | Tikslas |
 |---|---|---|
-| Vercel | 🟡 Auto-deploy active | Hosting + Edge Functions (3 commits push'inti, build status nepatvirtintas) |
+| Vercel | 🟢 Production LIVE | Hosting active, build #2 (`6974806`) READY 27s, 10 URL 200 OK, domain'ai (veriva.lt + www.veriva.lt) attached, apex SSL pending |
+| Hostinger DNS | 🟢 Migrated | A `@` → 76.76.21.21, CNAME `www` → cname.vercel-dns.com; Zoho email DNS (DKIM/SPF/MX×3) išsaugoti |
+| Zoho Mail | 🟢 Aktyvus (nepaliesta) | info@veriva.lt — MX/SPF/DKIM/verification record'ai DNS Zone'oje veikia toliau |
 | Supabase | ⬜ | Leads DB |
 | Resend | ⬜ | Email notifications |
 | GA4 + GTM | ⬜ | Analytics |
@@ -76,29 +81,36 @@
 
 ## KNOWN ISSUES
 
-Visi išsamiai dokumentuoti `KNOWN_ISSUES.md` (KI-001..KI-008):
-- **KI-005 🔴 Critical**: privatumas.html + slapukai.html neegzistuoja (BDAR teisinis pažeidimas)
-- **KI-008 🔴 Critical (kai bus deploy)**: Supabase migrations neištaisytos production'e (Supabase project gali būti dar nesetup'intas)
-- **KI-001 🟠 High**: 3/6 placeholder blog kortelės → 404 (3 patvarkyti: bdar-baudos-lietuvoje, nis2-direktyva-lietuvoje, phishing-mokymai-darbuotojams)
+Visi išsamiai dokumentuoti `KNOWN_ISSUES.md` (KI-001..KI-010):
+- **KI-005 🔴 Critical**: privatumas.html + slapukai.html neegzistuoja (BDAR teisinis pažeidimas) — svetainė LIVE be jų
+- **KI-008 🟠 High**: Supabase project'as nesetup'intas, migrations neištaisytos
+- **KI-001 🟠 High**: 3/6 placeholder blog kortelės → 404 (3 padaryta: bdar-baudos-lietuvoje, nis2-direktyva-lietuvoje, phishing-mokymai-darbuotojams)
 - **KI-002 🟠 High**: `blog.html:467` newsletter forma — tik `alert()`, duomenys prarandami
-- ~~**KI-006 🟠 High**: blog teaser/listing/template nepatikrinti naršyklėje~~ ✅ Patikrinta 2026-05-10 (live test 200 OK)
-- **KI-007 🟠 High**: API endpoint'ai (`contact.ts`, `health.ts`) niekada nepaleisti
-- ~~**KI-003 🟡 Medium**: `sitemap.xml` neapima blog URL'ų~~ ✅ Atnaujinta 2026-05-10 (image:image namespace)
-- **KI-004 🟡 Medium**: `index.html` ~1700 eil. monolitas (CSS + JS inline)
+- **KI-007 🟠 High**: API endpoint'ai (`contact.ts`, `health.ts`) niekada nepaleisti production'e
+- **KI-009 🟡 Medium**: 8 P1 audit fixes nepatraukti naujuose blog postuose
+- **KI-011 🟡 Medium (NEW)**: apex SSL sertifikatas (`https://veriva.lt/`) dar neissued — `www.veriva.lt` veikia, apex 307→www
+- ~~**KI-003 ✅ FIXED**~~ (2026-05-10): sitemap.xml su blog post URL + image:image namespace
+- ~~**KI-004 ✅ FIXED**~~ (2026-05-10): index.html split → assets/css/index.css + assets/js/index.js (-43% lines)
+- ~~**KI-006 ✅ FIXED**~~ (2026-05-10): blog naršyklėje 200 OK
+- ~~**KI-010 ✅ FIXED**~~ (2026-05-10): live veriva.lt patvirtinta po DNS migration (10 URL 200 OK)
 
 ## PRIORITETAI
 
-1. **P0**: Live veriva.lt verifikacija po pirmo push (commit `d9cc6e7`) — Schema Rich Results, PageSpeed, 3 blog URL'ai 200 OK
-2. **P0**: Sukurti privatumas.html + slapukai.html (BDAR privaloma — KI-005)
-3. **P0**: Vercel/Supabase/Resend setup + first deploy + contact endpoint smoke test (KI-007, KI-008)
-4. **P0**: Aktyvuoti `health-check.yml` workflow — pridėti `HEALTH_SECRET` GitHub Secrets
-5. **P0**: Išskirstyti `index.html` CSS/JS į atskirus failus (KI-004)
-6. **P1**: Multi-page skeletons (paslaugos, apie, kainos, kontaktai, 404)
-7. **P1**: Sukurti likusius 5/6 blog post'us (KI-001 — placeholder linkai vis dar veikia į 404)
-8. **P1**: Newsletter endpoint (KI-002)
-9. **P1**: Po deploy — Google Search Console: submit sitemap + request indexing pirmajam postui
-10. **P2**: Blog-gen automation (`api/internal/blog-gen.ts`) — docs paruošti, kodas dar ne
-11. **P2**: ~~Empirra parity (docs/root files/.claude/.github)~~ ✅ 2026-05-09 (`93cf7b7`)
-12. **P2**: ~~Blog struktūra~~ ✅ 2026-05-09 (teaser + listing + template v2 polished)
-13. **P2**: ~~SEO foundation~~ 🟢 (robots/sitemap + image schema + GEO meta + index FAQPage)
-14. **P2**: ~~Pirmas pillar postas~~ ✅ 2026-05-10 (BDAR baudos Lietuvoje, audit 19/20)
+1. **P0**: Apex SSL + naršyklės verifikacija — `https://veriva.lt/` (be www) atsidaro be SSL warning'o, FAQ 2 cols veikia, brief.html progress bar, BDAR widget realūs duomenys
+2. **P0**: Test email į `info@veriva.lt` (Zoho) — patvirtinti DNS migration nesulaužė email'o
+3. **P0**: Sukurti `privatumas.html` + `slapukai.html` (BDAR privaloma — KI-005)
+4. **P0**: Google Search Console — add property, submit sitemap, request indexing 3 blog URL'us
+5. **P0**: Multi-page skeletons (paslaugos, apie, kainos, kontaktai, 404)
+6. **P0**: Vercel/Supabase/Resend backend setup (KI-007, KI-008) + contact endpoint smoke test
+7. **P0**: Aktyvuoti `health-check.yml` workflow — pridėti `HEALTH_SECRET` GitHub Secrets
+8. **P1**: Sukurti likusius 3/6 blog post'us (KI-001 — placeholder linkai 404)
+9. **P1**: Newsletter endpoint (KI-002)
+10. **P1**: P1 batch fixes blog postams (KI-009): `<time datetime>`, keyword density dilution, TL;DR, cross-link, FAQ IIFE
+11. **P1**: WordPress hosting cancellation (po 7d stabilumo)
+12. **P2**: Blog-gen automation (`api/internal/blog-gen.ts`) — docs paruošti, kodas dar ne
+13. **P2**: ~~KI-004 index.html split~~ ✅ 2026-05-10 (CSS+JS extract'inta į /assets, -43% lines)
+14. **P2**: ~~KI-010 Vercel deploy fix + DNS migration~~ ✅ 2026-05-10 (PRODUCTION LIVE)
+15. **P2**: ~~Empirra parity~~ ✅ 2026-05-09
+16. **P2**: ~~Blog struktūra~~ ✅ 2026-05-09
+17. **P2**: ~~SEO foundation~~ 🟢
+18. **P2**: ~~3 pillar postai~~ ✅ 2026-05-10

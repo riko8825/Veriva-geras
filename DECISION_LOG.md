@@ -308,3 +308,71 @@ Architektūriniai sprendimai. Kiekvienas su data, kontekstu, alternatyvomis, spr
 - Privaloma kiekvienam blog postui prieš push į main
 - Reference: `blog/nis2-direktyva-lietuvoje.html` + `blog/phishing-mokymai-darbuotojams.html` (commits `fa35e51`, `e382d2e`, `d9cc6e7`)
 - BDAR postas (`blog/bdar-baudos-lietuvoje.html`) — published su tais pačiais sisteminiais P1 trūkumais (`<time datetime>`, FAQ IIFE) — KI-009 batch fix sekanti sesija
+
+---
+
+## 2026-05-10 — KI-004 index.html split: tik CSS/JS extract, NE HTML komponentai
+
+**Kontekstas**: index.html yra 1995 lines (376K) — viršija Read 25K token limit'ą, kiekvienas pakeitimas brangiai kainuoja token'us. Token analizė rodo CSS+JS sudaro ~42KB iš 376KB.
+
+**Alternatyvos**:
+- A) Extract'inti TIK inline `<style>` + `<script>` blokus (CSS + JS)
+- B) A + ištraukti modal'us (privatumas/slapukai/terms HTML) į atskirus failus per JS fetch
+- C) A + B + pereiti į static site generator (Eleventy / Astro) build-time partials
+
+**Sprendimas**: A — tik CSS/JS extract.
+
+**Priežastis**:
+- 88% mano darbo index.html'e yra CSS/JS pakeitimai (FAQ, widget, animations, BDAR logic). Tik ~12% — HTML kontento pakeitimai.
+- Po A: CSS keitimui Read 590 lines (~8K tokens) vietoj 1995 lines (~108K) — **-92% token cost**
+- B reikalauja JS fetch'inio infrastruktūros (kuri turi loading state, error handling) — pridėtinis komplekso lygmuo už ribotą sutaupymą
+- C reikalauja build step'o ir keičia visą project setup (vanilla → SSG) — out of scope
+
+**Trade-off**: index.html vis dar 339K (1127 lines) — viršija single Read call limit'ą. HTML kontento pakeitimai (modal'ai, hero, footer) dar reikalauja Grep + offset workaround'ų. Bet **CSS/JS keitimai dabar paprastai veikia per Edit įrankį.**
+
+**Implementacija**: commit `9328cef` — `assets/css/index.css` (590 lines) + `assets/js/index.js` (276 lines), cache-buster `?v=20260510`, JSON-LD schemos palieku inline (SEO geriau apdoroja).
+
+---
+
+## 2026-05-10 — Vercel deploy fix: pašalinti `vercel.json` `functions` blokas
+
+**Kontekstas**: Vercel build fail'inosi 9 kartus per 21h su klaida `Function Runtimes must have a valid version, for example "now-php@1.0.0"`. Visi commit'ai nuo 2026-03-23 nepasiekė production'o.
+
+**Alternatyvos**:
+- A) Pakeisti `"runtime": "edge"` → `"runtime": "@vercel/edge@1.0.0"` (pilnas semver)
+- B) Pašalinti `functions` bloką iš `vercel.json` ir palikti runtime config TIK TS failuose per `export const config = { runtime: 'edge' }`
+- C) Naudoti `vercel.json` `functions` block'ą su `runtime: "@vercel/edge"` be versijos (auto-pin)
+
+**Sprendimas**: B — pašalinti `functions` bloką.
+
+**Priežastis**:
+- Modern Vercel best practice: runtime declared **per-file** TS export'e, ne globaliai `vercel.json`'e
+- Mūsų TS failai (`api/forms/contact.ts`, `api/internal/health.ts`) jau turi `export const config = { runtime: 'edge' }` — dubliuoja konfiguraciją
+- A reikalauja nuolatinės versijos sinchronizacijos kai Vercel išleidžia naujas major versijas
+- C deprecated, gali fail'inti ateityje
+
+**Trade-off**: jei pridėsim naują API endpoint'ą, **privalu** pridėti `export const config = { runtime: 'edge' }` TS faile, kitaip Vercel default'ins į Node.js runtime (kuris su mūsų `lib/` wrapperiais nesuderinta). Sprendimas dokumentuotas `docs/automation-standards.md`.
+
+**Implementacija**: commit `fca76a9` — pašalintas `functions` blokas iš `vercel.json`. Po to commit `6974806` pridėjo `outputDirectory: "."` + `buildCommand: null` (statinė svetainė root'e).
+
+---
+
+## 2026-05-10 — DNS migration WP→Vercel: išsaugoti Zoho email DNS record'us
+
+**Kontekstas**: Hostinger DNS Zone turėjo 8 record'us — 2 WP-related (A `@` + CNAME `www`), 6 email-related (3× MX Zoho, 2× TXT SPF/verification, 1× TXT DKIM). Migracijai į Vercel reikia pakeisti A + CNAME, bet email turi veikti toliau.
+
+**Alternatyvos**:
+- A) Wipe visus DNS record'us ir pradėti iš naujo (saugu, bet sulaužytų email'ą)
+- B) Išsaugoti TIK email record'us (DKIM + SPF + verification + 3× MX), pakeisti tik A + CNAME `www`
+- C) Migruoti DNS valdymą į Vercel Nameservers (`ns1.vercel-dns.com`)
+
+**Sprendimas**: B — surgical replace.
+
+**Priežastis**:
+- `info@veriva.lt` aktyvi business email per Zoho — wipe'as sulaužytų LT klientų komunikaciją (kritinis)
+- A net su backup screenshot'u būtų rizikinga (DKIM rakto turinys ilgas, copy-paste klaidos tikimybė)
+- C reikalauja registrar'o (Hostinger registratorius) nameserver pakeitimo, kuris gali užtrukti 24-72h propagation + paliktų email valdymą Vercel'e (kuris neturi pilno email DNS UI kaip Hostinger)
+
+**Trade-off**: turime palaikyti DNS valdymą dviejuose vietose (Vercel Domains + Hostinger DNS Zone) — bet praktikoje DNS keitimas vyksta retai (~1× per metus).
+
+**Implementacija**: vartotojas per Hostinger UI ištrynė 2 WP record'us, pridėjo 2 Vercel record'us. 6 email DNS record'ai NEPALIESTI. Verify: 6 globalūs DNS resolvers'ai propaguoti per ~30 min, MX `mx{1,2,3}.zoho.eu` rodo toliau.

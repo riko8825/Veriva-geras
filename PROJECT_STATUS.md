@@ -15,7 +15,7 @@
 | `index.html` | 🟢 LIVE (premium dark tier 9 sekcijų + Cookiebot) | ~1500 lines, 0 inline styles perdirbtose sekcijose, Cookiebot script `<head>`, Schema.org enhanced (Person ×2, ItemList Service ×3, Organization +3 fields) |
 | `assets/css/index.css` | 🟢 LIVE 2571 lines | 590 → 2571 lines (~83KB), 705/705 braces; premium dark tier + cookie banner CSS pašalinta |
 | `assets/js/index.js` | 🟢 LIVE 12KB | count-up + cursor-follow + faq() a11y aria-expanded; cookie banner JS pašalintas |
-| `blog.html` | 🟢 LIVE + nav parity | Listing + filtrai + newsletter CTA; nav 8 punktų sync su index.html (`position:fixed`, mobile 900px breakpoint) |
+| `blog.html` | 🟢 LIVE premium dark tier | Visa puslapio dark theme (buvo light); hero radial mesh + mono kicker + cyan dot + Syne 800; filterai dark glass + cyan accent; post kortelės `.post`-style premium card su `:has()` sibling dim + grid mask visual; newsletter cyan CTA + glass card; 3 placeholder kortelės disabled (`bc--soon` + "Netrukus" badge, aria-disabled), 3 realūs post'ai aktyvūs (2026-05-10 blog-dark-tier-sync) |
 | `brief.html` | 🟢 NEW + LIVE | 4 sekcijos × 59 klausimai, konditional logika sveikatos vs verslo, multi-step progress, validation, 3 states (2026-05-10) |
 | `blog/template.html` | 🟢 v2 (post-polish) | 24 placeholder'iai, polished CSS, a11y, 4 schema slotai (2026-05-10) |
 | `blog/bdar-baudos-lietuvoje.html` | 🟢 PUBLISHED | Pillar 2846ž., audit health 19/20, 4 schemas, 3 SVG (2026-05-10) |
@@ -85,7 +85,7 @@
 Visi išsamiai dokumentuoti `KNOWN_ISSUES.md` (KI-001..KI-010):
 - **KI-005 🟠 High (partial fix 2026-05-10)**: `slapukai.html` ✅ LIVE su Cookiebot CMP. Liko `privatumas.html` (Privacy Policy — BDAR privaloma)
 - **KI-008 🟠 High**: Supabase project'as nesetup'intas, migrations neištaisytos
-- **KI-001 🟠 High**: 3/6 placeholder blog kortelės → 404 (3 padaryta: bdar-baudos-lietuvoje, nis2-direktyva-lietuvoje, phishing-mokymai-darbuotojams)
+- **KI-001 🟡 Medium (partial fix 2026-05-10)**: 3 placeholder kortelės (DPO, Incidentai, Mokymai) DISABLED su "Netrukus" badge (`<a href>` → `<div>`, aria-disabled, opacity .55, no hover) — 404 link'ai pašalinti, bet realūs post'ai dar nesukurti
 - **KI-002 🟠 High**: `blog.html:467` newsletter forma — tik `alert()`, duomenys prarandami
 - **KI-007 🟠 High**: API endpoint'ai (`contact.ts`, `health.ts`) niekada nepaleisti production'e
 - **KI-009 🟡 Medium**: 8 P1 audit fixes nepatraukti naujuose blog postuose

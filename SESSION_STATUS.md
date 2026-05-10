@@ -1,11 +1,50 @@
 # SESSION_STATUS
 
 **Data**: 2026-05-10
-**Sesijos tikslas**: Cookiebot CMP integracija (BDAR/e-Privatumo atitiktis) + slapukai.html + paskutinės sesijos #8 (premium dark tier 9 sekcijų) bundle commit į production
+**Sesijos tikslas**: blog.html premium dark tier sync su index.html brand language + 3 placeholder kortelių 404 link'ų pašalinimas (KI-001 partial fix)
 
 ---
 
-## ATLIKTA ŠIOJE SESIJOJE (2026-05-10 — cookiebot-integration)
+## ATLIKTA ŠIOJE SESIJOJE (2026-05-10 — blog-dark-tier-sync)
+
+### blog.html premium dark tier perdirbimas (commit `2ca8177`)
+- **Visa puslapio body** dark (`--ink`) — buvo light (`--cream`)
+- **Hero (`.bh`)**: mono kicker `Tinklaraštis` + glowing cyan dot (vietoj gold tag), Syne 800 H1, `em` accent baltas-50% (vietoj gold), radial mesh (matches `.about-bg` / `.blog-bg` index'e)
+- **Filterai (`.bf-btn`)**: dark glass `rgba(255,255,255,.04)` + cyan border on hover; aktyvus = cyan tinted background, ne ink black
+- **Post kortelės (`.bc`)**: `.post`-style premium card iš index — radial mesh background, top hairline cyan gradient line (`::before`), `:has()` sibling dim hover, gradient block visual su SVG grid mask, mono cat label su cyan glowing dot, white-on-dark titles, cyan arrow translateX hover
+- **Newsletter (`.nlw`)**: glass card su top hairline + mono kicker `Naujienlaiškis`, em accent baltas-50%, **cyan CTA mygtukas** (vietoj blue)
+- **Footer**: pridėtas `border-top` hairline
+- **Reduced-motion**: `prefers-reduced-motion` respect
+- **Fontai**: pridėtas JetBrains Mono preload
+- **CSS balansas**: 103/103 braces (po šios sesijos commit'o), 113/113 (po placeholder fix)
+
+### blog.html 3 placeholder cards disabled (commit `f74415f`)
+- **DPO, Incidentai, Mokymai** kortelės: `<a href="/blog/...">` → `<div>` (404 link'ai pašalinti — KI-001 partial fix)
+- Pridėtas `Netrukus` badge viršuje dešinėje (mono font, glass background `rgba(7,17,31,.7)` + backdrop-filter)
+- Disabled state: `.bc--soon` su `opacity:.55`, no hover transform, "Skaityti straipsnį →" → "Netrukus"
+- `aria-disabled="true"` accessibility
+- 3 realūs post'ai (BDAR, NIS2, Phishing) lieka aktyvūs su pilnu hover state
+- Filterai vis dar veikia (`data-cat` išsaugotas ir disabled kortelėse)
+
+### Production verifikacija
+- Push'inta į origin/main: `2ca8177..f74415f`
+- Vercel build #2 (commit `f74415f`): Ready 13s
+- `https://www.veriva.lt/blog.html` → HTTP 200 (su 308 redirect → /blog)
+- 6× "Netrukus" string, 11× `bc--soon` class refs production HTML
+
+### Tools naudoti
+- `Read` × 6, `Edit` × 9, `Bash` × 12, `Grep` × 6, `Glob` × 1
+- Lokalus HTTP servas (port 5174) prieš commit verifikacijai
+
+### Neužbaigta / nepatvirtinta
+- Naršyklės QA nepadarytas (mobile @768px, hover `:has()` sibling dim)
+- Cookiebot banner kontrastas su nauja dark paletė nepatikrintas
+- Newsletter CTA mygtukas pakeistas blue → cyan be A/B testo (per drąsus brand pakeitimas)
+- 3 disabled kortelės užima vietą — UX galėtų būti švaresnis visiškai paslėpus
+
+---
+
+## ATLIKTA ANKSČIAU (2026-05-10 — cookiebot-integration)
 
 ### Cookiebot CMP įdiegtas (auto-blocking modelis)
 - **Domain group ID**: `bc31b2c9-a2b7-44e8-a3a2-624b027ba646`
@@ -564,18 +603,19 @@ Vienas commit'as su:
 
 ## KITAS ŽINGSNIS (sekanti sesija — 1-3 konkretūs žingsniai)
 
-1. **Apex SSL + email + naršyklės verifikacija** — patikrinti ar `https://veriva.lt/` (be www) atsidaro be SSL warning'o; jei ne per 1-2h — Vercel UI Domains → Refresh; siųsti test email į `info@veriva.lt`, patvirtinti gauna Zoho; atidaryti `https://www.veriva.lt/`, `/blog`, `/brief` realioje naršyklėje + mobile (Chrome DevTools); patikrinti ar BDAR widget'as veikia, FAQ 2 stulpeliuose atsidaro/uždaro animation, brief.html progress bar veikia.
-2. **Google Search Console** — add property `https://veriva.lt`, ownership verification per Vercel DNS auto, submit `https://veriva.lt/sitemap.xml`, request indexing 3 blog URL'ams (BDAR baudos, NIS2, Phishing). PageSpeed Insights mobile + desktop test.
-3. **P0 KI-005 BDAR**: `privatumas.html` + `slapukai.html` — teisinis reikalavimas (BDAR privaloma), dabar svetainė LIVE be šių puslapių. Cookie banner index.html'e jau yra, bet neturi tikslo (linkina į `#`).
+1. **`privatumas.html` (paskutinis KI-005 BDAR blocker)** — teisinis reikalavimas BDAR. Stilius identiškas `slapukai.html` (cream bg + dark hero + 9-10 skyrių). Reikia: duomenų valdytojas (Veriva UAB), kontaktai, tvarkymo tikslai (lead form, newsletter, BDAR widget), teisinis pagrindas (BDAR 6 str.), saugojimo terminai, jūsų teisės, DPO kontaktas.
+2. **Hero sekcija index.html premium dark tier sync** — vienintelė sekcija, kuri dar liko ankstesnio stiliaus. Reikia perdaryti pagal naują brand language (radial mesh + mono kicker + Syne 800 H2 + cyan accent), kad svetainė būtų 100% vientisa.
+3. **Cookiebot dashboard verify** — patikrinti LT kalba, domeno whitelisting (`veriva.lt` + `www.veriva.lt`), incognito naršyklėje patvirtinti banner pasirodo. Jei nepasirodo — domeno whitelist'as Cookiebot dashboard'e neatliktas.
 
 **Alternatyvos:**
 - 🅰️ **Multi-page skeletons** (paslaugos.html, apie.html, kainos.html, kontaktai.html, 404.html) — visi linkai iš nav vis dar `/#section`, tikriausiai veiks tik scroll'inant index'e
-- 🅱️ **P1 KI-009 batch fixes** — 8 nepatraukti audit findings naujuose blog postuose (`<time datetime>`, keyword density dilution, Phishing "Lietuv*" 6→20+, TL;DR, NIS2→Phishing cross-link, FAQ IIFE, testimonial `role="img"`, "Susiję straipsniai")
+- 🅱️ **Likę 3/6 placeholder blog post'ai** (KI-001 full fix): dpo-funkcija, incidentu-valdymas-72h, darbuotoju-bdar-mokymai — naudojant template v2 + 4-agent pre-publish ratas
 - 🅲 **Backend setup** (KI-007, KI-008): Supabase project + migrations + env vars Vercel'yje, Resend API key, contact endpoint live test
-- 🅳 **WordPress hosting cancellation** (po 7 dienų stabilumo verifikacijos) — sutaupys hosting mokestį
-- 🅴 **Likę 3/6 placeholder blog post'ai** (KI-001): dpo-funkcija, incidentu-valdymas-72h, darbuotoju-bdar-mokymai
+- 🅳 **Google Search Console** — add property, submit sitemap, request indexing 3 blog URL'ams
+- 🅴 **WordPress hosting cancellation** (po 7 dienų stabilumo verifikacijos) — sutaupys hosting mokestį
+- 🅵 **Newsletter endpoint** (KI-002): `/api/forms/newsletter`, dabar tik `alert()` — duomenys prarandami
 
-**Rekomendacija**: 1 (svetainė LIVE — pirma patvirtinti veikimą) → 2 (SEO indexing) → 3 (teisinis BDAR blocker). Po to — 🅰️ multi-page skeletons.
+**Rekomendacija**: 1 (paskutinis BDAR teisinis blocker) → 2 (vizualinis polish 100% brand consistency) → 3 (Cookiebot verify 5 min). Po to — 🅰️ multi-page skeletons.
 
 ---
 
@@ -590,3 +630,6 @@ Vienas commit'as su:
 | 2026-05-10 (blog-polish-publish) | Audit→polish workflow, template v2, publish-ready | uncommitted | 3 SVG iliustracijos (21KB), FAQ 12Q 2 cols, HowTo + Review schemas, testimonial blokas, 12 selector typography sync su index, Kowalski animations (IntersectionObserver, FAQ smooth, hover wraps); `/audit` 16/20 → `/polish` P0+P1+P2 → 19/20 health; DRAFT/noindex pašalinti, sitemap + image:image; template v2 + atnaujinti docs; 3 nauji skills (audit/polish/emil-design-eng) iš Empirra |
 | 2026-05-10 (nis2-phishing-publish) | 2 nauji pillar postai + pre-publish audit ratas + first push į main | `fa35e51`, `e382d2e`, `d9cc6e7` | 2 nauji pillar postai (NIS2 1194 eil. 3700ž., Phishing 1118 eil. 3100ž.), 6 nauji SVG (~46KB), 4 nepriklausomi audit'ai (SEO 7→8.5/10, QA PASS, Frontend 17/20, Marketing 8/10), 6 P0 fixes (JSON parse bug, meta desc abu, NIS2 title, Phishing H1+title KW alignment, CTA #2 mygtukai, slug rename), atnaujinta sitemap.xml + index.html + blog.html, push origin main → Vercel auto-deploy (live veriva.lt nepatvirtintas) |
 | 2026-05-10 (vercel-migration) | UX patobulinimai + brief klausimynas + KI-004 split + Vercel deploy fix + DNS WP→Vercel | `c5e14e6`, `d011841`, `60f9d56`, `9328cef`, `fca76a9`, `6974806` | UX: FAQ 2 cols, plain email (7 vietos), nav parity (8 punktai blog.html), BDAR widget realūs VDAI duomenys; NEW brief.html (4 sek × 59 kl, konditional logika sveikatos vs verslo); KI-004 index.html split → assets/css/index.css (590 lines) + assets/js/index.js (276 lines), -43% lines, -92% token cost CSS keitimui; Vercel build fix #1 (invalid runtime:edge) + #2 (outputDirectory) → Production READY; DNS migration: Hostinger A 35.198.136.225 → Vercel 76.76.21.21 + CNAME www → cname.vercel-dns.com (vartotojo per UI, Zoho email DNS nepaliesti); 10 URL'ų LIVE ant www.veriva.lt 200 OK; apex SSL pending |
+| 2026-05-10 (premium-dark-tier-redesign) | 9 sekcijų index.html perdirbimas į premium dark tier (Stripe/Linear lygis) | bundle'inta `0e51dcf` | 9 sekcijos perdirbtos (paslaugos/auditas/komanda/apie/atsiliepimai/kainos/blog/FAQ/kontaktai), brand language unified (radial mesh + mono kicker + cyan dot + Syne 800 + cyan accent), CSS 590→2573 lines (708/708 braces), JS 276→324 lines (count-up + cursor-follow + faq a11y), schema enhancements ×3, 12× emoji+ → SVG icons, ~80 lines dead CSS removed, visi inline styles + onmouseover XSS pašalinti |
+| 2026-05-10 (cookiebot-integration) | Cookiebot CMP įdiegimas (BDAR/e-Privatumo atitiktis) + slapukai.html + bundle commit | `0e51dcf` | Cookiebot CMP auto-blocking 6 puslapiuose (Domain ID `bc31b2c9-...`), slapukai.html NEW (9-skyrių BDAR politika + CookieDeclaration + Cookiebot.renew btn), pašalintas custom #cookie-banner (XSS rizika su inline onmouseover): HTML 16 + JS 14 + CSS 2 + modal-cookies orphan 32 lines, footer linkas modal → /slapukai.html, bundle commit'as su sesija #8 (3516+/571-), production verify 7/7 URL 200 OK + Cookiebot CDN 200 OK |
+| 2026-05-10 (blog-dark-tier-sync) | blog.html premium dark tier sync su index.html + 3 placeholder cards disabled | `2ca8177`, `f74415f` | blog.html visas dark theme (buvo light cream): hero su mono kicker + cyan dot + Syne 800 + radial mesh, filterai dark glass + cyan accent, post kortelės `.post`-style premium card su top hairline cyan + `:has()` sibling dim + grid mask visual, newsletter cyan CTA + glass card, footer hairline, JetBrains Mono preload, prefers-reduced-motion respect; KI-001 partial: 3 placeholder kortelės (DPO/Incidentai/Mokymai) `<a href>` → `<div>` su Netrukus badge (glass + backdrop-filter) + opacity .55 + aria-disabled, 404 link'ai pašalinti, filterai vis dar veikia; production LIVE 200 OK, 6× Netrukus + 11× bc--soon refs |

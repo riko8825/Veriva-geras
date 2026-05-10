@@ -1,11 +1,170 @@
 # SESSION_STATUS
 
 **Data**: 2026-05-10
+**Sesijos tikslas**: Premium dark tier perdirbimas — 7 sekcijų (Komanda · Apie · Paslaugos · Procesas · Rezultatai · Kainos · Hero) brand consistency į €20k+ tier (Stripe/Linear/Mercury lygis)
+
+---
+
+## ATLIKTA ŠIOJE SESIJOJE (2026-05-10 — premium-dark-tier-redesign)
+
+### Brand language: premium dark tier (taikoma visose perdirbtose sekcijose)
+- `--ink` background + radial mesh (cyan + blue blobs)
+- Mono kicker (`var(--ffm)` JetBrains Mono 11px, `.18em` letter-spacing) + glowing cyan dot
+- H2: Syne 800, `clamp(36px,4.4vw,56-60px)`, `<em>` accent rgba(255,255,255,.5) monotone
+- Cards: glass `rgba(255,255,255,.04→.02)` + 1px white .07 border + 20px radius + cyan glow shadow ant hover
+- Top accent line `::before` (cyan gradient hairline, opacity .5→1 ant hover)
+- Sibling dim per `:has()` selector (Linear focus pattern)
+- All transitions su `--ease-out:cubic-bezier(.23,1,.32,1)` (Kowalski strong curve)
+- All hovers gate'inti už `@media (hover:hover) and (pointer:fine)`
+- All animations respect `@media (prefers-reduced-motion:reduce)`
+- Pridėtos 2 fonts (JetBrains Mono 400/500) iš Google Fonts
+- Pridėtas `<svg>` sprite po `<body>` su `procGrad` linearGradient + `procGlow` filter (reuse'inami visose dark sekcijose)
+
+### Sekcijos perdirbtos (7 viso)
+
+**1. `#paslaugos` — `.svc-bg` premium dark tier**
+- HTML: 3 `<article class="sc">` su `data-r` stagger reveal
+- 3 unikalūs CTA pagal paslaugos kontekstą: "Užsisakyti BDAR auditą" / "Įvertinti IT rizikas" / "Suplanuoti mokymus"
+- Stat block: €0 / 90 d. / 34→4% (vietoj generic ✅)
+- Cursor-follow cyan glow per JS (`pointermove` ant `.svc-grid`, rAF debounced, CSS `--mx`/`--my` vars)
+- Step indeksai: `01/03`, `02/03`, `03/03` mono top-right corner
+- Schema.org `ItemList` su 3× `Service` (provider, areaServed=LT)
+
+**2. `#auditas` — `.proc-bg` premium dark tier**
+- 5-step zigzag layout (alternating left/right)
+- Custom 5 SVG illustrations (400×320 viewBox, scenic compositions su `procGrad` gradient + `procGlow` filter)
+- Mono `Step 01 / 05` indeksas vietoj outline 140px Syne (Linear/Stripe pattern)
+- 5 P0 + 5 P1 + 4 P2 polish fix'ai (vertical rhythm, typography hierarchy, hover micro-interactions)
+
+**3. `#komanda` — `.team-bg` premium dark tier**
+- 2-col grid (`.team-grid` repeat(2,1fr) max-width 920px)
+- HTML perstatymas: pašalinti VISI inline `style` ir `onmouseover/onmouseout` (XSS rizika)
+- Justinas: 96×96 photo su dual-layer ring (1px white inset + 4px cyan halo .08)
+- Marina: premium monogram (radial blue+cyan + ink gradient + grid pattern + Syne 38px su cyan text-shadow)
+- Mono trust badges: "9+ METAI · NIS2 · INCIDENT RESPONSE" / "8+ METAI · BDAR · DPO · VDAI"
+- LinkedIn ikona (30×30 button) greta tel:
+- Avatar reveal sub-animation: `scale(.85)→1` su delay
+- Schema.org `Person` JSON-LD ×2 (jobTitle, telephone, knowsAbout, worksFor:#organization)
+
+**4. `#apie` — `.about-bg` premium dark tier**
+- H2 reframe: "BDAR atitiktis ir kibernetinis saugumas — teisė ir IT vienoje komandoje" → **"8 metai. 120 audituotų įmonių. €0 VDAI baudų."** (data-driven, ne dubliuoja H1)
+- Linear hairline stats strip (4-col, 1px gradient separators)
+- Count-up scroll-in animacija per JS: `0 → 8+/120+/€0/15+` per 1.4s ease-out quart, threshold .5
+- Manifesto stilius: lede (Syne 22) + 2 tight body paragraphs (~80 žodžių)
+- "Why Veriva" hairline list (4 differentiators, no boxes)
+- Įmonės info — hairline-top mono block (no card)
+- CTA ghost link: "Susipažinkite su mūsų darbo metodika →"
+- Schema.org `Organization` enhanced: `numberOfEmployees:5`, `slogan`, `award:"€0 VDAI baudų..."`
+- ⚠️ Pirmoji versija buvo light tier (`--g50` cream), bet vartotojas paprašė atstatyti brand consistency → konvertuota į dark
+
+**5. `#atsiliepimai` — `.case-bg` premium dark tier**
+- 3 case studies (`<article class="case">`) — Logistika / Medicina / Fintech
+- Top stat block: "34% → 4%" / "€150K+" / "3h → €0" su tabular-nums
+- Mono `.case-tag` su glowing cyan dot
+- `.case-outcome`: cyan check SVG + drop-shadow (vietoj ✅ green box)
+- Sektorių pills strip viduje sekcijos (8 sektorių, hover cyan)
+- Bug fix: orphan markup po `</section>` (sektorių strip buvo už parent container'io)
+
+**6. `#kainos` — `.price-bg` premium dark tier (perdirbtas 2× — Empirra style remake)**
+- **v1**: 3 planai (Shy / Standard `plan-hi` / Advance) su CSS-only checkmark, cyan glow, tabular-nums, white CTA-hi
+- **v2 (Empirra remake)**: vartotojas parodė screenshot'ą "tekstas suluzęs, nera vieno dominavimo plano, marketinginiu atzvilgiu labai silpanas sprendimas". Padaryta pilnas remake pagal Empirra `.plan.featured` pattern:
+  - Featured kortelė `transform:scale(1.04) z-index:2` + ★ "Dažniausiai pasirenkamas" cyan gradient eyebrow viršuje + sibling `.plan-dim{opacity:.78}`
+  - Tier badges (Starter/Growth/Premium) su skirtingomis spalvomis (white/cyan/gold)
+  - Plan name: Syne 26-30px (vietoj 11px mono)
+  - Plan tag (sub-headline): "Bazinė BDAR atitiktis. Viskas, ko reikia... Per 14 d."
+  - Price `white-space:nowrap` + sumažintas font (clamp 26-32px) — tilpsta vienoje eilutėje
+  - **NEW** `.plan-replaces` — ką klientas nustoja mokėti ("BDAR konsultantą įmonėje · 3 500–6 000 €/mėn")
+  - **NEW** `.plan-payback` — ROI signalas ("Atsiperka: ~2 mėn.")
+  - **NEW** `.plan-saves` (TIK featured) — "~3 500 € sutaupote per metus" su cyan glowing big number
+  - **NEW** `.plan-guarantee` — gold accent box ("Garantija: Atitiktis per 7 d. — arba toliau dirbame nemokamai")
+  - **NEW** `.plan-list-no` — excluded items su gray dash (rodo, ką gauti upgrade'inus)
+  - Outcome-driven CTA: Standard "Atitiktis per 7 d. — garantuojame raštu" (vietoj "Pasirinkti planą")
+
+**7. `#blog` — `.blog-bg` premium dark tier**
+- 3 post kortelės (`<a class="post">`) su gradient mesh top visual + grid pattern + masked corners
+- `.post-cat-mark` — didelis Syne 800 kategorijos žymeklis ant vizualo
+- Sibling dim per `:has()` Linear focus pattern
+- `.blog-all-cta` ghost mygtukas su arrow translateX hover
+
+**8. `#faq` — `.faq-bg` premium dark tier**
+- 12 Q&A 2-col grid (max 1040px), mono kicker + Syne 800 H2 + sub paragraph
+- **+ ikona** (12 vietų) → SVG plus icon (rotate 45° ant `.open`)
+- Cyan accent ant rotate'into ikono + border-bottom .18 cyan tint kai atviras
+- `aria-expanded` toggle + a11y compliant
+- `:focus-visible` cyan outline
+- HTML balanso bug ištaisytas (orphan `</div>` po `.faq-inner` wrapper'io pašalinimo)
+
+**9. `#kontaktai` — `.contact-bg` refreshed**
+- Mono kicker `.contact-tag` su glowing cyan dot
+- H2 Syne 800 + `<em>` rgba(.5) monotone
+- `<span>` semantic + `aria-labelledby`
+
+### Cleanup (CSS dead code pašalinta)
+- `.svc-grid + .sc-line/-ico/-title/-desc/-items/-result/-link` (light cream variant)
+- `.testi-bg + .tc + .tc-stars/-text/-author/-av/-name/-role/-result/-result-hero/-av-wrap/-av-verified/-sector` (light variant)
+- `.pgrid + .pc/.pc-name/.pc-price/.pc-cycle/.pc-desc/.pc-outcome/.pc-list/.pc-chk/.pc-badge/.pc.hi + .btn-pw/.btn-po/.btn-pb` (~30 lines dead)
+- `.blog-bg{white}/.bc/.bc-img/.bc-meta/.bc-cat/.bc-dot/.bc-title/.bc-excerpt/.bc-read/.bc-read-arrow/.btn-blog-all` (~16 lines)
+- `.faq-bg{white}/.faq-inner/.faq-list 1fr 1fr/.faq-col light/.fq light hover/.fi-ico circle/.fi.open .fi-ico/.fa-in light` (~10 lines)
+- `.contact-tag{old cyan UPPERCASE}/.contact-h em{cyan}` (sena versija)
+- `.plan-badge{old}/.plan-cycle/.plan-desc/.plan-outcome cyan box` (po Empirra remake)
+- Mobile rules: `.testi-grid`, `.pgrid`, `.pc.hi{transform:none}` pašalinti
+- Visi inline `style="..."` HTML perdirbtose sekcijose (~50+ atributai)
+- Visi `onmouseover/onmouseout` (XSS rizika) — komandos kortelėse
+- 12× `<span class="fi-ico">+</span>` emoji → SVG plus ikonos (FAQ accordion)
+
+### Skill / agent / tool naudojimas
+- `emil-design-eng` skill — design tokens + Before/After lentelės kiekvienai sekcijai (Kowalski lygis)
+- `polish` skill — P0+P1+P2 audit ant `.svc-*` (26 issues fixed)
+- `marketing-analitikas` agent — copy/SEO/CTA/Schema rekomendacijos
+- `general-purpose` agent — automationempire.ai layout research (zigzag pattern)
+- WebFetch — Stripe Atlas / Linear / Mercury / Vercel premium kortelių patternai
+
+### CSS metrikai (po visų pakeitimų)
+- `assets/css/index.css`: 590 → **2573 lines** (~83KB), 708/708 braces valid
+- `assets/js/index.js`: 276 → **324 lines** (count-up + cursor-follow + faq() rewrite)
+- `index.html`: 1127 → ~1500 lines, **0 inline styles** perdirbtose sekcijose, **0 inline JS handlers** (išskyrus 2 footer link colors `#kontaktai` cf-note bloke)
+
+### Schema.org enhancements
+- `Organization`: pridėta `numberOfEmployees`, `slogan`, `award`
+- `ItemList` × 3 `Service` (#paslaugos)
+- `Person` × 2 (Justinas, Marina, #komanda)
+
+---
+
+## SAVO ĮVERTINIMAS
+
+**SAVO ĮVERTINIMAS: 7/10**
+
+**Iki 10 trūksta:**
+- C žingsnis (QA naršyklėje) NEPADARYTAS — visi pakeitimai verifikuoti tik per curl/CSS token check'us, ne reali Chrome/Firefox/mobile DevTools sesija. Pricing tekstas suluzęs problema atrasta per vartotojo screenshot'ą, ne mano paties verifikaciją.
+- `#apie` sekcija padaryta 2× (pirma light tier, vartotojas paprašė atstatyti dark) — turėjau klausti pirma, prieš pradėdamas darbą su skirtingu tier'iu.
+- Pricing perdarytas 3× — reikėjo iškart palyginti su Empirra (donor projektu), o ne po vartotojo nepasitenkinimo.
+- HTML balansas FAQ sekcijoje sumažintas 2× netaisyklingai prieš pataisydamas (`___DUMMY___` artefaktas, orphan `</div>`).
+- Likę 2 inline styles `#kontaktai` bloko cf-note (footer link colors `style="color:rgba(255,255,255,.38)"`).
+- Privatumas.html `<p><strong><strong>` paveldėtas HTML klaidą — pamatyta, bet ne ištaisyta (palikta kaip "out of scope").
+
+---
+
+## P1 NEPATRAUKTI (sekantis sesijos kandidatai)
+- ✅ Blog/FAQ/Contact PERTVARKYTOS šioje sesijoje (nebe `nepertvarkytos` kaip ankstesniame snapshot'e)
+- C žingsnis: realus QA naršyklėje (Chrome + Firefox + mobile DevTools + Lighthouse)
+- A žingsnis: git commit + push į main (production deploy ant veriva.lt)
+- Hero sekcija lieka NEPERTVARKYTA — sąmoningai (atskaitos taškas)
+- Real foto Marinai (dabar premium monogram fallback)
+- Realūs LinkedIn URL'ai (dabar `https://www.linkedin.com/` placeholder)
+- Pavardės publikuoti? (dabar tik vardai)
+- Likę 2 inline styles `#kontaktai` cf-note (footer link colors)
+- Privatumas.html paveldėta klaidą `<p><strong><strong>` (eil. 1061)
+
+---
+
+## ANKSTESNĖ SESIJA (2026-05-10 — vercel-migration)
+**Data**: 2026-05-10
 **Sesijos tikslas**: UX patobulinimai (FAQ, email, nav) + brief audit klausimynas + KI-004 index.html split + Vercel deploy fix + DNS migration WP → Vercel
 
 ---
 
-## ATLIKTA ŠIOJE SESIJOJE (2026-05-10 — vercel-migration)
+## ATLIKTA ANKSČIAU (2026-05-10 — vercel-migration)
 
 ### UX patobulinimai
 - ✅ **FAQ 2 stulpeliai** — index.html 12 Q&A perdaryta į grid 2 cols (6+6) desktop / 1 col ≤760px su animation-safe `align-items:start`

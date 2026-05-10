@@ -27,6 +27,54 @@ const ro=new IntersectionObserver(e=>{
 },{threshold:.1,rootMargin:'0px 0px -24px 0px'});
 document.querySelectorAll('[data-r]').forEach(el=>ro.observe(el));
 
+// ─ CURSOR-FOLLOW GLOW (services cards) ─
+if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+  const grid=document.querySelector('.svc-grid');
+  if(grid){
+    let raf=0;
+    grid.addEventListener('pointermove',(e)=>{
+      const card=e.target.closest('.sc');
+      if(!card)return;
+      if(raf)cancelAnimationFrame(raf);
+      raf=requestAnimationFrame(()=>{
+        const r=card.getBoundingClientRect();
+        card.style.setProperty('--mx',`${e.clientX-r.left}px`);
+        card.style.setProperty('--my',`${e.clientY-r.top}px`);
+      });
+    });
+  }
+}
+
+// ─ COUNT-UP STATS (about) ─
+const reduceMotion=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+function countUp(el,target,duration=1400){
+  if(reduceMotion){el.textContent=target;return}
+  const m=target.match(/^([^\d]*)([\d]+(?:\.\d+)?)([^\d]*)$/);
+  if(!m){el.textContent=target;return}
+  const prefix=m[1],finalNum=parseFloat(m[2]),suffix=m[3];
+  const isInt=!m[2].includes('.');
+  const start=performance.now();
+  const ease=t=>1-Math.pow(1-t,4);
+  function frame(now){
+    const t=Math.min((now-start)/duration,1);
+    const v=finalNum*ease(t);
+    el.textContent=prefix+(isInt?Math.round(v):v.toFixed(1))+suffix;
+    if(t<1)requestAnimationFrame(frame);
+    else el.textContent=target;
+  }
+  requestAnimationFrame(frame);
+}
+const statObs=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      const num=e.target.querySelector('.about-stat-num');
+      if(num&&num.dataset.target)countUp(num,num.dataset.target);
+      statObs.unobserve(e.target);
+    }
+  });
+},{threshold:.5});
+document.querySelectorAll('.about-stats > div').forEach(el=>statObs.observe(el));
+
 // ─ WIDGET ─
 // fineBase reikšmės paremtos VDAI 2018-2025 baudų statistika (be Vinted outlier)
 // Šaltiniai: vdai.lrv.lt, edpb.europa.eu, enforcementtracker.com
@@ -179,9 +227,22 @@ renderQ();
 // ─ FAQ ─
 function faq(btn){
   const item=btn.closest('.fi');
-  const open=item.classList.contains('open');
-  document.querySelectorAll('.fi').forEach(i=>i.classList.remove('open'));
-  if(!open)item.classList.add('open');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.fi').forEach(i=>{
+    i.classList.remove('open');
+    const q=i.querySelector('.fq');
+    const a=i.querySelector('.fa');
+    if(q)q.classList.remove('open');
+    if(a)a.classList.remove('open');
+    if(q)q.setAttribute('aria-expanded','false');
+  });
+  if(!isOpen){
+    item.classList.add('open');
+    btn.classList.add('open');
+    const a=item.querySelector('.fa');
+    if(a)a.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+  }
 }
 
 
@@ -260,17 +321,3 @@ document.addEventListener('keydown',function(e){
   }
 });
 
-// ── COOKIE BANNER ──
-(function(){
-  if(!localStorage.getItem('veriva_cookies')){
-    setTimeout(function(){ 
-      var b=document.getElementById('cookie-banner');
-      if(b){ b.style.display='block'; b.style.animation='slideUp .4s ease'; }
-    }, 1200);
-  }
-})();
-function acceptCookies(t){
-  localStorage.setItem('veriva_cookies', t);
-  var b=document.getElementById('cookie-banner');
-  if(b){ b.style.transform='translateY(100%)'; b.style.transition='transform .3s ease'; setTimeout(function(){ b.style.display='none'; },300); }
-}

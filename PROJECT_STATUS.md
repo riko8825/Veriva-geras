@@ -1,9 +1,10 @@
 # PROJECT_STATUS — Veriva
 
 **Pradžia**: 2026-05-09
-**Paskutinis update**: 2026-05-10 (vercel-migration)
-**Statusas**: 🟢 PRODUCTION LIVE — DNS migration WP→Vercel ✅, 10 URL 200 OK ant www.veriva.lt, apex SSL pending
-**Production URL**: https://www.veriva.lt (LIVE su Vercel SSL) | https://veriva.lt (apex 307 → www, SSL dar laukia)
+**Paskutinis update**: 2026-05-10 (premium-dark-tier-redesign)
+**Statusas**: 🟢 PRODUCTION LIVE — DNS migration WP→Vercel ✅, 10 URL 200 OK ant www.veriva.lt
+**Lokali būsena**: 9 sekcijos perdarytos premium dark tier (uncommitted, nepush'inta)
+**Production URL**: https://www.veriva.lt (LIVE su Vercel SSL) | https://veriva.lt (apex SSL ✅)
 
 ---
 
@@ -11,9 +12,9 @@
 
 | Puslapis | Statusas | Pastabos |
 |---|---|---|
-| `index.html` | 🟢 LIVE + KI-004 split done | 1127 lines (was 1995, -43%); CSS+JS extract'inta į /assets; FAQ 2 cols, plain email, BDAR widget realūs duomenys, brief.html link (2026-05-10) |
-| `assets/css/index.css` | 🟢 NEW | 590 lines, 32K — pagrindinis CSS + slideUp keyframe (2026-05-10) |
-| `assets/js/index.js` | 🟢 NEW | 276 lines, 11K — widget logic, FAQ, modals, cookie banner (2026-05-10) |
+| `index.html` | 🟢 LIVE (production senas) + 🟡 lokaliai 9 sekcijų premium dark tier remake (2026-05-10) | 1127 → ~1500 lines, 0 inline styles perdirbtose sekcijose, Schema.org enhanced (Person ×2, ItemList Service ×3, Organization +3 fields) |
+| `assets/css/index.css` | 🟢 NEW + 🟡 lokaliai 2573 lines | 590 → 2573 lines (~83KB), 708/708 braces; premium dark tier (.about/.team/.svc/.proc/.case/.price/.blog/.faq/.contact + plan-* Empirra remake) |
+| `assets/js/index.js` | 🟢 NEW + 🟡 324 lines | 276 → 324 lines (count-up + cursor-follow + faq() rewrite su a11y aria-expanded) |
 | `blog.html` | 🟢 LIVE + nav parity | Listing + filtrai + newsletter CTA; nav 8 punktų sync su index.html (`position:fixed`, mobile 900px breakpoint) |
 | `brief.html` | 🟢 NEW + LIVE | 4 sekcijos × 59 klausimai, konditional logika sveikatos vs verslo, multi-step progress, validation, 3 states (2026-05-10) |
 | `blog/template.html` | 🟢 v2 (post-polish) | 24 placeholder'iai, polished CSS, a11y, 4 schema slotai (2026-05-10) |

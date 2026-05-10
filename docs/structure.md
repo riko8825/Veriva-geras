@@ -8,21 +8,34 @@ Detalus kiekvieno puslapio aprašymas — kas yra, kokios sekcijos, kokia paskir
 
 **Tikslas**: Pirmas įspūdis. Greitai paaiškinti kas yra Veriva ir kodėl rinktis.
 
-**Sekcijos** (faktinė tvarka pagal index.html):
+**Sekcijos** (faktinė tvarka pagal index.html — atnaujinta 2026-05-10 po premium dark tier perdirbimo):
 1. Nav (sticky) + mobile menu
 2. Hero (`#top`) — H1 + subhead + 2 CTA + BDAR rizikos testo widget'as
 3. Proof strip — 120+ auditų, €0 baudų, 7d., 48h
-4. Komanda (`#komanda`)
-5. Apie (`#apie`)
-6. Paslaugos (`#paslaugos`) — `svc-bg`
-7. Auditas / Kaip dirbame (`#auditas`) — `wug-bg`
-8. Atsiliepimai / Rezultatai (`#atsiliepimai`) — `testi-bg` + sektorių strip
-9. Kainos (`#kainos`) — 3 paketai (Shy / Standard / Advance)
+4. **Komanda (`#komanda`) — `team-bg` premium dark tier** — Justinas + Marina su mono badges, dual-ring photo, monogram mesh, LinkedIn, Person schema ×2
+5. **Apie (`#apie`) — `about-bg` premium dark tier** — H2 "8 metai. 120 audituotų įmonių. €0 VDAI baudų." + Linear hairline stats strip su count-up + manifesto + "Why Veriva" hairline list
+6. **Paslaugos (`#paslaugos`) — `svc-bg` premium dark tier** — 3 kortelės (BDAR · Saugumas · Mokymai) su gradient mesh, cursor-follow glow, sibling dim su `:has()`, white CTA
+7. **Auditas / Kaip dirbame (`#auditas`) — `proc-bg` premium dark tier** — 5-step zigzag su mono "Step 01/05" indeksais + custom SVG illustrations su `procGrad` gradient + `procGlow` filter
+8. **Rezultatai (`#atsiliepimai`) — `case-bg` premium dark tier** — 3 case studies (`<article class="case">`) su top stat block (tabular-nums) + cyan check outcome + sektorių pills strip viduje sekcijos
+9. **Kainos (`#kainos`) — `price-bg` premium dark tier** — 3 planai (Shy / Standard `plan-hi` su cyan glow / Advance) + `.price-note` apačioje
 10. **Tinklaraštis (`#blog`) — `blog-bg` — 3 latest posts + "Visi straipsniai" → `/blog.html`**
     - Pirma kortelė (2026-05): `/blog/bdar-baudos-lietuvoje.html` (PUBLISHED)
 11. FAQ (`faq-bg`) — **12 klausimų (5 pagerinti + 7 nauji su SEO/GEO)** + FAQPage schema (12 Q&A)
 12. Kontaktai (`#kontaktai`) — `contact-bg` — minimal form
 13. Footer
+
+**Premium dark tier brand language** (visos perdirbtos sekcijos 4-9):
+- Background: `--ink` + radial mesh (cyan + blue blobs)
+- Mono kicker (`var(--ffm)` JetBrains Mono 11px, `.18em` letter-spacing) + glowing cyan dot (`5×5px`, `box-shadow:0 0 12px rgba(0,180,216,.6)`)
+- H2: Syne 800, `clamp(36px,4.4vw,56-60px)`, `<em>` accent rgba(255,255,255,.5) monotone
+- Sub: 17px white .55 weight 300
+- Cards: `rgba(255,255,255,.04→.02)` glass + 1px white .07 border + 20px radius + `0 30px 60px -50px rgba(0,0,0,.7)` shadow
+- Top accent line `::before` (cyan gradient hairline, `.5→1` opacity ant hover)
+- Hover: `translateY(-3→-4px)` + cyan glow shadow
+- Sibling dim per `:has()` selector (Linear focus pattern)
+- All transitions su `--ease-out:cubic-bezier(.23,1,.32,1)` (Kowalski strong curve)
+- All hovers gate'inti už `@media (hover:hover) and (pointer:fine)`
+- All animations respect `@media (prefers-reduced-motion:reduce)`
 
 **Schema.org** (head): `ProfessionalService` (21 laukai — geo coords, addressRegion, areaServed Country+City, priceRange, taxID/vatID, knowsAbout, contactPoint) + `FAQPage` (12 Q&A, `inLanguage: lt-LT`)
 
@@ -263,3 +276,61 @@ Detalus kiekvieno puslapio aprašymas — kas yra, kokios sekcijos, kokia paskir
 - **Newsletter signup** — footer'yje
 
 Komponentų stiliai: `assets/css/components.css`
+
+---
+
+## CSS CLASS MAP (assets/css/index.css — premium dark tier)
+
+Kiekviena sekcija turi unikalų prefix'ą + identišką brand language pattern'ą.
+
+| Prefix | Sekcija | Pakeitė senas klases |
+|---|---|---|
+| `.team-*` (`.tm`) | `#komanda` | inline `style` (anti-pattern) |
+| `.about-*` | `#apie` | inline `style` (anti-pattern) |
+| `.svc-*` (`.sc`) | `#paslaugos` | `.svc-grid` + `.sc-line/-ico/-title/-desc/-items/-result/-link` (light cream) |
+| `.proc-*` | `#auditas` | `.del-steps/.ds-*` ir `.wug-*` deliverable card |
+| `.case-*` | `#atsiliepimai` | `.testi-bg/.tc/.tc-stars/.tc-text/.tc-author/.tc-av/.tc-name/.tc-role/.tc-result/.tc-result-hero/.tc-av-wrap/.tc-av-verified/.tc-sector` (light + green ✅ box) |
+| `.price-*` (`.plan`) | `#kainos` | `.pgrid/.pc/.pc-name/.pc-price/.pc-cycle/.pc-desc/.pc-outcome/.pc-list/.pc-chk/.pc-badge/.pc.hi/.btn-pw/.btn-po/.btn-pb` (~30 dead lines) |
+
+**Shared brand tokens** (visose dark sekcijose):
+- `--ease-out:cubic-bezier(.23,1,.32,1)` — Kowalski strong curve
+- `--ffm:'JetBrains Mono',ui-monospace,...` — mono labels
+- Reveal: `[data-r]` (12px translateY) override per `.sc[data-r]/.proc-row[data-r]` (20px translateY)
+- Stagger delays: `[data-r="1/2/3/4/5"]` (.05/.1/.15/.2/.25s)
+
+**SVG sprite** (`<svg style="position:absolute">` po `<body>`):
+- `<linearGradient id="procGrad">` — gradient stroke (white → light cyan) used in `.proc-illu` ir `.sc-ico`
+- `<filter id="procGlow">` — feGaussianBlur stdDeviation=2.5 + feMerge — used on cyan accent path'ų
+
+---
+
+## JS MAP (assets/js/index.js)
+
+| Funkcija | Trigger | Aprašymas |
+|---|---|---|
+| Smooth scroll handler | `<a href="#…">` click | Nav offset (60px) + smooth scroll |
+| `toggleMob()` / `closeMob()` | Hamburger button click | Mobile nav open/close |
+| Reveal observer | `[data-r]` enters viewport | Adds `.in` class (threshold .1, rootMargin -24px) |
+| Cursor-follow glow | `.svc-grid` pointermove | rAF debounced, sets `--mx`/`--my` CSS vars on `.sc:hover` (Linear pricing pattern) |
+| `countUp(el, target)` | `.about-stats > div` enters viewport (threshold .5) | 0→target per 1.4s ease-out quart, `data-target` attribute, respects `prefers-reduced-motion` |
+
+Visi handler'iai gate'inti už `(hover:hover) and (pointer:fine)` kur reikia. `prefers-reduced-motion` respektuojama tiek CSS (`@media`), tiek JS (`reduceMotion` constant).
+
+---
+
+## SECTION STYLE TIER MAP (premium dark vs light)
+
+| Sekcija | Tier | Background |
+|---|---|---|
+| Hero (`#top`) | dark | `--ink` + radial mesh |
+| Komanda (`#komanda`) | **dark** | `--ink` + radial mesh |
+| Apie (`#apie`) | **dark** | `--ink` + radial mesh |
+| Paslaugos (`#paslaugos`) | **dark** | `--ink` + radial mesh |
+| Procesas (`#auditas`) | **dark** | `--ink` + radial mesh |
+| Rezultatai (`#atsiliepimai`) | **dark** | `--ink` + radial mesh |
+| Kainos (`#kainos`) | **dark** | `--ink` + radial mesh |
+| Blog (`#blog`) | light | `--white` (TODO: nepertvarkyta) |
+| FAQ | light | `--cream` (TODO: nepertvarkyta) |
+| Kontaktai (`#kontaktai`) | dark | (TODO: patikrinti) |
+
+**Eilė: 7 dark sekcijos iš eilės** (Hero → Pricing) — "Veriva premium dark zone". Light sekcijos (Blog/FAQ) ateina po, kuria kvėpavimo momentą prieš kontaktus.

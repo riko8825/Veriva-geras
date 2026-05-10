@@ -204,3 +204,107 @@ Architektūriniai sprendimai. Kiekvienas su data, kontekstu, alternatyvomis, spr
 - Lengviau debug'inti — paleidi `cat template.html | sed ...` ir matai output'ą
 
 **Trade-off**: Jei template'as išaugs (50+ placeholder'ių) arba reikės conditional rendering — migruosim į Eta arba simply move logic into the post body.
+
+---
+
+## 2026-05-10 — Blog post quality bar: audit → polish workflow privalomas
+
+**Kontekstas**: Pirmasis blog post'as buvo parašytas kaip "pillar standartas". Po publish — vartotojas pasiteiravo apie kokybę. Atlikus `/audit` skill'ą, iš pradžių radome 16/20 (P0×3, P1×7, P2×9, P3×5).
+
+**Sprendimas**: Privaloma seka kiekvienam blog post'ui prieš publish:
+1. `/audit blog/{slug}.html` → P0-P3 ataskaita
+2. `/polish blog/{slug}.html` → P0+P1 fixes (P2 jei laikas)
+3. Re-`/audit` → audit health 18+/20 prieš publish
+4. Tik tada `noindex,nofollow` → `index,follow`
+
+**Priežastis**:
+- Pirmojo posto fix'ai parodė pasikartojančias problemas: trūksta `<main>`, callout kontrasto, FAQ aria-expanded, hover (hover:hover) wraps. Be audit'o — nematomi.
+- Be šitų — postas vis tiek atrodo "shipped", bet a11y/CLS/touch target'ai tyliai prastesni.
+- 30 min audit + polish prieš deploy = mažiau "user finds bugs" iteracijų po deploy.
+
+**Trade-off**: Lėtesnis publish (30-45 min papildomai per postą), bet:
+- Audit health score yra konkretus metric'as ataskaitose
+- A11y compliance prieš LT teisinius reikalavimus (BDAR + neviešumo įstatymai)
+- Geresnis Lighthouse score → SEO + Core Web Vitals
+
+**Implementacija**: 3 nauji skills nukopijuoti iš Empirra: `audit`, `polish`, `emil-design-eng` (`.claude/skills/`). `/impeccable` dependencija pakeista į Veriva-specific kontekstą (CLAUDE.md + emil-design-eng skill).
+
+---
+
+## 2026-05-10 — Blog template v2: post-polish komponentai standartu
+
+**Kontekstas**: Pirmasis postas po polish'o turėjo daug komponentų ir CSS pagerinimų, kurių template v1 neturėjo: `<main>` landmark, skip-link, `:focus-visible`, FAQ `aria-expanded`, `<header class="ah">`, testimonial blokas, hero figure, HowTo + Review schemas, 2-stulpelių FAQ grid, `(hover: hover)` wraps, naujieji tokens (`--gold-strong`, `--red`, `--g500` darker, `--g600`, easing tokens).
+
+**Sprendimas**: Atnaujinti `blog/template.html` (v2) su pilnai polished CSS + 24 placeholder'iais. Visi būsimi postai privalo naudoti šią template'ą. `docs/blog-system-prompt.md` atnaujintas su naujais komponentais ir QA checklist'u.
+
+**Priežastis**:
+- Standartas: vienas template, visi postai vienodi.
+- Audit health score 18+/20 garantuojamas iš template'o.
+- Claude API blog-gen automatizacija (kai bus sukurta) generuos teisingą structure'ą iš pirmo karto.
+
+**Trade-off**: Template'o failo dydis didesnis (~28 KB vs ~15 KB v1). Bet — tai vienkartinis CSS, kuris kopijuojamas į kiekvieną postą. Šiuo metu CSS extract'inti į `assets/css/blog.css` neapsimoka, kol nėra 5+ postų.
+
+**Reference implementation**: `blog/bdar-baudos-lietuvoje.html` (audit health 19/20).
+
+---
+
+## 2026-05-10 — Author'ių sistema: vardai be pavardžių (M / J / V)
+
+**Kontekstas**: Pirmajame poste autorius buvo "Marina Kazlauskienė", inicialai "MK". Vartotojas paprašė pakeisti į "Marina" (be pavardės). Realiai — pavardę sugalvojau be pagrindo (fact fabrication).
+
+**Sprendimas**: Nuo šiol — tik vardai. Author'ių sistema:
+| Vardas | Initial | Rolė | Sritis |
+|---|---|---|---|
+| Marina | M | Teisės ekspertė, BDAR | BDAR, DPO, teisė |
+| Justinas | J | IT saugumo ekspertas | NIS2, kibernetinis saugumas, IT auditas |
+| Veriva komanda | V | Veriva ekspertų komanda | Bendro pobūdžio |
+
+**Priežastis**:
+- Be realios pavardės — dropping "Kazlauskienė" išvengia LT teisinės atsakomybės už neegzistuojantį asmenį
+- Initial 1 simbolis vietoj 2 simbolių — vizualiai švariau (M vs MK)
+- Schema.org Person.name lieka galiojantis (tik vardas)
+
+**Trade-off**: Kai bus realūs Veriva komandos nariai — galima atnaujinti į pilnus vardus (pavyzdžiui, kai vartotojas patvirtins realų DPO vardą). Iki tol — generic personas.
+
+**Implementacija**: atnaujinta visuose 5 vietose poste (HTML, JSON-LD, OG, meta tag, avatar). Atnaujinta `docs/blog-content-rules.md` lentelė ir `docs/blog-system-prompt.md` output schema.
+
+---
+
+## 2026-05-10 — Pre-publish workflow: 4-agent ratas privalomas prieš push
+
+**Kontekstas**: Sukūrus 2 naujus pillar postus (NIS2 + Phishing) per `page-builder` agent, mano self-audit (`/audit` skill) tvirtino 19/20. User paklausė, ar naudoju visus skill'us ir agentus — atvirai pripažinau, kad ne. Vartotojas paprašė paleisti pilną pre-publish ratą.
+
+**Rezultatas**: 4 nepriklausomi agentai (`seo-specialistas`, `qa-tester`, `frontend-revizorius`, `marketing-analitikas`) rado **6 P0 blockers** + 14 P1 fixes, kurių self-audit nepastebėjo:
+- P0 #1: Phishing JSON-LD parse error (line 208) — LT quote `„Shame and blame"` sulaužė FAQPage schema
+- P0 #2-3: Meta description per ilgos (NIS2 186 chr, Phishing 212 chr) — Google trims
+- P0 #4: NIS2 title 66 chr — Google trims
+- P0 #5: Phishing primary KW neatitikimas tarp H1 ir search intent
+- P0 #6: CTA #2 mygtukai abu generic ("Susisiekti su ekspertu")
+- Slug rename optimizacijai (kol nedeploy'inta — be 301 problemos)
+
+**Sprendimas**: Nuo šiol — privaloma blog post quality bar atnaujinta į **5 fazes** (vietoj ankstesnių 4):
+
+```
+1. /audit blog/{slug}.html → P0-P3 ataskaita
+2. /polish blog/{slug}.html → P0+P1 fixes
+3. Re-/audit → audit health 18+/20
+4. PRE-PUBLISH 4-AGENT RATAS (NAUJAS):
+   - seo-specialistas (keyword density, meta tags, schema, competitor benchmarking)
+   - qa-tester (HTML validation, JSON-LD parse, security, links)
+   - frontend-revizorius (CSS/HTML/a11y nepriklausomas review)
+   - marketing-analitikas (CTA copy, conversion funnel, trust signals)
+5. Tik tada `noindex,nofollow` → `index,follow` + git push
+```
+
+**Priežastis**:
+- Self-audit per optimistic — frontend-revizorius nustatė 17/20 (ne 19/20 self-rated). Skirtumas: `<time datetime>` ir FAQ IIFE — sisteminiai trūkumai paveldėti iš template'o, kurių self-audit negalėjo objektyviai įvertinti
+- 4 agentai veikia paraleliai — pridedama tik ~3-5 min. iki workflow'o
+- Vienas kritinis bug'as (JSON-LD parse error) sulaužytų Google Rich Results FAQ schema visoje publikacijoje — fix išvengtas TIK pre-publish rato
+- SEO skores: NIS2 7→8.5/10, Phishing 6.5→8.5/10 po P0 fixes — measurable improvement
+
+**Trade-off**: Pre-publish ratas užtrunka ~10-15 min. (4 agentai paraleliai + P0 fixes ~30 min.). Bet: išvengia post-publish embarrassment'o (broken FAQ schema, 404 broken links per renamed slug, generic CTA).
+
+**Implementacija**:
+- Privaloma kiekvienam blog postui prieš push į main
+- Reference: `blog/nis2-direktyva-lietuvoje.html` + `blog/phishing-mokymai-darbuotojams.html` (commits `fa35e51`, `e382d2e`, `d9cc6e7`)
+- BDAR postas (`blog/bdar-baudos-lietuvoje.html`) — published su tais pačiais sisteminiais P1 trūkumais (`<time datetime>`, FAQ IIFE) — KI-009 batch fix sekanti sesija

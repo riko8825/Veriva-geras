@@ -13,16 +13,18 @@ Uždarytus issues perkelti į `## Išspręsta` skyrių (ne trinti).
 
 ## Aktyvūs issues
 
-### KI-001 — Blog placeholder linkai veda į 404
+### KI-001 — Blog placeholder linkai veda į 404 (3/6 pataisyta)
 - **SLA:** 🟠 High
 - **Paveiktas blokas:** `index.html` blog teaser + `blog.html` listing
-- **Statusas:** Open
-- **Aprašas:** 6 placeholder blog kortelės nukreipia į `/blog/bdar-baudos-2026.html`, `/blog/nis2-direktyva.html` ir kt. — failai NEEGZISTUOJA. Production'e produktyš 404.
-- **Workaround:** Kortelėms uždėti `aria-disabled="true"` + `pointer-events:none` arba sukurti vieną realų pillar straipsnį
-- **Fix:**
-  - Variantas A: sukurti realius post'us pagal `blog/template.html` (žr. `docs/blog-content-rules.md`)
-  - Variantas B: padaryti kortelės non-clickable kol post'ai dar negeneruoti
-- **Atidarytas:** 2026-05-09
+- **Statusas:** Partial (3/6 fixed)
+- **Aprašas:** ~~6~~ **3** placeholder blog kortelės blog.html nukreipia į neegzistuojančius URL'us: `/blog/dpo-funkcija-kada-reikia.html`, `/blog/incidentu-valdymas-72h.html`, `/blog/darbuotoju-bdar-mokymai.html`.
+- **Pataisyta (2026-05-10 nis2-phishing-publish):**
+  - ~~`/blog/nis2-direktyva-praktiskai.html`~~ → `/blog/nis2-direktyva-lietuvoje.html` (PUBLISHED, 3700ž., 5 schemas)
+  - ~~`/blog/phishing-darbuotoju-mokymai.html`~~ → `/blog/phishing-mokymai-darbuotojams.html` (PUBLISHED, 3100ž., 5 schemas)
+- **Pataisyta (2026-05-10 blog-polish-publish):** `/blog/bdar-baudos-lietuvoje.html` (PUBLISHED, audit 19/20)
+- **Workaround:** Kortelėms uždėti `aria-disabled="true"` + `pointer-events:none` arba sukurti likusius post'us
+- **Fix:** Sukurti likusius 3 post'us naudojant `blog/template.html` v2 + `/audit` + `/polish` workflow + pre-publish 4-agent ratas (lessons learned iš nis2-phishing-publish)
+- **Atidarytas:** 2026-05-09 | **Paskutinis update:** 2026-05-10
 
 ---
 
@@ -37,16 +39,17 @@ Uždarytus issues perkelti į `## Išspręsta` skyrių (ne trinti).
 
 ---
 
-### KI-003 — sitemap.xml neapima blog URL'ų
+### KI-003 — sitemap.xml neapima blog URL'ų ✅ FIXED
 - **SLA:** 🟡 Medium
 - **Paveiktas blokas:** SEO indexavimas
-- **Statusas:** Open
-- **Aprašas:** `sitemap.xml` neturi `blog.html` ir blog post URL'ų — Google neindex'uos blog turinio.
-- **Workaround:** Manual `sitemap.xml` update kol bus auto-generation
-- **Fix:**
-  - Trumpalaikis: rankiniu būdu pridėti `blog.html` ir esamus blog post'us
-  - Ilgalaikis: `api/internal/blog-publish.ts` automatizuotai update'ina sitemap po publish
-- **Atidarytas:** 2026-05-09
+- **Statusas:** **Fixed (2026-05-10)**
+- **Aprašas:** `sitemap.xml` neturėjo `blog.html` ir blog post URL'ų — Google neindex'uotų blog turinio.
+- **Resolution:**
+  - Pridėtas `<image:image>` namespace (`xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"`)
+  - Pridėtas `/blog/bdar-baudos-lietuvoje.html` su `lastmod`, `priority` ir `image:image` (Google Image Search)
+  - Atnaujinta `/blog` → `/blog.html` (faktinis URL)
+- **Future**: Kai bus `api/internal/blog-publish.ts` — auto-update sitemap.xml po kiekvieno publish
+- **Atidarytas:** 2026-05-09 | **Uždarytas:** 2026-05-10
 
 ---
 
@@ -75,14 +78,18 @@ Uždarytus issues perkelti į `## Išspręsta` skyrių (ne trinti).
 
 ---
 
-### KI-006 — Šios sesijos pakeitimai NIEKADA NEPATIKRINTI naršyklėje
+### KI-006 — Šios sesijos pakeitimai NIEKADA NEPATIKRINTI naršyklėje ✅ FIXED
 - **SLA:** 🟠 High
-- **Paveiktas blokas:** `index.html` blog teaser, `blog.html` listing, `blog/template.html`
-- **Statusas:** Open
-- **Aprašas:** Joks dev server nepaleistas, joks Vercel preview nedeploy'intas. Blog teaser desktop/mobile responsive, blog.html `filterPosts()` JS, `blog/template.html` FAQ accordion — visi gali turėti vizualinių/funkcinių bug'ų.
-- **Workaround:** Nėra — reikia testuoti
-- **Fix:** Paleisti dev server (`npx vercel dev` arba `python -m http.server`), patikrinti visus 3 puslapius mobile + desktop
-- **Atidarytas:** 2026-05-09
+- **Paveiktas blokas:** `index.html` blog teaser, `blog.html` listing, `blog/template.html`, `blog/bdar-baudos-lietuvoje.html`
+- **Statusas:** **Fixed (2026-05-10)**
+- **Aprašas:** Joks dev server nebuvo paleistas, joks Vercel preview nedeploy'intas.
+- **Resolution:**
+  - Paleistas `python -m http.server 8000` lokaliai
+  - Live HTTP statusų patikrinimas: visi 200 OK (`/`, `/blog.html`, `/blog/bdar-baudos-lietuvoje.html`, `/sitemap.xml`, SVG iliustracijos)
+  - Vizualinis testavimas: nav (Ctrl+F5 su naujais šriftais), FAQ accordion (12 Q&A), CTA mygtukų matomumas, hero typography
+  - Audit health 19/20 po polish pass
+- **Future**: Vercel preview deploy testavimas po pirmo `git push origin main`
+- **Atidarytas:** 2026-05-09 | **Uždarytas:** 2026-05-10
 
 ---
 
@@ -105,6 +112,42 @@ Uždarytus issues perkelti į `## Išspręsta` skyrių (ne trinti).
 - **Workaround:** Negalima deploy'inti Vercel be Supabase setup'o
 - **Fix:** Sukurti Supabase projektą → paleisti `001_init.sql` SQL Editor'iuje → patikrinti RLS politikas → pridėti `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` į Vercel env
 - **Atidarytas:** 2026-05-09
+
+---
+
+### KI-009 — P1 audit fixes nepatraukti naujuose 2 postuose (NIS2 + Phishing)
+- **SLA:** 🟡 Medium
+- **Paveiktas blokas:** `blog/nis2-direktyva-lietuvoje.html`, `blog/phishing-mokymai-darbuotojams.html`
+- **Statusas:** Open
+- **Aprašas:** Pre-publish audit ratas (SEO + QA + frontend + marketing) rado 14 P1 fixes. Push'inta tik su 6 P0 fixes. Likę 8 P1:
+  1. `<time datetime="2026-05-10">` markup trūksta abu (paveldėta iš BDAR template'o)
+  2. Keyword density per aukšta: NIS2 "NIS2" 6.2% (191×) → ≤3% per sinonimus, Phishing "phishing" 7% (217×) → ≤3%
+  3. Phishing "Lietuv*" tik 6 paminėjimai (NIS2 turi 43) — B2B LT targeting silpnas
+  4. TL;DR / Key takeaways blokas — abu neturi (2026 GEO standartas)
+  5. NIS2 → Phishing cross-link trūksta (Phishing → NIS2 yra)
+  6. FAQ accordion JS ne IIFE wrapped (nesutampa su template stiliumi)
+  7. Testimonial `aria-label` ant `<div>` → `role="img"` papildymas
+  8. "Susiję straipsniai" vizualus blokas po FAQ — template'o `{{RELATED_POSTS_HTML}}` placeholder neperduotas
+- **Workaround:** Yra (postai veikia, score 17-19/20)
+- **Fix:** P1 batch sesija per `frontend-revizorius` + `seo-specialistas` polish workflow. ~1.5 val. darbo abiem postams. Po fix → re-audit → score ~20/20.
+- **Atidarytas:** 2026-05-10
+
+---
+
+### KI-010 — Live veriva.lt po pirmo deploy (`d9cc6e7`) NEPATVIRTINTAS
+- **SLA:** 🟠 High
+- **Paveiktas blokas:** Vercel deploy, 3 blog URL'ai, schema.org Rich Results
+- **Statusas:** Open
+- **Aprašas:** Po `git push origin main` (commit `d9cc6e7`, 3 commits) Vercel auto-deploy paleistas, bet sesijos pabaigoje NEPATVIRTINTA:
+  - Vercel build status (sėkmingas / fail)
+  - 3 blog URL'ų HTTP 200 (`https://veriva.lt/blog/{bdar,nis2,phishing}-...html`)
+  - Schema.org Rich Results test (FAQ + HowTo + Review schemos atpažintos)
+  - PageSpeed Insights mobile/desktop scores
+  - SSL/HTTPS handshake
+  - NKSC + e-tar.lt ext URL'us reikia patikrinti naršyklėje (WebFetch grąžino 403)
+- **Workaround:** Lokalus HTTP server testas (port 8000) — visi 4 URL'ai 200 OK lokaliai
+- **Fix:** Sekanti sesija — 1 žingsnis: `https://search.google.com/test/rich-results` su 3 URL'ais + PageSpeed test + Vercel dashboard build log peržiūra
+- **Atidarytas:** 2026-05-10
 
 ---
 

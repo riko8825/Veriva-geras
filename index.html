@@ -155,8 +155,8 @@
 
 /* Bottom row */
 .h-bottom {
-  display: grid; grid-template-columns: 1.2fr auto;
-  gap: 60px; align-items: end;
+  display: grid; grid-template-columns: minmax(0, 1.2fr) auto;
+  gap: 80px; align-items: end;
 }
 .h-sub {
   font-family: var(--ff);
@@ -209,6 +209,13 @@
 .btn-hero-secondary:hover { color: var(--cyan); }
 .btn-hero-secondary::after { content: '→'; font-size: 13px; transition: transform .2s var(--ease-out); }
 .btn-hero-secondary:hover::after { transform: translateX(3px); }
+
+/* Hero bottom — tarpinis breakpoint (kad tekstas+mygtukas nesilauztu) */
+@media (max-width: 1100px) and (min-width: 901px) {
+  .h-bottom { grid-template-columns: 1fr; gap: 32px; }
+  .h-actions { align-items: flex-start; }
+  .h-sub { max-width: 640px; }
+}
 
 /* ── Quiz section — premium dark tier ── */
 #quiz-section {

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Cookiebot CMP (auto-blocking) -->
 <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="bc31b2c9-a2b7-44e8-a3a2-624b027ba646" data-blockingmode="auto" type="text/javascript"></script>
-<meta name="description" content="BDAR atitiktis, DPO outsourcing ir kibernetinis saugumas Lietuvos įmonėms. Teisė + IT vienoje komandoje nuo 2017 m. 120+ klientų, €0 VDAI baudų. Vilnius.">
+<meta name="description" content="Veriva apsaugo Lietuvos įmones nuo VDAI baudų: BDAR atitiktis, DPO outsourcing, kibernetinis saugumas. Teisė + IT vienoje komandoje. 120+ klientų, €0 baudų nuo 2017 m.">
 <meta name="keywords" content="BDAR atitiktis, BDAR reikalavimai įmonėms, duomenų apsaugos pareigūnas, DPO outsourcing Lietuva, VDAI tikrinimas, BDAR baudos Lietuva, asmens duomenų apsauga smulkus verslas, NIS2 direktyva Lietuva, kibernetinis saugumas įmonėms, IT saugumo auditas Vilnius, slapukų politika, asmens duomenų pažeidimas">
 <title>BDAR atitiktis ir kibernetinis saugumas Lietuvoje | Veriva</title>
 <meta property="og:title" content="BDAR atitiktis ir kibernetinis saugumas Lietuvoje | Veriva">
@@ -30,7 +30,563 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/index.css?v=20260510b">
+<link rel="stylesheet" href="/assets/css/index.css?v=20260511l">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+/* ── HERO + QUIZ — premium dark tier (matchina komandą/paslaugas/kainas) ── */
+/* Brand tokens: --ink #07111f, --cyan #00b4d8, --gold #c8962a, Plus Jakarta Sans + Syne 800 + JetBrains Mono */
+
+#hero, #quiz-section {
+  background: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom cursor pašalintas — naudojamas standartinis cursor:pointer/default visam puslapiui (a11y + brand polish) */
+#cur { display: none !important; }
+
+/* ── Ticker (fixed viršuje, dark solid bg, mono font) ── */
+.ticker {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 250;
+  background: var(--ink); border-bottom: 1px solid rgba(0,180,216,.18);
+  padding: 8px 0; overflow: hidden; white-space: nowrap;
+}
+.ticker::before {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,180,216,.35), transparent);
+}
+/* Nav stumiamas žemyn (po fixed ticker) */
+#nav { top: 30px !important; }
+.ticker-track {
+  display: inline-flex; gap: 0;
+  animation: tick 38s linear infinite;
+}
+.ticker-track span {
+  display: inline-block;
+  font-family: var(--ffm);
+  font-size: 10.5px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(0,180,216,.7); padding: 0 22px;
+}
+.ticker-track .dot { color: rgba(0,180,216,.3); padding: 0 4px; }
+@keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── Hero (full viewport, premium dark tier) ── */
+#hero {
+  position: relative; height: 100vh; min-height: 720px;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 0 24px;
+  overflow: hidden;
+  background: var(--ink);
+}
+/* Radial mesh — toks pat kaip team-bg / svc-bg / about-bg */
+#hero::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background:
+    radial-gradient(60% 40% at 30% 20%, rgba(26,71,204,.18) 0%, transparent 65%),
+    radial-gradient(50% 35% at 90% 90%, rgba(0,180,216,.10) 0%, transparent 60%);
+}
+#hero canvas#cvs {
+  position: absolute; inset: 0; z-index: 0; opacity: .85;
+  mix-blend-mode: screen;
+}
+.bg-vignette {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: radial-gradient(ellipse 80% 90% at 50% 50%, transparent 30%, rgba(7,17,31,.6) 100%);
+}
+.bg-grain {
+  position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: .025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
+}
+
+.hero-inner {
+  position: relative; z-index: 5;
+  max-width: var(--max); margin: 0 auto; width: 100%;
+  padding-top: 96px;
+}
+
+/* Mono kicker (matchina .team-kicker / .svc-head .stag) */
+.h-label {
+  font-family: var(--ffm);
+  font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(0,180,216,.85);
+  display: inline-flex; align-items: center; gap: 9px;
+  margin-bottom: 28px;
+}
+.h-label-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 12px rgba(0,180,216,.6);
+  animation: heroPulse 2.4s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes heroPulse { 0%,100%{opacity:1}50%{opacity:.45} }
+
+/* Massive headline — Syne 800, brand standartas */
+.h-main {
+  font-family: var(--ffd);
+  font-size: clamp(56px, 8vw, 110px);
+  font-weight: 800; color: #fff;
+  line-height: 1.02; letter-spacing: -.035em;
+  margin: 0;
+}
+.h-main em, .h-main .accent { color: rgba(255,255,255,.5); font-style: normal; font-weight: 800; }
+
+/* Stat strip — kaip about-stats: hairline, tabular-nums */
+.h-rule {
+  display: flex; align-items: center; gap: 28px;
+  margin: 48px 0 40px;
+  flex-wrap: wrap;
+}
+.h-rule-line { flex: 0 0 auto; width: 48px; height: 1px; background: rgba(255,255,255,.12); }
+.h-rule-stat { display: flex; align-items: baseline; gap: 10px; }
+.h-rule-num {
+  font-family: var(--ffd);
+  font-size: 22px; font-weight: 800;
+  color: #fff; letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+}
+.h-rule-desc {
+  font-family: var(--ffm);
+  font-size: 10px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+}
+.h-rule-sep { width: 1px; height: 14px; background: rgba(255,255,255,.12); }
+.h-rule-line2 { flex: 1; min-width: 40px; height: 1px; background: rgba(255,255,255,.06); }
+
+/* Bottom row */
+.h-bottom {
+  display: grid; grid-template-columns: 1.2fr auto;
+  gap: 60px; align-items: end;
+}
+.h-sub {
+  font-family: var(--ff);
+  font-size: 17px; line-height: 1.65; font-weight: 300;
+  color: rgba(255,255,255,.55); max-width: 520px;
+}
+.h-sub em { color: #fff; font-style: normal; font-weight: 500; }
+
+.h-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 14px; }
+
+/* Primary button — brand standartas (matching .plan-cta-hi: gradient cyan + glow + inset highlight) */
+.btn-hero-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 16px 28px;
+  background: linear-gradient(180deg, #00e8ff 0%, var(--cyan) 100%);
+  color: var(--ink);
+  font-family: var(--ff);
+  font-size: 14px; font-weight: 700;
+  letter-spacing: .01em;
+  border: 1px solid transparent; text-decoration: none;
+  border-radius: 12px;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.4) inset,
+    0 0 0 1px rgba(0,180,216,.5),
+    0 10px 28px -8px rgba(0,180,216,.55),
+    0 0 32px rgba(0,180,216,.25);
+  transition: transform .25s var(--ease-out), box-shadow .25s var(--ease-out), background .2s var(--ease-out);
+  will-change: transform;
+}
+@media (hover:hover) and (pointer:fine) {
+  .btn-hero-primary:hover {
+    background: linear-gradient(180deg, #5fe5ff 0%, #00d6ff 100%);
+    transform: translateY(-2px);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.4) inset,
+      0 0 0 1px rgba(0,180,216,.7),
+      0 14px 36px -8px rgba(0,180,216,.7),
+      0 0 40px rgba(0,180,216,.4);
+  }
+}
+.btn-hero-primary:active { transform: translateY(0) scale(.98); transition-duration: 100ms; }
+
+.btn-hero-secondary {
+  font-family: var(--ffm);
+  font-size: 11px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(255,255,255,.55); text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: color .2s var(--ease-out);
+}
+.btn-hero-secondary:hover { color: var(--cyan); }
+.btn-hero-secondary::after { content: '→'; font-size: 13px; transition: transform .2s var(--ease-out); }
+.btn-hero-secondary:hover::after { transform: translateX(3px); }
+
+/* ── Quiz section — premium dark tier ── */
+#quiz-section {
+  position: relative;
+  padding: 120px 24px;
+  background: var(--ink);
+}
+#quiz-section::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(45% 30% at 0% 0%, rgba(26,71,204,.10) 0%, transparent 60%),
+    radial-gradient(40% 30% at 100% 100%, rgba(0,180,216,.07) 0%, transparent 60%);
+}
+#quiz-section .section-label {
+  position: relative; z-index: 1;
+  max-width: var(--max); margin: 0 auto 56px;
+  font-family: var(--ffm);
+  font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(0,180,216,.85);
+  display: inline-flex; align-items: center; gap: 9px;
+  width: 100%;
+}
+#quiz-section .section-label::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 12px rgba(0,180,216,.6);
+  flex-shrink: 0;
+}
+.quiz-layout {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 64px; align-items: center;
+  max-width: var(--max); margin: 0 auto;
+}
+.quiz-pitch h2 {
+  font-family: var(--ffd);
+  font-size: clamp(36px, 4.4vw, 56px);
+  font-weight: 800; color: #fff;
+  line-height: 1.04; letter-spacing: -.028em;
+  margin-bottom: 24px;
+}
+.quiz-pitch h2 em, .quiz-pitch h2 .accent { color: rgba(255,255,255,.5); font-style: normal; font-weight: 800; }
+.quiz-pitch p {
+  font-family: var(--ff);
+  font-size: 17px; line-height: 1.65; font-weight: 300;
+  color: rgba(255,255,255,.55);
+  margin-bottom: 36px; max-width: 460px;
+}
+.quiz-stats { display: flex; gap: 28px; flex-wrap: wrap; }
+.qs-item {
+  border-left: 1px solid rgba(0,180,216,.25);
+  padding-left: 16px;
+}
+.qs-val {
+  font-family: var(--ffd);
+  font-size: 28px; font-weight: 800;
+  color: #fff; letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.qs-lbl {
+  font-family: var(--ffm);
+  font-size: 10px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(255,255,255,.4);
+  margin-top: 6px;
+}
+
+/* Glass card su radial mesh + cyan hairline top (kaip .tm) */
+.quiz-card {
+  position: relative;
+  background: rgba(12,26,46,.55);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+  padding: 32px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  overflow: hidden;
+}
+.quiz-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 24px; right: 24px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,180,216,.7), transparent);
+}
+.quiz-card::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(70% 50% at 50% 0%, rgba(0,180,216,.06) 0%, transparent 60%);
+}
+.quiz-card > * { position: relative; z-index: 1; }
+
+.qc-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.qc-title {
+  font-family: var(--ffm);
+  font-size: 11px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(0,180,216,.85);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.qc-meta {
+  font-family: var(--ffm);
+  font-size: 10px; font-weight: 500; letter-spacing: .08em;
+  color: rgba(255,255,255,.3);
+}
+.qc-progress-labels {
+  display: flex; justify-content: space-between;
+  font-family: var(--ffm);
+  font-size: 10px; font-weight: 500; letter-spacing: .08em;
+  color: rgba(255,255,255,.4);
+  margin-bottom: 8px;
+}
+.qc-progress {
+  height: 2px; background: rgba(255,255,255,.06);
+  border-radius: 2px; margin-bottom: 28px; overflow: hidden;
+}
+.qc-fill {
+  height: 100%; width: 20%;
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+  position: relative;
+  transition: width .4s var(--ease-out);
+  border-radius: 2px;
+}
+.qc-fill::after {
+  content: ''; position: absolute; right: -3px; top: 50%; transform: translateY(-50%);
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan);
+}
+.qc-question {
+  font-family: var(--ffd);
+  font-size: 18px; font-weight: 800;
+  color: #fff;
+  line-height: 1.3; letter-spacing: -.01em;
+  margin-bottom: 20px;
+  min-height: 44px;
+}
+.qc-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.qc-opt {
+  padding: 14px 16px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px;
+  background: rgba(255,255,255,.02);
+  color: rgba(255,255,255,.7);
+  font-family: var(--ff);
+  font-size: 14px; font-weight: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  position: relative; overflow: hidden;
+  transition: border-color .2s, background .2s, color .2s, transform .2s;
+  text-align: left;
+  width: 100%;
+}
+.qc-opt:hover {
+  border-color: rgba(0,180,216,.4);
+  background: rgba(0,180,216,.05);
+  color: #fff;
+  transform: translateX(2px);
+}
+.qc-opt.pick {
+  border-color: rgba(0,180,216,.6);
+  background: rgba(0,180,216,.08);
+  color: #fff;
+}
+.qc-opt.pick-bad {
+  border-color: rgba(220,38,38,.5);
+  background: rgba(220,38,38,.06);
+  color: #fff;
+}
+.qco-inner { display: flex; align-items: center; gap: 12px; flex: 1; }
+.qco-ico {
+  width: 30px; height: 30px;
+  border: 1px solid rgba(0,180,216,.25);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 14px;
+  background: rgba(0,180,216,.04);
+}
+.qco-arr {
+  color: rgba(255,255,255,.25);
+  font-size: 14px;
+  transition: color .2s, transform .2s;
+  flex-shrink: 0;
+}
+.qc-opt:hover .qco-arr { color: var(--cyan); transform: translateX(3px); }
+
+.qc-guarantee {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px;
+  background: rgba(200,150,42,.05);
+  border: 1px solid rgba(200,150,42,.18);
+  border-radius: 10px;
+}
+.qcg-ico {
+  width: 36px; height: 36px; flex-shrink: 0;
+  border: 1px solid rgba(200,150,42,.3);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold);
+  background: rgba(200,150,42,.05);
+}
+.qcg-txt {
+  font-family: var(--ff);
+  font-size: 12px; font-weight: 400;
+  line-height: 1.55;
+  color: rgba(255,255,255,.55);
+}
+.qcg-txt strong {
+  color: var(--gold);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 3px;
+  font-size: 12.5px;
+  letter-spacing: .01em;
+}
+
+/* ── Quiz: result screen ── */
+.qc-result { display: none; }
+.qc-result.show { display: block; }
+.qcr-score {
+  display: flex; align-items: center; gap: 20px;
+  padding-bottom: 20px; margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.qcr-ring { position: relative; width: 88px; height: 88px; flex-shrink: 0; }
+.qcr-ring svg { transform: rotate(-90deg); }
+.qcr-ring .wr-bg { fill: none; stroke: rgba(255,255,255,.08); stroke-width: 4; }
+.qcr-ring .wr-fill {
+  fill: none; stroke: var(--cyan); stroke-width: 4; stroke-linecap: round;
+  stroke-dasharray: 220; stroke-dashoffset: 220;
+  transition: stroke-dashoffset 1.2s var(--ease-out), stroke .4s;
+}
+.qcr-ring-val {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  flex-direction: column; line-height: 1;
+}
+.qcr-ring-num {
+  font-family: var(--ffd);
+  font-size: 30px; font-weight: 800; color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.qcr-ring-denom {
+  font-family: var(--ffm);
+  font-size: 9px; color: rgba(255,255,255,.4); margin-top: 4px;
+  letter-spacing: .08em;
+}
+.qcr-label-wrap { flex: 1; }
+.qcr-label {
+  font-family: var(--ffd);
+  font-size: 18px; font-weight: 800; color: #fff;
+  margin-bottom: 6px; letter-spacing: -.01em;
+}
+.qcr-sub {
+  font-family: var(--ff);
+  font-size: 13px; color: rgba(255,255,255,.55);
+  line-height: 1.5; font-weight: 400;
+}
+.qcr-fine {
+  padding: 14px 16px;
+  background: rgba(220,38,38,.06);
+  border: 1px solid rgba(220,38,38,.2);
+  border-radius: 10px;
+  margin-bottom: 18px;
+}
+.qcr-fine-label {
+  font-family: var(--ffm);
+  font-size: 10px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(248,113,113,.85); margin-bottom: 6px;
+}
+.qcr-fine-amt {
+  font-family: var(--ffd);
+  font-size: 26px; font-weight: 800; color: #fff;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 4px; letter-spacing: -.02em;
+}
+.qcr-fine-note {
+  font-family: var(--ff);
+  font-size: 11px; color: rgba(255,255,255,.4);
+  font-weight: 400;
+}
+.qcr-breakdown { display: flex; flex-direction: column; margin-bottom: 18px; }
+.qcr-bd-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  font-size: 13px;
+}
+.qcr-bd-row:last-child { border-bottom: none; }
+.qcr-bd-name {
+  font-family: var(--ff);
+  color: rgba(255,255,255,.55);
+  font-weight: 400;
+}
+.qcr-bd-val {
+  font-family: var(--ffm);
+  font-size: 11px; font-weight: 500; letter-spacing: .08em;
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+.qcr-bd-val.g { color: #4ade80; background: rgba(74,222,128,.1); }
+.qcr-bd-val.a { color: #fbbf24; background: rgba(251,191,36,.1); }
+.qcr-bd-val.r { color: #f87171; background: rgba(248,113,113,.1); }
+
+.qcr-cta {
+  width: 100%; padding: 16px;
+  background: linear-gradient(180deg, #00e8ff 0%, var(--cyan) 100%);
+  color: var(--ink);
+  border: 1px solid transparent; border-radius: 12px;
+  font-family: var(--ff);
+  font-size: 14px; font-weight: 700; letter-spacing: .01em;
+  margin-bottom: 10px;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.4) inset,
+    0 0 0 1px rgba(0,180,216,.5),
+    0 10px 28px -8px rgba(0,180,216,.55),
+    0 0 32px rgba(0,180,216,.25);
+  transition: transform .25s var(--ease-out), box-shadow .25s var(--ease-out), background .2s var(--ease-out);
+}
+.qcr-cta:hover {
+  background: linear-gradient(180deg, #5fe5ff 0%, #00d6ff 100%);
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.4) inset,
+    0 0 0 1px rgba(0,180,216,.7),
+    0 14px 36px -8px rgba(0,180,216,.7),
+    0 0 40px rgba(0,180,216,.4);
+}
+.qcr-cta:active { transform: translateY(0) scale(.98); transition-duration: 100ms; }
+.qcr-cta-note {
+  font-family: var(--ffm);
+  font-size: 10px; font-weight: 500; letter-spacing: .08em;
+  color: rgba(255,255,255,.4);
+  text-align: center; margin-bottom: 12px;
+}
+.qcr-brief-link {
+  display: block; text-align: center;
+  font-family: var(--ff);
+  font-size: 12px; font-weight: 400;
+  color: rgba(255,255,255,.5); text-decoration: none;
+  padding: 8px 0;
+  transition: color .2s;
+}
+.qcr-brief-link:hover { color: var(--cyan); }
+.qcr-reset {
+  width: 100%; padding: 10px;
+  background: transparent; border: none;
+  font-family: var(--ffm);
+  color: rgba(255,255,255,.3);
+  font-size: 10px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+  transition: color .2s;
+}
+.qcr-reset:hover { color: rgba(255,255,255,.6); }
+
+@media (max-width: 900px) {
+  #hero { padding: 0 20px; min-height: 640px; }
+  .hero-inner { padding-top: 80px; }
+  .h-main { font-size: clamp(44px, 11vw, 72px); }
+  .h-rule { gap: 18px; margin: 28px 0 24px; }
+  .h-rule-line, .h-rule-line2 { display: none; }
+  .h-rule-num { font-size: 18px; }
+  .h-rule-desc { font-size: 9px; letter-spacing: .12em; }
+  .h-bottom { grid-template-columns: 1fr; gap: 28px; }
+  .h-actions { align-items: flex-start; }
+  .h-sub { font-size: 15px; }
+
+  #quiz-section { padding: 80px 20px; }
+  .quiz-layout { grid-template-columns: 1fr; gap: 48px; }
+  .quiz-pitch h2 { font-size: clamp(28px, 7vw, 40px); }
+  .quiz-pitch p { font-size: 15px; }
+  .qs-val { font-size: 22px; }
+  .quiz-card { padding: 24px; }
+  .qc-question { font-size: 16px; }
+
+  #cur { display: none !important; }
+  .ticker { padding: 6px 0; }
+  .ticker-track span { font-size: 9px; padding: 0 16px; letter-spacing: .14em; }
+  #nav { top: 28px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track, .h-label-dot, .qc-fill::after { animation: none !important; }
+}
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -233,13 +789,40 @@
 </svg>
 
 
+<!-- Custom cursor (scope: #hero + #quiz-section) -->
+<div id="cur"></div>
+
+<!-- Ticker (fixed top virš nav) -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span>BDAR atitiktis</span><span class="dot">·</span>
+    <span>NIS2 / TIS2</span><span class="dot">·</span>
+    <span>120+ auditų</span><span class="dot">·</span>
+    <span>€0 VDAI baudų</span><span class="dot">·</span>
+    <span>DPO outsourcing</span><span class="dot">·</span>
+    <span>Vilnius, Lietuva</span><span class="dot">·</span>
+    <span>Nuo 2017 m.</span><span class="dot">·</span>
+    <span>Garantija raštu</span><span class="dot">·</span>
+    <span>Kibernetinis saugumas</span><span class="dot">·</span>
+    <span>BDAR atitiktis</span><span class="dot">·</span>
+    <span>NIS2 / TIS2</span><span class="dot">·</span>
+    <span>120+ auditų</span><span class="dot">·</span>
+    <span>€0 VDAI baudų</span><span class="dot">·</span>
+    <span>DPO outsourcing</span><span class="dot">·</span>
+    <span>Vilnius, Lietuva</span><span class="dot">·</span>
+    <span>Nuo 2017 m.</span><span class="dot">·</span>
+    <span>Garantija raštu</span><span class="dot">·</span>
+    <span>Kibernetinis saugumas</span><span class="dot">·</span>
+  </div>
+</div>
+
 <!-- NAV -->
 <nav id="nav">
   <div class="nw">
     <a href="#top" id="nav-logo-wrap" aria-label="Veriva — pradinis" style="display:flex;align-items:center;gap:10px;text-decoration:none">
       <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#ffffff" transform="translate(8,8)"/>
-        <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="#c8962a" transform="translate(8,8)"/>
+        <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="rgba(255,255,255,0.5)" transform="translate(8,8)"/>
       </svg>
       <span style="font-family:Syne,system-ui,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.04em">VERIVA</span>
     </a>
@@ -269,96 +852,133 @@
 </div>
 
 <!-- ══ HERO ══ -->
-<section class="hero" id="top">
-  <div class="hero-grid"></div>
-  <div class="hero-w">
+<section id="hero" aria-labelledby="hm">
+  <a id="top" style="position:absolute;top:0"></a>
+  <canvas id="cvs"></canvas>
+  <div class="bg-vignette"></div>
+  <div class="bg-grain"></div>
 
-    <!-- LEFT -->
-    <div>
-      <div class="hero-eyebrow">BDAR · NIS2 · Kibernetinis saugumas · Vilnius, Lietuva</div>
-      <h1>Teisė ir IT —<br><span class="accent">vienoje komandoje</span></h1>
-      <p class="hero-sub">Veriva jungia teisinę ir IT ekspertizę į vieną komandą. Jūsų BDAR atitiktis ir kibernetinis saugumas — garantuoti raštu, 7 dienomis.</p>
-      <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:32px">
-        <a href="#kontaktai" class="btn-primary" id="main-cta">
-          Pradėti konsultaciją
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4-4 4M21 12H3"/></svg>
-        </a>
-        <a href="#top" onclick="document.getElementById('main-widget').scrollIntoView({behavior:'smooth'});return false;" style="font-size:13px;color:rgba(255,255,255,.45);text-decoration:none;display:flex;align-items:center;gap:6px;transition:.2s" onmouseover="this.style.color='rgba(255,255,255,.75)'" onmouseout="this.style.color='rgba(255,255,255,.45)'">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 8v4M12 16h.01"/></svg>
-          Atlikti nemokamą BDAR testą
-        </a>
+  <div class="hero-inner">
+
+    <div class="h-label" id="hl">
+      <div class="h-label-dot"></div>
+      BDAR · NIS2 · Kibernetinis saugumas · Vilnius, Lietuva
+    </div>
+
+    <h1 class="h-main" id="hm">
+      <span class="line1">VDAI baudos?</span><br>
+      <span class="line2"><em>Ne mūsų klientams.</em></span>
+    </h1>
+
+    <div class="h-rule" id="hr">
+      <div class="h-rule-line"></div>
+      <div class="h-rule-stat">
+        <span class="h-rule-num">120+</span>
+        <span class="h-rule-desc">auditų atlikta</span>
       </div>
-      <div class="hero-trust">
-        <div class="ht-item"><span class="ht-dot"></span>120+ auditų nuo 2017 m.</div>
-        <div class="ht-item"><span class="ht-dot"></span>€0 VDAI baudų klientams</div>
-        <div class="ht-item"><span class="ht-dot"></span>Garantija raštu</div>
+      <div class="h-rule-sep"></div>
+      <div class="h-rule-stat">
+        <span class="h-rule-num">€0</span>
+        <span class="h-rule-desc">VDAI baudų</span>
+      </div>
+      <div class="h-rule-sep"></div>
+      <div class="h-rule-stat">
+        <span class="h-rule-num">7 d.</span>
+        <span class="h-rule-desc">garantija raštu</span>
+      </div>
+      <div class="h-rule-line2"></div>
+    </div>
+
+    <div class="h-bottom" id="hb">
+      <p class="h-sub">
+        Daugelis įmonių sužino apie BDAR trūkumus tik VDAI
+        patikrinimo metu — kai bauda jau neišvengiama.
+        <em>Mes garantuojame, kad taip neatsitiks — raštu.</em>
+      </p>
+      <div class="h-actions">
+        <a href="#quiz-section" class="btn-hero-primary" id="mainBtn">Nemokamas BDAR testas →</a>
+        <a class="btn-hero-secondary" href="#kontaktai">Pradėti konsultaciją</a>
       </div>
     </div>
 
-    <!-- WIDGET — visible on both desktop & mobile -->
-    <div class="widget" id="main-widget">
-      <div class="w-top">
-        <span class="w-top-title">⚡ BDAR rizikos testas</span>
-        <span class="w-top-badge">60 sek. · Nemokamai</span>
+  </div>
+
+</section>
+
+<!-- ══ QUIZ SECTION ══ -->
+<section id="quiz-section">
+  <div class="section-label">BDAR rizikos testas</div>
+  <div class="quiz-layout">
+
+    <div class="quiz-pitch">
+      <h2>Sužinokite savo<br>BDAR rizikos lygį<br><em>per 60 sekundžių.</em></h2>
+      <p>Atsakykite į 5 klausimus ir gausite individualią ataskaitą su konkrečiais veiksmais jūsų įmonei. Nemokamai.</p>
+      <div class="quiz-stats">
+        <div class="qs-item"><div class="qs-val">120+</div><div class="qs-lbl">Auditų atlikta</div></div>
+        <div class="qs-item"><div class="qs-val">€0</div><div class="qs-lbl">VDAI baudų</div></div>
+        <div class="qs-item"><div class="qs-val">7 d.</div><div class="qs-lbl">Garantija raštu</div></div>
+      </div>
+    </div>
+
+    <div class="quiz-card" id="main-widget">
+      <div class="qc-head">
+        <span class="qc-title">
+          <svg width="11" height="11" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          BDAR Rizikos testas
+        </span>
+        <span class="qc-meta">60 sek · Nemokamai</span>
       </div>
 
       <!-- QUESTION SCREEN -->
       <div id="w-qscreen">
-        <div class="w-progress" id="w-progress"></div>
-        <div class="w-qscreen" style="padding:14px 22px 20px">
-          <div class="w-qlabel" id="w-qlabel">1 iš 5</div>
-          <div class="w-question" id="w-question"></div>
-          <div class="w-opts" id="w-opts"></div>
+        <div class="qc-progress-labels"><span id="w-qlabel">1 iš 5</span><span id="w-qpct">20%</span></div>
+        <div class="qc-progress"><div class="qc-fill" id="w-qfill" style="width:20%"></div></div>
+        <div class="qc-question" id="w-question"></div>
+        <div class="qc-options" id="w-opts"></div>
+        <div class="qc-guarantee">
+          <div class="qcg-ico">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <div class="qcg-txt">
+            <strong>€0 VDAI baudų garantija</strong>
+            Visiems klientams nuo 2017 m. — garantuojame raštu.
+          </div>
         </div>
       </div>
 
       <!-- RESULT SCREEN -->
-      <div class="w-result" id="w-result">
-        <div class="w-r-score">
-          <div class="w-ring">
+      <div class="qc-result" id="w-result">
+        <div class="qcr-score">
+          <div class="qcr-ring">
             <svg width="88" height="88" viewBox="0 0 88 88">
               <circle class="wr-bg" cx="44" cy="44" r="35"/>
               <circle class="wr-fill" id="wr-fill" cx="44" cy="44" r="35"/>
             </svg>
-            <div class="w-ring-val">
-              <div class="w-ring-num" id="w-rnum">—</div>
-              <div class="w-ring-denom">/10</div>
+            <div class="qcr-ring-val">
+              <div class="qcr-ring-num" id="w-rnum">—</div>
+              <div class="qcr-ring-denom">/10</div>
             </div>
           </div>
-          <div class="w-r-label" id="w-rlabel"></div>
-          <div class="w-r-sub" id="w-rsub"></div>
+          <div class="qcr-label-wrap">
+            <div class="qcr-label" id="w-rlabel"></div>
+            <div class="qcr-sub" id="w-rsub"></div>
+          </div>
         </div>
-        <div class="w-fine" id="w-fine">
-          <div class="w-fine-label">⚠️ Galima BDAR bauda</div>
-          <div class="w-fine-amt" id="w-fine-amt">—</div>
-          <div class="w-fine-note" id="w-fine-note">Pagal VDAI 2018–2025 baudų statistiką</div>
+        <div class="qcr-fine">
+          <div class="qcr-fine-label">⚠️ Galima BDAR bauda</div>
+          <div class="qcr-fine-amt" id="w-fine-amt">—</div>
+          <div class="qcr-fine-note" id="w-fine-note">Pagal VDAI 2018–2025 baudų statistiką</div>
         </div>
-        <div class="w-breakdown" id="w-breakdown"></div>
-        <div class="w-cta-wrap">
-          <button class="w-cta" onclick="widgetCTA()">Gauti pilną BDAR auditą nemokamai →</button>
-          <div class="w-cta-note">Sertifikuotas ekspertas · Per 48h · Be mokesčio</div>
-          <a href="/brief.html" style="display:block;text-align:center;margin-top:10px;font-size:12px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s" onmouseover="this.style.color='rgba(255,255,255,.85)'" onmouseout="this.style.color='rgba(255,255,255,.5)'">Norite tikslesnio vertinimo? → užpildyti detalų klausimyną (10–15 min)</a>
-        </div>
-        <button class="w-reset" onclick="resetWidget()">↺ Pradėti iš naujo</button>
+        <div class="qcr-breakdown" id="w-breakdown"></div>
+        <button class="qcr-cta" onclick="widgetCTA()">Gauti pilną BDAR auditą nemokamai →</button>
+        <div class="qcr-cta-note">Sertifikuotas ekspertas · Per 48h · Be mokesčio</div>
+        <a href="/brief.html" class="qcr-brief-link">Norite tikslesnio vertinimo? → detalus klausimynas (10–15 min)</a>
+        <button class="qcr-reset" onclick="resetWidget()">↺ Pradėti iš naujo</button>
       </div>
     </div>
+
   </div>
 </section>
-
-<!-- PROOF STRIP -->
-<div class="proof-strip">
-  <div class="ps-w">
-    <div class="ps-stat"><div class="ps-n">120+</div><div class="ps-l">Auditų atlikta<br>nuo 2017 m.</div></div>
-    <div class="ps-div"></div>
-    <div class="ps-stat"><div class="ps-n">€0</div><div class="ps-l">VDAI baudų<br>mūsų klientams</div></div>
-    <div class="ps-div"></div>
-    <div class="ps-stat"><div class="ps-n">7d.</div><div class="ps-l">Atitiktis nuo<br>sutarties</div></div>
-    <div class="ps-div"></div>
-    <div class="ps-stat"><div class="ps-n">48h</div><div class="ps-l">Reagavimas<br>į incidentus</div></div>
-    <div class="ps-div"></div>
-    
-  </div>
-</div>
 
 
 <!-- ══ TEAM — premium dark tier ══ -->
@@ -1311,7 +1931,7 @@
         <a href="#top" aria-label="Veriva" style="display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:16px">
           <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:block">
             <path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#ffffff" transform="translate(8,8)"/>
-            <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="#c8962a" transform="translate(8,8)"/>
+            <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="rgba(255,255,255,0.5)" transform="translate(8,8)"/>
           </svg>
           <span style="font-family:Syne,system-ui,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.04em">VERIVA</span>
         </a>
@@ -1358,10 +1978,13 @@
         <a href="#" onclick="openModal('modal-terms');return false;">Taisyklės ir sąlygos</a>
       </div>
     </div>
+    <div class="ft-credit">
+      <span>Svetainę sukūrė <a href="https://empirra.com" target="_blank" rel="noopener">Empirra</a> — AI automatizacijos ir web development agentūra</span>
+    </div>
   </div>
 </footer>
 
-<script src="/assets/js/index.js?v=20260510b" defer></script>
+<script src="/assets/js/index.js?v=20260511l" defer></script>
 
 <!-- ── PRIVACY POLICY MODAL ── -->
 <div class="modal-overlay" id="modal-privacy" onclick="closeModal(event,'modal-privacy')">

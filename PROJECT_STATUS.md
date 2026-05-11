@@ -1,10 +1,10 @@
 # PROJECT_STATUS — Veriva
 
 **Pradžia**: 2026-05-09
-**Paskutinis update**: 2026-05-10 (privatumas-html)
-**Statusas**: 🟢 PRODUCTION LIVE — KI-005 BDAR FULL FIX (slapukai.html + privatumas.html LIVE), 6 footer link sync, Cookiebot CMP, premium dark tier 9 sekcijų
+**Paskutinis update**: 2026-05-11 (blog-automation-port)
+**Statusas**: 🟡 UNCOMMITTED — blog automation pipeline code-done (14 lib + 3 endpoint'ai + topics + migration + vercel.json + docs), 7/12 Vercel env vars push'inta, 5 Sensitive vars + Telegram bot + Supabase migration + git push laukia vartotojo input'o; ankstesnė hero-quiz-redesign sesija irgi UNCOMMITTED (bundle'insis su šia)
 **Production URL**: https://www.veriva.lt (LIVE su Vercel SSL) | https://veriva.lt (apex SSL ✅)
-**Paskutinis commit**: `9efb0d0` (privatumas.html NEW + 6 footer link fix, +468/-12 lines)
+**Paskutinis commit**: `9efb0d0` (privatumas.html NEW + 6 footer link fix — production state, 2026-05-10)
 
 ---
 
@@ -12,9 +12,9 @@
 
 | Puslapis | Statusas | Pastabos |
 |---|---|---|
-| `index.html` | 🟢 LIVE (premium dark tier 9 sekcijų + Cookiebot) | ~1500 lines, 0 inline styles perdirbtose sekcijose, Cookiebot script `<head>`, Schema.org enhanced (Person ×2, ItemList Service ×3, Organization +3 fields) |
-| `assets/css/index.css` | 🟢 LIVE 2571 lines | 590 → 2571 lines (~83KB), 705/705 braces; premium dark tier + cookie banner CSS pašalinta |
-| `assets/js/index.js` | 🟢 LIVE 12KB | count-up + cursor-follow + faq() a11y aria-expanded; cookie banner JS pašalintas |
+| `index.html` | 🟡 UNCOMMITTED hero rewrite (2026-05-11) | Hero + quiz section perdarytos pagal vartotojo pateiktą HTML, brand-adapted (`--ink/--cyan/--gold` + Plus Jakarta Sans + Syne 800 + JetBrains Mono mono kicker); pridėta: ticker (fixed top, mono font, brand žodžiai loop) + canvas particles (80 mėlynos taškės, mouse attraction, 105px line connections) + GSAP entrance timeline + magnetic CTA + glass quiz card su radial mesh + cyan hairline ::before; pašalinta: senas `.widget` 5-q embed hero'jūje + `.proof-strip` 4-stat blokas; **inline `<style>` ~340 lines head'e** (laužia "niekada inline" taisyklę, laukia perkėlimo į index.css); custom cursor `#cur` div `display:none !important` (dead element, laukia cleanup); cache-buster `v=20260511c` |
+| `assets/css/index.css` | 🟡 LIVE 2571 lines + ~150 lines dead CSS | Po hero rewrite: `.widget`, `.w-*`, `.wpd*`, `.wbd*`, `.proof-strip`, `.ps-*`, sena `.hero-w/.hero-eyebrow/.hero-trust` (eil. 55-225) nebenaudojamos. Dead CSS cleanup laukia kitos sesijos. |
+| `assets/js/index.js` | 🟡 LIVE ~16KB + dead cursor listener'iai | Po hero rewrite: widget logika adaptuota naujam markup'ui (`buildProgress` progress bar, `renderQ` `.qc-opt`, `pick` `#w-opts .qc-opt`, `showResult` `.qcr-bd-row`); pridėtas hero JS blokas (~110 lines: canvas particles + GSAP timeline + magnetic CTA + custom cursor handler); custom cursor JS listener'iai (~30 lines) liko nors `#cur` `display:none` |
 | `blog.html` | 🟢 LIVE premium dark tier | Visa puslapio dark theme (buvo light); hero radial mesh + mono kicker + cyan dot + Syne 800; filterai dark glass + cyan accent; post kortelės `.post`-style premium card su `:has()` sibling dim + grid mask visual; newsletter cyan CTA + glass card; 3 placeholder kortelės disabled (`bc--soon` + "Netrukus" badge, aria-disabled), 3 realūs post'ai aktyvūs (2026-05-10 blog-dark-tier-sync) |
 | `brief.html` | 🟢 NEW + LIVE | 4 sekcijos × 59 klausimai, konditional logika sveikatos vs verslo, multi-step progress, validation, 3 states (2026-05-10) |
 | `blog/template.html` | 🟢 v2 (post-polish) | 24 placeholder'iai, polished CSS, a11y, 4 schema slotai (2026-05-10) |
@@ -37,8 +37,9 @@
 | `POST /api/forms/audit-request` | ⬜ Nesukurtas | BDAR audito užklausa |
 | `POST /api/forms/newsletter` | ⬜ Nesukurtas | Newsletter prenumerata (blog.html naudoja) |
 | `GET /api/internal/health` | 🟡 Sukurtas, neištestuotas | Health check |
-| `POST /api/internal/blog-gen` | ⬜ Nesukurtas | Claude API blog generavimas (docs paruošti) |
-| `POST /api/internal/blog-publish` | ⬜ Nesukurtas | Write į `/blog/{slug}.html` + sitemap update |
+| `POST /api/automations/blog-gen` | 🟡 Code-done (553 lines), UNDEPLOYED | Cron blog post generation: topics.json → AI (OpenAI gpt-4.1) → 10 validators → template injection → GitHub draft branch → Telegram notification (Publikuoti/Taisyti/Praleisti) |
+| `POST /api/automations/telegram-webhook` | 🟡 Code-done (319 lines), UNDEPLOYED | Telegram callback handler: P → blog-approve, R → save Supabase state + ask text reply, S → delete branch + topics.status=skipped |
+| `POST /api/automations/blog-approve` | 🟡 Code-done (406 lines), UNDEPLOYED | Publish flow: addBlogCardToGrid (.bp-grid) + linkInternal forward+reverse + updateSitemap + topics.status=published + mergeBranchToMain + deleteBranch + Telegram confirmation |
 
 ## INTEGRACIJOS
 
@@ -47,10 +48,14 @@
 | Vercel | 🟢 Production LIVE | Hosting active, build #2 (`6974806`) READY 27s, 10 URL 200 OK, domain'ai (veriva.lt + www.veriva.lt) attached, apex SSL pending |
 | Hostinger DNS | 🟢 Migrated | A `@` → 76.76.21.21, CNAME `www` → cname.vercel-dns.com; Zoho email DNS (DKIM/SPF/MX×3) išsaugoti |
 | Zoho Mail | 🟢 Aktyvus (nepaliesta) | info@veriva.lt — MX/SPF/DKIM/verification record'ai DNS Zone'oje veikia toliau |
-| Supabase | ⬜ | Leads DB |
-| Resend | ⬜ | Email notifications |
+| Supabase | 🟡 Shared Empirra project (URL pushed to Veriva env), migration 002_blog_automation.sql code-done bet NEPALEISTA | Veriva lenteles atskiria `veriva_*` prefix (veriva_telegram_revise_state, veriva_blog_runs). SERVICE_ROLE_KEY laukia rankinio pateikimo iš Empirra Vercel UI (Sensitive flag) |
+| Resend | 🟡 API key pushed į Veriva Vercel | Email notifications (contact form + audit-request) — endpoint'ai dar neištestuoti |
+| OpenAI | 🟡 API key pushed (shared with Empirra) | gpt-4.1 blog generavimui, $0.05-0.08/post estimate |
+| Pexels | 🔴 API key NEPUSH'INTAS (Sensitive flag — laukia rankinio pateikimo) | Hero images blog post'ams (LT→EN query translation map sukurtas lib/pexels.ts) |
+| GitHub API | 🔴 GITHUB_TOKEN NEPUSH'INTAS (Sensitive flag — laukia rankinio pateikimo) | Branch create/commit/merge per blog automation pipeline, repo `riko8825/Veriva-geras` |
+| Telegram bot | 🔴 NESUKURTAS — vartotojas turi sukurti `@VerivaBlogBot` per @BotFather (atskiras nuo Empirra) | Blog draft approve flow su 3 inline buttons (Publikuoti/Taisyti/Praleisti) |
 | GA4 + GTM | ⬜ | Analytics |
-| Cookiebot | 🟢 LIVE | CMP auto-blocking, Domain group ID `bc31b2c9-a2b7-44e8-a3a2-624b027ba646`, įdiegtas 6 puslapiuose, slapukai.html turi CookieDeclaration script (2026-05-10) |
+| Cookiebot | 🟡 LIVE su stale crawl | CMP auto-blocking, CBID `bc31b2c9-a2b7-44e8-a3a2-624b027ba646`, įdiegtas 7 puslapiuose (+privatumas.html), CookieDeclaration script veikia. **Issue (2026-05-11)**: paskutinis crawl 2026-04-23 (PRIEŠ WP→Vercel migraciją) — lentelė rodo seną WP versiją (wpEmojiSettings, _pk_*, _ga). **Action**: vartotojas siunčia support email + manual rescan (CBID + paaiškinimas) — ETA ~24h; alternatyva auto-scan ~2026-05-23 |
 
 ## SEO / CONTENT
 

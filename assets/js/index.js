@@ -112,34 +112,32 @@ const LABELS=['Įmonės dydis','Duomenų jautrumas','Dokumentacija','Incidentai'
 let cur=0, total=0, fineBase=3000, fineMult=1.0, answers=[];
 
 function buildProgress(){
-  const p=document.getElementById('w-progress');
-  p.innerHTML='';
-  QS.forEach((_,i)=>{
-    const d=document.createElement('div');
-    d.className='wpd'+(i<cur?' done':i===cur?' active':'');
-    d.id='wpd'+i;
-    p.appendChild(d);
-  });
+  const pct=Math.round(((cur+1)/QS.length)*100);
+  const fill=document.getElementById('w-qfill');
+  const pctLabel=document.getElementById('w-qpct');
+  if(fill)fill.style.width=pct+'%';
+  if(pctLabel)pctLabel.textContent=pct+'%';
 }
 
 function renderQ(){
   buildProgress();
-  document.getElementById('w-qlabel').textContent=`${cur+1} iš ${QS.length}`;
+  document.getElementById('w-qlabel').textContent=`${cur+1} iš ${QS.length} klausimų`;
   document.getElementById('w-question').textContent=QS[cur].q;
   const wrap=document.getElementById('w-opts');
   wrap.innerHTML='';
   QS[cur].opts.forEach((o,i)=>{
     const b=document.createElement('button');
-    b.className='w-opt';
-    b.innerHTML=`<span class="w-opt-ico">${o.i}</span><span class="w-opt-txt">${o.t}</span>`;
+    b.className='qc-opt';
+    b.type='button';
+    b.innerHTML=`<div class="qco-inner"><div class="qco-ico">${o.i}</div>${o.t}</div><span class="qco-arr">→</span>`;
     b.onclick=()=>pick(i,o);
     wrap.appendChild(b);
   });
 }
 
 function pick(idx,opt){
-  document.querySelectorAll('.w-opt').forEach(b=>b.classList.remove('pick','pick-bad'));
-  document.querySelectorAll('.w-opt')[idx].classList.add(opt.bad?'pick-bad':'pick');
+  document.querySelectorAll('#w-opts .qc-opt').forEach(b=>b.classList.remove('pick','pick-bad'));
+  document.querySelectorAll('#w-opts .qc-opt')[idx].classList.add(opt.bad?'pick-bad':'pick');
   total+=opt.s;
   if(opt.f)fineBase=opt.f;
   if(opt.m)fineMult*=opt.m;
@@ -182,14 +180,11 @@ function showResult(){
   // Fine: fineBase (LT VDAI mediana pagal įmonės dydį) × fineMult (pažeidimų koeficientai)
   // Šaltinis: vdai.lrv.lt 2018-2025 baudų statistika
   const riskMult=pct<.35?0.5:pct<.65?1.0:1.5;
-  // Cap pagal LT realybę: SME max ~€110K (CityBee), didelės ~€350K, cross-border outlier €2.4M (Vinted)
   const fineCap=fineBase<=12000?fineBase*4:fineBase<=75000?fineBase*3:fineBase*2.5;
   const fineRaw=Math.min(fineBase*fineMult*riskMult, fineCap);
-  // Round to nearest €500 for cleaner display
   const fine=Math.round(fineRaw/500)*500;
   document.getElementById('w-fine-amt').textContent='€'+fine.toLocaleString('lt-LT');
 
-  // Disclaimer note — Vinted outlier paminimas tik jei 250+ įmonė + kritinė rizika
   const noteEl=document.getElementById('w-fine-note');
   if(fineBase>=350000 && pct>=.65){
     noteEl.innerHTML='Cross-border platformoms gali siekti €2M+ (Vinted, 2024)';
@@ -197,16 +192,15 @@ function showResult(){
     noteEl.textContent='Pagal VDAI 2018–2025 baudų statistiką';
   }
 
-  // Breakdown
+  // Breakdown — naujas markup (qcr-bd-row)
   const bd=document.getElementById('w-breakdown');
   bd.innerHTML='';
   answers.forEach(a=>{
     const cls=a.score===0?'g':a.score<=2?'a':'r';
     const val=a.score===0?'Gerai':a.score<=2?'Vidutinė':'Aukšta';
-    bd.innerHTML+=`<div class="wbd"><span class="wbd-name">${a.label}</span><span class="wbd-val ${cls}">${val}</span></div>`;
+    bd.innerHTML+=`<div class="qcr-bd-row"><span class="qcr-bd-name">${a.label}</span><span class="qcr-bd-val ${cls}">${val}</span></div>`;
   });
 
-  // Auto-fill form service
   const svc=document.getElementById('cf-svc');
   if(svc&&!svc.value)svc.value='BDAR atitiktis ir dokumentacija';
 }
@@ -320,4 +314,150 @@ document.addEventListener('keydown',function(e){
     });
   }
 });
+
+/* ─────────────────────────────────────
+   HERO + QUIZ — naujas premium dark tier
+   Canvas particles + custom cursor + GSAP
+   ───────────────────────────────────── */
+
+(function(){
+  const isHoverFine = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+  // ─ Canvas particles (hero) — premium dust motes su soft glow ─
+  const cv=document.getElementById('cvs');
+  const heroEl=document.getElementById('hero');
+  if(cv && heroEl && !reduceMotion){
+    const ctx=cv.getContext('2d');
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    let W=heroEl.offsetWidth,H=heroEl.offsetHeight;
+    function resize(){
+      W=heroEl.offsetWidth;H=heroEl.offsetHeight;
+      cv.width=W*dpr;cv.height=H*dpr;
+      cv.style.width=W+'px';cv.style.height=H+'px';
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+    resize();
+    const N=55;
+    let mx=W*.5,my=H*.5,tmx=mx,tmy=my;
+    const pts=Array.from({length:N},()=>({
+      x:Math.random()*W,y:Math.random()*H,
+      vx:(Math.random()-.5)*.12,vy:(Math.random()-.5)*.12,
+      r:Math.random()*1.8+.6,
+      op:Math.random()*.45+.15,
+      // phase for breathing opacity
+      phase:Math.random()*Math.PI*2,
+      ps:.0008+Math.random()*.0012
+    }));
+    // 2 aurora orbs — slow drift
+    const orbs=[
+      {x:W*.25,y:H*.35,vx:.06,vy:.04,r:Math.max(W,H)*.45,hue:'26,71,204',op:.10},
+      {x:W*.78,y:H*.7,vx:-.05,vy:-.03,r:Math.max(W,H)*.38,hue:'0,180,216',op:.07}
+    ];
+    document.addEventListener('mousemove',e=>{
+      const rect=heroEl.getBoundingClientRect();
+      tmx=e.clientX-rect.left;tmy=e.clientY-rect.top;
+    });
+    window.addEventListener('resize',resize);
+    let t=0;
+    function frame(){
+      t++;
+      // smooth mouse follow (no jitter)
+      mx+=(tmx-mx)*.04;my+=(tmy-my)*.04;
+      ctx.clearRect(0,0,W,H);
+
+      // ─ Aurora orbs (slow drift, soft radial gradient) ─
+      for(const o of orbs){
+        o.x+=o.vx;o.y+=o.vy;
+        if(o.x<-o.r*.3||o.x>W+o.r*.3)o.vx*=-1;
+        if(o.y<-o.r*.3||o.y>H+o.r*.3)o.vy*=-1;
+        const g=ctx.createRadialGradient(o.x,o.y,0,o.x,o.y,o.r);
+        g.addColorStop(0,`rgba(${o.hue},${o.op})`);
+        g.addColorStop(1,`rgba(${o.hue},0)`);
+        ctx.fillStyle=g;
+        ctx.fillRect(0,0,W,H);
+      }
+
+      // ─ Particle physics (gentle drift + soft mouse repulsion) ─
+      for(const p of pts){
+        const dx=mx-p.x,dy=my-p.y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<140&&d>5){
+          // repel away (premium: subtle push, not aggressive pull)
+          p.vx-=dx/d*.003;p.vy-=dy/d*.003;
+        }
+        // damping (slow settle)
+        p.vx*=.992;p.vy*=.992;
+        // micro brownian motion for organic drift
+        p.vx+=(Math.random()-.5)*.008;p.vy+=(Math.random()-.5)*.008;
+        const sp=Math.sqrt(p.vx*p.vx+p.vy*p.vy);
+        if(sp>.45){p.vx/=sp/.45;p.vy/=sp/.45;}
+        p.x+=p.vx;p.y+=p.vy;
+        // wrap (no bounce — feels stuck on edges)
+        if(p.x<-20)p.x=W+20;else if(p.x>W+20)p.x=-20;
+        if(p.y<-20)p.y=H+20;else if(p.y>H+20)p.y=-20;
+      }
+
+      // ─ Line connections — longer reach, softer ─
+      for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){
+        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<135){
+          const a=.08*(1-d/135);
+          ctx.beginPath();
+          ctx.strokeStyle=`rgba(0,180,216,${a})`;
+          ctx.lineWidth=.5;
+          ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);
+          ctx.stroke();
+        }
+      }
+
+      // ─ Particles with soft glow halo ─
+      for(const p of pts){
+        // breathing opacity (slow sine)
+        const breath=.7+Math.sin(p.phase+t*p.ps*60)*.3;
+        const op=p.op*breath;
+        // outer glow halo
+        const gg=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*5);
+        gg.addColorStop(0,`rgba(0,180,216,${op*.6})`);
+        gg.addColorStop(.4,`rgba(0,180,216,${op*.15})`);
+        gg.addColorStop(1,`rgba(0,180,216,0)`);
+        ctx.fillStyle=gg;
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r*5,0,Math.PI*2);ctx.fill();
+        // core dot
+        ctx.beginPath();
+        ctx.fillStyle=`rgba(220,240,255,${op})`;
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
+      }
+      requestAnimationFrame(frame);
+    }
+    frame();
+  }
+
+  // ─ GSAP hero entrance + magnetic CTA ─
+  if(typeof gsap!=='undefined' && !reduceMotion){
+    const E='power3.out';
+    gsap.set('#hl',{opacity:0,y:14});
+    gsap.set('#hm .line1',{opacity:0,y:26});
+    gsap.set('#hm .line2',{opacity:0,y:26});
+    gsap.set('#hr',{opacity:0,y:14});
+    gsap.set('#hb',{opacity:0,y:16});
+    gsap.set('#sh',{opacity:0});
+
+    gsap.timeline({defaults:{ease:E}})
+      .to('#hl',{opacity:1,y:0,duration:.6},.15)
+      .to('#hm .line1',{opacity:1,y:0,duration:.85},'-=.35')
+      .to('#hm .line2',{opacity:1,y:0,duration:.85},'-=.62')
+      .to('#hr',{opacity:1,y:0,duration:.65},'-=.4')
+      .to('#hb',{opacity:1,y:0,duration:.7},'-=.45')
+      .to('#sh',{opacity:1,duration:.6},'-=.3');
+
+    const btn=document.getElementById('mainBtn');
+    if(btn && isHoverFine){
+      btn.addEventListener('mousemove',e=>{
+        const r=btn.getBoundingClientRect();
+        gsap.to(btn,{x:(e.clientX-r.left-r.width/2)*.12,y:(e.clientY-r.top-r.height/2)*.12,duration:.28,ease:'power2.out'});
+      });
+      btn.addEventListener('mouseleave',()=>gsap.to(btn,{x:0,y:0,duration:.7,ease:'elastic.out(1,.5)'}));
+    }
+  }
+})();
 

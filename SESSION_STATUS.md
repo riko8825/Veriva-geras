@@ -1,11 +1,232 @@
 # SESSION_STATUS
 
-**Data**: 2026-05-10
-**Sesijos tikslas**: `privatumas.html` (KI-005 paskutinis BDAR blocker) + 6 footer link sync (broken `/#kontaktai` → `/privatumas.html` + `/slapukai.html`)
+**Data**: 2026-05-11
+**Sesijos tikslas**: Blog automation pipeline port iš Empirra į Veriva — full stack (blog-gen + telegram-webhook + blog-approve + 14 lib failai + topics.json + migration + vercel.json + docs).
 
 ---
 
-## Paskutinė sesija: 2026-05-10 — privatumas-html
+## Paskutinė sesija: 2026-05-11 — blog-automation-port
+
+### Ką padarėme
+
+**Architektūra (solution-architect agent):**
+- Detali 11-sekcijų adaptacijos plano analizė Empirra → Veriva (file-by-file mapping, env vars, schema, internal links, Telegram setup, GitHub, Supabase migration, system prompt diff, fazes, rizikos)
+- Sprendimai: OpenAI gpt-4.1 (kaip Empirra), atskiras Veriva Telegram bot, share OpenAI+Pexels keys, share Empirra Supabase (Veriva lenteles `veriva_*` prefix), 2×/sav cron (Tue+Thu 10:00 LT), JSON+template injection output
+
+**14 lib failų (1748 lines TS):**
+- `lib/claude.ts` (82) — OpenAI gpt-4.1 wrapper, 75s timeout, 4500 max tokens
+- `lib/github.ts` (171) — GitHub API (createDraftBranch, commitFileToBranch, mergeBranchToMain, deleteBranch, branchExists, listBranches, getFileFromBranch, listDirFromBranch) — repo `riko8825/Veriva-geras`
+- `lib/telegram.ts` (205) — bot wrapper + LT pranešimai + sendTelegramDraftNotification su Publikuoti/Taisyti/Praleisti inline keyboard + slugHash callback_data
+- `lib/pexels.ts` (94) — hero images su LT→EN translation map (18 BDAR/NIS2/DPO keyword mappings)
+- `lib/blog-card.ts` (163) — Veriva `.bc` card markup (matches blog.html .bp-grid struct), `normalizeCategory()` BDAR/NIS2/DPO/Sauga/Mokymai, LT-aware excerpt extraction
+- `lib/blog-template.ts` (197) — JSON → template.html injection (29 placeholder map, RAW_HTML_FIELDS set, validatePostData() su 6 required field checks)
+- `lib/blog-prompts.ts` (228) — Veriva LT sistem prompt (export const, ~3000 chars) + buildBlogUserPrompt(brief) + pillar context per topic
+- `lib/link-map.ts` (157) — KW→URL map + 5 service page targets (`/paslaugos#bdar/nis2/dpo/mokymai/audit` su weight=4), LT ltSlugify(), topics.json read
+- `lib/link-constraints.ts` (103) — Veriva-specific SKIP_BLOCK_CLASSES (toc, callout, definition, stat-hl, faq-*, cta-inline, internal-links), plain `<article>` body anchor, LT diacritic word-boundary regex
+- `lib/internal-links.ts` (196) — forward injection + reverse linking, service: targets skipped in reverse, weight-based scoring
+- `lib/sitemap-update.ts` (85) — Veriva 8 static pages + /blog/*.html, sutvarkyta image:image namespace, BASE_URL https://veriva.lt
+- `lib/auth-node.ts` (56) — Node runtime auth (constantTimeEqual, verifyBlogTriggerAuth, verifyBlogApproveAuth, verifyTelegramWebhookAuth)
+- `lib/timeout.ts` (7) + `lib/flags.ts` (17) — utility (paliktas DISABLE_AI / DISABLE_TELEGRAM)
+
+**3 API endpoint'ai (1278 lines TS):**
+- `api/automations/blog-gen/route.ts` (553) — full pipeline: auth dual-mode (cron+manual) → fetchTopics → getNextTopic → expandKeywords (gpt-4.1, 500 max) → generateBlogJSON (gpt-4.1, 5000 max) → validatePost (10 checks: required, BANNED_LT_PHRASES, source whitelist, FAQ count, FAQ schema, inline styles, H2 count, CTA brand mention) → renderTemplate → createDraftBranch + commitFileToBranch (post + topics.status=draft) → sendTelegramDraftNotification. Su LT slugify (transliteruoja ą→a, č→c, š→s, ž→z), formatDateHuman (LT žodžiu), resolveAuthor (Marina/Justinas/Veriva komanda per author_key arba pillar fallback)
+- `api/automations/telegram-webhook/route.ts` (319) — verifyTelegramWebhookAuth → text message handler (revise state via Supabase veriva_telegram_revise_state, slash commands NO-OP — pašalintas Empirra /intake) → callback_query handler (P/R/S 6-char hash matching draft-blog-* branches) → POST delegates to blog-approve via https://veriva.lt URL → SKIP marks topics.status=skipped + deleteBranch → REVISE saves Supabase state + asks text reply
+- `api/automations/blog-approve/route.ts` (406) — verifyBlogApproveAuth → POST flow (addBlogCardToGrid → linkInternal forward+reverse → updateSitemap → mark topics.status=published on branch → mergeBranchToMain → deleteBranch → Telegram confirm) + SKIP + REVISE branches. Service: target skip in reverse linking. Vienas blog.html path (NE dual kaip Empirra src/pages/).
+
+**Konfigūracija (4 failai):**
+- `topics.json` — 21 keyword queue (3 published Veriva pillarai + 18 pending, BDAR/NIS2/DPO/Sauga/Mokymai distribution). Pridėta author_key + post_type + pillar fields per topic (extends Empirra schema).
+- `vercel.json` — Pridėta `builds` array (3 automation endpoints + 3 form endpoints + static), `rewrites` (3 automation URLs), `crons` (`0 8 * * 2,4` = antradienis+ketvirtadienis 08:00 UTC), maxDuration 60-90s per endpoint
+- `migrations/002_blog_automation.sql` — `veriva_telegram_revise_state` (chat_id PK) + `veriva_blog_runs` (analytics log). RLS enabled, service_role only access, 3 indexes
+- `.env.example` — 17 env vars dokumentuota (8 nauji blog automation)
+
+**Docs:**
+- `docs/blog-automation-deploy.md` — 7-step deploy guide su Telegram bot setup, Supabase migration, secrets generation, Vercel push, webhook setup, smoke test, troubleshooting (timeouts, validation failures, linking debug), cost estimate ($0.05-0.08/post, $0.40-0.64/mo)
+
+**Vercel env vars push (7 vars production):**
+- `vercel env pull` iš Empirra → push į Veriva: `OPENAI_API_KEY`, `SUPABASE_URL`, `RESEND_API_KEY`, `BLOG_TRIGGER_SECRET` (gen new), `BLOG_APPROVE_SECRET` (gen new), `CRON_SECRET` (gen new), `TELEGRAM_WEBHOOK_SECRET` (gen new)
+- Vercel CLI grąžina TUŠČIUS values for Sensitive flag vars: `GITHUB_TOKEN`, `PEXELS_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `TELEGRAM_CHAT_ID` — REIKIA rankiniu būdu iš Vercel UI "Show value" arba edit dialog'o
+
+**TypeScript type check: ✅ PASS (zero errors)** po 2 fix'ų `lib/auth-node.ts` (env var undefined handling)
+
+### Kas liko / nepatvirtinta
+
+**KRITINIAI blockers (5 env vars vartotojo pateikti + 3 setup steps):**
+1. `GITHUB_TOKEN` (Empirra Vercel UI) — Sensitive flag, CLI nepull'ina
+2. `PEXELS_API_KEY` (Empirra Vercel UI) — Sensitive flag
+3. `SUPABASE_SERVICE_ROLE_KEY` (Empirra Vercel UI) — Sensitive flag
+4. `TELEGRAM_BOT_TOKEN` — VARTOTOJAS turi sukurti naują `@VerivaBlogBot` per @BotFather (atskiras nuo Empirra)
+5. `TELEGRAM_CHAT_ID` — VARTOTOJAS turi gauti per `getUpdates` po `/start` su nauju bot'u
+6. **Supabase migration** — vartotojas turi paleisti `migrations/002_blog_automation.sql` Empirra Supabase SQL Editor'yje
+7. **Git commit + push** — visi pakeitimai dar neužcommit'inti (35 untracked + 19 modified failai)
+8. **Telegram webhook setup** — po deploy, vykdyti `setWebhook` su naujo bot'o token + `TELEGRAM_WEBHOOK_SECRET`
+9. **Smoke test** — manual `POST /api/automations/blog-gen` su `BLOG_TRIGGER_SECRET` + `{"force":true}` body
+
+**Žinomi rizikai (untested code paths):**
+- `lib/blog-card.ts` `extractBlogCardMeta()` regex'as gali fail'inti jei AI grąžins HTML be `class="post-cat"` / `class="article-cat"` (template'as šitų klasių neturi default'iškai) → fail su `extract_meta_failed`
+- `lib/link-map.ts` `slugFromKeyword()` LT slugify gali nesutapti su Veriva esamais slug'ais (`BDAR baudos Lietuvoje` → `bdar-baudos-lietuvoje` vs faktinis slug `bdar-baudos-lietuvoje`) — testintina su debug log po pirmo run'o
+- 3 esami Veriva pillarai NETURI `<ul class="internal-links">` sekcijos → reverse linking fail'ins su `internal_links_section_not_found` per pirmus 3-5 publish'us (skip — nekritiška)
+- AI prompt'as nepatikrintas su realia OpenAI gpt-4.1 — LT diakritikai, JSON parsing, FAQ schema struktūra, BANNED phrases enforcement nebūtinai veiks 100% iš pirmo karto. Reikia 2-3 smoke test'ų ir prompt iteracijos jei rejection rate >50%.
+
+**Carry-over iš ankstesnės sesijos (NEIŠSPRĘSTA):**
+- Sesija #12 hero-quiz-redesign UNCOMMITTED — `index.html` + `assets/js/index.js` modifikuoti, bet šios sesijos commit'as juos viską sujungs
+- Cookiebot crawl pasenęs (2026-04-23) — laukia support email response arba auto-scan 2026-05-23
+
+### Kitas žingsnis
+
+1. **Vartotojas: pateikia 5 Sensitive env vars + sukuria Telegram bot + paleidžia Supabase migration** (~15 min rankų darbo)
+2. **Aš: push 5 likusius env vars + git commit + git push origin main + Vercel auto-deploy + setWebhook + smoke test** (~20 min)
+3. **Jei smoke test fail'ina**: debug `vercel logs --since 1h | grep blog-gen` → fix prompt arba validators → iterate
+
+---
+
+## ATLIKTA ANKSČIAU (2026-05-11 — cookiebot-debug)
+
+### Ką padarėme
+
+**Diagnostika (zero code change):**
+- Patikrintas Cookiebot scripts placement'as `index.html` (eil. 7) + `slapukai.html` (eil. 206) — `<script id="Cookiebot">` su CBID `bc31b2c9-a2b7-44e8-a3a2-624b027ba646` ir `<script id="CookieDeclaration">` vietoje
+- Patikrintas CDN endpoint'as `https://consent.cookiebot.com/bc31b2c9-.../cd.js` (HTTP 200, OK loader script)
+- Patikrintas data endpoint'as `cdreport.js?referer=www.veriva.lt` ir `?referer=veriva.lt` — abu HTTP 200, grąžina pilną CookieDeclaration HTML lentelę su `Būtini (2)`, `Statistika (4)`
+- Headless Chrome render testas (`--virtual-time-budget=15000`) — lentelė renderinasi DOM'e su 2 `Statistika+Būtini` blokais, `CookieDeclarationTable`, `CookieDeclarationTableCell` × N
+- Patikrinti security headers (`X-Frame-Options: DENY`, jokio CSP) — Cookiebot script'as nėra blokuojamas
+- Patikrintas `vercel.json` — headers OK, redirect'ai OK
+
+**Tikroji problema rasta:**
+- Cookiebot crawl iš **`2026-04-23`** rodo seną WordPress versiją: slapukai `wpEmojiSettingsSupports`, Piwik `_pk_id#` + `_pk_ses#`, Google Analytics `_ga` + `_ga_#` (visi NEEGZISTUOJA naujoje Vercel svetainėje)
+- CookieDeclaration intro tekstas turi link'ą į `https://veriva.lt/privatumo-politika-2/` (404 — sena WP URL struktūra)
+- WP→Vercel migracija buvo 2026-05-10, bet Cookiebot scan'as buvo 2026-04-23 — 17 dienų prieš migraciją
+- Domain group `veriva.lt` patvirtinta apex'e, `www.veriva.lt` automatinis aliasas (Cookiebot grąžino "Domain is already registered with its variant" pridedant alias)
+
+**Dashboard navigation (3 ekranai):**
+- ❌ `Domains & Aliases > veriva.lt` — tik GCM Consent Mode Check, nėra `Re-scan` mygtuko
+- ❌ `Cookies & Reports > Cookies and Trackers` tab — tik manuali `Add cookie / tracker` opcija
+- ❌ `Cookies & Reports > Reports` tab — vartotojas patvirtino, kad ten irgi nėra `Scan now`
+
+**Pricing patikra (WebFetch + WebSearch):**
+- Default `Monthly` scan'as — **įtraukta į Premium**
+- `Daily` scan'as — **+€62-99/mėn už domeną** (Cookiebot Premium add-on)
+- `Weekly` — nedokumentuota, greičiausiai irgi extra
+- **Sprendimas:** nedidinti scan frequency (per brangu vienam pakeitimui)
+
+**Pateikta vartotojui:**
+- Cookiebot Domain Group ID (CBID) verify: `bc31b2c9-a2b7-44e8-a3a2-624b027ba646`
+- Paruoštas EN support email template (siusti į `support@cookiebot.com` su prašymu manual rescan)
+
+### Testai atlikti
+
+- `curl -sI https://consent.cookiebot.com/.../cd.js` — HTTP 200, `Cache-Control: max-age=1200`
+- `curl -s .../cdreport.js?referer=www.veriva.lt -o veriva_cd_www.js` — 10676 bytes (pilna lentelė LT)
+- `curl -s .../cdreport.js?referer=veriva.lt -o veriva_cd_apex.js` — 10668 bytes (identiškas turinys, skiriasi tik domain referer)
+- Headless Chrome × 2 (5s + 15s budget) → DOM įrašė `CookieDeclarationTable` × 2 + `wpEmojiSettings` + `_ga` + `_pk_*` įrašus
+- CSS verify: `.cookiebot-wrap` border, `--border` var apibrėžtas eil. 32
+
+### Deploy
+
+- **Code change: 0** (grynai diagnostika)
+- **Commits: 0**
+- **Push: 0**
+
+### Kas liko / nepatvirtinta
+
+- **Support email NEIŠSIUSTAS** — vartotojas turi pats išsiųsti `support@cookiebot.com` su CBID + manual rescan prašymu (template paruoštas)
+- **Auto-scan trigger'ins savaime ~2026-05-23** (Monthly frequency) jei support nenudirbs anksčiau
+- **Incognito test'as nepatvirtintas** — vartotojas atsakė "nera", bet screenshot ar specifika nepateikta (neaišku, ar lentelė nematoma naršyklės render'yje, ar visas Cookies & Reports puslapis dashboard'e). Galima Adblock/uBlock blokuoja `consent.cookiebot.com` arba pasenusi crawl rodo seną WP turinį
+- **Cookies & Reports `wpEmojiSettings`, `_pk_*`, `_ga` įrašai** — vis dar rodomi dashboard'e + live `/slapukai` puslapyje. Sprendimas: laukti rescan'o
+- **`veriva.lt/privatumo-politika-2/` 404 link** CookieDeclaration intro tekste — pasens kartu su pilnu rescan'u
+
+### Kitas žingsnis
+
+1. **Vartotojas: išsiųsti support email** `support@cookiebot.com` su CBID `bc31b2c9-a2b7-44e8-a3a2-624b027ba646` + manual rescan prašymu. ETA atsakymo ~24h. Po rescan'o lentelė rodys tik `CookieConsent` (1 slapukas) iki kol bus pridėta GA4/GTM.
+2. **Carry-over iš sesijos #12: hero rewrite cleanup + commit + push** — dead CSS ~150 lines, inline `<style>` ~340 lines, `#cur` dead code (žr. sesijos #12 carry-over apačioje).
+3. **Carry-over: naršyklės QA** (mobile <900px + 5-q quiz flow + prefers-reduced-motion + GSAP defer).
+
+### Tools naudoti
+
+- `Read` × 5, `Grep` × 4, `Bash` × 11 (curl × 5, headless Chrome × 2, where × 2, git × 2)
+- `WebFetch` × 1 (Cookiebot pricing)
+- `WebSearch` × 1 (scan frequency cost)
+- `Edit` × 0, `Write` × 0
+- Sukurta + ištrinta laikina: `veriva_slapukai.html`, `veriva_cd.js`, `veriva_rendered.html`, `veriva_rendered2.html`
+
+### Mokyklėlė šiai sesijai
+
+- **Cookiebot diagnostiką pradėti nuo `cdreport.js?referer=` curl'o** — tai parodo, kokius slapukus Cookiebot ŽINO apie domeną. Jei lentelė tuščia ten — markup problema. Jei pilna ten, bet nesimato naršyklėje — render/adblock problema.
+- **Premium scan frequency: NIEKADA nedidinti be pricing patikros** — `Daily` kainuoja €62-99/mėn už 1 domain. Vartotojas vos nesumokėjo, nes nepaklausė pirmas.
+- **Cookiebot `cd.js` yra loader, ne data** — pats `cd.js` tik ~12KB JS engine'as, kuris fetch'ina `cdreport.js?referer=<hostname>` su tikru turiniu. Be šito skirtumo supratimo galima diagnostikuoti neteisingą failą.
+
+---
+
+## ATLIKTA ANKSČIAU (2026-05-11 — hero-quiz-redesign)
+
+### Ką padarėme
+
+**Pradinė užduotis** — vartotojas pateikė pilnai kitokio dizaino HTML (canvas particles + custom cursor + DM Sans + cyan #00cffc + #030a14 + GSAP) ir paprašė įdėti vietoj esamo hero. Po 3 pivot'ų pasiekta brand-aligned versija.
+
+**`index.html`** — hero + quiz section pilnas perrašymas
+- **Pašalinta**: senas `.hero` su `.widget` 5-q embed + `.proof-strip` 4-stat blokas (eil. 271-361, ~95 lines)
+- **Pridėta**: naujas `#hero` su canvas particles + radial mesh + ticker + h-rule stat strip + Syne 800 massive headline (`€0 VDAI baudų. / Garantuota raštu.`) + scroll-hint
+- **Pridėta**: atskira `#quiz-section` (2-col grid: pitch H2 + 5-q widget glass card su cyan hairline ::before, glass mesh ::after, brand mygtukai)
+- **Pridėta**: fixed ticker `<div>` virš nav (9 brand žodžiai × 2 loop, mono font 10.5px)
+- **Pridėta**: `<style>` blokas head'e ~340 lines (scope: #hero + #quiz-section, NEpaliečia kitų sekcijų)
+- **Brand adaptacija (3 pivot)**: `#030a14` → `var(--ink) #07111f`; `#00cffc` → `var(--cyan) #00b4d8`; `#c9a84c` → `var(--gold) #c8962a`; DM Sans → Plus Jakarta Sans + Syne 800 + JetBrains Mono kicker; clip-path corners → border-radius 8/10/16px; `cursor:none` → standartinis cursor
+- **Custom cursor `#cur`**: `display:none !important` (pašalinta funkcionalumas, paliktas div + JS dead listener'iai)
+- **Cache-buster**: `v=20260510b` → `v=20260511c` (3 bump'ai dėl 3 pivot'ų)
+- **Nav**: `top: 0` → `top: 28px` (dėl fixed ticker virš)
+- **Google Fonts**: pridėtas `Syne 400` weight + `DM Sans` (po pivot'o pašalintas) → galutinis stack: Syne 700+800 + Plus Jakarta Sans + JetBrains Mono
+
+**`assets/js/index.js`** — widget logika adaptuota naujam markup'ui
+- `buildProgress()` perdaryta — 5 dot'ų (`wpd0..4`) → progress bar fill (`w-qfill` width % + `w-qpct` text label)
+- `renderQ()` — `.w-opt` markup → `.qc-opt` su `qco-inner` (icon + text) + `qco-arr`
+- `pick()` — selector'ius `.w-opt` → `#w-opts .qc-opt`
+- `showResult()` breakdown — markup `.wbd/.wbd-name/.wbd-val` → `.qcr-bd-row/.qcr-bd-name/.qcr-bd-val`
+- Pridėtas hero JS blokas gale (~110 lines): canvas particles (80 mėlynos taškės + 105px line connections + mouse attraction) + GSAP entrance timeline + magnetic CTA + custom cursor handler (paliktas, bet display:none)
+- Visi handler'iai gerbia `prefers-reduced-motion` ir `(hover:hover)`
+
+### Testai atlikti
+
+- Lokalus HTTP servas (port 5174) — HTTP 200 OK, 6 critical elementai grep verify (`#cur`, `.ticker`, `#hero`, `#quiz-section`, `#main-widget`, `#w-question`, `#w-result`)
+- JS adaptacijos verify: `qc-opt`, `qcr-bd-row`, `w-qfill`, GSAP timeline, frame() canvas loop
+- HTML balansas: 11 `<section>` open/close balanced
+- Vartotojo screenshot'ai (2 pivot'ai):
+  - Pirma — balta juosta virš ticker (cream body bg pro `padding-top:28px` skylę → fix: solid #030a14 ticker bg + pašalintas padding-top)
+  - Antra — hero/quiz nesutampa su komandos stiliumi (cyan #00cffc + DM Sans — fix: brand adaptacija į `--ink/--cyan/--gold` + Plus Jakarta Sans + Syne 800)
+
+### Deploy
+
+- **Production deploy NEpadarytas** — vartotojas patvirtino `ok` po brand adaptacijos, bet nepaprašė push'inti
+- Commit nepadarytas — uncommitted likučiai laukia kitos sesijos commit'o (kartu su cleanup)
+
+### Kas liko / nepatvirtinta
+
+- **Dead CSS `assets/css/index.css`** ~150 lines (eil. 55-225): `.widget`, `.w-top/title/badge`, `.w-progress`, `.wpd`, `.w-qscreen`, `.w-qlabel`, `.w-question`, `.w-opts`, `.w-opt`, `.w-result`, `.w-r-*`, `.w-ring*`, `.w-fine*`, `.w-breakdown`, `.wbd*`, `.w-cta*`, `.w-reset`, `.proof-strip`, `.ps-*`, sena `.hero` (jei egzistuoja), `.hero-grid`, `.hero-w`, `.hero-eyebrow`, `.hero-sub`, `.hero-trust`, `.ht-*` — visi nebenaudojami po hero rewrite
+- **Inline `<style>` blokas index.html head'e** (~340 lines) laužia CLAUDE.md `niekada inline CSS/JS` taisyklę — vartotojo `daryti taip kaip kode` leido, bet po brand adaptacijos taisyklė vėl tinka. Reikia perkelti į `assets/css/index.css`
+- **Custom cursor `#cur` div** ir JS event listener'iai (~30 lines `index.js` end) — funkcionalumas pašalintas (`display:none !important`), bet kodas liko kaip dead code
+- **Naršyklės QA nepadarytas**: 1) mobile breakpoint <900px (h-rule line'ai paslepiami, hero padding-top:80px); 2) widget 5-q flow su naujais `.qc-opt` mygtukais — vartotojas spaudžia option, ar `pick()` veikia, ar progress bar atsinaujina, ar result screen rendering'as su naujais `.qcr-*` markup'u; 3) GSAP timeline veikia su `prefers-reduced-motion`; 4) canvas particles performance ant lower-end prietaiso
+- **GSAP CDN ~70KB blocking** `<script src>` head'e be `defer` — Core Web Vitals impact nepatikrintas (LCP gali pablogėti)
+- **Cookiebot dashboard verify** carry-over iš ankstesnių sesijų (LT kalba, domeno whitelist)
+- **Modal `#modal-privacy` + `#modal-terms` cleanup** carry-over iš ankstesnės sesijos
+
+### Kitas žingsnis
+
+1. **Cleanup po hero rewrite** — pašalinti dead CSS (~150 lines `index.css`) + perkelti inline `<style>` iš `index.html` head'e į `index.css` + pašalinti `#cur` div + dead cursor JS listener'ius. Po to commit + push.
+2. **Mobile + widget QA** — naršyklėje incognito 1) hero <900px ar h-rule wrap'ina; 2) 5-q quiz flow nuo pirmo klausimo iki result screen su VDAI baudos prognoze; 3) `prefers-reduced-motion` (Chrome DevTools) kad GSAP + canvas + ticker animation būtų išjungta.
+3. **Modal `#modal-privacy` + `#modal-terms` cleanup** (~150 lines) — grep verify, kad niekas nešaukia `openModal('modal-privacy/terms')`, tada ištrinti.
+
+### Tools naudoti
+
+- `Read` × 6, `Edit` × 17, `Bash` × 8, `Grep` × 5, `Glob` × 0
+- `AskUserQuestion` × 4 (apimtis, standartai, nav scope, brand kryptis)
+- Lokalus HTTP servas (port 5174) × 2 paleidimai prieš pivot'us
+
+### Pivot'ų istorija
+
+1. **Pivot 1** (pradinis): paliktas pateiktas kodas kaip yra (DM Sans + #00cffc + #030a14 + cursor:none + GSAP) → balta juosta virš ticker (cream body bg pro padding-top skylę)
+2. **Pivot 2** (balta juosta fix): solid `#030a14` ticker bg + pašalintas `body { padding-top:28px }` + nav `top:28px` → vartotojas patvirtino balta juosta dingo, bet "neatitinka spalvinės ir stiliaus gamos"
+3. **Pivot 3** (brand adaptacija): visas `<style>` blokas perrašytas su `var(--ink)/--cyan/--gold` + Plus Jakarta Sans + Syne 800 + JetBrains Mono mono kicker + glass kortelė su radial mesh + brand mygtukai (be clip-path) → vartotojas patvirtino `ok`
+
+---
+
+## ATLIKTA ANKSČIAU (2026-05-10 — privatumas-html)
 
 ### Ką padarėme
 
@@ -691,3 +912,7 @@ Vienas commit'as su:
 | 2026-05-10 (premium-dark-tier-redesign) | 9 sekcijų index.html perdirbimas į premium dark tier (Stripe/Linear lygis) | bundle'inta `0e51dcf` | 9 sekcijos perdirbtos (paslaugos/auditas/komanda/apie/atsiliepimai/kainos/blog/FAQ/kontaktai), brand language unified (radial mesh + mono kicker + cyan dot + Syne 800 + cyan accent), CSS 590→2573 lines (708/708 braces), JS 276→324 lines (count-up + cursor-follow + faq a11y), schema enhancements ×3, 12× emoji+ → SVG icons, ~80 lines dead CSS removed, visi inline styles + onmouseover XSS pašalinti |
 | 2026-05-10 (cookiebot-integration) | Cookiebot CMP įdiegimas (BDAR/e-Privatumo atitiktis) + slapukai.html + bundle commit | `0e51dcf` | Cookiebot CMP auto-blocking 6 puslapiuose (Domain ID `bc31b2c9-...`), slapukai.html NEW (9-skyrių BDAR politika + CookieDeclaration + Cookiebot.renew btn), pašalintas custom #cookie-banner (XSS rizika su inline onmouseover): HTML 16 + JS 14 + CSS 2 + modal-cookies orphan 32 lines, footer linkas modal → /slapukai.html, bundle commit'as su sesija #8 (3516+/571-), production verify 7/7 URL 200 OK + Cookiebot CDN 200 OK |
 | 2026-05-10 (blog-dark-tier-sync) | blog.html premium dark tier sync su index.html + 3 placeholder cards disabled | `2ca8177`, `f74415f` | blog.html visas dark theme (buvo light cream): hero su mono kicker + cyan dot + Syne 800 + radial mesh, filterai dark glass + cyan accent, post kortelės `.post`-style premium card su top hairline cyan + `:has()` sibling dim + grid mask visual, newsletter cyan CTA + glass card, footer hairline, JetBrains Mono preload, prefers-reduced-motion respect; KI-001 partial: 3 placeholder kortelės (DPO/Incidentai/Mokymai) `<a href>` → `<div>` su Netrukus badge (glass + backdrop-filter) + opacity .55 + aria-disabled, 404 link'ai pašalinti, filterai vis dar veikia; production LIVE 200 OK, 6× Netrukus + 11× bc--soon refs |
+| 2026-05-10 (privatumas-html) | privatumas.html NEW (BDAR Privacy Policy) + 6 footer link sync | `9efb0d0` | privatumas.html NEW 454 lines, 10 skyrių BDAR Privacy Policy (LT, BDAR + LR ADTAĮ atitiktis), sub-processors lentelė (Vercel/Resend/Cookiebot/Hostinger/Zoho su SCC + DPF), 7 saugojimo terminai, 8 BDAR teisės (15-22 str.), Cookiebot.renew CTA, `.proc-table` responsive (data-label mobile cards); 6 footer link sync (index×2 + 4 blog post'ai/template: modal openModal('modal-privacy') + broken `<a href="#" onclick="return false">` → /privatumas.html); sitemap lastmod + priority bump 0.3→0.4; production verify 308→200 OK; KI-005 FULL FIX |
+| 2026-05-11 (hero-quiz-redesign) | index.html hero + quiz section perdarymas pagal vartotojo HTML + brand adaptacija | UNCOMMITTED | Hero + quiz pilnas perrašymas (canvas particles + ticker + glass quiz card + Syne 800 + mono kicker + cyan accent); 3 pivot'ai (DM Sans/cyan #00cffc → balta juosta debug → solid #030a14 ticker bg → brand adaptacija į --ink/--cyan/--gold + Plus Jakarta Sans + Syne 800 + JetBrains Mono); pašalintas `.hero` + `.widget` + `.proof-strip` (~95 lines), pridėtas naujas markup; `#cur` custom cursor display:none + dead JS listener'iai; inline `<style>` ~340 lines head'e laužia CLAUDE.md; cache-buster v=20260510b→20260511c; nav top: 0→28px; widget JS adaptuota (qc-opt, qcr-bd-row, w-qfill); hero JS gale (~110 lines: canvas + GSAP + magnetic CTA); production lieka ant `9efb0d0` — UNCOMMITTED |
+| 2026-05-11 (cookiebot-debug) | CookieDeclaration lentelės diagnostika + Cookiebot pricing patikra | — (zero code change) | Patikrinta: scripts placement OK, CDN endpoint'ai HTTP 200, cdreport.js?referer= grąžina pilną lentelę, headless Chrome render parodė DOM lentelę su Būtini(2)+Statistika(4). Root cause: Cookiebot crawl iš 2026-04-23 (PRIEŠ WP→Vercel migraciją) rodo seną WP versiją (wpEmojiSettings, _pk_id#, _pk_ses#, _ga, _ga_#, link į veriva.lt/privatumo-politika-2/ 404). `www.veriva.lt` automatinis aliasas apex'ui (Cookiebot grąžino "already registered with its variant"). Dashboard `Re-scan` mygtuko Premium UI NĖRA (3 ekranai patikrinti). Pricing tyrimas: Daily +€62-99/mėn/domain — neaktyvinti. Sprendimas: vartotojas siunčia support email su CBID `bc31b2c9-a2b7-44e8-a3a2-624b027ba646` + manual rescan prašymu, arba laukti auto-scan ~2026-05-23 |
+| 2026-05-11 (blog-automation-port) | Blog automation pipeline full port iš Empirra (3 endpoint'ai + 14 lib failai + topics.json + migration + vercel.json + docs) | UNCOMMITTED (code-done, deploy pending) | Solution-architect 11-sekcijų plano analizė; 14 lib failų (1748 lines TS): claude/github/telegram/pexels/blog-card/blog-template/blog-prompts/link-map/link-constraints/internal-links/sitemap-update/auth-node/timeout/flags — visi adapted Verivai (LT slugify, LT→EN Pexels translation, .bc card markup, LT diacritic regex, service: page targets, veriva.lt URLs); 3 API endpoint'ai (1278 lines TS): blog-gen 553 lines (LT validators × 10), telegram-webhook 319 lines (LT pranešimai, veriva_telegram_revise_state), blog-approve 406 lines (single blog.html path, branch-level topics.json update); topics.json 21 keywords (3 published + 18 pending); migrations/002_blog_automation.sql (veriva_telegram_revise_state + veriva_blog_runs, RLS, service_role only); vercel.json updated (builds array + crons "0 8 * * 2,4" + 60-90s maxDuration); docs/blog-automation-deploy.md 7-step guide ($0.05-0.08/post cost); 7/12 env vars push'inta į Veriva Vercel (OPENAI_API_KEY, SUPABASE_URL, RESEND_API_KEY + 4 gen secrets); 5 Sensitive vars CLI nepull'ina (GITHUB_TOKEN, PEXELS_API_KEY, SUPABASE_SERVICE_ROLE_KEY, TELEGRAM_BOT_TOKEN/CHAT_ID) — vartotojo input pending; TypeScript zero errors |

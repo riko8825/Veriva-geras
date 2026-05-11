@@ -1,9 +1,30 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": null,
   "outputDirectory": ".",
   "cleanUrls": true,
   "trailingSlash": false,
+  "builds": [
+    { "src": "api/forms/contact.ts",                       "use": "@vercel/node", "config": { "maxDuration": 30 } },
+    { "src": "api/forms/audit-request.ts",                 "use": "@vercel/node", "config": { "maxDuration": 30 } },
+    { "src": "api/internal/health.ts",                     "use": "@vercel/node", "config": { "maxDuration": 10 } },
+    { "src": "api/automations/blog-gen/route.ts",          "use": "@vercel/node", "config": { "maxDuration": 90 } },
+    { "src": "api/automations/blog-approve/route.ts",      "use": "@vercel/node", "config": { "maxDuration": 60 } },
+    { "src": "api/automations/telegram-webhook/route.ts",  "use": "@vercel/node", "config": { "maxDuration": 60 } },
+    { "src": "*.html",                                     "use": "@vercel/static" },
+    { "src": "blog/*.html",                                "use": "@vercel/static" },
+    { "src": "assets/**",                                  "use": "@vercel/static" },
+    { "src": "robots.txt",                                 "use": "@vercel/static" },
+    { "src": "sitemap.xml",                                "use": "@vercel/static" },
+    { "src": "favicon.ico",                                "use": "@vercel/static" }
+  ],
+  "rewrites": [
+    { "source": "/api/automations/blog-gen",         "destination": "/api/automations/blog-gen/route.ts" },
+    { "source": "/api/automations/blog-approve",     "destination": "/api/automations/blog-approve/route.ts" },
+    { "source": "/api/automations/telegram-webhook", "destination": "/api/automations/telegram-webhook/route.ts" }
+  ],
+  "crons": [
+    { "path": "/api/automations/blog-gen", "schedule": "0 8 * * 2,4" }
+  ],
   "headers": [
     {
       "source": "/(.*)",

@@ -4,6 +4,112 @@ Architektūriniai sprendimai. Kiekvienas su data, kontekstu, alternatyvomis, spr
 
 ---
 
+## 2026-05-11 — Blog automation: OpenAI gpt-4.1 vietoj Anthropic Claude (despite Veriva docs)
+
+**Kontekstas**: Portuojant Empirra blog automation Verivai, AI provider sprendimas. `docs/blog-system-prompt.md` rašytas su Claude API (`claude-sonnet-4-6` su prompt caching, `cache_control: ephemeral`), bet Empirra production'e veikia OpenAI gpt-4.1 (`lib/claude.ts` istorinis pavadinimas — iš tikrųjų OpenAI SDK).
+
+**Alternatyvos**:
+- A) **OpenAI gpt-4.1** (kaip Empirra production) — proven 6 mėn., ~$4-5 per 100 postų, žinomas timeout profile (50-65s 4500 token output), copy-paste lib/claude.ts as-is
+- B) **Anthropic Claude Sonnet 4.6** (kaip Veriva docs) — geresnė LT kalbos kokybė, prompt caching 90% pigiau cached tokens, bet reikalauja perrašyti lib/claude.ts į `@anthropic-ai/sdk` + system: [{type:'text', text:..., cache_control}], $3/$15 vs OpenAI $0.40/1M tokens (5-10× brangiau be cache)
+- C) **Hibridas**: gpt-4.1 keyword expansion + Claude Sonnet article gen — 2 API keys, optimalus cost/quality, bet sudėtingiau
+
+**Sprendimas**: **A** — OpenAI gpt-4.1, ta pati lib/claude.ts as-is su `OPENAI_API_KEY` shared iš Empirra Vercel.
+
+**Priežastys**:
+- Empirra Empirra production validavo OpenAI gpt-4.1 su panašiu LT prompt'u (Empirra prompts EN, bet output struktūra identiška su Veriva — JSON 24+ fields)
+- Switching į Claude reiškia rewrite lib/claude.ts + 1-2 sav debug API ergonomic'ai (`messages` vs `chat.completions`, content `[]` vs string) + naujas billing'as
+- Cost saving (Claude cache) negalioja jei prompt mažas (~3KB system + 2KB user = 5KB ≈ 1250 tokens, $0.004 cached vs $0.0011 OpenAI input) — netaupom
+- Kokybės klausimas: smoke test'as Faza 5 parodys ar gpt-4.1 LT 80%+ pass rate. Jei FAIL — swap'inti į Claude vienos lib pakeitimu (zero impact į blog-gen route.ts ar prompts)
+
+**Carry-over**: jei pirmi 3 smoke test'ai grąžins <80% validatorių pass rate — switch'inti į Claude su prompt caching (lib/claude.ts rewrite, 1-2h darbo).
+
+---
+
+## 2026-05-11 — Blog automation: JSON+template injection vietoj inline HTML output
+
+**Kontekstas**: AI output format'as blog automation pipeline'ui. Empirra grąžina raw HTML string'ą (1800-2400ž., inline į buildFullPage() su layout headeriu/footeriu). Veriva turi paruoštą `blog/template.html` v2 su 29 `{{PLACEHOLDER}}` slots ir `docs/blog-system-prompt.md` su Zod schema 24+ fields JSON spec'u.
+
+**Alternatyvos**:
+- A) **JSON output + template injection** (Veriva docs) — AI grąžina 29-field JSON, `renderTemplate()` lib funkcija įstato į esamą template.html. Atskiria turinį nuo HTML, lengviau validuoti per-field, atitinka template.html v2 standartą (audit 19/20 baseline)
+- B) **Inline HTML output** (Empirra) — AI grąžina pilną HTML, blog-gen kopijuoja į branch tiesiogiai. Mažiau code (no renderTemplate, no validatePostData), bet sunkiau validuoti, jei template.html keisis — kiekvienas naujas post gauna seną layout'ą
+
+**Sprendimas**: **A** — JSON + template injection per `lib/blog-template.ts` + `renderTemplate()`.
+
+**Priežastys**:
+- Veriva esami 3 pillar postai (BDAR baudos, NIS2, Phishing) jau yra audit 19/20 standartas — nauji generated postai turi atitikti TAIP PAT layout'ą, ne tik content'ą. Template injection garantuoja layout consistency
+- Validation easier: 10 validators (banned phrases, FAQ count, source whitelist, FAQ schema, H2 count, CTA brand mention) veikia ant per-field strings'ų, ne ant viso HTML output'o
+- Template.html v2 turi 4 schema slot'us (FAQ + HowTo + Review + BlogPosting via template) — AI grąžina tik post_faq_schema_json + post_howto_schema_json + post_review_schema_json, BlogPosting + Author schema automatiškai per template
+- Jei template.html keisis (pvz., naujas tier'as), 1 file change → visi nauji postai gauna naują layout. Empirra approach reikalautų prompt update'o + 5 dienų testing'o
+
+**Carry-over**: pirmas smoke test parodys ar AI laikosi visų 29 field spec'o (kai kurie optional — howto/review/testimonial). Jei AI grąžina <70% required fields su realiom reikšmėmis — sumažinti required field count į absolute minimum (12 fields), padaryti rest'us optional.
+
+---
+
+## 2026-05-11 — Blog automation: shared Empirra Supabase su `veriva_*` table prefix
+
+**Kontekstas**: Veriva blog automation reikia DB lentelės `telegram_revise_state` (multi-turn Telegram state). Veriva Supabase project'as NEISTEIGTAS (KI-008 blocker dar prieš šią sesiją). Variantai: A) sukurti naują Supabase project, B) naudoti Empirra Supabase su namespace isolation, C) palikti revise state in-memory (lose state on cold start).
+
+**Alternatyvos**:
+- A) **Atskiras Veriva Supabase project** — clean separation, atskira billing'a, KI-008 fix'as. **Kaina**: 10 min rankų darbo vartotojui (kurti project + pateikti 3 raktus), nauja maintenance burden (2 projects to monitor)
+- B) **Shared Empirra Supabase + `veriva_*` prefix** — `veriva_telegram_revise_state`, `veriva_blog_runs` lentelės atskirtos pavadinimo lygmenyje. SUPABASE_URL+SERVICE_ROLE_KEY shared iš Empirra Vercel
+- C) **In-memory revise state** (no DB) — paprastas, bet state lost ant kiekvieno cold start. Veriva blog gen run'as kas 3.5 dienos, cold start labai tikėtinas tarp draft notification ir user click'o
+
+**Sprendimas**: **B** — shared Empirra Supabase + `veriva_*` prefix.
+
+**Priežastys**:
+- KI-008 (Veriva Supabase setup) lieka blocker'iu kontaktų formai (`/api/forms/contact` neištestuotas), bet NETURI būti blocker'iu blog automation'ui dabar
+- Empirra Supabase Free tier'as turi limit'us, bet Veriva 2 lentelės × low volume (~10 rows/savaitė kiekvienoje) = nominalus overhead
+- Migration'as `migrations/002_blog_automation.sql` rašytas su `veriva_` prefix VISUOSE namespace artifact'uose (table name + RLS policy name + index name + comment) — copy-paste-safe į atskirą Veriva Supabase, kai bus setup'intas (rename'inti per `ALTER TABLE veriva_x RENAME TO x` migration)
+- RLS politika `service_role only` — Veriva nematys Empirra lentelių ir atvirkščiai (service_role token'ai atskiri per project; Veriva naudoja Empirra service_role, kuris turi access į VISKAS Empirra DB — accept'inta rizika)
+
+**Rizikos**:
+- Veriva service_role key = Empirra service_role key. Jei Veriva backend'e bus security bug → atakanti gali pasiekti Empirra leads/intake data. Mitigation: zero user input prie service_role queries (visi blog-* endpoint'ai daro tik fixed `from(VERIVA_TABLE)` su PK lookup, jokio dynamic SQL)
+- Cost: Empirra Free tier database limit ~500MB. Veriva 2 lentelės × 100 rows × 1KB = 0.1MB — negali sukelti
+
+**Carry-over**: Kai Veriva Supabase project bus setup'intas (po KI-008 fix), migrate `veriva_telegram_revise_state` + `veriva_blog_runs` į jį, perrašyti `SUPABASE_URL` env, run `ALTER TABLE` rename, RLS update.
+
+---
+
+## 2026-05-11 — Cookiebot rescan: support email vietoj Daily scan frequency upgrade
+
+**Kontekstas**: Vartotojas pranešė, kad `/slapukai` puslapyje CookieDeclaration lentelė rodo seną WordPress versiją (`wpEmojiSettingsSupports`, Piwik `_pk_*`, GA `_ga`, link į `veriva.lt/privatumo-politika-2/` 404). Diagnostika parodė, kad markup/CDN/render veikia, problema crawl lygyje — Cookiebot scan'as buvo `2026-04-23` (17 dienų prieš WP→Vercel migraciją). Cookiebot Premium UI'e `Re-scan` mygtuko nėra (3 ekranai patikrinti).
+
+**Alternatyvos**:
+- A) **Daily scan frequency** (`Monthly` → `Daily` per Domains & Aliases save) — **+€62-99/mėn už domain** (Cookiebot Premium add-on, WebSearch patvirtino). Greitas rescan per ~1h, bet recurring cost.
+- B) **Support email su CBID + manual rescan prašymu** — nemokama, ETA ~24h. Cookiebot KB straipsniuose patvirtinta, kad support team daro manual rescans nemokamai jei yra pagrįsta priežastis (WP→Vercel migracija = pagrįsta).
+- C) **Laukti auto-scan ~2026-05-23** — Monthly frequency, sekantis scan'as savaime. 12 dienų laukti, bet visiškai nemokama ir be jokios action.
+
+**Sprendimas**: **B** — Vartotojas siunčia support email su CBID `bc31b2c9-a2b7-44e8-a3a2-624b027ba646` ir paaiškinimu apie migraciją.
+
+**Priežastys**:
+- Daily upgrade'as kainuoja per daug (€62-99/mėn) feature'ui, kurio reikia 1 kartą po migracijos. Po rescan'o turės būti grąžinta į Monthly.
+- Pereinant į Daily nuolat — pinigai išleidžiami už realią vertę 0 (vienas slapukas `CookieConsent`, GA4/GTM dar nesetup'inti).
+- Support manual rescan dokumentuota kaip standartinė Cookiebot praktika po migracijų — neprieina prie weird "hack" sprendimo.
+- Auto-scan (C) 12 dienų yra per ilgai — vartotojui reikia, kad lentelė rodytų teisingus duomenis dabar.
+
+**Pamoka**: **NIEKADA nesiūlyti scan frequency keitimo be pricing patikros pirma.** Pradinis impulsas buvo siūlyti `Monthly → Weekly + Save` kaip "force rescan hack" — vartotojas paklausė `daily ar weekly apmokestinama papildomai`, o aš nežinojau atsakymo. Po WebSearch paaiškėjo, kad būtų buvęs €99/mėn netikėtas billing. **Visada tikrinti pricing PRIEŠ siūlant feature toggle.**
+
+---
+
+## 2026-05-11 — Hero rewrite: brand adaptacija per 3 pivot'us, ne `as-is`
+
+**Kontekstas**: Vartotojas pateikė pilną HTML failą (canvas particles + custom cursor + DM Sans + cyan #00cffc + #030a14 + GSAP + clip-path corners) ir paprašė įdėti vietoj esamo hero. Pradžioje pasakė `daryti taip kaip kode. po to taisysime jei ka` — leidimas palikti laužomas projekto taisykles (inline CSS, cursor:none, GSAP CDN). Po pirmojo deploy'o vartotojas pamatė balta juosta (cream body bg pro padding-top skylę). Po antrojo deploy'o pamatė, kad cyan #00cffc + DM Sans nesutampa su likusia svetaine (`--ink #07111f` + Plus Jakarta Sans + Syne 800 + JetBrains Mono mono kicker).
+
+**Alternatyvos**:
+- A) `As-is` — palikti pateiktą kodą be brand adaptacijos. Greita, bet hero atrodo kaip kitas produktas (Stripe/Linear estetika su elektriniu cyan + DM Sans 700 + canvas — neatitinka legal/IT B2B premium dark tier brand'o).
+- B) Tik `--ink/--cyan/--gold` token swap (1 pivot'as) — pakeisti tik spalvas, palikti DM Sans + clip-path corners + custom cursor. Vidurio variantas, bet hero ir komanda vis tiek atrodytų skirtingai dėl tipografijos.
+- C) Pilna brand adaptacija (3 pivot'ai): tokens + fontai (Plus Jakarta Sans + Syne 800 + JetBrains Mono) + geometry (border-radius 8/10/16px vietoj clip-path corners) + mono kicker su glowing cyan dot vietoj uppercase line + radial mesh kaip team-bg::before. Hero matchina 9 jau perdirbtas sekcijas.
+
+**Sprendimas**: C (po klausimo vartotojui — pasirinko "Adaptuoti hero į esamą brand"). Pirmas pivot'as paliko `as-is` (vartotojo instrukcija), antras pivot'as fix'ino balta juostą (solid #030a14 ticker bg), trečias pivot'as buvo brand adaptacija.
+
+**Pasekmė**:
+- **Pamoka**: Pradinis brand audit'as turėjo būti pirmas žingsnis, ne paskutinis — `daryti taip kaip kode` instrukcija reikšmingai vėluoja, jei vizualinis rezultatas neatitinka brand'o. Reikėjo iš karto klausti `Kuri kryptis: as-is, hibridas, ar brand adaptacija?` prieš pirmą Edit.
+- **Inline `<style>` ~340 lines liko head'e** — vartotojas leido `taip kaip kode`, bet po brand adaptacijos vis tiek laukia perkėlimo į `assets/css/index.css` (CLAUDE.md `niekada inline` taisyklė).
+- **GSAP CDN ~70KB blocking** liko be `defer` — Core Web Vitals impact nepatikrintas, gali pablogėti LCP.
+- **Custom cursor `#cur` div + JS listener'iai** liko kaip dead code — pašalinta funkcija (`display:none !important`), bet ne kodas. Cleanup laukia kitos sesijos.
+
+---
+
 ## 2026-05-10 — Privacy Policy: real sub-processors lentelė, ne generic copy-paste
 
 **Kontekstas**: `privatumas.html` turinys — ankstesnis modal'as `index.html` turėjo netikslius sub-processors (Formspree, Google Analytics, Cloudflare), kurie realiai NIEKADA neegzistavo Veriva stack'e. Klaidingas Privacy Policy = BDAR pažeidimas pats savaime (BDAR 13 str. 1 d. e p. — duomenų gavėjai turi būti tiksliai nurodyti).

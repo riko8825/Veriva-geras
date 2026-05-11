@@ -4,7 +4,7 @@
   <!-- Variantas šviesiam fonui: kairė V pusė ink, dešinė auksinė -->
   <g>
     <path d="M 8 12 L 28 12 L 40 56 L 40 68 L 32 68 Z" fill="#07111f"/>
-    <path d="M 40 56 L 52 12 L 72 12 L 48 68 L 40 68 Z" fill="#c8962a"/>
+    <path d="M 40 56 L 52 12 L 72 12 L 48 68 L 40 68 Z" fill="rgba(7,17,31,0.5)"/>
   </g>
   <text x="92" y="52"
         font-family="Syne, system-ui, sans-serif"

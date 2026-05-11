@@ -1,0 +1,39 @@
+{
+  "_comment": "Veriva blog topic queue. Status: pending → draft → published | skipped. Used by /api/automations/blog-gen cron.",
+  "_authors": {
+    "marina": "Marina (Teisės ekspertė, BDAR) — BDAR, DPO, teisė",
+    "justinas": "Justinas (IT saugumo ekspertas) — NIS2, kibernetinis saugumas, IT",
+    "veriva": "Veriva komanda — bendro pobūdžio"
+  },
+  "_categories": {
+    "bdar": "BDAR / duomenų apsauga",
+    "nis2": "NIS2 direktyva",
+    "sauga": "Kibernetinis saugumas",
+    "dpo": "DPO outsourcing",
+    "mokymai": "Darbuotojų mokymai"
+  },
+  "topics": [
+    { "keyword": "BDAR baudos Lietuvoje", "status": "published", "post_type": "pillar", "pillar": "bdar", "author_key": "marina" },
+    { "keyword": "NIS2 direktyva Lietuvoje", "status": "published", "post_type": "pillar", "pillar": "nis2", "author_key": "justinas" },
+    { "keyword": "phishing mokymai darbuotojams", "status": "published", "post_type": "pillar", "pillar": "mokymai", "author_key": "justinas" },
+
+    { "keyword": "BDAR auditas įmonėms 2026", "status": "pending", "post_type": "pillar", "pillar": "bdar", "author_key": "marina" },
+    { "keyword": "VDAI patikrinimas: kaip pasiruošti", "status": "pending", "post_type": "cluster", "pillar": "bdar", "author_key": "marina" },
+    { "keyword": "DPO outsourcing kainos Lietuvoje", "status": "pending", "post_type": "cluster", "pillar": "dpo", "author_key": "marina" },
+    { "keyword": "BDAR smulkiam verslui", "status": "pending", "post_type": "cluster", "pillar": "bdar", "author_key": "marina" },
+    { "keyword": "cookie banner sutikimas BDAR", "status": "pending", "post_type": "cluster", "pillar": "bdar", "author_key": "marina" },
+    { "keyword": "NIS2 kam taikoma 2026", "status": "pending", "post_type": "cluster", "pillar": "nis2", "author_key": "justinas" },
+    { "keyword": "NIS2 incidentų pranešimas 24 valandos", "status": "pending", "post_type": "cluster", "pillar": "nis2", "author_key": "justinas" },
+    { "keyword": "DORA reglamentas finansinėms įmonėms", "status": "pending", "post_type": "cluster", "pillar": "nis2", "author_key": "justinas" },
+    { "keyword": "kibernetinio saugumo auditas įmonei", "status": "pending", "post_type": "pillar", "pillar": "sauga", "author_key": "justinas" },
+    { "keyword": "DPIA rizikos vertinimas pavyzdys", "status": "pending", "post_type": "cluster", "pillar": "bdar", "author_key": "marina" },
+    { "keyword": "duomenų pažeidimas 72 valandos", "status": "pending", "post_type": "pillar", "pillar": "bdar", "author_key": "marina" },
+    { "keyword": "privatumo politika pavyzdys įmonei", "status": "pending", "post_type": "cluster", "pillar": "bdar", "author_key": "marina" },
+    { "keyword": "darbuotojų duomenų apsauga", "status": "pending", "post_type": "cluster", "pillar": "bdar", "author_key": "marina" },
+    { "keyword": "duomenų tvarkytojo sutartis DPA", "status": "pending", "post_type": "cluster", "pillar": "bdar", "author_key": "marina" },
+    { "keyword": "BDAR sutikimo formos reikalavimai", "status": "pending", "post_type": "cluster", "pillar": "bdar", "author_key": "marina" },
+    { "keyword": "ISO 27001 sertifikavimas Lietuvoje", "status": "pending", "post_type": "cluster", "pillar": "sauga", "author_key": "justinas" },
+    { "keyword": "social engineering apsauga įmonėje", "status": "pending", "post_type": "cluster", "pillar": "sauga", "author_key": "justinas" },
+    { "keyword": "GDPR vs BDAR: skirtumai LT", "status": "pending", "post_type": "cluster", "pillar": "bdar", "author_key": "marina" }
+  ]
+}

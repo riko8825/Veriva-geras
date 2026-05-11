@@ -201,13 +201,26 @@
 .btn-hero-primary:active { transform: translateY(0) scale(.98); transition-duration: 100ms; }
 
 .btn-hero-secondary {
-  font-family: var(--ffm);
-  font-size: 11px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
-  color: rgba(255,255,255,.55); text-decoration: none;
-  display: inline-flex; align-items: center; gap: 8px;
-  transition: color .2s var(--ease-out);
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 24px;
+  background: transparent;
+  color: #fff;
+  font-family: var(--ff);
+  font-size: 13px; font-weight: 600;
+  letter-spacing: .01em;
+  border: 1px solid rgba(0,180,216,.55);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: border-color .2s var(--ease-out), background .2s var(--ease-out), transform .25s var(--ease-out);
 }
-.btn-hero-secondary:hover { color: var(--cyan); }
+@media (hover:hover) and (pointer:fine) {
+  .btn-hero-secondary:hover {
+    border-color: var(--cyan);
+    background: rgba(0,180,216,.08);
+    transform: translateY(-2px);
+  }
+}
+.btn-hero-secondary:active { transform: translateY(0) scale(.98); transition-duration: 100ms; }
 .btn-hero-secondary::after { content: '→'; font-size: 13px; transition: transform .2s var(--ease-out); }
 .btn-hero-secondary:hover::after { transform: translateX(3px); }
 

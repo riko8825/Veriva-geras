@@ -13,18 +13,19 @@ Uždarytus issues perkelti į `## Išspręsta` skyrių (ne trinti).
 
 ## Aktyvūs issues
 
-### KI-001 — Blog placeholder linkai veda į 404 (3/6 pataisyta)
+### KI-001 — Blog placeholder linkai veda į 404 (4/6 pataisyta)
 - **SLA:** 🟠 High
 - **Paveiktas blokas:** `index.html` blog teaser + `blog.html` listing
-- **Statusas:** Partial (3/6 fixed)
-- **Aprašas:** ~~6~~ **3** placeholder blog kortelės blog.html nukreipia į neegzistuojančius URL'us: `/blog/dpo-funkcija-kada-reikia.html`, `/blog/incidentu-valdymas-72h.html`, `/blog/darbuotoju-bdar-mokymai.html`.
+- **Statusas:** Partial (4/6 fixed)
+- **Aprašas:** ~~6~~ **2** placeholder blog kortelės blog.html nukreipia į neegzistuojančius URL'us: `/blog/incidentu-valdymas-72h.html`, `/blog/darbuotoju-bdar-mokymai.html`.
 - **Pataisyta (2026-05-10 nis2-phishing-publish):**
   - ~~`/blog/nis2-direktyva-praktiskai.html`~~ → `/blog/nis2-direktyva-lietuvoje.html` (PUBLISHED, 3700ž., 5 schemas)
   - ~~`/blog/phishing-darbuotoju-mokymai.html`~~ → `/blog/phishing-mokymai-darbuotojams.html` (PUBLISHED, 3100ž., 5 schemas)
 - **Pataisyta (2026-05-10 blog-polish-publish):** `/blog/bdar-baudos-lietuvoje.html` (PUBLISHED, audit 19/20)
+- **Pataisyta (2026-05-12 dpo-pillar-publish):** `/blog/dpo-funkcija-vadovas.html` (PUBLISHED, ~2977ž., 4 schemas — BlogPosting+Breadcrumb+FAQPage+HowTo. Pre-publish 4-agent ratas: frontend 16/20 + SEO 15/20 + QA 18/20 + marketing 15/20 po P0/P1 fix'ų)
 - **Workaround:** Kortelėms uždėti `aria-disabled="true"` + `pointer-events:none` arba sukurti likusius post'us
-- **Fix:** Sukurti likusius 3 post'us naudojant `blog/template.html` v2 + `/audit` + `/polish` workflow + pre-publish 4-agent ratas (lessons learned iš nis2-phishing-publish)
-- **Atidarytas:** 2026-05-09 | **Paskutinis update:** 2026-05-10
+- **Fix:** Sukurti likusius 2 post'us naudojant `blog/template.html` v2 + `/audit` + `/polish` workflow + pre-publish 4-agent ratas
+- **Atidarytas:** 2026-05-09 | **Paskutinis update:** 2026-05-12
 
 ---
 
@@ -159,6 +160,18 @@ Uždarytus issues perkelti į `## Išspręsta` skyrių (ne trinti).
 - **Aprašas:** Po DNS migration (~07:50 UTC) `www.veriva.lt` gavo SSL per ~5 min, bet apex `veriva.lt` (be www) sertifikato dar neturėjo — Vercel laukė pilno DNS propagation. Naršyklė rodė `SEC_E_WRONG_PRINCIPAL` warning'ą.
 - **Resolution (auto, 09:20 UTC):** Vercel auto-issued Let's Encrypt sertifikatą `CN=veriva.lt`. Verify: `https://veriva.lt/` → 307 redirect → `https://www.veriva.lt/` su `Server: Vercel`, HSTS `max-age=63072000`, jokio TLS warning'o.
 - **Atidarytas:** 2026-05-10 | **Uždarytas:** 2026-05-10 (~1.5h trukmė)
+
+---
+
+### KI-012 — DPO straipsnis naudoja bdar-baudos hero SVG (placeholder)
+- **SLA:** ⚪ Low
+- **Paveiktas blokas:** `blog/dpo-funkcija-vadovas.html` hero img, og:image, twitter:image, BlogPosting schema image, HowTo schema image (5 vietos), sitemap.xml image:image
+- **Statusas:** Open — placeholder accepted, dedicated SVG laukia dailininko
+- **Aprašas:** Naujas DPO pillar straipsnis publikuotas naudojant `bdar-baudos-hero.svg` kaip placeholder (kito straipsnio hero). OG/Twitter share preview rodys klaidingą vaizdą.
+- **Impact:** Mažas — turinys teisingas, schema valid, SEO nepaveiktas; tik socialinis dalinimasis rodo klaidingą paveiksliuką
+- **Workaround:** Hero img alt teisingas (DPO/BDAR 37 str.); placeholder kontekste tinkamas (BDAR brand)
+- **Fix:** Sukurti dedicated `dpo-funkcija-vadovas-hero.svg` 1200×630, brand spalvos (--ink fone, --blue + --gold accent), tema: BDAR 37 str. ikonografija + DPO pasirinkimo grafas. Atnaujinti 6 vietas (5 HTML + 1 sitemap.xml).
+- **Atidarytas:** 2026-05-12
 
 ---
 

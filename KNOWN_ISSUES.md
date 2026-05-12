@@ -175,6 +175,70 @@ Uždarytus issues perkelti į `## Išspręsta` skyrių (ne trinti).
 
 ---
 
+### KI-013 — Redirect Architecture Normalization (apex ↔ www + .html stripping inconsistency)
+- **SLA:** 🟡 Medium
+- **Paveiktas blokas:** Vercel routing visam projektui (`vercel.json`), `sitemap.xml`, kanoninės URL'ai visuose HTML failuose, vidiniai linkai
+- **Statusas:** Open — atskira sesija reikalinga (NE quick fix, didelė rizika)
+- **Aptiktas:** 2026-05-12 s18 post-deploy SEO verification (seo-specialistas agent)
+
+**Aprašas — double redirect chain:**
+
+`https://veriva.lt/blog/dpo-funkcija-vadovas.html` rezultatas:
+1. `veriva.lt/blog/dpo-funkcija-vadovas.html` → **307 Temporary Redirect** → `www.veriva.lt/blog/dpo-funkcija-vadovas.html`
+2. `www.veriva.lt/blog/dpo-funkcija-vadovas.html` → **308 Permanent Redirect** → `www.veriva.lt/blog/dpo-funkcija-vadovas` (be `.html`)
+
+**Konfliktai:**
+- **Canonical mismatch**: HTML `<link rel="canonical">` rodo `https://veriva.lt/blog/dpo-funkcija-vadovas.html` (apex + .html), bet galutinis live URL = `https://www.veriva.lt/blog/dpo-funkcija-vadovas` (www + be .html)
+- **Sitemap inconsistency**: `sitemap.xml` rodo apex URL'us su `.html` blog'ams ir be `.html` paslaugų puslapiams (kiti puslapiai: `/paslaugos`, `/apie`, `/kainos` — be ext)
+- **Schema.org `@id` mismatch**: BlogPosting `@id` = apex + .html, bet faktinis indeksuojamas URL = www be .html
+- **Internal links mix**: HTML faile vidiniai linkai naudoja `/blog/{slug}.html` formatą (su .html), Vercel reasigna juos į be .html
+
+**Impact:**
+- **PageRank dilution**: Google index'uoja www be .html, bet canonical signal'as veda kitur — split signal'ai
+- **Crawl budget waste**: kiekvienas crawl'as = 2 redirect'ai prieš final URL
+- **PSI/PageSpeed score**: papildomas 200-400ms RTT per redirect'us
+- **Mobile users**: 2× DNS lookup + TLS handshake (jei www naudojamas pirmą kartą)
+- **Vis tiek INDEXUOJAMAS**: nestabdo Google'o, bet ne optimalu
+
+**Paveikti URL tipai** (visi 12+ puslapių):
+- `/` (apex root)
+- `/blog.html` ir `/blog/{slug}.html` (4 postai)
+- `/paslaugos`, `/apie`, `/kainos`, `/kontaktai` (planuojami)
+- `/privatumas`, `/slapukai` (jau live)
+- `sitemap.xml`, `robots.txt`
+
+**Workaround (current):** None. Google'as vis tiek indeksuoja, tik mažiau efektyviai.
+
+**Fix (atskira sesija, ~30-60 min):**
+
+1. **Redirect audit**: `curl -ILv` visiems 12+ URL'ams (apex ir www, su .html ir be) — užfiksuoti pilną redirect grafiką
+2. **Canonical audit**: visi HTML failai → grep `<link rel="canonical">` + `schema:url` + `schema:@id` → pasirinkti vieną source of truth
+3. **Sitemap normalization**: visi URL'ai vienodu formatu (vienas iš: `apex + .html`, `www + .html`, `apex be .html`, `www be .html`)
+4. **Internal link cleanup**: visi HTML failai → konsistencijos atvejis (visi linkai į `/blog/{slug}.html` ARBA visi į `/blog/{slug}` — bet ne mix)
+5. **vercel.json consolidation**: vienas redirect'as (NE chain'as):
+   - Variantas A: `www → apex` + palikti `.html` (mažiau pakeitimų)
+   - Variantas B: `apex → www` + nustatyti `cleanUrls: true` (geriau, bet daug canonical pakeitimų)
+
+**Rizikos (kodėl NE quick fix):**
+- ❌ Redirect loop'ai (jei misconfig'as)
+- ❌ Existing indexed URLs (Google jau indeksavo www be .html — naujas redirect'as sukurs 404/301 spike)
+- ❌ Sitemap.xml broken state — Google Search Console errors
+- ❌ Canonical → live URL mismatch persists, jei tik dalis stack'o atnaujinta
+- ❌ Backward links iš LinkedIn share'ų / kitų puslapių su senais URL'ais
+
+**Pre-fix checklist:**
+- [ ] Pasidaryti `vercel.json` backup
+- [ ] Užfiksuoti current redirect chain visiems URL'ams
+- [ ] Google Search Console patikrinti, kokius URL'us Google jau indeksuoja
+- [ ] Test stage'inant `vercel deploy --prod` ant preview before production
+
+**Decision needed:** kuris URL formatas = canonical (rekomendacija: `https://www.veriva.lt/{path}` su `.html` — minimum pakeitimų, Google jau indeksuoja www).
+
+- **Atidarytas:** 2026-05-12 (s18 post-deploy verification)
+- **Priority:** Medium — neblokuoja core veiklos, bet kenkia SEO efektyvumui
+
+---
+
 ## Issue šablonas (naujam issue)
 
 ```

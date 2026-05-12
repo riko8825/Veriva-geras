@@ -17,7 +17,7 @@ import { runPrompt } from '../../../lib/claude';
 import { sendTelegramDraftNotification } from '../../../lib/telegram';
 import { createDraftBranch, commitFileToBranch, deleteBranch, branchExists, getFileFromBranch } from '../../../lib/github';
 import { getImage } from '../../../lib/pexels';
-import { renderTemplate, validatePostData, type BlogPostData } from '../../../lib/blog-template';
+import { renderTemplate, validateAIResponse, validatePostData, type BlogPostData } from '../../../lib/blog-template';
 import {
   BLOG_SYSTEM_PROMPT,
   KEYWORD_EXPAND_SYSTEM,
@@ -25,6 +25,15 @@ import {
   buildKeywordExpandPrompt,
   type BlogBrief,
 } from '../../../lib/blog-prompts';
+import { resolveContentType, type ContentTypeKey } from '../../../lib/content-types';
+import { fetchRecentPosts, parsePostMeta } from '../../../lib/recent-posts';
+import {
+  scoreUniqueness,
+  buildAvoidInstructions,
+  UNIQUENESS_PASS_THRESHOLD,
+  type UniquenessReport,
+} from '../../../lib/uniqueness';
+import { verifyBlogTriggerAuth } from '../../../lib/auth-node';
 
 const GITHUB_API = 'https://api.github.com/repos/riko8825/Veriva-geras';
 
@@ -56,10 +65,11 @@ function slugify(text: string): string {
 // ───────────────────────────────────────────────────────────
 interface TopicEntry {
   keyword: string;
-  status: 'pending' | 'draft' | 'published' | 'skipped';
+  status: 'pending' | 'draft' | 'published' | 'skipped' | 'blocked_duplication';
   post_type?: 'pillar' | 'cluster' | 'standalone';
   pillar?: string;
   author_key?: 'marina' | 'justinas' | 'veriva';
+  content_type?: ContentTypeKey;
 }
 
 interface TopicsData {
@@ -103,6 +113,33 @@ async function getNextTopic(): Promise<{ entry: TopicEntry; index: number } | nu
   const idx = data.topics.findIndex(t => t.status === 'pending');
   if (idx === -1) return null;
   return { entry: data.topics[idx], index: idx };
+}
+
+/**
+ * Mark a topic as blocked_duplication on main branch with race-safe retry.
+ * commitFileToBranch already includes sha guard → GitHub returns 409 if sha changed mid-write.
+ * We retry up to 3 times with fresh fetch to handle concurrent commits (e.g. blog-approve).
+ */
+async function markTopicBlocked(index: number, keyword: string, maxRetries = 3): Promise<void> {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const td = await fetchTopics();
+      td.topics[index].status = 'blocked_duplication';
+      await commitFileToBranch('main', 'topics.json', JSON.stringify(td, null, 2), `chore: block "${keyword}" — duplication`);
+      console.log(`[blog-gen] markTopicBlocked attempt ${attempt} ✅ committed`);
+      return;
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      const is409 = msg.includes('409') || msg.includes('does not match') || msg.includes('conflict');
+      if (is409 && attempt < maxRetries) {
+        const delay = 500 * attempt;
+        console.warn(`[blog-gen] markTopicBlocked attempt ${attempt} → 409 conflict, retry in ${delay}ms`);
+        await new Promise(r => setTimeout(r, delay));
+        continue;
+      }
+      throw err;
+    }
+  }
 }
 
 async function pendingDraftExists(): Promise<boolean> {
@@ -180,7 +217,9 @@ async function generateBlogJSON(brief: BlogBrief): Promise<Partial<BlogPostData>
   const raw = await runPrompt({
     system: BLOG_SYSTEM_PROMPT,
     user: buildBlogUserPrompt(brief),
-    maxTokens: 5000,
+    // 2026-05-12 dry-run: naujas content-type prompt + pillar (3500ž.) reikalauja ~16K chars output.
+    // Senas 5000 max_tokens kerpa JSON vidury → JSON.parse fail. 8000 saugu, gpt-4.1 limit'as palaiko.
+    maxTokens: 8000,
   });
 
   // Strip ```json fences if model ignored "raw JSON only" instruction
@@ -278,8 +317,8 @@ function validateInlineStyles(data: Partial<BlogPostData>): string | null {
 function validatePost(data: Partial<BlogPostData>, postType: string): { ok: true } | { ok: false; reasons: string[] } {
   const reasons: string[] = [];
 
-  // Required fields + numeric/format checks
-  const baseErrors = validatePostData(data);
+  // AI-time required fields (excludes injected post_date/post_author/post_hero_img — added by route after AI gen)
+  const baseErrors = validateAIResponse(data);
   reasons.push(...baseErrors);
 
   // Content checks
@@ -341,29 +380,78 @@ function countWords(html: string): number {
 }
 
 // ───────────────────────────────────────────────────────────
-// Main generation with retry
+// Main generation with retry — combines structural validation + uniqueness gate
 // ───────────────────────────────────────────────────────────
-async function generateWithRetry(brief: BlogBrief, maxAttempts = 2): Promise<BlogPostData> {
+import type { RecentPostMeta } from '../../../lib/recent-posts';
+
+interface GenerationResult {
+  postData: BlogPostData;
+  uniqueness: UniquenessReport;
+}
+
+async function generateWithRetry(
+  brief: BlogBrief,
+  slug: string,
+  recents: RecentPostMeta[],
+  maxAttempts = 2,
+): Promise<GenerationResult> {
   let lastReasons: string[] = [];
+  let lastUniqueness: UniquenessReport | null = null;
+  let workingBrief = brief;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     console.log(`[blog-gen] AI attempt ${attempt}/${maxAttempts}`);
-    const partial = await generateBlogJSON(brief);
+    const partial = await generateBlogJSON(workingBrief);
 
-    const result = validatePost(partial, brief.postType);
-    if (result.ok) {
-      console.log(`[blog-gen] AI attempt ${attempt} ✅ validation passed`);
-      return partial as BlogPostData;
+    const structResult = validatePost(partial, workingBrief.postType);
+    if (!structResult.ok) {
+      lastReasons = structResult.reasons;
+      console.warn(`[blog-gen] AI attempt ${attempt} ❌ structural validation failed:\n  - ${structResult.reasons.join('\n  - ')}`);
+      if (attempt < maxAttempts) {
+        console.log(`[blog-gen] retrying with same brief...`);
+        continue;
+      }
+      throw new Error(`[blog-gen] all ${maxAttempts} AI attempts failed structural validation:\n  - ${lastReasons.join('\n  - ')}`);
     }
 
-    lastReasons = result.reasons;
-    console.warn(`[blog-gen] AI attempt ${attempt} ❌ validation failed:\n  - ${result.reasons.join('\n  - ')}`);
+    // Structural pass — now run uniqueness gate
+    const candidateMeta = parsePostMeta(slug, [
+      partial.post_body_html ?? '',
+      partial.post_faq_html ?? '',
+    ].join('\n'));
+    const uniqueness = scoreUniqueness({
+      slug,
+      contentType: workingBrief.contentType.key,
+      pillar: workingBrief.pillar,
+      h2List: candidateMeta.h2List,
+      h3List: candidateMeta.h3List,
+      statHighlights: candidateMeta.statHighlights,
+      ctaPhrases: candidateMeta.ctaPhrases,
+    }, recents);
+
+    lastUniqueness = uniqueness;
+    console.log(`[blog-gen] uniqueness attempt ${attempt}: score=${uniqueness.score} verdict=${uniqueness.verdict} worst=${uniqueness.worstNeighborSlug ?? 'n/a'} h2overlap=${uniqueness.h2OverlapPct}%`);
+
+    if (uniqueness.verdict === 'pass') {
+      console.log(`[blog-gen] AI attempt ${attempt} ✅ structural + uniqueness PASS (score ${uniqueness.score})`);
+      return { postData: partial as BlogPostData, uniqueness };
+    }
+
+    if (uniqueness.verdict === 'warn' && attempt === maxAttempts) {
+      console.warn(`[blog-gen] AI attempt ${attempt} ⚠️ uniqueness WARN (score ${uniqueness.score}) — accepting on last attempt with warning`);
+      return { postData: partial as BlogPostData, uniqueness };
+    }
+
+    console.warn(`[blog-gen] AI attempt ${attempt} ❌ uniqueness ${uniqueness.verdict} (score ${uniqueness.score}):\n  - ${uniqueness.reasons.join('\n  - ')}`);
     if (attempt < maxAttempts) {
-      console.log(`[blog-gen] retrying with same brief...`);
+      const avoidBlock = buildAvoidInstructions(recents, uniqueness);
+      workingBrief = { ...brief, avoidBlock };
+      console.log(`[blog-gen] retrying with AVOID block (${avoidBlock.length} chars)`);
     }
   }
 
-  throw new Error(`[blog-gen] all ${maxAttempts} AI attempts failed validation:\n  - ${lastReasons.join('\n  - ')}`);
+  const finalReasons = lastUniqueness?.reasons ?? lastReasons;
+  throw new Error(`[blog-gen] all ${maxAttempts} AI attempts failed uniqueness gate (last score=${lastUniqueness?.score ?? 'n/a'}):\n  - ${finalReasons.join('\n  - ')}`);
 }
 
 // ───────────────────────────────────────────────────────────
@@ -386,28 +474,18 @@ async function readBody(req: IncomingMessage): Promise<string> {
 }
 
 export default async function handler(req: IncomingMessage, res: ServerResponse): Promise<void> {
-  // Auth: Vercel cron Bearer CRON_SECRET OR manual x-api-key BLOG_TRIGGER_SECRET
-  const authHeader = req.headers.authorization;
-  const cronSecret = process.env.CRON_SECRET;
-  const isCron = Boolean(cronSecret) && authHeader === `Bearer ${cronSecret}`;
-
-  if (!isCron) {
-    const incomingKey = req.headers['x-api-key'];
-    const triggerSecret = process.env.BLOG_TRIGGER_SECRET;
-    if (!triggerSecret) {
-      console.error('[blog-gen] BLOG_TRIGGER_SECRET env is not set');
-      sendJson(res, 500, { error: 'Server misconfiguration' });
-      return;
-    }
-    if (incomingKey !== triggerSecret) {
-      console.warn('[blog-gen] Unauthorized — invalid x-api-key');
-      sendJson(res, 401, { error: 'Unauthorized' });
-      return;
-    }
-    console.log('[blog-gen] Authorized via x-api-key (manual)');
-  } else {
-    console.log('[blog-gen] Authorized via Vercel cron');
+  // Auth: constant-time comparison via lib/auth-node.ts (accepts CRON_SECRET Bearer OR BLOG_TRIGGER_SECRET x-api-key)
+  if (!process.env.CRON_SECRET && !process.env.BLOG_TRIGGER_SECRET) {
+    console.error('[blog-gen] Neither CRON_SECRET nor BLOG_TRIGGER_SECRET env is set');
+    sendJson(res, 500, { error: 'Server misconfiguration' });
+    return;
   }
+  if (!verifyBlogTriggerAuth(req)) {
+    console.warn('[blog-gen] Unauthorized — invalid Bearer or x-api-key');
+    sendJson(res, 401, { error: 'Unauthorized' });
+    return;
+  }
+  console.log('[blog-gen] Authorized (constant-time auth ok)');
 
   let force = false;
   if (req.method === 'POST') {
@@ -456,6 +534,14 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     // Author resolution
     const author = resolveAuthor(topic.author_key, topic.pillar);
 
+    // Content type resolution (explicit topics.json field > heuristic fallback)
+    const contentType = resolveContentType(topic.content_type, topic.pillar, topic.post_type ?? 'cluster');
+    console.log(`[blog-gen] content_type: ${contentType.key} (${contentType.label}) — intent: ${contentType.intent.slice(0, 60)}...`);
+
+    // Fetch recent posts for uniqueness comparison (cached per process)
+    const recents = await fetchRecentPosts(10);
+    console.log(`[blog-gen] comparing against ${recents.length} recent posts`);
+
     // Expand keywords + build brief
     const kws = await expandKeywords(topic.keyword);
     const brief: BlogBrief = {
@@ -468,13 +554,29 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       authorRole: author.role,
       postType: topic.post_type ?? 'cluster',
       pillar: topic.pillar,
+      contentType,
     };
 
-    // Generate + validate (with retry)
-    const [postData, heroImageUrl] = await Promise.all([
-      generateWithRetry(brief, 2),
-      getImage(topic.keyword),
-    ]);
+    // Generate + validate + uniqueness gate (with retry).
+    // ANY retry-loop exit (uniqueness fail OR structural fail) → mark topic blocked, prevent next-cron loop.
+    let genResult;
+    try {
+      genResult = await generateWithRetry(brief, slug, recents, 2);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      const isRetryExhaust = msg.includes('all 2 AI attempts') || msg.includes('uniqueness gate') || msg.includes('failed structural validation');
+      if (isRetryExhaust) {
+        console.error(`[blog-gen] RETRY EXHAUSTED for "${topic.keyword}" — marking topics.status=blocked_duplication on main to prevent loop`);
+        try {
+          await markTopicBlocked(index, topic.keyword);
+        } catch (markErr) {
+          console.error(`[blog-gen] failed to mark blocked_duplication: ${markErr instanceof Error ? markErr.message : String(markErr)}`);
+        }
+      }
+      throw err;
+    }
+    const { postData, uniqueness } = genResult;
+    const heroImageUrl = await getImage(topic.keyword);
 
     // Inject computed fields (not from AI)
     const finalData: BlogPostData = {
@@ -495,6 +597,12 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       // Re-compute word count from final HTML (AI may underreport)
       post_word_count: countWords(postData.post_body_html ?? '') || postData.post_word_count,
     };
+
+    // Final validation AFTER computed fields injected (post_date, post_author, post_hero_img)
+    const finalErrors = validatePostData(finalData);
+    if (finalErrors.length > 0) {
+      throw new Error(`[blog-gen] finalData validation failed (post-inject):\n  - ${finalErrors.join('\n  - ')}`);
+    }
 
     // Fetch template from main, render
     const templateHTML = await getFileFromBranch('main', 'blog/template.html');
@@ -520,12 +628,20 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       `chore: mark "${topic.keyword}" as draft`,
     );
 
-    // Telegram notification
+    // Telegram notification (now includes content type + uniqueness report)
     const tgOk = await sendTelegramDraftNotification({
       keyword: topic.keyword,
       slug,
       branch: branchName,
       articleHTML: fullHTML,
+      contentType: { key: contentType.key, label: contentType.label, intent: contentType.intent },
+      uniqueness: {
+        score: uniqueness.score,
+        verdict: uniqueness.verdict,
+        worstNeighborSlug: uniqueness.worstNeighborSlug,
+        h2OverlapPct: uniqueness.h2OverlapPct,
+        intentCollisionSlug: uniqueness.intentCollisionSlug,
+      },
     });
 
     if (!tgOk) {
@@ -539,6 +655,9 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       slug,
       branch: branchName,
       keyword: topic.keyword,
+      content_type: contentType.key,
+      uniqueness_score: uniqueness.score,
+      uniqueness_verdict: uniqueness.verdict,
       word_count: finalData.post_word_count,
       telegram: tgOk,
       duration_ms: duration,

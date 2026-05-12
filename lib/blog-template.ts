@@ -88,20 +88,39 @@ function escapeHtml(s: string): string {
     .replace(/"/g, '&quot;');
 }
 
+// Fields AI returns directly in JSON output (per blog-system-prompt.md schema).
+const AI_REQUIRED_FIELDS: Array<keyof BlogPostData> = [
+  'post_title', 'post_description', 'post_slug',
+  'post_category', 'post_definition', 'post_toc_html',
+  'post_body_html', 'post_faq_html', 'post_faq_schema_json',
+  'post_hero_alt',
+];
+
+// Fields injected by route.ts AFTER AI generation (date, author, hero img, etc.).
+const INJECT_REQUIRED_FIELDS: Array<keyof BlogPostData> = [
+  'post_date', 'post_date_human',
+  'post_author', 'post_author_role', 'post_author_initial',
+  'post_hero_img',
+];
+
 /**
- * Validate required fields are present and non-empty.
- * Returns array of missing/invalid field names (empty = all OK).
+ * Validate AI raw response — only checks fields AI is supposed to return.
+ * Use IMMEDIATELY after JSON.parse(aiOutput), BEFORE injecting computed fields.
+ */
+export function validateAIResponse(data: Partial<BlogPostData>): string[] {
+  return runValidations(data, AI_REQUIRED_FIELDS);
+}
+
+/**
+ * Validate full post data after route injects computed fields.
+ * Use AFTER finalData = { ...partial, post_date, post_author, post_hero_img, ... }.
  */
 export function validatePostData(data: Partial<BlogPostData>): string[] {
+  return runValidations(data, [...AI_REQUIRED_FIELDS, ...INJECT_REQUIRED_FIELDS]);
+}
+
+function runValidations(data: Partial<BlogPostData>, required: Array<keyof BlogPostData>): string[] {
   const errors: string[] = [];
-  const required: Array<keyof BlogPostData> = [
-    'post_title', 'post_description', 'post_slug',
-    'post_category', 'post_date', 'post_date_human',
-    'post_author', 'post_author_role', 'post_author_initial',
-    'post_hero_img', 'post_hero_alt',
-    'post_definition', 'post_toc_html', 'post_body_html',
-    'post_faq_html', 'post_faq_schema_json',
-  ];
 
   for (const f of required) {
     const v = data[f];

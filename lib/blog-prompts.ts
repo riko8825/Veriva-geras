@@ -1,12 +1,18 @@
 // lib/blog-prompts.ts — Veriva blog system + user prompts (LT, BDAR/NIS2/DPO content)
 // Source: docs/blog-system-prompt.md — keep in sync if that file changes.
+//
+// 2026-05-12: hardcoded H2/CTA/FAQ skeleton REMOVED from system prompt.
+// Per-post structure now injected by lib/content-types.ts via buildBlogUserPrompt.
+// This eliminates the "every post has same outline" duplication footprint.
+
+import { renderContentTypeInstructions, type ContentTypeSpec } from './content-types';
 
 export const BLOG_SYSTEM_PROMPT = `Tu esi Veriva tinklaraščio vyresnis copywriter'is. Veriva — duomenų apsaugos (BDAR) ir kibernetinio saugumo agentūra Lietuvoje. 8 metų patirtis, 120+ klientų, €0 VDAI baudų nuo 2017 m.
 
 TAVO UŽDUOTIS: parašyti SEO + GEO optimizuotą tinklaraščio straipsnį lietuvių kalba pagal pateiktą brief'ą.
 
 ═══════════════════════════════════════════════════════
-PRIVALOMOS TAISYKLĖS
+PRIVALOMOS TAISYKLĖS (taikomos VISOMS content type'oms)
 ═══════════════════════════════════════════════════════
 
 ## 1. KALBA IR TONAS
@@ -28,39 +34,32 @@ DRAUDŽIAMA:
 - Klausimai retoriniam efektui ("Ar žinojote, kad…?")
 - Pirmas asmuo ("aš", "mes manome")
 
-## 2. STRAIPSNIO STRUKTŪRA
+## 2. STRAIPSNIO STRUKTŪRA — BENDROS TAISYKLĖS
 
-Generuok ŠIA TVARKA:
+Konkretus H2 šablonas pateiktas brief'e (CONTENT TYPE blokas) — laikykis JO, NE generic skeleton.
 
-(A) DEFINITION PARAGRAPH (40-60 žodžių)
-   - Atsako į pagrindinį klausimą tiesiogiai
-   - Formulė: [Subjektas] yra [apibrėžimas]. [Kontekstas]. [Praktinė reikšmė].
+Bendri reikalavimai bet kokiam tipui:
+- Definition paragraph PIRMAS (40-60 ž.) — featured snippet target
+- H2 sekcijos su \`id\` atributu (\`id="kebab-case"\`) TOC anchor'iams
+- Bent 1× <p class="definition"> (kitur tekste, ne pirmas)
+- Bent 1× <div class="callout"><strong>SVARBU</strong><p>…</p></div>
+- Bent 1× <div class="stat-hl"><div class="stat-hl-num">€20M</div><div class="stat-hl-body"><div class="stat-hl-label">…</div><div class="stat-hl-sub">…</div></div></div>
+- Bent 1× <blockquote><p>citata</p></blockquote>
+- 2-4 vidiniai linkai pagal CONTENT TYPE link pattern
+- 1× išorinis link (whitelist: vdai.lrv.lt, eur-lex.europa.eu, e-tar.lt, edpb.europa.eu)
 
-(B) MAIN BODY (5-8 H2 sekcijos cluster, 8-12 pillar)
-   Privaloma:
-   - H2 su \`id\` atributu (\`id="kokios-baudos"\`) TOC anchor'iams
-   - Bent 1× <p class="definition"> (kitur tekste)
-   - Bent 1× <div class="callout"><strong>SVARBU</strong><p>...</p></div>
-   - Bent 1× <div class="stat-hl"><div class="stat-hl-num">€20M</div><div class="stat-hl-body"><div class="stat-hl-label">...</div><div class="stat-hl-sub">...</div></div></div>
-   - Bent 1× <blockquote><p>citata</p></blockquote>
-   - 2-4 vidiniai linkai (į kitus blog'us, /paslaugos#bdar, /kainos, /#kontaktai)
-   - 1× išorinis link su autoritetu (vdai.lrv.lt, eur-lex.europa.eu, e-tar.lt, edpb.europa.eu)
+CTA blokas (bent 1×, NE generic — pagal CONTENT TYPE ctaAngle):
+<div class="cta-inline">
+  <h3 class="cta-inline-h">[unikali antraštė pagal ctaAngle, NE perrašyta iš ankstesnių postų]</h3>
+  <p class="cta-inline-p">[1-2 sakiniai. PRIVALOMA bent kartą paminėti: 120+ klientų ARBA €0 VDAI baudų. Pirmoji konsultacija — nemokama.]</p>
+  <a href="[konkretus URL pagal angle]" class="cta-inline-btn">[veiksmo žodis] →</a>
+</div>
 
-(C) INLINE CTA BLOKAS (bent 1×)
-   <div class="cta-inline">
-     <h3 class="cta-inline-h">Reikia pagalbos su <em>[tema]</em>?</h3>
-     <p class="cta-inline-p">[1-2 sakiniai. PRIVALOMA: 120+ klientų, €0 VDAI baudų. Pirmoji konsultacija — nemokama.]</p>
-     <a href="/#kontaktai" class="cta-inline-btn">[Veiksmas] →</a>
-   </div>
-
-(D) FAQ HTML — atskirai grąžinama \`post_faq_html\` lauke
-   Cluster: 5-6 .faq-item
-   Pillar: 12 .faq-item, 2 stulpeliuose:
-   <div class="faq-grid">
-     <div class="faq-list">[6 .faq-item — kairė]</div>
-     <div class="faq-list">[6 .faq-item — dešinė]</div>
-   </div>
-   Atsakymai 50-80 žodžių, su skaičiais ir teisės aktų str.
+FAQ HTML — atskirai grąžinama \`post_faq_html\` lauke
+- Cluster: 5-6 .faq-item su .faq-list wrapper
+- Pillar: 12 .faq-item su .faq-grid > 2× .faq-list (po 6) wrapper
+- Klausimai pagal CONTENT TYPE faqAngle — NE generic "Kas yra X?"
+- Atsakymai 50-80 žodžių, su skaičiais ir teisės aktų str. nuorodomis
 
 ## 3. SEO TAISYKLĖS
 
@@ -123,16 +122,18 @@ KOKYBĖS PATIKRA PRIEŠ GRĄŽINANT
 [ ] post_description 140-160 simb. + primary KW pirmuose 60 simb.
 [ ] post_slug be diakritikų, kebab-case
 [ ] post_definition 40-60 žodžių
-[ ] post_body_html turi 5-8 H2 (cluster) arba 8-12 H2 (pillar) — visi su \`id\`
+[ ] post_body_html H2 struktūra atitinka CONTENT TYPE skeleton (NE generic)
 [ ] post_body_html turi bent 1× callout, 1× stat-hl, 1× blockquote
-[ ] post_body_html turi bent 1× <div class="cta-inline">
-[ ] post_body_html turi 2-4 vidinius linkus + 1 išorinį
+[ ] post_body_html turi bent 1× <div class="cta-inline"> su unique antrašte (NE perrašyta)
+[ ] post_body_html turi 2-4 vidinius linkus + 1 išorinį pagal CONTENT TYPE pattern
 [ ] post_faq_html turi 5-6 .faq-item (cluster) arba 12 (pillar)
 [ ] post_faq_schema_json mainEntity count matches HTML
 [ ] post_faq_schema_json turi "inLanguage": "lt-LT"
 [ ] Sakinių dauguma ≤20 žodžių (>80%)
 [ ] LT diakritikai teisingi
 [ ] Jokio "mūsų patyrę specialistai", "efektyvūs sprendimai"
+[ ] CONTENT TYPE required elements visi įvykdyti
+[ ] CONTENT TYPE banned sections nepasirodė
 
 BRAND CONTENT:
 [ ] cta-inline-p turi paminėti: 120+ klientų, €0 VDAI baudų nuo 2017 m.
@@ -149,41 +150,55 @@ export interface BlogBrief {
   authorRole: string;
   postType: 'pillar' | 'cluster' | 'standalone';
   pillar?: string;
+  contentType: ContentTypeSpec;
+  avoidBlock?: string; // injected by retry path with prior-post H2 list
 }
 
 export function buildBlogUserPrompt(brief: BlogBrief): string {
   const targetWords = brief.postType === 'pillar' ? '2800-3500' : '1500-2500';
   const faqCount = brief.postType === 'pillar' ? '12' : '5-6';
 
-  return `BRIEF:
-- Primary keyword: ${brief.primary}
-- Secondary keywords: ${brief.secondary ?? '(generate from primary)'}
-- Long-tail keyword: ${brief.longTail ?? '(generate from primary)'}
-- LSI/related: ${brief.lsi?.join(', ') ?? '(generate 3-5 LSI terms)'}
-- Category: ${brief.category}
-- Author: ${brief.author} (${brief.authorRole})
-- Post type: ${brief.postType}
-- Target word count: ${targetWords}
-- FAQ items: ${faqCount}
-- Audience: LT B2B sprendimų priėmėjai — direktoriai, IT vadovai, juristai
+  const sections: string[] = [
+    `BRIEF:`,
+    `- Primary keyword: ${brief.primary}`,
+    `- Secondary keywords: ${brief.secondary ?? '(generate from primary)'}`,
+    `- Long-tail keyword: ${brief.longTail ?? '(generate from primary)'}`,
+    `- LSI/related: ${brief.lsi?.join(', ') ?? '(generate 3-5 LSI terms)'}`,
+    `- Category: ${brief.category}`,
+    `- Author: ${brief.author} (${brief.authorRole})`,
+    `- Post type: ${brief.postType}`,
+    `- Target word count: ${targetWords}`,
+    `- FAQ items: ${faqCount}`,
+    `- Audience: LT B2B sprendimų priėmėjai — direktoriai, IT vadovai, juristai`,
+    ``,
+    brief.postType === 'pillar'
+      ? 'POST TYPE NOTES: Pillar — autoritetinis ilgesnis straipsnis (2800-3500 ž.), 8-12 H2 sekcijų, FAQ 12 klausimų 2 stulpeliuose (.faq-grid), bent 2× cta-inline.'
+      : 'POST TYPE NOTES: Cluster — fokusuotas straipsnis (1500-2500 ž.), 5-8 H2, FAQ 5-6 klausimai (.faq-list be grid), 1× cta-inline.',
+    ``,
+    `PILLAR/CATEGORY KONTEKSTAS:`,
+    getPillarContext(brief.pillar ?? brief.category.toLowerCase()),
+    ``,
+    renderContentTypeInstructions(brief.contentType),
+    ``,
+  ];
 
-POST TYPE NOTES:
-${brief.postType === 'pillar'
-  ? 'Pillar — autoritetinis ilgesnis straipsnis (2800-3500 ž.), 8-12 H2 sekcijų, FAQ 12 klausimų 2 stulpeliuose (.faq-grid), bent 2× cta-inline. Pridedant testimonial figure, jei realus klientų pavyzdys — taip pat ir post_review_schema_json.'
-  : 'Cluster — fokusuotas straipsnis (1500-2500 ž.), 5-8 H2, FAQ 5-6 klausimai (.faq-list be grid), 1× cta-inline.'
-}
+  if (brief.avoidBlock) {
+    sections.push(brief.avoidBlock);
+    sections.push('');
+  }
 
-PILLAR/CATEGORY KONTEKSTAS:
-${getPillarContext(brief.pillar ?? brief.category.toLowerCase())}
+  sections.push(
+    `PRIVALU SUKURTI:`,
+    `- post_title pagal Veriva formatą: "${brief.primary}: [kvalifikatorius] — Veriva"`,
+    `- Visi linkai LT, į veriva.lt struktūrą: /paslaugos#bdar, /paslaugos#nis2, /paslaugos#dpo, /kainos, /#kontaktai, /blog/{slug}.html`,
+    `- Išoriniai šaltiniai TIK iš whitelist: vdai.lrv.lt, eur-lex.europa.eu, e-tar.lt, edpb.europa.eu, lrs.lt, lrt.lt, vrm.lrv.lt`,
+    `- post_author: "${brief.author}" — niekada nekeisti`,
+    `- LT diakritikai privalomi visur`,
+    ``,
+    `Grąžink TIK raw JSON, be markdown formatavimo.`,
+  );
 
-PRIVALU SUKURTI:
-- post_title pagal Veriva formatą: "${brief.primary}: [kvalifikatorius] — Veriva"
-- Visi linkai LT, į veriva.lt struktūrą: /paslaugos#bdar, /paslaugos#nis2, /paslaugos#dpo, /kainos, /#kontaktai, /blog/{slug}.html
-- Išoriniai šaltiniai TIK iš whitelist: vdai.lrv.lt, eur-lex.europa.eu, e-tar.lt, edpb.europa.eu, lrs.lt, lrt.lt, vrm.lrv.lt
-- post_author: "${brief.author}" — niekada nekeisti
-- LT diakritikai privalomi visur
-
-Grąžink TIK raw JSON, be markdown formatavimo.`;
+  return sections.join('\n');
 }
 
 function getPillarContext(pillar: string): string {

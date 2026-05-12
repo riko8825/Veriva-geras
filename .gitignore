@@ -39,3 +39,10 @@ ab-*.png
 debug-*.png
 
 .vercel
+
+# Dry-run AI test outputs (local OpenAI calls, not for git)
+.dry-run/
+.dry-run-log.txt
+
+# Claude scheduled task lock
+.claude/scheduled_tasks.lock

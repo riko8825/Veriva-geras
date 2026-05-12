@@ -20,6 +20,11 @@ function getCredentials(): { token: string; chatId: string } {
   return { token, chatId };
 }
 
+function maskChatId(chatId: string): string {
+  if (chatId.length <= 4) return '****';
+  return '*'.repeat(chatId.length - 4) + chatId.slice(-4);
+}
+
 async function telegramPost(token: string, method: string, body: object): Promise<boolean> {
   const url = `https://api.telegram.org/bot${token}/${method}`;
   let lastErr: unknown;
@@ -70,11 +75,11 @@ async function telegramPost(token: string, method: string, body: object): Promis
 
 export async function sendTelegramMessage(text: string): Promise<boolean> {
   const { token, chatId } = getCredentials();
-  console.log(`[telegram] sendMessage → chat_id: ${chatId}`);
+  console.log(`[telegram] sendMessage → chat_id: ${maskChatId(chatId)}`);
   return telegramPost(token, 'sendMessage', { chat_id: chatId, text, parse_mode: 'HTML' });
 }
 
-function extractPlanFromTemplate(articleHTML: string): string {
+function extractPlanFromTemplate(articleHTML: string, topN = 5): string {
   // Veriva template uses {{POST_TITLE}} placeholder OR plain <h1>...</h1>
   const h1Match = articleHTML.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
   const h1 = h1Match ? h1Match[1].replace(/<[^>]+>/g, '').trim() : '';
@@ -83,9 +88,22 @@ function extractPlanFromTemplate(articleHTML: string): string {
   let m: RegExpExecArray | null;
   while ((m = h2Re.exec(articleHTML)) !== null) {
     const text = m[1].replace(/<[^>]+>/g, '').trim();
-    if (text) h2s.push(`  · ${text}`);
+    if (text) h2s.push(text);
   }
-  return [h1 ? `<b>${h1}</b>` : '', ...h2s].filter(Boolean).join('\n');
+  const totalH2 = h2s.length;
+  const topH2 = h2s.slice(0, topN).map(t => `  · ${t}`);
+  if (totalH2 > topN) topH2.push(`  · …+${totalH2 - topN} dar`);
+  return [h1 ? `<b>${h1}</b>` : '', ...topH2].filter(Boolean).join('\n');
+}
+
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function verdictEmoji(v: 'pass' | 'warn' | 'fail'): string {
+  if (v === 'pass') return '🟢';
+  if (v === 'warn') return '🟡';
+  return '🔴';
 }
 
 async function githubBranchExists(branch: string): Promise<boolean> {
@@ -112,16 +130,32 @@ async function githubBranchExists(branch: string): Promise<boolean> {
   }
 }
 
+export interface DraftNotificationContentType {
+  key: string;
+  label: string;
+  intent: string;
+}
+
+export interface DraftNotificationUniqueness {
+  score: number;
+  verdict: 'pass' | 'warn' | 'fail';
+  worstNeighborSlug: string | null;
+  h2OverlapPct: number;
+  intentCollisionSlug: string | null;
+}
+
 export async function sendTelegramDraftNotification(params: {
   keyword: string;
   slug: string;
   branch: string;
   articleHTML?: string;
+  contentType?: DraftNotificationContentType;
+  uniqueness?: DraftNotificationUniqueness;
 }): Promise<boolean> {
   const { token, chatId } = getCredentials();
-  console.log(`[telegram] sendTelegramDraftNotification → chat_id: ${chatId}, slug: ${params.slug}`);
+  console.log(`[telegram] sendTelegramDraftNotification → chat_id: ${maskChatId(chatId)}, slug: ${params.slug}`);
 
-  const { keyword, slug, branch, articleHTML } = params;
+  const { keyword, slug, branch, articleHTML, contentType, uniqueness } = params;
 
   const [branchExists, photoUrl] = await Promise.all([
     githubBranchExists(branch),
@@ -134,14 +168,39 @@ export async function sendTelegramDraftNotification(params: {
     ? `https://github.com/${REPO_OWNER}/${REPO_NAME}/blob/${branch}/blog/${slug}.html`
     : null;
 
-  const plan = articleHTML ? extractPlanFromTemplate(articleHTML) : '';
+  const plan = articleHTML ? extractPlanFromTemplate(articleHTML, 5) : '';
+
+  const ctLine = contentType
+    ? `<b>Content type:</b> ${escapeHtml(contentType.label)} <code>${escapeHtml(contentType.key)}</code>`
+    : null;
+  const intentLine = contentType
+    ? `<b>Intent:</b> <i>${escapeHtml(contentType.intent)}</i>`
+    : null;
+
+  let uniqLines: string[] | null = null;
+  if (uniqueness) {
+    const emoji = verdictEmoji(uniqueness.verdict);
+    uniqLines = [
+      `${emoji} <b>Uniqueness:</b> ${uniqueness.score}/100 (${uniqueness.verdict.toUpperCase()})`,
+      `<b>H2 overlap:</b> ${uniqueness.h2OverlapPct}%${uniqueness.worstNeighborSlug ? ` vs <code>${escapeHtml(uniqueness.worstNeighborSlug)}</code>` : ''}`,
+    ];
+    if (uniqueness.verdict === 'warn') {
+      uniqLines.push(`⚠️ <b>Cannibalization warning</b> — peržiūrėk H2 prieš publikuojant`);
+    }
+    if (uniqueness.intentCollisionSlug) {
+      uniqLines.push(`🚨 <b>Intent collision:</b> tas pats content_type+slug stem kaip <code>${escapeHtml(uniqueness.intentCollisionSlug)}</code>`);
+    }
+  }
 
   const msgText = [
     `📝 <b>Naujas straipsnis paruoštas</b>`,
     ``,
-    `<b>Tema:</b> ${keyword}`,
-    `<b>Slug:</b> <code>${slug}</code>`,
-    plan ? `\n${plan}` : null,
+    `<b>Tema:</b> ${escapeHtml(keyword)}`,
+    `<b>Slug:</b> <code>${escapeHtml(slug)}</code>`,
+    ctLine,
+    intentLine,
+    uniqLines ? `\n${uniqLines.join('\n')}` : null,
+    plan ? `\n<b>Top H2 (5):</b>\n${plan}` : null,
     previewUrl ? `\n<a href="${previewUrl}">👁 Peržiūrėti GitHub</a>` : null,
     ``,
     `Pasirink veiksmą:`,

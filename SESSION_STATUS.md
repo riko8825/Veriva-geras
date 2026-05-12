@@ -1,11 +1,97 @@
 # SESSION_STATUS
 
 **Data**: 2026-05-12
-**Sesijos tikslas**: Cookiebot consent banner force LT GeoIP override (force visiems regionams), brief.html premium dark tier redesign (suvienodinti su index.html brand), privatumo politikos sutikimo checkbox prieš submit, hero `.h-bottom` margin-bottom papildomas pakėlimas.
+**Sesijos tikslas**: DPO pillar straipsnio publikavimas (4-agent pre/post-publish ratas) + copyright hotfix project-wide + KI-013 redirect architecture dokumentavimas.
 
 ---
 
-## Paskutinė sesija: 2026-05-12 — cookiebot-brief-dark-tier-consent
+## Paskutinė sesija: 2026-05-12 — dpo-pillar-publish
+
+### Ką padarėme
+
+**1. DPO pillar straipsnis (blog/dpo-funkcija-vadovas.html, 2979 ž., commit `bc481ea`):**
+- Primary KW: "duomenų apsaugos pareigūnas" (480/mo, Medium difficulty, P0 iš blog-keywords.md)
+- Autorius: Marina (Teisės ekspertė, BDAR)
+- Title 53 simb. + geo: "Duomenų apsaugos pareigūnas: vadovas Lietuvos verslui"
+- Meta description 152 simb.
+- 8 H2 sekcijos: kas yra DPO + 3 atvejai BDAR 37 str. + užduotys 39 str. + kvalifikacija + vidinis vs outsourcing + 5 žingsnių vadovas + dažniausios klaidos + baudų rizika
+- 12 FAQ klausimų (FAQPage schema su acceptedAnswer.text)
+- 5 žingsnių HowTo schema (su position+name+text)
+- 4 schemos: BlogPosting + BreadcrumbList + FAQPage + HowTo (3 JSON-LD blokai, visi valid parse)
+- Komponentai: definition paragraph (40 ž., featured snippet), TOC 8 punktai, 2 callout + 17 stat-hl + 2 blockquote + 2 cta-inline + testimonial su Rasa J. + 3 related cards
+- 3 CTA: po definition (`/#top` BDAR testas) + vidury po H2 #6 (`/#kontaktai` su €6 000/m) + pabaiga ("Gauti DPO pasiūlymą — per 24 val.")
+- Pricing transparency: 6-18k €/m outsourcing vs 35-60k €/m vidinis, €30K+ savings stat
+- Social proof 3×: 120+ klientų, €0 VDAI baudų, Teisė + IT vienoje komandoje
+- Hero img placeholder bdar-baudos-hero.svg (KI-012)
+
+**2. 4-agent pre-publish ratas (paraleliai) + P0/P1 fix'ai:**
+- frontend-revizorius 16/20 → P0 typo `strategin` + P1 hover transforms + inline styles
+- seo-specialistas 15/20 → P1 meta desc 172→156, title geo, KW tankis `DPO outsourcing` 14× per daug
+- qa-tester 18/20 → P1 gramatika 7× `negali patys savęs auditų` (įskaitant JSON-LD FAQPage schema — Google parsina!)
+- marketing-analitikas 15/20 → P1 CTA copy "Susisiekti su ekspertu" generic
+- 12 fix'ų pritaikyti prieš publish: robots noindex→index, title 68→53, meta 172→156, gramatika 7× → `atlikti savęs auditų`, typo `strateginis`, KW stuffing 14→12×, `DPO Lietuvoje` 0→1×, CTA `Gauti DPO pasiūlymą — per 24 val.`, © 2025→2026
+
+**3. 4-agent post-deploy verifikacija (paraleliai):**
+- qa-tester PRODUCTION_VERIFIED — 6/6 URL'ų HTTP 200, gramatikos fix patvirtintas live (0× `patys savęs auditų`, 0× `strategin`, 0× `Susisiekti su ekspertu`)
+- frontend-revizorius PRODUCTION_READY — HTML valid, 0 placeholder'ių, 12 FAQ items, 3 related cards, nav/footer/share parity su bdar-baudos
+- seo-specialistas INDEXABLE — meta tags OK, schemas valid, KW tankis OK po fix'o, **aptiko KI-013** (double redirect chain, pre-existing projekto problema)
+- marketing-analitikas CONVERSION_READY — 3 CTA chain veikia, pricing transparency, social proof, 5-step BOFU
+
+**4. Copyright hotfix project-wide (commit `e24eb78`):**
+- 6 failai: `index.html`, `blog.html`, `blog/bdar-baudos-lietuvoje.html`, `blog/nis2-direktyva-lietuvoje.html`, `blog/phishing-mokymai-darbuotojams.html`, `blog/template.html`
+- 0× `© 2025` projekte, 9× `© 2026` full consistency
+- Live verify: `https://veriva.lt/` ir `bdar-baudos` rodo `© 2026 Veriva`
+
+**5. Listing + sitemap + KNOWN_ISSUES atnaujinimai:**
+- `blog.html`: DPO "Netrukus" placeholder kortelė → aktyvi `<a class="bc">` su pilna CTA
+- `sitemap.xml`: +DPO URL su image:image, lastmod 2026-05-12, blog.html lastmod atnaujintas
+- `KNOWN_ISSUES.md`: KI-001 3/6 → 4/6 fixed; **+KI-012 hero SVG placeholder** (Low); **+KI-013 Redirect Architecture Normalization** (Medium, atskira sesija, su 5-step fix plan + 5 rizikomis + pre-fix checklist)
+
+**Git commits + push (2 nauji):**
+1. `bc481ea` — feat(blog): DPO pillar straipsnis (4 files, +1154/-13)
+2. `e24eb78` — fix(footer): © 2025→2026 (6 failai) + KI-013 (7 files, +70/-6)
+
+**Production verifikacija:**
+- Vercel deploys: 2 Ready (13s + 14s)
+- DPO live URL `https://veriva.lt/blog/dpo-funkcija-vadovas.html` → 200, ~1.8s response
+- HTTP 200 visi 6 verifikacijos URL'ai (DPO, blog.html, sitemap, index, 2 regression checks)
+
+### Kas liko / nepatvirtinta
+
+**DPO straipsnio carry-over:**
+- **KI-012**: dedicated `dpo-funkcija-vadovas-hero.svg` 1200×630 dailininkui (low priority, social share preview)
+- **Primary KW tankis 2.69×/1000 ž.** po anti-stuffing fix'o (target 3-5×) — galimai reikės natūraliai pridėti 1-2× `duomenų apsaugos pareigūnas`
+- **VDAI tankis 35× per 2979 ž.** (11.7×/1000) — aukštas, gali triggerinti Google over-optimization filtrą. Dalies pakeisti į `priežiūros institucija` arba pilną pavadinimą
+- **Mobile real flow nepatikrintas** — agentai naudojo WebFetch (NE puppeteer), FAQ accordion interaktyvumas + mobile reading flow + TOC mobile scroll nesutikrintas
+- **Schema rich-results test'as Google'e** neatliktas (agentai parsino JSON, bet ne pateikė į `search.google.com/test/rich-results`)
+
+**Projekto-lygio:**
+- **KI-013 Redirect Architecture** (Medium, ATSKIRA SESIJA) — double redirect chain apex→www→stripping .html, canonical mismatch, sitemap inconsistency. NE quick fix. 5-step plan dokumentuotas KNOWN_ISSUES.md
+- **5 Sensitive env vars blog-gen automation** (`GITHUB_TOKEN`, `PEXELS_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`) — cron ketv. 2026-05-14 10:00 LT crash'ins iki pateikimo
+- **s17 P1 carry-over** (~2.5h): self-collision intent skip, cache invalidation po publish, chronological sort, warn-warn regression check, Vercel timeout audit, sanitizeKeyword prompt injection, escapeHtml `"`
+- **brief.html inline `<style>` ~330 lines** (s16 carry-over) — extract į `assets/css/brief.css`
+- **`POST /api/forms/audit-request`** neegzistuoja (KI-007)
+
+### Kitas žingsnis
+
+1. **Blog automation runtime finalization** (KRITINIS — cron ketv. 2026-05-14 10:00 LT) — vartotojas pateikia 5 Sensitive env vars + sukuria @VerivaBlogBot per @BotFather + paleidžia `migrations/002_blog_automation.sql`
+2. **KI-013 Redirect Architecture atskira sesija** (~30-60 min) — redirect audit + canonical decision + sitemap normalization + internal link cleanup + vercel.json consolidation
+3. **DPO hero SVG** (KI-012) — sukurti `dpo-funkcija-vadovas-hero.svg` 1200×630 brand spalvomis (BDAR 37 str. ikonografija)
+
+### Production verifikacija (live)
+
+| URL | Statusas |
+|---|---|
+| `https://veriva.lt/blog/dpo-funkcija-vadovas.html` | 200 OK, ~1.8s |
+| `https://veriva.lt/blog.html` (DPO kortelė aktyvi) | 200 OK |
+| `https://veriva.lt/sitemap.xml` (+DPO URL) | 200 OK |
+| `https://veriva.lt/` (© 2026) | 200 OK |
+| `https://veriva.lt/blog/bdar-baudos-lietuvoje.html` (no regression, © 2026) | 200 OK |
+| `https://veriva.lt/blog/nis2-direktyva-lietuvoje.html` (no regression, © 2026) | 200 OK |
+
+---
+
+## Sesija #16: 2026-05-12 — cookiebot-brief-dark-tier-consent
 
 ### Ką padarėme
 

@@ -1,10 +1,10 @@
 # PROJECT_STATUS — Veriva
 
 **Pradžia**: 2026-05-09
-**Paskutinis update**: 2026-05-12 (cookiebot-brief-dark-tier-consent)
-**Statusas**: 🟢 DEPLOYED frontend (hero + brief.html dark tier + Cookiebot LT force + consent checkbox live), 🟡 blog automation RUNTIME blocked — 5 Sensitive env vars + Telegram bot + Supabase migration laukia vartotojo input'o; cron'as 2026-05-12 10:00 LT **JAU PRABĖGO** be paleidimo
+**Paskutinis update**: 2026-05-12 (dpo-pillar-publish)
+**Statusas**: 🟢 4 LIVE blog pillarai (BDAR baudos + NIS2 + Phishing + DPO funkcija), 🟢 frontend stable, 🟡 blog automation RUNTIME blocked, 🟡 KI-013 redirect architecture (Medium, atskira sesija)
 **Production URL**: https://www.veriva.lt (LIVE su Vercel SSL) | https://veriva.lt (apex SSL ✅)
-**Paskutinis commit**: `a467b9c` (docs: s15 status + INC-002 postmortem, 2026-05-12)
+**Paskutinis commit**: `e24eb78` (fix(footer): © 2025→2026 + KI-013, 2026-05-12)
 
 ---
 
@@ -17,10 +17,11 @@
 | `assets/js/index.js` | 🟡 LIVE ~16KB + dead cursor listener'iai | Po hero rewrite: widget logika adaptuota naujam markup'ui (`buildProgress` progress bar, `renderQ` `.qc-opt`, `pick` `#w-opts .qc-opt`, `showResult` `.qcr-bd-row`); pridėtas hero JS blokas (~110 lines: canvas particles + GSAP timeline + magnetic CTA + custom cursor handler); custom cursor JS listener'iai (~30 lines) liko nors `#cur` `display:none` |
 | `blog.html` | 🟢 LIVE premium dark tier | Visa puslapio dark theme (buvo light); hero radial mesh + mono kicker + cyan dot + Syne 800; filterai dark glass + cyan accent; post kortelės `.post`-style premium card su `:has()` sibling dim + grid mask visual; newsletter cyan CTA + glass card; 3 placeholder kortelės disabled (`bc--soon` + "Netrukus" badge, aria-disabled), 3 realūs post'ai aktyvūs (2026-05-10 blog-dark-tier-sync) |
 | `brief.html` | 🟢 LIVE premium dark tier + consent | 4 sek × **60 klausimų** (pridėtas privacy_consent checkbox kaip 60-tas), konditional logika sveikatos vs verslo, multi-step progress, validation, 3 states; **2026-05-12 dark tier redesign**: glass card `rgba(12,26,46,.55)` + backdrop-blur 20px + cyan glowing kicker + Syne 800 + dark glass inputs + cyan gradient buttons + consent kortelė su cyan glowing checkmark; privacy_consent privalomas prieš submit (Norėdami pateikti klausimyną, turite sutikti...); **carry-over**: inline `<style>` ~330 lines head'e laukia extract'o į `assets/css/brief.css`; mobile 4-sek click-through realus flow netesttuotas (tik state injection) |
-| `blog/template.html` | 🟢 v2 (post-polish) | 24 placeholder'iai, polished CSS, a11y, 4 schema slotai (2026-05-10) |
-| `blog/bdar-baudos-lietuvoje.html` | 🟢 PUBLISHED | Pillar 2846ž., audit health 19/20, 4 schemas, 3 SVG (2026-05-10) |
-| `blog/nis2-direktyva-lietuvoje.html` | 🟢 PUBLISHED | Pillar 3700ž., audit 19/20 self / 17/20 frontend, 5 schemas, 3 SVG, Author Justinas (2026-05-10) |
-| `blog/phishing-mokymai-darbuotojams.html` | 🟢 PUBLISHED | Pillar 3100ž., audit 19/20 self / 17/20 frontend, 5 schemas, 3 SVG, 6 ext šaltiniai (2026-05-10) |
+| `blog/template.html` | 🟢 v2 (post-polish) | 24 placeholder'iai, polished CSS, a11y, 4 schema slotai (2026-05-10); footer © 2026 (2026-05-12) |
+| `blog/bdar-baudos-lietuvoje.html` | 🟢 PUBLISHED | Pillar 2846ž., audit health 19/20, 4 schemas, 3 SVG (2026-05-10); footer © 2026 (2026-05-12 hotfix) |
+| `blog/nis2-direktyva-lietuvoje.html` | 🟢 PUBLISHED | Pillar 3700ž., audit 19/20 self / 17/20 frontend, 5 schemas, 3 SVG, Author Justinas (2026-05-10); footer © 2026 (2026-05-12 hotfix) |
+| `blog/phishing-mokymai-darbuotojams.html` | 🟢 PUBLISHED | Pillar 3100ž., audit 19/20 self / 17/20 frontend, 5 schemas, 3 SVG, 6 ext šaltiniai (2026-05-10); footer © 2026 (2026-05-12 hotfix) |
+| `blog/dpo-funkcija-vadovas.html` | 🟢 PUBLISHED (2026-05-12 dpo-pillar-publish, `bc481ea`) | Pillar 2979ž., primary KW "duomenų apsaugos pareigūnas" (480/mo P0), author Marina, 8 H2 + 12 FAQ + HowTo 5 steps, 4 schemas (BlogPosting+Breadcrumb+FAQPage+HowTo), pre-publish 4-agent ratas: frontend 16/20 + SEO 15/20 + QA 18/20 + marketing 15/20 → 12 P0/P1 fix'ai pritaikyti; post-deploy 4-agent verifikacija: PRODUCTION_VERIFIED + INDEXABLE (su KI-013) + CONVERSION_READY + PRODUCTION_READY. **Carry-over**: KW tankis 2.69×/1000 (kiek žemiau target 3-5), VDAI tankis 35×/2979 (over-optimization risk), hero SVG placeholder (KI-012). 3 CTA chain, pricing transparency 6-18k vs 35-60k €/m, testimonial Rasa J. |
 | `paslaugos.html` | ⬜ Nesukurtas | |
 | `apie.html` | ⬜ Nesukurtas | |
 | `kainos.html` | ⬜ Nesukurtas | |

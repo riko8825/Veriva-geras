@@ -1,11 +1,95 @@
 # SESSION_STATUS
 
-**Data**: 2026-05-11
-**Sesijos tikslas**: Blog automation pipeline port iš Empirra į Veriva — full stack (blog-gen + telegram-webhook + blog-approve + 14 lib failai + topics.json + migration + vercel.json + docs).
+**Data**: 2026-05-12
+**Sesijos tikslas**: Bundle commit + push s12 (hero-quiz-redesign) + s14 (blog-automation-port) į production; hero polish iteracijos (ticker baltas, .h-bottom spacing+margin, brief.html CTA outlined button, nav padding + .h-sub overflow fix).
 
 ---
 
-## Paskutinė sesija: 2026-05-11 — blog-automation-port
+## Paskutinė sesija: 2026-05-12 — bundle-push-hero-polish
+
+### Ką padarėme
+
+**Git bundle push (9 commits push'inti į origin/main):**
+1. `2512730` — feat: bundle s12+s14 (43 files, +9136/-326) — hero rewrite + blog automation pipeline + topics.json + migration + vercel.json + docs
+2. `4ee35d1` — chore: trigger redeploy po CRON_SECRET whitespace fix
+3. `caa5f01` — fix: `.h-bottom` cramped 900-1100px viewport zone (minmax + intermediate breakpoint)
+4. `d708d90` — fix: ticker baltas tekstas (cyan rgba(0,180,216,.7) → rgba(255,255,255,.85))
+5. `e88719f` — fix: `.h-bottom` margin-bottom 64px desktop / 40px mobile (pakeltas aukščiau nuo apačios)
+6. `c91c675` — chore: force vercel rebuild (3 commits buvo missing Vercel deployments sąraše)
+7. `50d409c` — feat: hero secondary CTA `#kontaktai` → `/brief.html` (54 kl, 10-15 min)
+8. `9d1b367` — fix: `.btn-hero-secondary` text-link (11px mono 55% opacity) → outlined button (13px + cyan border + transparent fill + translateY hover)
+9. `f2f2cdb` — fix: nav nelimpa ant H1 (padding-top 96→128px desktop, 80→108px mobile) + `.h-sub` neoverflow (`#hero overflow: hidden → clip`, min-height 720→780 / 640→700)
+
+**Incident I-001: Vercel build failed po pirmo push'o** (root cause + fix):
+- Build `hx362gc6v` ● Error 3s — `CRON_SECRET` env var trailing whitespace (newline iš `openssl rand -hex 32` per s14 push'ą)
+- Vercel klaida: "The `CRON_SECRET` environment variable contains leading or trailing whitespace, which is not allowed in HTTP header values."
+- Fix: `vercel env rm CRON_SECRET production --yes` → `printf "%s" "$(openssl rand -hex 32 | tr -d '\n\r\t ')" | vercel env add CRON_SECRET production`
+- Trigger empty commit (`4ee35d1`) → build `fkbcoi4q2` ● Ready 14s ✅
+
+**Vercel webhook tylus delay** (untracked anomaly):
+- 3 commits (`d708d90`, `e88719f`, `50d409c`) push'inta į GitHub bet nepasiekė Vercel deployments sąrašo (production curl rodė missing markers)
+- Empty commit `c91c675` force-trigger'ino rebuild — build `7gqawzb8d` apjungė visus 3 + trigger į vieną deploy
+- Tikrasis root cause neidentifikuotas (GitHub webhook lag arba Vercel ignored deploy events)
+
+**Frontend-revizorius agent panaudotas** paskutiniam fix'ui (nav padding + overflow):
+- Diagnozavo root cause #1: nav apačia (top:30px + height:60px = 90px) prie `.hero-inner padding-top:96px` paliko tik 6px iki `.h-label` — vizualiai nulis
+- Diagnozavo root cause #2: `overflow: hidden` kuria scroll context'ą + flex container'is negali augti virš `height:100vh` jei content per didelis → paskutinė `.h-sub` eilutė ("neatsitiks — raštu") nukerpta
+- Fix: `overflow: hidden → clip` (vizualiai identiškas, nesukuria scroll context'o) + `min-height` bump
+
+**Vercel build status (6 production builds Ready, 1 Error):**
+- `hx362gc6v` ● Error 3s (CRON_SECRET whitespace)
+- `fkbcoi4q2` ● Ready 14s (post env fix)
+- `9qjlcfqs3` ● Ready 14s (caa5f01)
+- `k0n4yaf90` ● Ready 13s
+- `oivxqjxk8` ● Ready 13s
+- `7gqawzb8d` ● Ready 13s (3 missing commits bundle)
+- `d2m7sa0c4` ● Ready ~13s (brief link)
+- (paskutinis post f2f2cdb push) — laukia auto-deploy ~14s
+
+**Production verifikacija (curl + cache-busting):**
+- `https://veriva.lt` (apex) → 308 → `https://www.veriva.lt` 200 OK
+- Baltas ticker color rasta production HTML'e (2 markers)
+- `.h-bottom margin-bottom: 64px` rasta production HTML'e
+- `Pildyti detalų klausimyną` link rasta production HTML'e
+
+### Kas liko / nepatvirtinta
+
+**Hero rewrite carry-over (iš s12, vis dar neišspręsta):**
+- Dead CSS ~150 lines `assets/css/index.css` (`.widget`, `.w-*`, `.wpd*`, `.wbd*`, `.proof-strip`, `.ps-*`, sena `.hero-w/.hero-eyebrow/.hero-trust`) — nebenaudojamos po hero rewrite
+- Inline `<style>` ~340 lines `index.html` head'e — vis dar laužia CLAUDE.md "niekada inline" taisyklę, laukia extracted į index.css
+- `#cur` div + cursor JS listener'iai (~30 lines `assets/js/index.js`) — dead code po custom cursor pašalinimo
+
+**Blog automation deploy blockers (iš s14, vis dar neišspręsta):**
+- 5 Sensitive env vars vartotojo input pending: `GITHUB_TOKEN`, `PEXELS_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY` (Empirra Vercel UI "Show value") + `TELEGRAM_BOT_TOKEN` (naujas `@VerivaBlogBot` per @BotFather) + `TELEGRAM_CHAT_ID` (getUpdates po `/start`)
+- Supabase migration `migrations/002_blog_automation.sql` nepaleistas (veriva_telegram_revise_state + veriva_blog_runs lentelės neegzistuoja Empirra Supabase)
+- 3 esami pillarai NETURI `<ul class="internal-links">` sekcijos → reverse linking fail'ins per pirmus publish'us
+- `lib/blog-card.ts extractBlogCardMeta()` fallback nepridėtas (`<span class="post-cat">` template'e nėra)
+- 3027 lines TS UNTESTED — runtime nepatikrintas
+
+**Naršyklės QA neatlikta:**
+- Mobile <900px (hero, ticker, .h-bottom stack, naujas outlined button)
+- 5-q quiz flow (s12 carry-over)
+- prefers-reduced-motion (canvas particles + GSAP)
+- GSAP CDN `defer` atributas + Core Web Vitals patikra
+
+**Vercel webhook lag tikslus root cause** neidentifikuotas — gali kartotis ateityje.
+
+**Cron'as crash'ins 2026-05-12 10:00 LT** (šiandien antradienis) jei env vars nepateikti per kelias valandas:
+- `https://veriva.lt/api/automations/blog-gen` su `Authorization: Bearer $CRON_SECRET` → fail'ins per `GITHUB_TOKEN` undefined arba `validateBlogTriggerAuth` (jei CRON_SECRET nelinks su Vercel value)
+
+### Kitas žingsnis
+
+**Option A (P0 KRITIŠKAI — laikas iki cron'o)**: Vartotojas pateikia 5 Sensitive env vars + sukuria `@VerivaBlogBot` + paleidžia Supabase migration. Tada: `vercel env add` × 5 → Vercel auto-redeploy → `setWebhook` Telegram → smoke test `curl POST /api/automations/blog-gen -H "x-api-key: $BLOG_TRIGGER_SECRET" -d '{"force":true}'`. Expected: Telegram pranešimas su 3 inline buttons per 60-90s.
+
+**Option B (P0)**: Pre-deploy fix'ai prieš blog automation runtime — pridėti `<ul class="internal-links">` 3 esamiems pillarams + template.html, `lib/blog-card.ts extractBlogCardMeta()` fallback (`<meta>` arba topics.json pillar lookup).
+
+**Option C (P1)**: Hero rewrite cleanup carry-over — dead CSS removal (~150 lines `index.css`), inline `<style>` extract į `index.css` (~340 lines), `#cur` cursor cleanup (~30 lines `index.js`).
+
+**Option D (P1)**: Naršyklės QA (mobile <900px + 5-q quiz flow + prefers-reduced-motion + GSAP defer + LCP/Core Web Vitals patikra).
+
+---
+
+## Sesija #14: 2026-05-11 — blog-automation-port
 
 ### Ką padarėme
 
@@ -916,3 +1000,4 @@ Vienas commit'as su:
 | 2026-05-11 (hero-quiz-redesign) | index.html hero + quiz section perdarymas pagal vartotojo HTML + brand adaptacija | UNCOMMITTED | Hero + quiz pilnas perrašymas (canvas particles + ticker + glass quiz card + Syne 800 + mono kicker + cyan accent); 3 pivot'ai (DM Sans/cyan #00cffc → balta juosta debug → solid #030a14 ticker bg → brand adaptacija į --ink/--cyan/--gold + Plus Jakarta Sans + Syne 800 + JetBrains Mono); pašalintas `.hero` + `.widget` + `.proof-strip` (~95 lines), pridėtas naujas markup; `#cur` custom cursor display:none + dead JS listener'iai; inline `<style>` ~340 lines head'e laužia CLAUDE.md; cache-buster v=20260510b→20260511c; nav top: 0→28px; widget JS adaptuota (qc-opt, qcr-bd-row, w-qfill); hero JS gale (~110 lines: canvas + GSAP + magnetic CTA); production lieka ant `9efb0d0` — UNCOMMITTED |
 | 2026-05-11 (cookiebot-debug) | CookieDeclaration lentelės diagnostika + Cookiebot pricing patikra | — (zero code change) | Patikrinta: scripts placement OK, CDN endpoint'ai HTTP 200, cdreport.js?referer= grąžina pilną lentelę, headless Chrome render parodė DOM lentelę su Būtini(2)+Statistika(4). Root cause: Cookiebot crawl iš 2026-04-23 (PRIEŠ WP→Vercel migraciją) rodo seną WP versiją (wpEmojiSettings, _pk_id#, _pk_ses#, _ga, _ga_#, link į veriva.lt/privatumo-politika-2/ 404). `www.veriva.lt` automatinis aliasas apex'ui (Cookiebot grąžino "already registered with its variant"). Dashboard `Re-scan` mygtuko Premium UI NĖRA (3 ekranai patikrinti). Pricing tyrimas: Daily +€62-99/mėn/domain — neaktyvinti. Sprendimas: vartotojas siunčia support email su CBID `bc31b2c9-a2b7-44e8-a3a2-624b027ba646` + manual rescan prašymu, arba laukti auto-scan ~2026-05-23 |
 | 2026-05-11 (blog-automation-port) | Blog automation pipeline full port iš Empirra (3 endpoint'ai + 14 lib failai + topics.json + migration + vercel.json + docs) | UNCOMMITTED (code-done, deploy pending) | Solution-architect 11-sekcijų plano analizė; 14 lib failų (1748 lines TS): claude/github/telegram/pexels/blog-card/blog-template/blog-prompts/link-map/link-constraints/internal-links/sitemap-update/auth-node/timeout/flags — visi adapted Verivai (LT slugify, LT→EN Pexels translation, .bc card markup, LT diacritic regex, service: page targets, veriva.lt URLs); 3 API endpoint'ai (1278 lines TS): blog-gen 553 lines (LT validators × 10), telegram-webhook 319 lines (LT pranešimai, veriva_telegram_revise_state), blog-approve 406 lines (single blog.html path, branch-level topics.json update); topics.json 21 keywords (3 published + 18 pending); migrations/002_blog_automation.sql (veriva_telegram_revise_state + veriva_blog_runs, RLS, service_role only); vercel.json updated (builds array + crons "0 8 * * 2,4" + 60-90s maxDuration); docs/blog-automation-deploy.md 7-step guide ($0.05-0.08/post cost); 7/12 env vars push'inta į Veriva Vercel (OPENAI_API_KEY, SUPABASE_URL, RESEND_API_KEY + 4 gen secrets); 5 Sensitive vars CLI nepull'ina (GITHUB_TOKEN, PEXELS_API_KEY, SUPABASE_SERVICE_ROLE_KEY, TELEGRAM_BOT_TOKEN/CHAT_ID) — vartotojo input pending; TypeScript zero errors |
+| 2026-05-12 (bundle-push-hero-polish) | Bundle commit + push s12+s14 į production + hero polish iteracijos | `2512730`, `4ee35d1`, `caa5f01`, `d708d90`, `e88719f`, `c91c675`, `50d409c`, `9d1b367`, `f2f2cdb` | Bundle commit s12+s14 (43 files, +9136/-326) į origin/main. INC-001: Vercel build fail po pirmo push'o — CRON_SECRET trailing whitespace iš openssl rand -hex 32, fix: `vercel env rm` + `printf %s | tr -d \\n\\r\\t` + redeploy. Vercel webhook lag anomaly: 3 commits (d708d90+e88719f+50d409c) push'inta į GitHub bet missing Vercel deployments — force trigger empty commit (c91c675) reabsorbavo. Hero iteracijos: ticker baltas, .h-bottom margin-bottom 64/40, .btn-hero-secondary text-link→outlined button, nav padding 96→128/80→108, #hero overflow hidden→clip + min-height 720→780/640→700. Frontend-revizorius agent panaudotas paskutiniam fix'ui. Brief.html prilinkintas hero secondary CTA (buvo tik quiz result screen'e). 6 Vercel builds Ready (13-14s avg), production LIVE ant `f2f2cdb` |

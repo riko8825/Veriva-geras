@@ -20,6 +20,37 @@ Production incidentų istorija. Atnaujinti po kiekvieno rollback'o, downtime'o, 
 
 ---
 
+## INC-002 — Vercel build fail po pirmo bundle push'o (CRON_SECRET trailing whitespace)
+
+**Kada:** 2026-05-12 ~09:25 UTC (~16:25 LT)
+**Sukėlęs commit/deploy:** `2512730` bundle commit (s12+s14 push) — Vercel deployment `veriva-geras-hx362gc6v` ● Error 3s
+**Simptomas:** `vercel ls` rodė ● Error status'ą paskutiniam deploy'ui. Production lieka ant ankstesnio Ready build'o (s11 privatumas, `9efb0d0`). `vercel inspect --logs` grąžino:
+```
+2026-05-12T09:25:21.798Z  Error: The `CRON_SECRET` environment variable contains leading or trailing whitespace, which is not allowed in HTTP header values.
+2026-05-12T09:25:21.799Z  Learn More: https://vercel.link/securing-cron-jobs
+```
+Build pasibaigė per 3s (prieš install/build steps).
+
+**Detection:** Manual `vercel ls` patikra po push'o (CLAUDE.md "Vercel CLI workflow" 2026-05-10 standartas, INC-001 prevention). Be šios privalomos patikros incident'as būtų likęs silent (cron'as 2026-05-12 10:00 LT būtų bandęs paleisti su missing env var).
+
+**Impact:** 0 production user'ių paveiktų (production lieka ant ankstesnio Ready build'o). Hero rewrite + blog automation kodas nepasiekė production'o ~5 min.
+
+**Resolution:**
+1. `vercel env rm CRON_SECRET production --yes` — pašalintas blogas value
+2. `printf "%s" "$(openssl rand -hex 32 | tr -d '\n\r\t ')" | vercel env add CRON_SECRET production` — naujas value, explicit whitespace strip
+3. `git commit --allow-empty -m "chore: trigger redeploy after CRON_SECRET whitespace fix" && git push` — trigger empty commit (`4ee35d1`)
+4. Build `fkbcoi4q2` ● Ready 14s ✅
+
+**Root cause:** Per s14 blog-automation-port sesiją (2026-05-11) buvo paleista `openssl rand -hex 32 | vercel env add CRON_SECRET production`. Komanda `openssl rand -hex 32` įvairiose terminal versijose grąžina trailing newline (`\n`). Vercel env value išsaugojo su šiuo newline. Build'o metu Vercel validuoja `CRON_SECRET` kaip Authorization header value (`Bearer $CRON_SECRET`), o HTTP header standardas (RFC 7230 §3.2.4) neleidžia whitespace prefix/suffix.
+
+**Prevention:**
+- ✅ NAUJAS STANDARTAS: visi secret generation pipe'ai į `vercel env add` per `printf "%s" "$(... | tr -d '\n\r\t ')"` — žr. DECISION_LOG 2026-05-12
+- ✅ Atnaujinti `docs/blog-automation-deploy.md` 7-step guide su šituo patternu (carry-over)
+- ✅ Pridėti į `WORKFLOW.md` secret rotation checklist'ą: visada `tr -d` arba `printf "%s"` prieš `vercel env add`
+- ❌ NIEKADA `openssl rand -hex 32 | vercel env add ...` be whitespace strip
+
+---
+
 ## INC-001 — Vercel auto-deploy fail'inosi 9× per 21h (silent)
 
 **Kada:** 2026-05-09 ~10:00 UTC – 2026-05-10 08:30 UTC (~21h trukmės silent failure)

@@ -4,6 +4,49 @@ Architektūriniai sprendimai. Kiekvienas su data, kontekstu, alternatyvomis, spr
 
 ---
 
+## 2026-05-12 — Hero `.btn-hero-secondary` stilius: text-link → outlined button
+
+**Kontekstas**: Po `feat: hero secondary CTA → /brief.html` (commit `50d409c`) vartotojas pasakė "kur tas mygtukas, aš nematau". Reikėjo nuspręsti kaip stipriai diferencijuoti secondary CTA nuo primary.
+
+**Alternatyvos**:
+- A) **Antras tikras outlined button** (Recommended) — 13px font, padding 14×24, cyan border 55%, transparent fill, baltas tekstas, hover cyan border + 8% cyan bg + translateY(-2px). Konsistencija su .btn-hero-primary (border-radius 12px, gap 10px) bet aiškiai antrinis (be solid gradient + glow + box-shadow primary'ui)
+- B) **Sustiprintas text-link** — opacity 55→85%, font 11→13px, palieka diskretiškumą
+- C) **Du tikri mygtukai (vienas dydis)** — confusion kuris primary
+- D) **Solid gold accent button** — išklysta iš brand uniformity (cyan = primary action color)
+
+**Sprendimas**: **A — outlined button (cyan border + transparent + baltas tekstas)**
+
+**Priežastys**:
+- Žodis "mygtukas" iš vartotojo signalizuoja, kad lankytojas neidentifikavo link'o kaip clickable action (font 11px + 55% opacity per silpnas signal)
+- Outlined variantas yra industry-standard secondary CTA pattern (Stripe, Linear, Anthropic visi naudoja); konsistentus su brand cyan accent
+- Aiški vizualinė hierarchija: solid cyan + glow + box-shadow = primary; transparent + cyan border = secondary
+- 13px font su uppercase pašalintas — gerai skaitomas iš toli, bet ne perdaug agresyvus
+
+**Pamoka**: Pristatant naują CTA visada paklausti vartotojo apie tipą (text-link vs outlined vs solid) PRIEŠ implementaciją. Šįkart pridėjus link'ą su esamu silpnu stiliumi, gavau extra round-trip'ą.
+
+---
+
+## 2026-05-12 — Vercel CRON_SECRET whitespace incident: openssl pipe į vercel env add
+
+**Kontekstas**: Po pirmo bundle push'o (`2512730`) Vercel build fail'ino 3s su `Error: The CRON_SECRET environment variable contains leading or trailing whitespace, which is not allowed in HTTP header values.` Per s14 secret generation buvo naudota `openssl rand -hex 32 | vercel env add CRON_SECRET production` — newline iš `openssl` pateko į env value.
+
+**Alternatyvos po incident'o**:
+- A) **`printf "%s" "$(openssl rand -hex 32 | tr -d '\n\r\t ')" | vercel env add`** (Recommended) — explicit whitespace strip, paranoidiškas
+- B) `echo -n "..."` — POSIX echo -n nerelijobenoring (Windows cmd echo neignoruoja -n)
+- C) `vercel env add CRON_SECRET production` rankiniu būdu paste'inant — patikima, bet ne automatable
+
+**Sprendimas**: **A — printf + tr -d**
+
+**Priežastys**:
+- `tr -d '\n\r\t '` apima visus whitespace variantus (Unix `\n`, Windows `\r\n`, tab, space)
+- `printf "%s"` nepriededa trailing newline (skirtingai nei `echo`)
+- Veikia identiškai PowerShell + bash + zsh + Vercel CLI input pipe
+- Future automation skriptai (rotation, multi-env push) gauna stabilų patterną
+
+**Naujas standartas Veriva projekte**: Visi secret generation pipe'ai į `vercel env add` per `printf "%s" "$(... | tr -d '\n\r\t ')"`. Atnaujinti `docs/blog-automation-deploy.md` 7-step guide su šituo patternu (nepadariau šioje sesijoje — carry-over).
+
+---
+
 ## 2026-05-11 — Blog automation: OpenAI gpt-4.1 vietoj Anthropic Claude (despite Veriva docs)
 
 **Kontekstas**: Portuojant Empirra blog automation Verivai, AI provider sprendimas. `docs/blog-system-prompt.md` rašytas su Claude API (`claude-sonnet-4-6` su prompt caching, `cache_control: ephemeral`), bet Empirra production'e veikia OpenAI gpt-4.1 (`lib/claude.ts` istorinis pavadinimas — iš tikrųjų OpenAI SDK).

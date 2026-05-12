@@ -1,10 +1,10 @@
 # PROJECT_STATUS — Veriva
 
 **Pradžia**: 2026-05-09
-**Paskutinis update**: 2026-05-11 (blog-automation-port)
-**Statusas**: 🟡 UNCOMMITTED — blog automation pipeline code-done (14 lib + 3 endpoint'ai + topics + migration + vercel.json + docs), 7/12 Vercel env vars push'inta, 5 Sensitive vars + Telegram bot + Supabase migration + git push laukia vartotojo input'o; ankstesnė hero-quiz-redesign sesija irgi UNCOMMITTED (bundle'insis su šia)
+**Paskutinis update**: 2026-05-12 (bundle-push-hero-polish)
+**Statusas**: 🟢 DEPLOYED frontend (hero + blog automation kodas live), 🟡 blog automation RUNTIME blocked — 5 Sensitive env vars + Telegram bot + Supabase migration laukia vartotojo input'o; cron'as 2026-05-12 10:00 LT crash'ins jei env vars nepateikti
 **Production URL**: https://www.veriva.lt (LIVE su Vercel SSL) | https://veriva.lt (apex SSL ✅)
-**Paskutinis commit**: `9efb0d0` (privatumas.html NEW + 6 footer link fix — production state, 2026-05-10)
+**Paskutinis commit**: `f2f2cdb` (hero polish: nav padding + .h-sub overflow fix, 2026-05-12)
 
 ---
 
@@ -12,7 +12,7 @@
 
 | Puslapis | Statusas | Pastabos |
 |---|---|---|
-| `index.html` | 🟡 UNCOMMITTED hero rewrite (2026-05-11) | Hero + quiz section perdarytos pagal vartotojo pateiktą HTML, brand-adapted (`--ink/--cyan/--gold` + Plus Jakarta Sans + Syne 800 + JetBrains Mono mono kicker); pridėta: ticker (fixed top, mono font, brand žodžiai loop) + canvas particles (80 mėlynos taškės, mouse attraction, 105px line connections) + GSAP entrance timeline + magnetic CTA + glass quiz card su radial mesh + cyan hairline ::before; pašalinta: senas `.widget` 5-q embed hero'jūje + `.proof-strip` 4-stat blokas; **inline `<style>` ~340 lines head'e** (laužia "niekada inline" taisyklę, laukia perkėlimo į index.css); custom cursor `#cur` div `display:none !important` (dead element, laukia cleanup); cache-buster `v=20260511c` |
+| `index.html` | 🟢 LIVE hero polish (2026-05-12, `f2f2cdb`) | Hero + quiz section live'e su brand-adapted stack (`--ink/--cyan/--gold` + Plus Jakarta Sans + Syne 800 + JetBrains Mono); ticker BALTAS tekstas (rgba(255,255,255,.85)) + canvas particles + GSAP timeline + magnetic CTA + glass quiz card; brief.html link hero secondary CTA outlined button (cyan border, 13px); `.h-bottom` margin-bottom 64px desktop / 40px mobile; nav padding 128px desktop / 108px mobile (nav nelimpa ant H1); `#hero overflow: clip` + min-height 780/700 (`.h-sub` neoverflow'ina); **inline `<style>` ~340 lines head'e** (vis dar laukia perkėlimo į index.css); custom cursor `#cur` dead element + cursor JS listener'iai dead code |
 | `assets/css/index.css` | 🟡 LIVE 2571 lines + ~150 lines dead CSS | Po hero rewrite: `.widget`, `.w-*`, `.wpd*`, `.wbd*`, `.proof-strip`, `.ps-*`, sena `.hero-w/.hero-eyebrow/.hero-trust` (eil. 55-225) nebenaudojamos. Dead CSS cleanup laukia kitos sesijos. |
 | `assets/js/index.js` | 🟡 LIVE ~16KB + dead cursor listener'iai | Po hero rewrite: widget logika adaptuota naujam markup'ui (`buildProgress` progress bar, `renderQ` `.qc-opt`, `pick` `#w-opts .qc-opt`, `showResult` `.qcr-bd-row`); pridėtas hero JS blokas (~110 lines: canvas particles + GSAP timeline + magnetic CTA + custom cursor handler); custom cursor JS listener'iai (~30 lines) liko nors `#cur` `display:none` |
 | `blog.html` | 🟢 LIVE premium dark tier | Visa puslapio dark theme (buvo light); hero radial mesh + mono kicker + cyan dot + Syne 800; filterai dark glass + cyan accent; post kortelės `.post`-style premium card su `:has()` sibling dim + grid mask visual; newsletter cyan CTA + glass card; 3 placeholder kortelės disabled (`bc--soon` + "Netrukus" badge, aria-disabled), 3 realūs post'ai aktyvūs (2026-05-10 blog-dark-tier-sync) |
@@ -37,9 +37,9 @@
 | `POST /api/forms/audit-request` | ⬜ Nesukurtas | BDAR audito užklausa |
 | `POST /api/forms/newsletter` | ⬜ Nesukurtas | Newsletter prenumerata (blog.html naudoja) |
 | `GET /api/internal/health` | 🟡 Sukurtas, neištestuotas | Health check |
-| `POST /api/automations/blog-gen` | 🟡 Code-done (553 lines), UNDEPLOYED | Cron blog post generation: topics.json → AI (OpenAI gpt-4.1) → 10 validators → template injection → GitHub draft branch → Telegram notification (Publikuoti/Taisyti/Praleisti) |
-| `POST /api/automations/telegram-webhook` | 🟡 Code-done (319 lines), UNDEPLOYED | Telegram callback handler: P → blog-approve, R → save Supabase state + ask text reply, S → delete branch + topics.status=skipped |
-| `POST /api/automations/blog-approve` | 🟡 Code-done (406 lines), UNDEPLOYED | Publish flow: addBlogCardToGrid (.bp-grid) + linkInternal forward+reverse + updateSitemap + topics.status=published + mergeBranchToMain + deleteBranch + Telegram confirmation |
+| `POST /api/automations/blog-gen` | 🟡 DEPLOYED (553 lines), RUNTIME BLOCKED | Cron blog post generation: topics.json → AI (OpenAI gpt-4.1) → 10 validators → template injection → GitHub draft branch → Telegram notification (Publikuoti/Taisyti/Praleisti). DEPLOYED su `f2f2cdb`, bet runtime laukia 5 Sensitive env vars + Telegram bot + Supabase migration. Cron'as 2026-05-12 10:00 LT crash'ins. |
+| `POST /api/automations/telegram-webhook` | 🟡 DEPLOYED (319 lines), RUNTIME BLOCKED | Telegram callback handler: P → blog-approve, R → save Supabase state + ask text reply, S → delete branch + topics.status=skipped. DEPLOYED, bet Supabase `veriva_telegram_revise_state` lentelė neegzistuoja. |
+| `POST /api/automations/blog-approve` | 🟡 DEPLOYED (406 lines), RUNTIME BLOCKED | Publish flow: addBlogCardToGrid (.bp-grid) + linkInternal forward+reverse + updateSitemap + topics.status=published + mergeBranchToMain + deleteBranch + Telegram confirmation. DEPLOYED, bet `GITHUB_TOKEN` env var laukia. |
 
 ## INTEGRACIJOS
 

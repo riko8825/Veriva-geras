@@ -1,10 +1,10 @@
 # PROJECT_STATUS — Veriva
 
 **Pradžia**: 2026-05-09
-**Paskutinis update**: 2026-05-12 (bundle-push-hero-polish)
-**Statusas**: 🟢 DEPLOYED frontend (hero + blog automation kodas live), 🟡 blog automation RUNTIME blocked — 5 Sensitive env vars + Telegram bot + Supabase migration laukia vartotojo input'o; cron'as 2026-05-12 10:00 LT crash'ins jei env vars nepateikti
+**Paskutinis update**: 2026-05-12 (cookiebot-brief-dark-tier-consent)
+**Statusas**: 🟢 DEPLOYED frontend (hero + brief.html dark tier + Cookiebot LT force + consent checkbox live), 🟡 blog automation RUNTIME blocked — 5 Sensitive env vars + Telegram bot + Supabase migration laukia vartotojo input'o; cron'as 2026-05-12 10:00 LT **JAU PRABĖGO** be paleidimo
 **Production URL**: https://www.veriva.lt (LIVE su Vercel SSL) | https://veriva.lt (apex SSL ✅)
-**Paskutinis commit**: `f2f2cdb` (hero polish: nav padding + .h-sub overflow fix, 2026-05-12)
+**Paskutinis commit**: `a467b9c` (docs: s15 status + INC-002 postmortem, 2026-05-12)
 
 ---
 
@@ -12,11 +12,11 @@
 
 | Puslapis | Statusas | Pastabos |
 |---|---|---|
-| `index.html` | 🟢 LIVE hero polish (2026-05-12, `f2f2cdb`) | Hero + quiz section live'e su brand-adapted stack (`--ink/--cyan/--gold` + Plus Jakarta Sans + Syne 800 + JetBrains Mono); ticker BALTAS tekstas (rgba(255,255,255,.85)) + canvas particles + GSAP timeline + magnetic CTA + glass quiz card; brief.html link hero secondary CTA outlined button (cyan border, 13px); `.h-bottom` margin-bottom 64px desktop / 40px mobile; nav padding 128px desktop / 108px mobile (nav nelimpa ant H1); `#hero overflow: clip` + min-height 780/700 (`.h-sub` neoverflow'ina); **inline `<style>` ~340 lines head'e** (vis dar laukia perkėlimo į index.css); custom cursor `#cur` dead element + cursor JS listener'iai dead code |
+| `index.html` | 🟢 LIVE hero polish + .h-bottom 96px (2026-05-12, `a467b9c`) | Hero + quiz section live'e su brand-adapted stack (`--ink/--cyan/--gold` + Plus Jakarta Sans + Syne 800 + JetBrains Mono); ticker BALTAS tekstas (rgba(255,255,255,.85)) + canvas particles + GSAP timeline + magnetic CTA + glass quiz card; brief.html link hero secondary CTA outlined button (cyan border, 13px); `.h-bottom margin-bottom: 96px desktop / 64px mobile` (s16 pakeltas iš 64/40); nav padding 128px desktop / 108px mobile; `#hero overflow: clip` + min-height 780/700; Cookiebot script su `data-user-country="LT"` override; **inline `<style>` ~340 lines head'e** (vis dar laukia perkėlimo į index.css); custom cursor `#cur` dead element + cursor JS listener'iai dead code |
 | `assets/css/index.css` | 🟡 LIVE 2571 lines + ~150 lines dead CSS | Po hero rewrite: `.widget`, `.w-*`, `.wpd*`, `.wbd*`, `.proof-strip`, `.ps-*`, sena `.hero-w/.hero-eyebrow/.hero-trust` (eil. 55-225) nebenaudojamos. Dead CSS cleanup laukia kitos sesijos. |
 | `assets/js/index.js` | 🟡 LIVE ~16KB + dead cursor listener'iai | Po hero rewrite: widget logika adaptuota naujam markup'ui (`buildProgress` progress bar, `renderQ` `.qc-opt`, `pick` `#w-opts .qc-opt`, `showResult` `.qcr-bd-row`); pridėtas hero JS blokas (~110 lines: canvas particles + GSAP timeline + magnetic CTA + custom cursor handler); custom cursor JS listener'iai (~30 lines) liko nors `#cur` `display:none` |
 | `blog.html` | 🟢 LIVE premium dark tier | Visa puslapio dark theme (buvo light); hero radial mesh + mono kicker + cyan dot + Syne 800; filterai dark glass + cyan accent; post kortelės `.post`-style premium card su `:has()` sibling dim + grid mask visual; newsletter cyan CTA + glass card; 3 placeholder kortelės disabled (`bc--soon` + "Netrukus" badge, aria-disabled), 3 realūs post'ai aktyvūs (2026-05-10 blog-dark-tier-sync) |
-| `brief.html` | 🟢 NEW + LIVE | 4 sekcijos × 59 klausimai, konditional logika sveikatos vs verslo, multi-step progress, validation, 3 states (2026-05-10) |
+| `brief.html` | 🟢 LIVE premium dark tier + consent | 4 sek × **60 klausimų** (pridėtas privacy_consent checkbox kaip 60-tas), konditional logika sveikatos vs verslo, multi-step progress, validation, 3 states; **2026-05-12 dark tier redesign**: glass card `rgba(12,26,46,.55)` + backdrop-blur 20px + cyan glowing kicker + Syne 800 + dark glass inputs + cyan gradient buttons + consent kortelė su cyan glowing checkmark; privacy_consent privalomas prieš submit (Norėdami pateikti klausimyną, turite sutikti...); **carry-over**: inline `<style>` ~330 lines head'e laukia extract'o į `assets/css/brief.css`; mobile 4-sek click-through realus flow netesttuotas (tik state injection) |
 | `blog/template.html` | 🟢 v2 (post-polish) | 24 placeholder'iai, polished CSS, a11y, 4 schema slotai (2026-05-10) |
 | `blog/bdar-baudos-lietuvoje.html` | 🟢 PUBLISHED | Pillar 2846ž., audit health 19/20, 4 schemas, 3 SVG (2026-05-10) |
 | `blog/nis2-direktyva-lietuvoje.html` | 🟢 PUBLISHED | Pillar 3700ž., audit 19/20 self / 17/20 frontend, 5 schemas, 3 SVG, Author Justinas (2026-05-10) |
@@ -55,7 +55,7 @@
 | GitHub API | 🔴 GITHUB_TOKEN NEPUSH'INTAS (Sensitive flag — laukia rankinio pateikimo) | Branch create/commit/merge per blog automation pipeline, repo `riko8825/Veriva-geras` |
 | Telegram bot | 🔴 NESUKURTAS — vartotojas turi sukurti `@VerivaBlogBot` per @BotFather (atskiras nuo Empirra) | Blog draft approve flow su 3 inline buttons (Publikuoti/Taisyti/Praleisti) |
 | GA4 + GTM | ⬜ | Analytics |
-| Cookiebot | 🟡 LIVE su stale crawl | CMP auto-blocking, CBID `bc31b2c9-a2b7-44e8-a3a2-624b027ba646`, įdiegtas 7 puslapiuose (+privatumas.html), CookieDeclaration script veikia. **Issue (2026-05-11)**: paskutinis crawl 2026-04-23 (PRIEŠ WP→Vercel migraciją) — lentelė rodo seną WP versiją (wpEmojiSettings, _pk_*, _ga). **Action**: vartotojas siunčia support email + manual rescan (CBID + paaiškinimas) — ETA ~24h; alternatyva auto-scan ~2026-05-23 |
+| Cookiebot | 🟢 LIVE + rescan'inta + force LT | CMP auto-blocking, CBID `bc31b2c9-a2b7-44e8-a3a2-624b027ba646`, įdiegtas **9 HTML failuose** su `data-user-country="LT"` override (force GDPR scope visiems regionams, ne tik ES — Free planas neturi dashboard toggle). Rescan'as 2026-05-11 14:26 UTC: 1 slapukas (`CookieConsent` Necessary), seni WP markeriai išvalyti. Headless puppeteer verify (4 URL): dialog `#CybotCookiebotDialog` `display:flex`, `userCountry:LT`, `gdprApplies:true`, CookieDeclaration lentelė renderinasi DOM'e `/slapukai` puslapyje |
 
 ## SEO / CONTENT
 

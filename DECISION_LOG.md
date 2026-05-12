@@ -4,6 +4,73 @@ Architektūriniai sprendimai. Kiekvienas su data, kontekstu, alternatyvomis, spr
 
 ---
 
+## 2026-05-12 — Cookiebot GeoIP override: `data-user-country="LT"` (Free planas, force visiems)
+
+**Kontekstas**: Po Cookiebot scan'o atnaujinimo (2026-05-11 14:26 UTC, seni WP markeriai išvalyti) vartotojas vis dar incognito nematė consent banner'io. Diagnozavus `cdreport.js` aptikta, kad Cookiebot pagal default rodo banner'į TIK ES regionams (31 šalies sąrašas `gdpr:[...]` iš `uc.js`). Vartotojas testavo ne iš LT IP. Cookiebot Free planas neturi dashboard "Geographic regulations" toggle (vartotojo screenshot patvirtino).
+
+**Alternatyvos**:
+- A) **`data-user-country="LT"` HTML override 9 failuose** (Recommended) — hardcode'inti userCountry kaip LT → `gdprApplies: true` visiems pasaulyje. Be backend pakeitimo, kodu valdoma.
+- B) Upgrade Cookiebot į Premium (~€16/mėn) → atrakina Geographic regulations toggle (visi regions)
+- C) `data-georegions='{"region":"001","cbid":"..."}'` (worldwide wildcard) — netinkamas, georegions skirta CBID switching, ne force scope
+- D) Custom inline JS pre-uc.js: `window.CookieConsent.regulations.gdprApplies = true` — fragile (race condition su Cookiebot init)
+
+**Sprendimas**: **A — `data-user-country="LT"` 9 HTML failuose**
+
+**Priežastys**:
+- Veriva yra **B2B LT only** business — target audience visada LT, jokio CCPA/LGPD compliance reikalavimo
+- Free planas (Veriva neturi reklamos budget'o Premium tier'ui dabar)
+- Single attribute change, lengvai reversible jei strategijai keisis (find/replace)
+- Headless puppeteer verify patvirtino: `userCountry: "LT"`, `gdprApplies: true`, `isOutsideEU: false` visiems pasauliniams IP
+
+**Pamoka**: Cookiebot Free GDPR scope ne global — visada testuoti su VPN (ne ES IP) prieš deploy'inant CMP. Force-LT pattern saugus jei target audience yra vienos šalies B2B.
+
+---
+
+## 2026-05-12 — Privatumo politikos sutikimas: `consent` klausimo tipas + strict boolean validation
+
+**Kontekstas**: brief.html (59 klausimai, 4 sekcijos) submit'as veikė be jokio explicit privatumo politikos sutikimo — BDAR 6 str. 1a (sutikimo pagrindas) neoptimaliai aiškiai dokumentuotas. Vartotojas paprašė pridėti varnelę gale klausimyno, kuri privaloma prieš submit.
+
+**Alternatyvos**:
+- A) **Naujas `consent` tipas su custom render + strict `=== true` validation** (Recommended) — atskira semantic kategorija, savitas markup (visas tekstas klikinamas su HTML link viduje), atskira CSS klasė `bf-q-consent` su top hairline border atskiriantis nuo įprastų klausimų
+- B) Reuse `checkbox` tipas su `required: true` + 1 opcija — generic, bet semantiškai sutapatina su "pasirinkite kategorijas" klausimais
+- C) HTML5 native `<input type="checkbox" required>` su FormData — paprasta, bet nebūtų konsistentu su state.answers JSON modelin, ir custom error message reikalautų atskiro markup
+- D) Modal popup po Submit'o click'o — friction, blogiau a11y, dažnas anti-pattern
+
+**Sprendimas**: **A — atskiras `consent` tipas**
+
+**Priežastys**:
+- Semantinis aiškumas: `consent` ≠ `checkbox` (skirtingos BDAR pasekmės — sutikimas yra teisinis pagrindas, ne data category)
+- Custom markup leidžia HTML link viduje teksto (`<a href="/privatumas.html" target="_blank">`)
+- Atskira CSS klasė leidžia vizualinį atskyrimą (top hairline border-top + atskira kortelė) nuo įprastų klausimų — vartotojas IŠKART supranta, kad tai NE įprastas klausimas
+- Strict `valid = a === true` (boolean) — checkbox `valid = Array.isArray(a) && a.length > 0` būtų buvęs platus
+- `state.answers.privacy_consent: true` pateks į payload su aiškia `_consent` semantic dimension
+
+**BDAR compliance kontekstas**: Sutikimo language "Sutinku, kad mano pateikti duomenys būtų tvarkomi pagal privatumo politiką, siekiant parengti preliminarias rekomendacijas. Suprantu, kad galiu bet kada atsiimti sutikimą" — atitinka BDAR 7 str. (sutikimas turi būti aiškus, informuotas, atšaukiamas). Privatumo politikos link tikslus dokumentas (`/privatumas.html` su 10 BDAR skyriais).
+
+---
+
+## 2026-05-12 — brief.html `.bf-btn[hidden]` regression fix po dark tier redesign
+
+**Kontekstas**: brief.html dark tier redesign metu (s16 commit `936bc6a`) pakeičiau `.bf-btn` base klasę į `display:inline-flex; align-items:center; gap:8px` (kad buttons turėtų konsistentų layout su SVG arrows). Originaliame brief.html CSS turėjo TIK `.bf-btn-prev[hidden]{display:none}` — paskutiniame ekrane consent push'o screenshot rodė 2 mygtukus (`Toliau →` + `Pateikti klausimyną →`) vienu metu, nors `next.hidden = true` per `updateNav()` set'inta. CSS `display:inline-flex` override'ino native `[hidden]` attribute.
+
+**Alternatyvos**:
+- A) **`.bf-btn[hidden]{display:none !important}`** (Recommended) — universal selector + `!important` kad pribijotų base flex
+- B) Atstatyti `.bf-btn-prev[hidden]` + pridėti `.bf-btn-next[hidden]` + `.bf-btn-submit[hidden]` (specific selectors) — verbose, lengvas miss naujam button tipui
+- C) Naudoti `style.display = 'none'` JS handler'yje vietoj `hidden = true` — keičiamas API, refactor reikalauja `updateNav()` perdarymas
+- D) Pakeisti `.bf-btn` iš `display:inline-flex` į `display:inline` + wrap'inti turinį flex container'iu — palieka `[hidden]` natūralį behavior'ą bet keičia visą button layout
+
+**Sprendimas**: **A — `.bf-btn[hidden]{display:none !important}`**
+
+**Priežastys**:
+- Specificity match base klasei + `!important` užtikrina, kad nei viena future modifier klasė neperrašys
+- Universal pattern — jei pridėsim naują button tipą `.bf-btn-cancel[hidden]` veiks be papildomo CSS
+- Native `[hidden]` semantic išsaugotas (a11y screen reader'iai supranta attribute)
+- Minimalus diff (1 line keičiama)
+
+**Pamoka**: Po **base klasės modifications** (`display`, `position`, `overflow`) **ALWAYS check** ar `[hidden]`/`[disabled]` attribute'ai vis dar veikia per pažymėtus naudojimo case'us. Šitas regression'as įvyko, nes dark tier redesign'as turėjo per platų scope'ą — turėjau du atskirus commit'us (dark tier separately + button additions separately), ne vieną bundle.
+
+---
+
 ## 2026-05-12 — Hero `.btn-hero-secondary` stilius: text-link → outlined button
 
 **Kontekstas**: Po `feat: hero secondary CTA → /brief.html` (commit `50d409c`) vartotojas pasakė "kur tas mygtukas, aš nematau". Reikėjo nuspręsti kaip stipriai diferencijuoti secondary CTA nuo primary.

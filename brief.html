@@ -145,6 +145,45 @@ input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
 .bf-q.invalid .bf-err{display:block}
 .bf-q.invalid .bf-input,.bf-q.invalid .bf-select,.bf-q.invalid .bf-textarea{border-color:rgba(239,68,68,.55);background:rgba(239,68,68,.05)}
 
+/* ── CONSENT (privatumo politikos sutikimas — paskutiniame ekrane) ── */
+.bf-q-consent{
+  margin-top:32px;padding-top:24px;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.bf-consent{
+  position:relative;display:flex;align-items:flex-start;gap:14px;
+  padding:16px 20px;
+  background:rgba(7,17,31,.45);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:12px;cursor:pointer;
+  transition:all var(--t);
+}
+.bf-consent:hover{border-color:rgba(0,180,216,.40);background:rgba(7,17,31,.6)}
+.bf-consent input[type="checkbox"]{position:absolute;opacity:0;pointer-events:none}
+.bf-consent-mark{
+  flex-shrink:0;width:20px;height:20px;
+  border:1.5px solid rgba(255,255,255,.30);
+  border-radius:5px;margin-top:1px;position:relative;
+  background:rgba(7,17,31,.5);
+  transition:all var(--t);
+}
+.bf-consent-mark::after{
+  content:'';position:absolute;
+  left:5px;top:1px;width:6px;height:11px;
+  border:solid var(--cyan);border-width:0 2px 2px 0;
+  transform:rotate(45deg) scale(.4);
+  opacity:0;transition:all var(--t);
+  filter:drop-shadow(0 0 4px rgba(0,180,216,.6));
+}
+.bf-consent:has(input:checked){border-color:rgba(0,180,216,.55);background:rgba(0,180,216,.06)}
+.bf-consent:has(input:checked) .bf-consent-mark{border-color:var(--cyan);background:rgba(0,180,216,.1)}
+.bf-consent:has(input:checked) .bf-consent-mark::after{opacity:1;transform:rotate(45deg) scale(1)}
+.bf-consent-text{font-family:var(--ff);font-size:13px;color:rgba(255,255,255,.80);line-height:1.55;font-weight:400}
+.bf-consent-text a{color:var(--cyan);text-decoration:underline;text-underline-offset:2px}
+.bf-consent-text a:hover{color:#5fe5ff}
+.bf-q-consent.invalid .bf-consent{border-color:rgba(239,68,68,.55);background:rgba(239,68,68,.05)}
+.bf-q-consent.invalid .bf-consent-mark{border-color:rgba(239,68,68,.55)}
+
 /* ── NAV ── */
 .bf-nav{display:flex;align-items:center;justify-content:space-between;margin-top:36px;padding-top:28px;border-top:1px solid rgba(255,255,255,.08);gap:12px;position:relative;z-index:1}
 .bf-btn{padding:14px 24px;border-radius:12px;font-family:var(--ff);font-size:13.5px;font-weight:700;letter-spacing:.01em;transition:transform .25s var(--ease-out),box-shadow .25s var(--ease-out),background .2s var(--ease-out),border-color .2s var(--ease-out),color .2s var(--ease-out);display:inline-flex;align-items:center;gap:8px;will-change:transform}
@@ -661,6 +700,7 @@ const SECTIONS = [
         { v: 'exploring', t: 'Tik žvalgausi' },
       ]},
       { id: 'comments', label: '59. Papildomi komentarai ar specifiniai klausimai', type: 'textarea', required: false, placeholder: 'Pvz., specifiniai sektoriaus reikalavimai, jau vykstantys projektai, žinomos rizikos…' },
+      { id: 'privacy_consent', type: 'consent', required: true, label: 'Sutinku, kad mano pateikti duomenys būtų tvarkomi pagal <a href="/privatumas.html" target="_blank" rel="noopener">privatumo politiką</a>, siekiant parengti preliminarias rekomendacijas. Suprantu, kad galiu bet kada atsiimti sutikimą.', errMsg: 'Norėdami pateikti klausimyną, turite sutikti su privatumo politika.' },
     ]
   }
 ];
@@ -724,7 +764,41 @@ function renderSection(){
 
     const qEl = document.createElement('div');
     qEl.className = 'bf-q';
+    if(q.type === 'consent') qEl.classList.add('bf-q-consent');
     qEl.dataset.qid = q.id;
+
+    // Consent tipas turi savitą markup — visas label klikinamas su checkbox viduje
+    if(q.type === 'consent'){
+      const wrap = document.createElement('label');
+      wrap.className = 'bf-consent';
+      wrap.htmlFor = q.id;
+      const input = document.createElement('input');
+      input.type = 'checkbox';
+      input.id = q.id;
+      input.name = q.id;
+      if(state.answers[q.id] === true) input.checked = true;
+      input.addEventListener('change', e => {
+        state.answers[q.id] = e.target.checked;
+        qEl.classList.remove('invalid');
+      });
+      const mark = document.createElement('span');
+      mark.className = 'bf-consent-mark';
+      const txt = document.createElement('span');
+      txt.className = 'bf-consent-text';
+      txt.innerHTML = adapt(q.label) + (q.required ? ' <span class="bf-q-req">*</span>' : '');
+      wrap.appendChild(input);
+      wrap.appendChild(mark);
+      wrap.appendChild(txt);
+      qEl.appendChild(wrap);
+
+      const err = document.createElement('div');
+      err.className = 'bf-err';
+      err.textContent = q.errMsg || 'Šis sutikimas privalomas.';
+      qEl.appendChild(err);
+
+      sec.appendChild(qEl);
+      return;
+    }
 
     const label = document.createElement('label');
     label.className = 'bf-q-label';
@@ -870,6 +944,8 @@ function validateSection(){
       valid = !!a;
     } else if(q.type === 'checkbox'){
       valid = Array.isArray(a) && a.length > 0;
+    } else if(q.type === 'consent'){
+      valid = a === true;
     }
 
     if(!valid){

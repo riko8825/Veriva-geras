@@ -12,6 +12,7 @@
     { "src": "api/automations/telegram-webhook/route.ts",  "use": "@vercel/node", "config": { "maxDuration": 60 } },
     { "src": "*.html",                                     "use": "@vercel/static" },
     { "src": "blog/*.html",                                "use": "@vercel/static" },
+    { "src": "seo/**/index.html",                          "use": "@vercel/static" },
     { "src": "assets/**",                                  "use": "@vercel/static" },
     { "src": "robots.txt",                                 "use": "@vercel/static" },
     { "src": "sitemap.xml",                                "use": "@vercel/static" },

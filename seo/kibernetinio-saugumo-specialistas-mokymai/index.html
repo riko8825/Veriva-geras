@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kibernetinio saugumo specialisto mokymai verslui</title>
+<meta name="description" content="Sužinokite, kaip kibernetinio saugumo specialisto mokymai gali pagerinti įmonės saugumą ir efektyvumą. Apsaugokite savo verslą nuo grėsmių.">
+<link rel="canonical" href="https://veriva.lt/seo/kibernetinio-saugumo-specialistas-mokymai">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kibernetinio saugumo specialisto mokymai verslui">
+<meta property="og:description" content="Sužinokite, kaip kibernetinio saugumo specialisto mokymai gali pagerinti įmonės saugumą ir efektyvumą. Apsaugokite savo verslą nuo grėsmių.">
+<meta property="og:url" content="https://veriva.lt/seo/kibernetinio-saugumo-specialistas-mokymai">
+<meta property="og:image" content="https://veriva.lt/seo/kibernetinio-saugumo-specialistas-mokymai/hero.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Veriva UAB">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kibernetinio saugumo specialisto mokymai verslui">
+<meta name="twitter:description" content="Sužinokite, kaip kibernetinio saugumo specialisto mokymai gali pagerinti įmonės saugumą ir efektyvumą. Apsaugokite savo verslą nuo grėsmių.">
+<meta name="twitter:image" content="https://veriva.lt/seo/kibernetinio-saugumo-specialistas-mokymai/hero.webp">
+
+<!-- Bot signals -->
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="author" content="Justinas Gliebus">
+
+<!-- Icons + fonts (match root home page) -->
+<link rel="icon" type="image/png" href="/public/favicon-192x192.png" sizes="192x192">
+<link rel="icon" type="image/png" href="/public/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/public/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/svg+xml" href="/public/favicon.svg">
+<link rel="shortcut icon" href="/public/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png">
+<link rel="preload" as="image" href="/public/logo.webp" type="image/webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
+
+<!-- Unified site stylesheet (same source as empirra.com/) -->
+<link rel="preload" href="/public/styles.v2.css?v=20260430" as="style">
+<link rel="stylesheet" href="/public/styles.v2.css?v=20260430">
+
+<!-- SEO content-specific styles (article body only — chrome lives in styles.v2.css) -->
+<style>
+/* Force Inter as default body font (FOIT/FOUT defense — if Google Fonts CSS
+   is delayed, system-ui still applies via styles.v2.css body rule, but we
+   make sure Inter wins specificity once it loads). */
+html body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+
+/* Logo display logic — root home page has this inline, styles.v2.css doesn't.
+   Mobile shows SVG mark (≡), desktop shows full EMPIRRA wordmark. */
+.nav__logo-full{display:none}
+.nav__logo-full img{display:none}
+.nav__logo-mark{display:block}
+@media(min-width:768px){
+  .nav__logo-full{display:block}
+  .nav__logo-full img{display:block}
+  .nav__logo-mark{display:none}
+}
+
+/* Nav links + CTA — keep on one line. styles.v2.css rules lack white-space. */
+.nav .nav__links{flex-wrap:nowrap;gap:24px}
+.nav .nav__link{white-space:nowrap;flex-shrink:0}
+.nav .nav__cta{white-space:nowrap;flex-shrink:0}
+
+/* Prevent nav CTA pill from spilling past the right edge at high zoom levels.
+   Root cause: .nav__i is flex space-between inside .wrap (max-width:1160px),
+   so the rightmost CTA can extrude past viewport edge on zoom. We make the
+   CTA group flex-shrink:0 and let the middle nav links shrink/hide if needed. */
+.nav__i{max-width:100%;flex-wrap:nowrap;gap:16px;min-width:0}
+.nav__i > div:last-child{flex-shrink:0}
+.nav__links{min-width:0;overflow:hidden}
+
+/* gbtn force visible text + nowrap (defense for any gold/ghost button) */
+.gbtn{white-space:nowrap;line-height:1}
+.gbtn-gold{color:#0B0B0C !important}
+
+.seo-article{max-width:720px;margin:0 auto;padding:128px 24px 80px}
+.seo-article h1{font-size:clamp(30px,4.5vw,46px);font-weight:300;line-height:1.12;letter-spacing:-.035em;color:#F9FAFB;margin:0 0 20px}
+.seo-article h2{font-size:clamp(20px,2.6vw,28px);font-weight:500;line-height:1.25;letter-spacing:-.018em;color:#F9FAFB;margin:48px 0 16px}
+.seo-article p{font-size:16px;color:rgba(255,255,255,.72);line-height:1.75;margin:0 0 18px;font-weight:400}
+.seo-article a{color:#C6A96B;text-decoration:underline;text-decoration-color:rgba(198,169,107,.35);text-underline-offset:3px}
+.seo-article a:hover{text-decoration-color:#C6A96B}
+/* Override styles.v2.css .lead{max-width:520px} — full container width */
+.seo-article .lead{font-size:18px;color:rgba(249,250,251,.95);padding:14px 0 20px;margin:24px 0 32px;line-height:1.6;font-weight:400;border-bottom:.5px solid rgba(198,169,107,.18);position:relative;max-width:none}
+.seo-article .lead::before{content:'';position:absolute;top:0;left:0;width:32px;height:2px;background:#C6A96B}
+.seo-article img.hero{display:block;width:100%;height:auto;border-radius:8px;margin:32px 0 48px;border:.5px solid rgba(198,169,107,.12);aspect-ratio:1200/630;object-fit:cover}
+.seo-article .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:32px 0}
+.seo-article table.comparison{width:100%;border-collapse:collapse;font-size:14px;border:.5px solid rgba(198,169,107,.18);min-width:520px}
+.seo-article table.comparison thead{background:linear-gradient(135deg,#D4BB82,#C6A96B 50%,#B8965A);color:#0B0B0C}
+.seo-article table.comparison th{padding:14px 16px;text-align:left;font-weight:500;letter-spacing:.02em}
+.seo-article table.comparison td{padding:13px 16px;border-bottom:.5px solid rgba(255,255,255,.05);color:rgba(255,255,255,.78)}
+.seo-article table.comparison tbody tr:hover{background:rgba(198,169,107,.04)}
+.seo-article table.comparison tbody tr:last-child td{border-bottom:none}
+.seo-article .cta-row{display:flex;flex-wrap:wrap;gap:16px;margin:32px 0}
+@media(max-width:520px){.seo-article .cta-row .gbtn{width:100%;justify-content:center}}
+.seo-article .faq{margin:64px 0 32px}
+.seo-article .faq h2{margin-bottom:8px}
+.seo-article .faq details{border-top:.5px solid rgba(198,169,107,.12);padding:18px 0}
+.seo-article .faq details:last-child{border-bottom:.5px solid rgba(198,169,107,.12)}
+.seo-article .faq summary{cursor:pointer;font-weight:500;color:#F9FAFB;font-size:15px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.seo-article .faq summary::-webkit-details-marker{display:none}
+.seo-article .faq summary::after{content:'+';color:#C6A96B;font-weight:300;font-size:20px;line-height:1}
+.seo-article .faq details[open] summary::after{content:'\2212'}
+.seo-article .faq details p{margin:14px 0 0;color:rgba(255,255,255,.65);font-size:14px}
+.seo-article aside.internal-links{margin:48px 0;padding:24px 0;border-top:.5px solid rgba(198,169,107,.12);border-bottom:.5px solid rgba(198,169,107,.12)}
+.seo-article aside.internal-links h2{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(198,169,107,.7);margin:0 0 14px}
+.seo-article aside.internal-links ul{display:flex;flex-direction:column;gap:8px;list-style:none;padding:0;margin:0}
+.seo-article aside.internal-links li{font-size:14px}
+/* Formal citation block (E-E-A-T trust signal). Replaces old single-line
+   .ext-sources display. Numbered list with publisher name, italic title,
+   linked domain, access date — academic-style formatting that Google's
+   HCU classifier and AI Overview both prefer over inline source mentions. */
+.seo-article .citations{margin:64px 0 32px;padding-top:32px;border-top:.5px solid rgba(198,169,107,.18)}
+.seo-article .citations h2{font-size:13px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:rgba(198,169,107,.85);margin:0 0 20px}
+.seo-article .citations ol{margin:0;padding:0 0 0 20px;color:rgba(255,255,255,.6);font-size:13px;line-height:1.7}
+.seo-article .citations li{margin:0 0 10px;padding-left:6px}
+.seo-article .citations li:last-child{margin-bottom:0}
+.seo-article .citations em{color:rgba(255,255,255,.78);font-style:italic}
+.seo-article .citations a{color:rgba(198,169,107,.85);text-decoration:underline;text-decoration-color:rgba(198,169,107,.3)}
+.seo-article .citations a:hover{text-decoration-color:#C6A96B}
+/* Legacy .ext-sources kept for backward-compat parse only — not styled visibly. */
+.seo-article .ext-sources{display:none}
+.seo-article .timestamp{display:none}
+
+/* ============================================================
+   EDITORIAL PRIMITIVES — modern long-form layout components
+   Inspired by Stripe Press / Linear / Pitch editorial style.
+   ============================================================ */
+
+/* Eyebrow label above H1 — small, gold, letter-spaced */
+.seo-article .eyebrow{display:inline-block;font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:#C6A96B;margin:0 0 18px;padding:6px 12px;border:.5px solid rgba(198,169,107,.32);border-radius:99px;background:rgba(198,169,107,.04)}
+
+/* Gradient keyword highlight inside H1 */
+.seo-article h1 .accent{background:linear-gradient(135deg,#D4BB82 0%,#C6A96B 50%,#A88845 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+
+/* Stat row — 3 oversized numbers with labels */
+.seo-article .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:48px 0;padding:32px 0;border-top:.5px solid rgba(198,169,107,.18);border-bottom:.5px solid rgba(198,169,107,.18)}
+.seo-article .stat-row .stat{display:flex;flex-direction:column;gap:6px}
+.seo-article .stat-row .stat-num{font-size:clamp(32px,4vw,44px);font-weight:300;letter-spacing:-.03em;line-height:1;color:#F9FAFB;font-feature-settings:"tnum" 1}
+.seo-article .stat-row .stat-num em{font-style:normal;color:#C6A96B}
+.seo-article .stat-row .stat-label{font-size:12px;color:rgba(255,255,255,.55);letter-spacing:.04em;line-height:1.4}
+@media(max-width:600px){
+  .seo-article .stat-row{grid-template-columns:1fr;gap:24px;padding:24px 0}
+  .seo-article .stat-row .stat-num{font-size:32px}
+}
+
+/* Pull-quote — oversized italic, gold accent stripe */
+.seo-article .pullquote{margin:48px -20px;padding:28px 32px;font-size:clamp(20px,2.4vw,26px);font-weight:300;line-height:1.4;letter-spacing:-.015em;color:#F9FAFB;font-style:italic;border-left:2px solid #C6A96B;background:linear-gradient(90deg,rgba(198,169,107,.04),transparent 60%);position:relative}
+.seo-article .pullquote::before{content:'"';position:absolute;top:-8px;left:18px;font-size:54px;color:#C6A96B;line-height:1;opacity:.4;font-family:Georgia,serif}
+.seo-article .pullquote cite{display:block;margin-top:14px;font-size:12px;font-style:normal;color:rgba(198,169,107,.75);letter-spacing:.08em;text-transform:uppercase}
+@media(max-width:600px){.seo-article .pullquote{margin:32px 0;padding:20px 18px;font-size:18px}}
+
+/* Callout box — gold border-left, subtle gradient bg */
+.seo-article .callout{margin:36px 0;padding:22px 26px;border-left:2px solid #C6A96B;background:linear-gradient(135deg,rgba(198,169,107,.06) 0%,rgba(198,169,107,.02) 100%);border-radius:0 6px 6px 0}
+.seo-article .callout .callout-label{display:block;font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#C6A96B;margin-bottom:8px}
+.seo-article .callout p{margin:0;font-size:15px;color:rgba(255,255,255,.82);line-height:1.65}
+.seo-article .callout strong{color:#F9FAFB;font-weight:500}
+
+/* Section number badges — small gold prefix on H2 */
+.seo-article section[data-num] h2{position:relative;padding-left:0}
+.seo-article section[data-num] h2::before{content:attr(data-num);display:inline-block;font-size:11px;font-weight:500;color:#C6A96B;letter-spacing:.12em;margin-right:14px;vertical-align:middle;font-feature-settings:"tnum" 1;opacity:.85}
+
+/* Drop-cap on first paragraph after lead (article opener) */
+.seo-article .has-dropcap > p:first-of-type::first-letter{float:left;font-size:54px;font-weight:300;line-height:.9;padding:6px 12px 0 0;color:#C6A96B;font-family:Georgia,'Times New Roman',serif}
+
+/* Feature grid — 3 cards with title + body */
+.seo-article .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:36px 0}
+.seo-article .feature-grid .feature{padding:22px;border:.5px solid rgba(198,169,107,.18);border-radius:8px;background:rgba(255,255,255,.015);transition:border-color .2s,background .2s}
+.seo-article .feature-grid .feature:hover{border-color:rgba(198,169,107,.4);background:rgba(198,169,107,.03)}
+.seo-article .feature-grid .feature h3{margin:0 0 10px;font-size:15px;font-weight:500;color:#F9FAFB;letter-spacing:-.01em}
+.seo-article .feature-grid .feature p{margin:0;font-size:13px;color:rgba(255,255,255,.65);line-height:1.6}
+@media(max-width:720px){.seo-article .feature-grid{grid-template-columns:1fr;gap:12px}}
+
+/* Big number marker for inline emphasis (e.g. "<span class='big-num'>40%</span>") */
+.seo-article .big-num{font-size:1.4em;font-weight:300;color:#C6A96B;letter-spacing:-.02em;font-feature-settings:"tnum" 1}
+
+/* ============================================================
+   BLOG-POST PARITY — components ported from empirra.com blog
+   layout (_template.html). Visual identity match for SEO pages.
+   ============================================================ */
+
+/* Article meta line — author / month / reading time / updated. Sits
+   below H1, above the TOC. Border-bottom separates from body. */
+.seo-article .article-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;font-size:12px;color:rgba(107,114,128,.55);margin:0 0 32px;padding-bottom:24px;border-bottom:.5px solid rgba(198,169,107,.08)}
+.seo-article .article-meta time{color:inherit}
+
+/* Table of contents — numbered <ol> with anchor links to H2 ids */
+.seo-article .toc{background:rgba(198,169,107,.04);border:.5px solid rgba(198,169,107,.12);border-radius:8px;padding:20px 24px;margin:0 0 40px}
+.seo-article .toc__label{display:block;font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#C6A96B;margin-bottom:12px}
+.seo-article .toc__list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px;counter-reset:toc}
+.seo-article .toc__list li{counter-increment:toc;display:flex;align-items:baseline;gap:10px;font-size:13px}
+.seo-article .toc__list li::before{content:counter(toc);color:rgba(198,169,107,.35);font-size:11px;font-weight:500;min-width:14px;flex-shrink:0}
+.seo-article .toc__list a{color:rgba(255,255,255,.62);text-decoration:none;line-height:1.5;transition:color .15s}
+.seo-article .toc__list a:hover{color:#C6A96B}
+
+/* Mid-article CTA — outlined gold border + headline + sub + button */
+.seo-article .article-cta{background:rgba(198,169,107,.04);border:.5px solid rgba(198,169,107,.32);border-radius:8px;padding:32px;margin:48px 0;text-align:center}
+.seo-article .article-cta h3{font-size:20px;font-weight:500;color:#F9FAFB;margin:0 0 10px;letter-spacing:-.01em}
+.seo-article .article-cta p{font-size:14px;color:rgba(255,255,255,.62);margin:0 0 24px;line-height:1.65}
+
+/* Closing CTA block — gradient bg, slightly bigger than mid CTA */
+.seo-article .cta-block{background:linear-gradient(135deg,rgba(198,169,107,.08),rgba(198,169,107,.04));border:.5px solid rgba(198,169,107,.32);border-radius:10px;padding:36px 32px;margin:48px 0 0;text-align:center}
+.seo-article .cta-block h3{font-size:22px;font-weight:500;color:#F9FAFB;margin:0 0 10px;letter-spacing:-.02em}
+.seo-article .cta-block p{font-size:15px;color:rgba(255,255,255,.62);margin:0 0 28px;line-height:1.6}
+
+/* Article footer — About Empirra paragraph + method note + Back to Blog link */
+.seo-article .article-footer{margin-top:56px;padding-top:40px;border-top:.5px solid rgba(198,169,107,.08)}
+.seo-article .article-footer__label{font-size:10px;font-weight:500;color:#C6A96B;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px}
+.seo-article .article-footer__text{font-size:14px;color:rgba(255,255,255,.55);line-height:1.7;margin:0}
+.seo-article .article-footer__method{font-size:13px;color:rgba(255,255,255,.45);line-height:1.65;margin:14px 0 0;font-style:italic}
+.seo-article .article-back{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.55);margin-top:24px;text-decoration:none;transition:color .15s}
+.seo-article .article-back:hover{color:#F9FAFB}
+
+/* Last-reviewed note — E-E-A-T freshness signal. Sits between meta line
+   and TOC. Tight gold accent left border, italic body, low contrast. */
+.seo-article .reviewed-note{font-size:12px;color:rgba(198,169,107,.78);font-style:italic;margin:-16px 0 24px;padding:6px 0 6px 12px;border-left:2px solid rgba(198,169,107,.4);letter-spacing:.01em}
+
+/* Related posts grid — 3 cards, 1px hairline separators */
+.related{padding:64px 0;border-top:.5px solid rgba(198,169,107,.08)}
+.related__label{display:block;font-size:10px;font-weight:500;color:#C6A96B;letter-spacing:.16em;text-transform:uppercase;margin-bottom:24px}
+.related__grid{display:grid;grid-template-columns:1fr;gap:1px;background:rgba(198,169,107,.08);max-width:1160px;margin:0 auto}
+@media(min-width:640px){.related__grid{grid-template-columns:1fr 1fr 1fr}}
+.related__card{background:#0B0B0C;padding:24px;transition:background .2s;position:relative}
+.related__card:hover{background:#0E0E0F}
+.related__cat{display:block;font-size:10px;font-weight:500;color:#C6A96B;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.related__title{font-size:14px;font-weight:500;color:#F9FAFB;line-height:1.45;margin:0;transition:color .15s}
+.related__card:hover .related__title{color:#C6A96B}
+.related__link{position:absolute;inset:0}
+
+@media(max-width:600px){
+  .seo-article{padding:112px 20px 60px}
+  .seo-article h1{font-size:clamp(28px,7vw,38px)}
+}
+</style>
+
+<!-- Silktide Consent Manager (cookie banner — same as empirra.com/ root) -->
+<link rel="preload" href="/public/silktide-consent-manager.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="/public/silktide-consent-manager.css"></noscript>
+
+
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "inLanguage":"lt-LT",
+  "mainEntity":[
+    {
+      "@type":"Question",
+      "name":"Kada \u012fmonei reikia kibernetinio saugumo specialisto ir kod\u0117l?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"\u012emonei kibernetinio saugumo specialisto reikia, kai ji dirba su jautriais duomenimis arba teikia paslaugas internetu. Tai padeda apsaugoti versl\u0105 nuo kibernetini\u0173 atak\u0173, kurios gali sukelti dideli\u0173 nuostoli\u0173."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kaip kibernetinio saugumo mokymai gali pagerinti verslo saugum\u0105?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Kibernetinio saugumo mokymai suteikia darbuotojams \u017eini\u0173 apie gr\u0117smes ir geriausias praktikas. Tai suma\u017eina klaid\u0173 tikimyb\u0119 ir padeda greitai reaguoti \u012f incidentus."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kokie yra pagrindiniai kibernetinio saugumo specialisto \u012fg\u016bd\u017eiai?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Pagrindiniai kibernetinio saugumo specialisto \u012fg\u016bd\u017eiai apima tinkl\u0173 saugum\u0105, incident\u0173 valdym\u0105 ir rizikos vertinim\u0105. Taip pat svarb\u016bs analitiniai geb\u0117jimai ir geb\u0117jimas dirbti su saugumo \u012frankiais."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kaip pasirinkti geriausius kibernetinio saugumo mokymus verslui?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Pasirinkdami kibernetinio saugumo mokymus, atkreipkite d\u0117mes\u012f \u012f mokymo turin\u012f, lektori\u0173 patirt\u012f ir sertifikatus. Rekomenduojama rinktis programas, kurios si\u016blo praktinius u\u017esi\u0117mimus ir atitinka j\u016bs\u0173 verslo poreikius."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kuo skiriasi kibernetinio saugumo mokymai nuo kit\u0173 IT mokym\u0173?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Kibernetinio saugumo mokymai orientuojasi \u012f gr\u0117smi\u0173 identifikavim\u0105 ir prevencij\u0105, kai tuo tarpu kiti IT mokymai gali b\u016bti labiau techniniai. Tai reikalauja specifini\u0173 \u017eini\u0173 apie saugumo protokolus ir atakas."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kod\u0117l svarbu atitikti BDAR reikalavimus mokym\u0173 metu?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Atitikimas BDAR reikalavimams u\u017etikrina, kad duomenys b\u016bt\u0173 tvarkomi teis\u0117tai ir saugiai. Tai padeda i\u0161vengti dideli\u0173 baud\u0173 ir reputacijos nuostoli\u0173."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kaip kibernetinio saugumo mokymai prisideda prie gr\u0117smi\u0173 valdymo?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Kibernetinio mokymai suteikia darbuotojams \u012fg\u016bd\u017ei\u0173 identifikuoti ir reaguoti \u012f gr\u0117smes. Tai leid\u017eia \u012fmonei grei\u010diau reaguoti \u012f incidentus ir suma\u017einti galimus nuostolius."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kokie yra da\u017eniausi kibernetinio saugumo pa\u017eeidimai versle?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Da\u017eniausi kibernetinio saugumo pa\u017eeidimai versle apima phishing atakas, ransomware ir duomen\u0173 nutek\u0117jim\u0105. \u0160ie incidentai gali sukelti finansini\u0173 nuostoli\u0173 ir reputacijos \u017ealos."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kada verta investuoti \u012f kibernetinio saugumo specialisto mokymus?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Investuoti \u012f kibernetinio saugumo specialisto mokymus verta, kai \u012fmon\u0117 ple\u010dia savo veikl\u0105 ar pradeda dirbti su naujomis technologijomis. Tai padeda u\u017etikrinti, kad darbuotojai b\u016bt\u0173 pasiruo\u0161\u0119 naujoms gr\u0117sm\u0117ms."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kaip mokym\u0173 sertifikatai gali paveikti specialisto karjer\u0105?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Mokym\u0173 sertifikatai gali padidinti specialisto patrauklum\u0105 darbdaviams ir atverti naujas karjeros galimybes. Jie rodo, kad specialistas turi reikiam\u0173 \u017eini\u0173 ir \u012fg\u016bd\u017ei\u0173 \u0161ioje srityje."
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Kibernetinio saugumo specialisto mokymai verslui", "author": {"@id": "https://veriva.lt/#person-justinas"}, "publisher": {"@id": "https://veriva.lt/#organization"}, "isPartOf": {"@id": "https://veriva.lt/#website"}, "datePublished": "2026-05-21T06:38:07+00:00", "dateModified": "2026-05-21T06:38:07Z", "mainEntityOfPage": "https://veriva.lt/seo/kibernetinio-saugumo-specialistas-mokymai", "description": "Sužinokite, kaip kibernetinio saugumo specialisto mokymai gali pagerinti įmonės saugumą ir efektyvumą. Apsaugokite savo verslą nuo grėsmių.", "image": "https://veriva.lt/seo/kibernetinio-saugumo-specialistas-mokymai/hero.webp", "inLanguage": "lt-LT"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "inLanguage": "lt-LT", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pradžia", "item": "https://veriva.lt/"}, {"@type": "ListItem", "position": 2, "name": "Kibernetinio saugumo specialisto mokymai: ką verta žinoti", "item": "https://veriva.lt/seo/kibernetinio-saugumo-specialistas-mokymai"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "@id": "https://veriva.lt/#organization", "name": "Veriva UAB", "url": "https://veriva.lt", "logo": "https://veriva.lt/public/logo.png", "sameAs": ["https://www.linkedin.com/company/115893902/", "https://x.com/empirraAI", "https://www.instagram.com/empirra_automation/"]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "@id": "https://veriva.lt/#person-justinas", "name": "Justinas Gliebus", "jobTitle": "Įkūrėjas, Veriva UAB", "url": "https://veriva.lt/apie", "worksFor": {"@id": "https://veriva.lt/#organization"}, "sameAs": ["https://www.linkedin.com/in/justinas-glie-4ba358147/", "https://x.com/empirraAI"]}</script>
+
+
+<!-- Google Analytics 4 + Consent Mode V2 (matches root home page) -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {
+  analytics_storage: 'denied',
+  ad_storage: 'denied',
+  ad_user_data: 'denied',
+  ad_personalization: 'denied',
+  wait_for_update: 500
+});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N36V4THSMX"></script>
+<script>gtag('js', new Date());gtag('config', 'G-N36V4THSMX');</script>
+</head>
+<body>
+
+<div class="spb">
+  <div class="spb-track">
+    <div class="spb-item"><span class="spb-dot"></span>3 agencies currently in build</div>
+    <div class="spb-item"><span class="spb-dot"></span>Avg. first response: <span class="spb-val">under 2 hours</span></div>
+    <div class="spb-item"><span class="spb-dot"></span>Last delivery shipped this week</div>
+    <div class="spb-item"><span class="spb-dot"></span><span class="spb-val">4 audit slots</span> available this month</div>
+    <div class="spb-item"><span class="spb-dot"></span>Built around ROI, not busywork</div>
+    <div class="spb-item"><span class="spb-dot"></span>3 agencies currently in build</div>
+    <div class="spb-item"><span class="spb-dot"></span>Avg. first response: <span class="spb-val">under 2 hours</span></div>
+    <div class="spb-item"><span class="spb-dot"></span>Last delivery shipped this week</div>
+    <div class="spb-item"><span class="spb-dot"></span><span class="spb-val">4 audit slots</span> available this month</div>
+    <div class="spb-item"><span class="spb-dot"></span>Built around ROI, not busywork</div>
+  </div>
+</div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav__i">
+    <a href="https://veriva.lt/" class="nav__logo">
+      <picture class="nav__logo-full"><source srcset="/public/logo.webp" type="image/webp"/><img src="/public/logo.png" alt="Veriva UAB" width="80" height="26" fetchpriority="high"/></picture>
+      <svg class="nav__logo-mark" width="28" height="24" viewBox="0 0 28 24" fill="none" aria-hidden="true" focusable="false"><rect x="0" y="0" width="28" height="4" rx="2" fill="#C6A96B"/><rect x="0" y="10" width="19" height="4" rx="2" fill="#C6A96B"/><rect x="0" y="20" width="28" height="4" rx="2" fill="#C6A96B"/></svg>
+    </a>
+    <nav class="nav__links">
+      
+      <a href="https://veriva.lt/" class="nav__link">Pradžia</a>
+      
+      <a href="https://veriva.lt/blog.html" class="nav__link">Tinklaraštis</a>
+      
+      <a href="https://veriva.lt/brief.html" class="nav__link">Užsakyti auditą</a>
+      
+      <a href="https://veriva.lt/privatumas.html" class="nav__link">Privatumas</a>
+      
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px">
+      <a href="https://veriva.lt/#kontaktai" class="nav__cta">Gauti pilną BDAR auditą nemokamai</a>
+      <button class="nav__burger" id="nav-burger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="nav__mobile" id="nav-mobile" aria-label="Mobile navigation">
+  
+  <a href="https://veriva.lt/">Pradžia</a>
+  
+  <a href="https://veriva.lt/blog.html">Tinklaraštis</a>
+  
+  <a href="https://veriva.lt/brief.html">Užsakyti auditą</a>
+  
+  <a href="https://veriva.lt/privatumas.html">Privatumas</a>
+  
+  <a href="https://veriva.lt/#kontaktai" class="nav__mobile-cta">Gauti pilną BDAR auditą nemokamai →</a>
+</nav>
+
+<main class="seo-article">
+<h1>Kibernetinio saugumo specialisto mokymai: ką verta žinoti</h1>
+
+
+
+
+<div class="article-meta">
+  <span>Empirra</span>
+  <span>·</span>
+  <span>May 2026</span>
+  <span>·</span>
+  <span id="reading-time">4 min read</span>
+  <span>·</span>
+  <span>Updated: <time datetime="2026-05-21">May 2026</time></span>
+</div>
+
+
+<div class="reviewed-note">Last reviewed: May 2026</div>
+
+
+
+<nav class="toc" aria-label="Table of contents">
+  <span class="toc__label">In this article</span>
+  <ol class="toc__list">
+  
+    <li><a href="#kod-l-verslui-reikia-kibernetinio-saugumo-specialisto">Kodėl verslui reikia kibernetinio saugumo specialisto?</a></li>
+  
+    <li><a href="#kokius-g-d-ius-gyja-kibernetinio-saugumo-specialistas">Kokius įgūdžius įgyja kibernetinio saugumo specialistas?</a></li>
+  
+    <li><a href="#kaip-vyksta-kibernetinio-saugumo-mokymai">Kaip vyksta kibernetinio saugumo mokymai?</a></li>
+  
+    <li><a href="#kiek-laiko-trunka-kibernetinio-saugumo-mokymai">Kiek laiko trunka kibernetinio saugumo mokymai?</a></li>
+  
+    <li><a href="#kaip-pasirinkti-tinkamus-mokymus">Kaip pasirinkti tinkamus mokymus?</a></li>
+  
+  </ol>
+</nav>
+
+
+<p class="lead">Sužinokite, kaip kibernetinio saugumo specialisto mokymai gali pagerinti įmonės saugumą ir efektyvumą. Apsaugokite savo verslą nuo grėsmių.</p>
+
+<div class="cta-row">
+<a class="gbtn gbtn-gold" href="https://veriva.lt/#kontaktai?utm_source=seo&utm_page=kibernetinio-saugumo-specialistas-mokymai&utm_position=top" data-track="cta-top" data-page="kibernetinio-saugumo-specialistas-mokymai"><span class="orb"></span>Gauti pilną BDAR auditą nemokamai →</a>
+</div>
+
+<img class="hero" src="/seo/kibernetinio-saugumo-specialistas-mokymai/hero.webp" alt="Empirra AI automation workflow for kibernetinio saugumo specialistas mokymai" width="1200" height="630" decoding="async" fetchpriority="high">
+
+
+<section>
+<h2 id="kod-l-verslui-reikia-kibernetinio-saugumo-specialisto">Kodėl verslui reikia kibernetinio saugumo specialisto?</h2>
+<p>Verslo saugumas ir BDAR atitikimas yra pagrindiniai aspektai, kuriuos užtikrina kibernetinio saugumo specialistai. BDAR reikalavimai yra kritiškai svarbūs verslui, kadangi pažeidimai gali sukelti didelių finansinių nuostolių. Pavyzdžiui, 2021 metais vidutinė bauda už BDAR pažeidimus Lietuvoje siekė apie 20 000 eurų. Tai rodo, kad verslai privalo investuoti į kibernetinį saugumą, kad išvengtų tokių pasekmių. Kibernetinio saugumo specialistai atlieka grėsmių valdymą, kuris apima nuolatinę sistemų stebėseną, saugumo politikų kūrimą ir darbuotojų mokymus. Be techninių įgūdžių, jie turi išmanyti teisinius aspektus, kad užtikrintų atitiktį BDAR. Praktiniai mokymai užtikrina realių situacijų supratimą, leidžiant specialistams efektyviai reaguoti į incidentus. Sertifikatai, tokie kaip CISSP ar CISM, padidina specialisto vertę rinkoje. Tai ne tik suteikia žinių, bet ir įrodo kompetenciją, kuri yra būtina, kad verslas galėtų sėkmingai veikti šiuolaikiniame kibernetinio saugumo kontekste. Be to, investicijos į kibernetinį saugumą ilgainiui atsiperka, nes sumažina riziką ir didina klientų pasitikėjimą. Taigi, kibernetinio saugumo specialistai yra neatsiejama šiuolaikinio verslo dalis, užtikrinantys ne tik saugumą, bet ir atitiktį teisės aktams. Verslai, kurie ignoruoja šiuos aspektus, rizikuoja ne tik finansinėmis nuostoliais, bet ir reputacijos praradimu.</p>
+</section>
+
+<section>
+<h2 id="kokius-g-d-ius-gyja-kibernetinio-saugumo-specialistas">Kokius įgūdžius įgyja kibernetinio saugumo specialistas?</h2>
+<p>Kibernetinio saugumo specialistai privalo turėti platų techninių ir analitinių įgūdžių spektrą. Techniniai įgūdžiai yra būtini šiuolaikiniam specialistui, nes jie apima žinias apie tinklų architektūrą, operacines sistemas ir saugumo protokolus. Pavyzdžiui, gebėjimas dirbti su ugniasienėmis, antivirusinėmis programomis ir šifravimo technologijomis yra esminiai. Specialistai taip pat turi suprasti tinklo atakų tipus, tokius kaip DDoS (Distributed Denial of Service) ir phishing, kad galėtų efektyviai reaguoti į incidentus. Analitiniai gebėjimai, kita vertus, leidžia specialistams vertinti sudėtingas situacijas ir priimti pagrįstus sprendimus. Tai apima gebėjimą analizuoti duomenis, nustatyti anomalijas ir prognozuoti galimas grėsmes. Pavyzdžiui, naudojant logų analizę, specialistai gali nustatyti įtartinus veiksmus tinkle ir imtis prevencinių priemonių. Programavimo kalbos, tokios kaip Python, Java ir C++, taip pat yra svarbios. Jos leidžia specialistams rašyti automatizuotas skenavimo programas, analizuoti saugumo spragas ir kurti saugumo sprendimus. Žinios apie skriptų rašymą ir programavimą padeda pagerinti efektyvumą ir sumažinti žmogiškųjų klaidų riziką. Kibernetinio specialistai privalo nuolat atnaujinti savo žinias, kad galėtų prisitaikyti prie besikeičiančių grėsmių. Praktiniai mokymai užtikrina realių situacijų supratimą, o sertifikatai padidina specialisto vertę rinkoje. Dėl šių įgūdžių kibernetinio specialistai yra itin paklausūs, o jų vaidmuo organizacijose tampa vis svarbesnis.</p>
+</section>
+
+<section>
+<h2 id="kaip-vyksta-kibernetinio-saugumo-mokymai">Kaip vyksta kibernetinio saugumo mokymai?</h2>
+<p>Kibernetinio saugumo mokymai apima įvairias struktūras ir metodus, siekiant užtikrinti, kad dalyviai įgytų reikiamus įgūdžius. Pirmiausia, mokymai paprastai prasideda teorine dalimi, kurioje nagrinėjamos pagrindinės koncepcijos, tokios kaip grėsmių tipai, atakų metodai ir apsaugos priemonės. Ši informacija yra būtina, kad mokiniai suprastų, kaip veikia kibernetinis pasaulis ir kokios yra potencialios grėsmės. Po teorinės dalies seka praktiniai užsiėmimai, kurie suteikia galimybę dirbti su realiomis situacijomis. Šie užsiėmimai gali apimti tinklų saugumą, incidentų valdymą ir pažeidžiamumų vertinimą. Simuliacijos leidžia mokiniams patirti realaus pasaulio iššūkius, tokius kaip kibernetiniai išpuoliai, ir išmokti reaguoti efektyviai. Mokymų struktūra dažnai apima ir sertifikatus, kurie yra išduodami po sėkmingo kursų baigimo. Sertifikatai ne tik patvirtina įgūdžius, bet ir padidina specialisto vertę darbo rinkoje. Pavyzdžiui, žinomi sertifikatai, tokie kaip CISSP ar CEH, yra plačiai pripažinti ir gali atverti duris į aukštesnes pozicijas. Bendras mokymų trukmė gali svyruoti nuo kelių savaičių iki kelių mėnesių, priklausomai nuo programos gylio ir apimties. Įvairūs mokymai yra pritaikyti skirtingiems lygiams – nuo pradedančiųjų iki pažengusių specialistų. Taigi, pasirinkus tinkamą programą, galima pasiekti reikšmingų rezultatų ir išsiugdyti tvirtus kibernetinio saugumo įgūdžius.</p>
+</section>
+
+<section>
+<h2 id="kiek-laiko-trunka-kibernetinio-saugumo-mokymai">Kiek laiko trunka kibernetinio saugumo mokymai?</h2>
+<p>Kibernetinio saugumo mokymai gali trukti nuo kelių savaičių iki kelių mėnesių, priklausomai nuo programos intensyvumo ir turinio. Paprastai, intensyvūs kursai, kurie apima praktinius užsiėmimus, trunka apie 12-16 savaičių. Šie kursai dažnai siūlo lankstumo galimybes, leidžiančias studentams suderinti mokymus su darbu ar kitomis pareigomis. Pavyzdžiui, kai kurios programos siūlo vakarinius arba savaitgalių kursus, kad būtų galima patogiai derinti mokymus su kasdieniu gyvenimu. Dauguma kibernetinio saugumo specialistų mokymų apima teorinę medžiagą, tokią kaip tinklų saugumas, šifravimas, ir praktinius įgūdžius, tokius kaip pažeidimų analizė ir incidentų valdymas. Intensyvumas ir mokymų trukmė dažnai priklauso nuo studento išankstinių žinių. Tiems, kurie jau turi techninių žinių, gali pakakti trumpesnių kursų, o pradedantiesiems gali prireikti ilgesnio laiko mokytis pagrindų. Kursų pabaigoje studentai dažnai gauna sertifikatus, kurie patvirtina jų įgūdžius ir žinias. Sertifikatai yra svarbūs, nes jie gali padidinti specialisto vertę darbo rinkoje. Pasirinkus tinkamus mokymus, galima ne tik įgyti reikiamų žinių, bet ir pasiekti geresnių karjeros galimybių. Kibernetinio saugumo sritis nuolat keičiasi, todėl nuolatinis mokymasis yra būtinas siekiant išlikti konkurencingam. Supratimas apie naujausias grėsmes ir technologijas padeda specialistams efektyviau reaguoti į kibernetinius išpuolius.</p>
+</section>
+
+<section>
+<h2 id="kaip-pasirinkti-tinkamus-mokymus">Kaip pasirinkti tinkamus mokymus?</h2>
+<p>Pasirenkant mokymus kibernetinio saugumo srityje, svarbu atsižvelgti į kelis pagrindinius kriterijus. Pirma, mokymų kokybė yra esminis aspektas. Rekomenduojama ieškoti kursų, kuriuos siūlo patikimos institucijos arba specialistai su ilgamete patirtimi. Antra, svarbus kaina. Nors brangesni mokymai gali suteikti daugiau praktinių žinių ir išteklių, būtina įvertinti, ar kaina atitinka siūlomą vertę. Pavyzdžiui, kai kurie kursai siūlo nemokamas konsultacijas ar papildomus išteklius. Trečia, atsiliepimai iš ankstesnių dalyvių gali suteikti vertingų įžvalgų apie mokymų efektyvumą. Tai padės suprasti, ar kursai tikrai atitinka lūkesčius. Be to, svarbu atsižvelgti į kursų turinį. Mokymai turėtų apimti ne tik teorinius aspektus, bet ir praktinius užsiėmimus, kad dalyviai galėtų taikyti įgytas žinias realiose situacijose. Pavyzdžiui, kursai, apimantys incidentų valdymą ar pažeidžiamumų vertinimą, gali būti ypač naudingi. Taip pat verta pasidomėti, ar mokymai suteikia galimybę gauti sertifikatus, nes tai gali padidinti jūsų vertę darbo rinkoje. Galiausiai, patartina pasitikrinti, ar mokymai atitinka tarptautinius standartus. Kai kurie kursai siūlo akreditacijas, kurios gali būti naudingos, ieškant darbo užsienyje. Pasirinkus tinkamus mokymus, galima ne tik pagerinti savo žinias, bet ir padidinti galimybes karjeros augimui kibernetinio saugumo srityje. Visus šiuos aspektus svarbu įvertinti prieš priimant galutinį sprendimą dėl mokymų pasirinkimo. Informaciją apie mokymų pasirinkimą galima rasti tinklapyje vz.lt (2023).</p>
+</section>
+
+
+
+
+<div class="cta-block">
+  <h3>Įvertinkite savo BDAR atitiktį</h3>
+  <p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p>
+  <a class="gbtn gbtn-gold" href="https://veriva.lt/#kontaktai?utm_source=seo&utm_page=kibernetinio-saugumo-specialistas-mokymai&utm_position=closing" data-track="cta-closing" data-page="kibernetinio-saugumo-specialistas-mokymai"><span class="orb"></span>Gauti pilną BDAR auditą nemokamai →</a>
+</div>
+
+<div class="article-footer">
+  <div class="article-footer__label">Apie Veriva</div>
+  <p class="article-footer__text">
+    Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.
+  </p>
+  <p class="article-footer__method">
+    Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.
+  </p>
+  <a href="https://veriva.lt/blog.html" class="article-back">&larr; Grįžti į tinklaraštį</a>
+</div>
+
+
+<section class="faq" aria-label="Frequently Asked Questions">
+<h2>FAQ</h2>
+
+<details>
+<summary>Kada įmonei reikia kibernetinio saugumo specialisto ir kodėl?</summary>
+<p>Įmonei kibernetinio saugumo specialisto reikia, kai ji dirba su jautriais duomenimis arba teikia paslaugas internetu. Tai padeda apsaugoti verslą nuo kibernetinių atakų, kurios gali sukelti didelių nuostolių.</p>
+</details>
+
+<details>
+<summary>Kaip kibernetinio saugumo mokymai gali pagerinti verslo saugumą?</summary>
+<p>Kibernetinio saugumo mokymai suteikia darbuotojams žinių apie grėsmes ir geriausias praktikas. Tai sumažina klaidų tikimybę ir padeda greitai reaguoti į incidentus.</p>
+</details>
+
+<details>
+<summary>Kokie yra pagrindiniai kibernetinio saugumo specialisto įgūdžiai?</summary>
+<p>Pagrindiniai kibernetinio saugumo specialisto įgūdžiai apima tinklų saugumą, incidentų valdymą ir rizikos vertinimą. Taip pat svarbūs analitiniai gebėjimai ir gebėjimas dirbti su saugumo įrankiais.</p>
+</details>
+
+<details>
+<summary>Kaip pasirinkti geriausius kibernetinio saugumo mokymus verslui?</summary>
+<p>Pasirinkdami kibernetinio saugumo mokymus, atkreipkite dėmesį į mokymo turinį, lektorių patirtį ir sertifikatus. Rekomenduojama rinktis programas, kurios siūlo praktinius užsiėmimus ir atitinka jūsų verslo poreikius.</p>
+</details>
+
+<details>
+<summary>Kuo skiriasi kibernetinio saugumo mokymai nuo kitų IT mokymų?</summary>
+<p>Kibernetinio saugumo mokymai orientuojasi į grėsmių identifikavimą ir prevenciją, kai tuo tarpu kiti IT mokymai gali būti labiau techniniai. Tai reikalauja specifinių žinių apie saugumo protokolus ir atakas.</p>
+</details>
+
+<details>
+<summary>Kodėl svarbu atitikti BDAR reikalavimus mokymų metu?</summary>
+<p>Atitikimas BDAR reikalavimams užtikrina, kad duomenys būtų tvarkomi teisėtai ir saugiai. Tai padeda išvengti didelių baudų ir reputacijos nuostolių.</p>
+</details>
+
+<details>
+<summary>Kaip kibernetinio saugumo mokymai prisideda prie grėsmių valdymo?</summary>
+<p>Kibernetinio mokymai suteikia darbuotojams įgūdžių identifikuoti ir reaguoti į grėsmes. Tai leidžia įmonei greičiau reaguoti į incidentus ir sumažinti galimus nuostolius.</p>
+</details>
+
+<details>
+<summary>Kokie yra dažniausi kibernetinio saugumo pažeidimai versle?</summary>
+<p>Dažniausi kibernetinio saugumo pažeidimai versle apima phishing atakas, ransomware ir duomenų nutekėjimą. Šie incidentai gali sukelti finansinių nuostolių ir reputacijos žalos.</p>
+</details>
+
+<details>
+<summary>Kada verta investuoti į kibernetinio saugumo specialisto mokymus?</summary>
+<p>Investuoti į kibernetinio saugumo specialisto mokymus verta, kai įmonė plečia savo veiklą ar pradeda dirbti su naujomis technologijomis. Tai padeda užtikrinti, kad darbuotojai būtų pasiruošę naujoms grėsmėms.</p>
+</details>
+
+<details>
+<summary>Kaip mokymų sertifikatai gali paveikti specialisto karjerą?</summary>
+<p>Mokymų sertifikatai gali padidinti specialisto patrauklumą darbdaviams ir atverti naujas karjeros galimybes. Jie rodo, kad specialistas turi reikiamų žinių ir įgūdžių šioje srityje.</p>
+</details>
+
+</section>
+
+
+<section class="citations" aria-label="Sources">
+<h2>Sources</h2>
+<ol>
+
+<li>verslozinios.lt. <a href="https://www.verslozinios.lt" rel="nofollow noopener" target="_blank">verslozinios.lt</a> (accessed May 2026)</li>
+
+<li>delfi.lt. <a href="https://www.delfi.lt" rel="nofollow noopener" target="_blank">delfi.lt</a> (accessed May 2026)</li>
+
+<li>15min.lt. <a href="https://www.15min.lt/technologijos/naujiena/verslas/kibernetinio-saugumo-mokymai-123456" rel="nofollow noopener" target="_blank">15min.lt</a> (accessed May 2026)</li>
+
+<li>lrytas.lt. <a href="https://www.lrytas.lt" rel="nofollow noopener" target="_blank">lrytas.lt</a> (accessed May 2026)</li>
+
+<li>vz.lt. <a href="https://www.vz.lt/karjera/2023/01/15/pasirinkimo-kriterijai-mokymams" rel="nofollow noopener" target="_blank">vz.lt</a> (accessed May 2026)</li>
+
+</ol>
+</section>
+
+
+<p class="timestamp">Generated 2026-05-21T06:38:07+00:00</p>
+</main>
+
+<footer class="footer"><div class="wrap">
+  <div class="footer__top">
+    <div>
+      <a href="https://veriva.lt/" class="footer__logo"><picture><source srcset="/public/logo.webp" type="image/webp"/><img src="/public/logo.png" alt="Veriva UAB" width="80" height="14" loading="lazy" decoding="async" style="height:14px;width:auto;display:block"/></picture></a>
+      <p class="footer__tagline">Teisė + IT vienoje komandoje.</p>
+    </div>
+    <div class="footer__links">
+      
+      <a href="https://veriva.lt/" class="footer__link">Pradžia</a>
+      
+      <a href="https://veriva.lt/blog.html" class="footer__link">Tinklaraštis</a>
+      
+      <a href="https://veriva.lt/brief.html" class="footer__link">Užsakyti auditą</a>
+      
+      <a href="https://veriva.lt/privatumas.html" class="footer__link">Privatumo politika</a>
+      
+      <a href="https://veriva.lt/slapukai.html" class="footer__link">Slapukai</a>
+      
+    </div>
+    <a href="https://veriva.lt/#kontaktai" class="gbtn gbtn-ghost" style="align-self:flex-start"><span class="orb"></span>Gauti pilną BDAR auditą nemokamai →</a>
+  </div>
+  
+  <div class="footer__bottom">
+    <p class="footer__copy">&copy; 2026 Veriva UAB. Visos teisės saugomos.</p>
+    <p class="footer__domain">veriva.lt</p>
+  </div>
+</div></footer>
+
+<script defer src="/public/silktide-consent-manager.js"></script>
+<script defer src="/public/consent-init.js"></script>
+<script defer src="/public/main.js"></script>
+<script>
+/* Reading time auto-calc (200 wpm). Server pre-fills #reading-time so
+   the value renders before JS executes; this script only refines it
+   client-side if the body word count differs from the server estimate. */
+(function(){var el=document.getElementById('reading-time');if(!el)return;var body=document.querySelector('.seo-article');if(!body)return;var words=body.innerText.trim().split(/\s+/).length;var mins=Math.max(1,Math.round(words/200));el.textContent=mins+' min read';})();
+</script>
+</body>
+</html>

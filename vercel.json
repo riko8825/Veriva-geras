@@ -13,6 +13,7 @@
     { "src": "*.html",                                     "use": "@vercel/static" },
     { "src": "blog/*.html",                                "use": "@vercel/static" },
     { "src": "seo/**/index.html",                          "use": "@vercel/static" },
+    { "src": "seo/**/*.webp",                              "use": "@vercel/static" },
     { "src": "assets/**",                                  "use": "@vercel/static" },
     { "src": "robots.txt",                                 "use": "@vercel/static" },
     { "src": "sitemap.xml",                                "use": "@vercel/static" },

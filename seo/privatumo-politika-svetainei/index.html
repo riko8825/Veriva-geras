@@ -163,6 +163,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,17,31,.95)
 .gbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;border-radius:8px;text-decoration:none!important;font-weight:700;font-size:13.5px;padding:13px 24px;font-family:var(--ff);background:var(--blue2);color:#fff!important;transition:background .25s var(--ease-out-cubic),transform .2s var(--ease-out-cubic),box-shadow .25s var(--ease-out-cubic)}
 @media(hover:hover){.gbtn:hover{background:var(--blue);color:#fff!important;transform:translateY(-1px);box-shadow:0 8px 20px rgba(34,85,224,.3)}}
 .gbtn:active{transform:translateY(0) scale(.98)}
+/* gold variant — CTA macros emit .gbtn.gbtn-gold; .orb is a decorative
+   span the empirra chrome animates, hidden here (no animation in blog look). */
+.gbtn-gold{background:var(--gold)!important;color:var(--ink)!important}
+@media(hover:hover){.gbtn-gold:hover{background:var(--gold2)!important;color:var(--ink)!important}}
+.orb{display:none}
 .cta-row{display:flex;flex-wrap:wrap;gap:14px;margin:30px 0}
 .article-cta,.cta-block{margin:48px 0;padding:32px;background:var(--ink);color:#fff;border-radius:12px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden;text-align:left}
 .article-cta::before,.cta-block::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 30%,rgba(26,71,204,.18),transparent 55%);pointer-events:none}
@@ -325,7 +330,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
   ]
 }
 </script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Privatumo politika svetainei verslui — apsauga nuo BDAR baudų", "author": {"@id": "https://veriva.lt/#person-justinas"}, "publisher": {"@id": "https://veriva.lt/#organization"}, "isPartOf": {"@id": "https://veriva.lt/#website"}, "datePublished": "2026-05-22T17:59:42+00:00", "dateModified": "2026-05-22T17:59:42Z", "mainEntityOfPage": "https://veriva.lt/seo/privatumo-politika-svetainei", "description": "Sužinokite, kaip tinkama privatumo politika svetainei gali apsaugoti jūsų verslą nuo BDAR baudų ir padidinti klientų pasitikėjimą.", "image": "https://veriva.lt/seo/privatumo-politika-svetainei/hero.webp", "inLanguage": "lt-LT"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Privatumo politika svetainei verslui — apsauga nuo BDAR baudų", "author": {"@id": "https://veriva.lt/#person-justinas"}, "publisher": {"@id": "https://veriva.lt/#organization"}, "isPartOf": {"@id": "https://veriva.lt/#website"}, "datePublished": "2026-05-22T18:18:10+00:00", "dateModified": "2026-05-22T18:18:10Z", "mainEntityOfPage": "https://veriva.lt/seo/privatumo-politika-svetainei", "description": "Sužinokite, kaip tinkama privatumo politika svetainei gali apsaugoti jūsų verslą nuo BDAR baudų ir padidinti klientų pasitikėjimą.", "image": "https://veriva.lt/seo/privatumo-politika-svetainei/hero.webp", "inLanguage": "lt-LT"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "inLanguage": "lt-LT", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pradžia", "item": "https://veriva.lt/"}, {"@type": "ListItem", "position": 2, "name": "Privatumo politika svetainei: kodėl tai svarbu jūsų verslui", "item": "https://veriva.lt/seo/privatumo-politika-svetainei"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "@id": "https://veriva.lt/#organization", "name": "Veriva UAB", "url": "https://veriva.lt", "sameAs": []}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "@id": "https://veriva.lt/#person-justinas", "name": "Justinas Gliebus", "jobTitle": "Įkūrėjas, Veriva UAB", "url": "https://veriva.lt/apie", "worksFor": {"@id": "https://veriva.lt/#organization"}, "sameAs": ["https://www.linkedin.com/in/justinas-glie-4ba358147/"]}</script>
@@ -415,29 +420,20 @@ gtag('consent', 'default', {
   <span>·</span>
   <span>May 2026</span>
   <span>·</span>
-  <span id="reading-time">5 min read</span>
+  <span id="reading-time">9 min. skaitymo</span>
   <span>·</span>
-  <span>Updated: <time datetime="2026-05-22">May 2026</time></span>
+  <span>Atnaujinta: <time datetime="2026-05-22">May 2026</time></span>
 </div>
 
 
-<div class="reviewed-note">Last reviewed: May 2026</div>
+<div class="reviewed-note">Paskutinį kartą peržiūrėta: May 2026</div>
 
 
-
-<nav class="toc" aria-label="Table of contents">
-  <span class="toc__label">In this article</span>
+<nav class="toc" aria-label="Turinio lentelė">
+  <span class="toc__label">Šiame straipsnyje</span>
   <ol class="toc__list">
   
     <li><a href="#privatumo-politikos-svarba-verslui">Privatumo politikos svarba verslui</a></li>
-  
-    <li><a href="#kaip-sukurti-veiksminga-privatumo-politika">Kaip sukurti veiksmingą privatumo politiką?</a></li>
-  
-    <li><a href="#bdar-reikalavimai-ir-privatumo-politika">BDAR reikalavimai ir privatumo politika</a></li>
-  
-    <li><a href="#dazniausios-privatumo-politikos-klaidos">Dažniausios privatumo politikos klaidos</a></li>
-  
-    <li><a href="#privatumo-politikos-atnaujinimas">Privatumo politikos atnaujinimas</a></li>
   
   </ol>
 </nav>
@@ -456,51 +452,20 @@ gtag('consent', 'default', {
 
 <section>
 <h2 id="privatumo-politikos-svarba-verslui">Privatumo politikos svarba verslui</h2>
-<p>Aiški ir veiksminga privatumo politika yra būtina bet kuriam verslui, kuris tvarko asmens duomenis. BDAR reikalavimai yra privalomi visiems verslams, nepriklausomai nuo jų dydžio. Ši politika padeda užtikrinti atitiktį teisės aktams ir sumažinti riziką, susijusią su galimais pažeidimais. Kiekvienas verslas turi informuoti savo klientus apie tai, kaip jų duomenys bus naudojami, saugomi ir apsaugoti. Klientų pasitikėjimas yra esminis verslo sėkmei. Jei vartotojai žino, kad jų informacija tvarkoma atsakingai, jie labiau linkę bendradarbiauti ir pirkti produktus ar paslaugas. Be aiškios privatumo politikos, verslai gali prarasti klientus ir reputaciją. Reguliari politikos peržiūra užtikrina atitiktį teisės aktams ir padeda verslui prisitaikyti prie nuolat kintančių taisyklių. Pavyzdžiui, 2022 metais Lietuvoje buvo patvirtinta nauja duomenų apsaugos įstatymų redakcija, kuri dar labiau sugriežtino reikalavimus. Verslai, kurie nesilaiko šių reikalavimų, gali susidurti su rimtomis baudomis, siekiančiomis iki 4% metinių pajamų. Taigi, privatumo politika ne tik padeda išvengti teisinių problemų, bet ir stiprina santykius su klientais.</p>
-</section>
-
-
-<section>
-<h2 id="kaip-sukurti-veiksminga-privatumo-politika">Kaip sukurti veiksmingą privatumo politiką?</h2>
-<p>Veiksminga privatumo politika turi apimti kelis esminius elementus. Pirma, aiškiai nurodykite, kokius asmeninius duomenis renkate. Tai gali būti vardas, el. pašto adresas, telefono numeris ir IP adresai. Antra, nurodykite, kaip šiuos duomenis naudojate. Pavyzdžiui, ar jie bus naudojami marketingo tikslais, ar tik paslaugų teikimui. Trečia, aprašykite, kaip duomenys bus saugomi. Tai apima fizines ir technines saugumo priemones, kurios padeda apsaugoti informaciją nuo neteisėtos prieigos. Ketvirta, nurodykite, kam bus perduoti duomenys. Pavyzdžiui, ar jie bus dalijamasi su trečiosiomis šalimis, tokiais kaip reklamos agentūros. Penkta, suteikite informaciją apie vartotojų teises. Pagal BDAR, vartotojai turi teisę prašyti prieigos prie savo duomenų, juos taisyti ar net ištrinti. Ši informacija yra esminė politikos struktūrai. Be to, rekomenduojama aprašyti, kaip vartotojai gali susisiekti su jumis dėl bet kokių klausimų ar pretenzijų, susijusių su asmeninių duomenų apsauga. Politika turėtų būti lengvai prieinama ir suprantama, kad vartotojai galėtų greitai rasti reikiamą informaciją. Reguliari politikos peržiūra yra būtina, kad būtų užtikrinta atitiktis teisės aktams ir prisitaikymas prie besikeičiančių verslo praktikų. Tokiu būdu, jūsų privatumo politika taps ne tik teisiniu dokumentu, bet ir pasitikėjimo šaltiniu jūsų klientams. Teisingai sudaryta politika padeda išvengti galimų teisinių pasekmių ir stiprina įmonės reputaciją.</p>
-</section>
-
-
-<section>
-<h2 id="bdar-reikalavimai-ir-privatumo-politika">BDAR reikalavimai ir privatumo politika</h2>
-<p>BDAR reikalavimai, nustatyti Europos Sąjungoje, tiesiogiai veikia jūsų svetainės privatumo politiką. Pirmiausia, būtina užtikrinti, kad visi asmens duomenys būtų tvarkomi teisėtai. Tai reiškia, jog turite gauti aiškų sutikimą iš vartotojų prieš renkant jų duomenis. BDAR straipsniai 6 ir 7 nurodo sutikimo reikalavimus ir aiškiai apibrėžia, kas laikoma teisėtu duomenų tvarkymu. Be to, kiekvienas verslas privalo atlikti poveikio vertinimą, jei planuoja tvarkyti duomenis, kurie gali kelti didelį pavojų asmenų teisėms ir laisvėms. Šis vertinimas padeda nustatyti galimas rizikas ir užtikrinti, kad būtų imtasi tinkamų priemonių jų sumažinimui. Kita svarbi sritis yra informacijos apie duomenų tvarkymą teikimas. Jūsų privatumo politika turi aiškiai nurodyti, kokius duomenis renkatės, kaip juos naudojate ir kam juos atskleidžiate. Tai ne tik padeda vartotojams suprasti, kaip jų informacija bus naudojama, bet ir užtikrina atitiktį BDAR reikalavimams. Be to, turite suteikti galimybę vartotojams lengvai pasiekti ir atnaujinti savo duomenis, taip pat atsisakyti sutikimo, jei jie to pageidauja. Reguliari privatumo politikos peržiūra yra būtina, kad atitiktumėte nuolat besikeičiančius teisės aktus ir technologijas. Nepakankama atitiktis gali sukelti rimtų teisinių pasekmių, įskaitant dideles baudas. Pasak bdar.lt, BDAR pažeidimai gali užtraukti baudas iki 20 milijonų eurų arba 4% metinių pasaulinių pajamų, priklausomai nuo to, kuri suma yra didesnė. Todėl svarbu, kad jūsų svetainės privatumo politika būtų nuolat atnaujinama ir atitiktų BDAR reikalavimus.</p>
-</section>
-
-<div class="article-cta">
-  <h3>Nelaukite VDAI patikrinimo, kad sužinotumėte trūkumus</h3>
-  <p>Veriva atlieka pilną BDAR auditą per 2-4 savaites. Nemokama konsultacija — per 24 val. pasiūlymas.</p>
-  <a class="gbtn gbtn-gold" href="https://veriva.lt/#kontaktai?utm_source=seo&utm_page=privatumo-politika-svetainei&utm_position=mid" data-track="cta-mid" data-page="privatumo-politika-svetainei"><span class="orb"></span>Gauti pilną BDAR auditą nemokamai →</a>
-</div>
-
-
-<section>
-<h2 id="dazniausios-privatumo-politikos-klaidos">Dažniausios privatumo politikos klaidos</h2>
-<p>Privatumo politika yra esminis dokumentas, kuris reguliuoja, kaip organizacija tvarko asmens duomenis. Tačiau netinkamai parengta politika gali sukelti rimtų teisinių problemų. Pirmiausia, neaiškumai dėl duomenų rinkimo ir naudojimo gali sukelti BDAR baudas. Pavyzdžiui, jei nenurodoma, kokius duomenis renka svetainė ir kaip jie bus naudojami, vartotojai gali jaustis apgauti. Tai gali lemti ne tik finansines pasekmes, bet ir reputacijos praradimą. Kita dažna klaida – nesugebėjimas informuoti vartotojų apie jų teises. Pagal BDAR, vartotojai turi teisę žinoti, kaip jų duomenys yra tvarkomi. Jei organizacija to nepaaiškina, ji pažeidžia teisės aktus. Taip pat svarbu atkreipti dėmesį į tai, kad privatumo politika turi būti aiški ir suprantama. Jei vartotojai nesugeba suprasti, kaip jų duomenys bus naudojami, tai gali sukelti nepasitikėjimą ir galimus teisinių veiksmų iniciavimus. Be to, kai kurios organizacijos pamiršta atnaujinti savo privatumo politiką. Pasikeitus teisės aktams, būtina peržiūrėti ir pritaikyti politiką. Reguliari politikos peržiūra užtikrina atitiktį teisės aktams ir padeda išvengti galimų teisinių pasekmių. Galiausiai, trūksta informacijos apie trečiuosius asmenis, kuriems gali būti perduodami duomenys. Jei vartotojai nesupranta, kas ir kodėl gauna jų informaciją, tai gali sukelti neigiamą reakciją. Tokios klaidos gali būti brangiai kainuojančios, todėl būtina parengti išsamią ir aiškią privatumo politiką, atitinkančią visus BDAR reikalavimus.</p>
-</section>
-
-
-<section>
-<h2 id="privatumo-politikos-atnaujinimas">Privatumo politikos atnaujinimas</h2>
-<p>Privatumo politika turėtų būti atnaujinama reguliariai, kad atitiktų nuolat besikeičiančius teisinius reikalavimus ir vartotojų lūkesčius. Rekomenduojama peržiūrėti politiką bent kartą per metus arba po kiekvieno reikšmingo įstatymo pakeitimo. Tai leidžia užtikrinti, kad jūsų politika atspindi dabartinę situaciją ir yra aiški vartotojams. Teisiniai pakeitimai gali paveikti, kaip renkama, saugoma ir naudojama asmeninė informacija. Pavyzdžiui, nauji duomenų apsaugos įstatymai gali reikalauti papildomų informacijos teikimo aspektų, todėl būtina atnaujinti politiką. Klientų informavimas apie šiuos pakeitimus yra ne mažiau svarbus. Vartotojai turi būti aiškiai informuoti apie tai, kaip jų duomenys bus naudojami ir saugomi. Tai ne tik padeda išvengti teisinių problemų, bet ir didina vartotojų pasitikėjimą. Atnaujinus privatumo politiką, svarbu informuoti visus vartotojus, pavyzdžiui, siunčiant jiems el. laiškus arba skelbiant pranešimus svetainėje. Be to, atnaujinta politika gali apimti naujas technologijas, tokias kaip slapukai ar trečiųjų šalių paslaugos, kurios gali keistis. Ignoruojant šiuos aspektus, organizacija gali rizikuoti ne tik teisinėmis pasekmėmis, bet ir reputacijos nuostoliais. Reguliari peržiūra ir atnaujinimas padeda išvengti tokių problemų ir užtikrina, kad jūsų svetainė atitiktų BDAR reikalavimus. Apibendrinant, privatumo politikos atnaujinimas yra esminis procesas, užtikrinantis atitiktį teisės ir vartotojų pasitikėjimą. Nepamirškite, kad tai yra nuolatinis procesas, reikalaujantis dėmesio ir atsakomybės.</p>
+<p>Sužinokite, kaip tinkama privatumo politika svetainei gali apsaugoti jūsų verslą nuo BDAR baudų ir padidinti klientų pasitikėjimą.</p><p>Sužinokite, kaip tinkama privatumo politika svetainei gali apsaugoti jūsų verslą nuo BDAR baudų ir padidinti klientų pasitikėjimą.</p><p>Aiški ir veiksminga privatumo politika yra būtina bet kuriam verslui, kuris tvarko asmens duomenis. BDAR reikalavimai yra privalomi visiems verslams, nepriklausomai nuo jų dydžio. Ši politika padeda užtikrinti atitiktį teisės aktams ir sumažinti riziką, susijusią su galimais pažeidimais. Kiekvienas verslas turi informuoti savo klientus apie tai, kaip jų duomenys bus naudojami, saugomi ir apsaugoti. Klientų pasitikėjimas yra esminis verslo sėkmei. Jei vartotojai žino, kad jų informacija tvarkoma atsakingai, jie labiau linkę bendradarbiauti ir pirkti produktus ar paslaugas. Be aiškios privatumo politikos, verslai gali prarasti klientus ir reputaciją. Reguliari politikos peržiūra užtikrina atitiktį teisės aktams ir padeda verslui prisitaikyti prie nuolat kintančių taisyklių. Pavyzdžiui, 2022 metais Lietuvoje buvo patvirtinta nauja duomenų apsaugos įstatymų redakcija, kuri dar labiau sugriežtino reikalavimus. Verslai, kurie nesilaiko šių reikalavimų, gali susidurti su rimtomis baudomis, siekiančiomis iki 4% metinių pajamų. Taigi, privatumo politika ne tik padeda išvengti teisinių problemų, bet ir stiprina santykius su klientais.</p><p>Veiksminga privatumo politika turi apimti kelis esminius elementus. Pirma, aiškiai nurodykite, kokius asmeninius duomenis renkate. Tai gali būti vardas, el. pašto adresas, telefono numeris ir IP adresai. Antra, nurodykite, kaip šiuos duomenis naudojate. Pavyzdžiui, ar jie bus naudojami marketingo tikslais, ar tik paslaugų teikimui. Trečia, aprašykite, kaip duomenys bus saugomi. Tai apima fizines ir technines saugumo priemones, kurios padeda apsaugoti informaciją nuo neteisėtos prieigos. Ketvirta, nurodykite, kam bus perduoti duomenys. Pavyzdžiui, ar jie bus dalijamasi su trečiosiomis šalimis, tokiais kaip reklamos agentūros. Penkta, suteikite informaciją apie vartotojų teises. Pagal BDAR, vartotojai turi teisę prašyti prieigos prie savo duomenų, juos taisyti ar net ištrinti. Ši informacija yra esminė politikos struktūrai. Be to, rekomenduojama aprašyti, kaip vartotojai gali susisiekti su jumis dėl bet kokių klausimų ar pretenzijų, susijusių su asmeninių duomenų apsauga. Politika turėtų būti lengvai prieinama ir suprantama, kad vartotojai galėtų greitai rasti reikiamą informaciją. Reguliari politikos peržiūra yra būtina, kad būtų užtikrinta atitiktis teisės aktams ir prisitaikymas prie besikeičiančių verslo praktikų. Tokiu būdu, jūsų privatumo politika taps ne tik teisiniu dokumentu, bet ir pasitikėjimo šaltiniu jūsų klientams. Teisingai sudaryta politika padeda išvengti galimų teisinių pasekmių ir stiprina įmonės reputaciją.</p><p>BDAR reikalavimai, nustatyti Europos Sąjungoje, tiesiogiai veikia jūsų svetainės privatumo politiką. Pirmiausia, būtina užtikrinti, kad visi asmens duomenys būtų tvarkomi teisėtai. Tai reiškia, jog turite gauti aiškų sutikimą iš vartotojų prieš renkant jų duomenis. BDAR straipsniai 6 ir 7 nurodo sutikimo reikalavimus ir aiškiai apibrėžia, kas laikoma teisėtu duomenų tvarkymu. Be to, kiekvienas verslas privalo atlikti poveikio vertinimą, jei planuoja tvarkyti duomenis, kurie gali kelti didelį pavojų asmenų teisėms ir laisvėms. Šis vertinimas padeda nustatyti galimas rizikas ir užtikrinti, kad būtų imtasi tinkamų priemonių jų sumažinimui. Kita svarbi sritis yra informacijos apie duomenų tvarkymą teikimas. Jūsų privatumo politika turi aiškiai nurodyti, kokius duomenis renkatės, kaip juos naudojate ir kam juos atskleidžiate. Tai ne tik padeda vartotojams suprasti, kaip jų informacija bus naudojama, bet ir užtikrina atitiktį BDAR reikalavimams. Be to, turite suteikti galimybę vartotojams lengvai pasiekti ir atnaujinti savo duomenis, taip pat atsisakyti sutikimo, jei jie to pageidauja. Reguliari privatumo politikos peržiūra yra būtina, kad atitiktumėte nuolat besikeičiančius teisės aktus ir technologijas. Nepakankama atitiktis gali sukelti rimtų teisinių pasekmių, įskaitant dideles baudas. Pasak bdar.lt, BDAR pažeidimai gali užtraukti baudas iki 20 milijonų eurų arba 4% metinių pasaulinių pajamų, priklausomai nuo to, kuri suma yra didesnė. Todėl svarbu, kad jūsų svetainės privatumo politika būtų nuolat atnaujinama ir atitiktų BDAR reikalavimus.</p><p>Veriva atlieka pilną BDAR auditą per 2-4 savaites. Nemokama konsultacija — per 24 val. pasiūlymas.</p><p>Privatumo politika yra esminis dokumentas, kuris reguliuoja, kaip organizacija tvarko asmens duomenis. Tačiau netinkamai parengta politika gali sukelti rimtų teisinių problemų. Pirmiausia, neaiškumai dėl duomenų rinkimo ir naudojimo gali sukelti BDAR baudas. Pavyzdžiui, jei nenurodoma, kokius duomenis renka svetainė ir kaip jie bus naudojami, vartotojai gali jaustis apgauti. Tai gali lemti ne tik finansines pasekmes, bet ir reputacijos praradimą. Kita dažna klaida – nesugebėjimas informuoti vartotojų apie jų teises. Pagal BDAR, vartotojai turi teisę žinoti, kaip jų duomenys yra tvarkomi. Jei organizacija to nepaaiškina, ji pažeidžia teisės aktus. Taip pat svarbu atkreipti dėmesį į tai, kad privatumo politika turi būti aiški ir suprantama. Jei vartotojai nesugeba suprasti, kaip jų duomenys bus naudojami, tai gali sukelti nepasitikėjimą ir galimus teisinių veiksmų iniciavimus. Be to, kai kurios organizacijos pamiršta atnaujinti savo privatumo politiką. Pasikeitus teisės aktams, būtina peržiūrėti ir pritaikyti politiką. Reguliari politikos peržiūra užtikrina atitiktį teisės aktams ir padeda išvengti galimų teisinių pasekmių. Galiausiai, trūksta informacijos apie trečiuosius asmenis, kuriems gali būti perduodami duomenys. Jei vartotojai nesupranta, kas ir kodėl gauna jų informaciją, tai gali sukelti neigiamą reakciją. Tokios klaidos gali būti brangiai kainuojančios, todėl būtina parengti išsamią ir aiškią privatumo politiką, atitinkančią visus BDAR reikalavimus.</p><p>Privatumo politika turėtų būti atnaujinama reguliariai, kad atitiktų nuolat besikeičiančius teisinius reikalavimus ir vartotojų lūkesčius. Rekomenduojama peržiūrėti politiką bent kartą per metus arba po kiekvieno reikšmingo įstatymo pakeitimo. Tai leidžia užtikrinti, kad jūsų politika atspindi dabartinę situaciją ir yra aiški vartotojams. Teisiniai pakeitimai gali paveikti, kaip renkama, saugoma ir naudojama asmeninė informacija. Pavyzdžiui, nauji duomenų apsaugos įstatymai gali reikalauti papildomų informacijos teikimo aspektų, todėl būtina atnaujinti politiką. Klientų informavimas apie šiuos pakeitimus yra ne mažiau svarbus. Vartotojai turi būti aiškiai informuoti apie tai, kaip jų duomenys bus naudojami ir saugomi. Tai ne tik padeda išvengti teisinių problemų, bet ir didina vartotojų pasitikėjimą. Atnaujinus privatumo politiką, svarbu informuoti visus vartotojus, pavyzdžiui, siunčiant jiems el. laiškus arba skelbiant pranešimus svetainėje. Be to, atnaujinta politika gali apimti naujas technologijas, tokias kaip slapukai ar trečiųjų šalių paslaugos, kurios gali keistis. Ignoruojant šiuos aspektus, organizacija gali rizikuoti ne tik teisinėmis pasekmėmis, bet ir reputacijos nuostoliais. Reguliari peržiūra ir atnaujinimas padeda išvengti tokių problemų ir užtikrina, kad jūsų svetainė atitiktų BDAR reikalavimus. Apibendrinant, privatumo politikos atnaujinimas yra esminis procesas, užtikrinantis atitiktį teisės ir vartotojų pasitikėjimą. Nepamirškite, kad tai yra nuolatinis procesas, reikalaujantis dėmesio ir atsakomybės.</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>Privatumo politika yra dokumentas, kuriame paaiškinama, kaip verslas renka, naudoja ir saugo vartotojų asmeninę informaciją. Ji reikalinga, kad verslas užtikrintų skaidrumą ir pasitikėjimą, taip pat atitiktų teisės aktus.</p><p>Privatumo politika padeda verslui laikytis BDAR reikalavimų, nurodydama, kokius duomenis renka, kaip juos naudoja ir kokias teises turi vartotojai. Tai leidžia užtikrinti, kad asmeninė informacija būtų tvarkoma teisėtai ir saugiai.</p><p>Svetainės privatumo politika turėtų būti atnaujinama bent kartą per metus arba kai pasikeičia duomenų tvarkymo praktika. Atnaujinimai taip pat būtini, jei įsigalioja nauji teisės aktai ar reglamentai.</p><p>Svetainės lankytojai turėtų pasitikėti privatumo politika, jei ji yra aiški, skaidri ir atitinka teisės aktus. Taip pat svarbu, kad verslas būtų atviras dėl duomenų naudojimo ir suteiktų vartotojams galimybę kontroliuoti savo informaciją.</p><p>Jei svetainė neturi privatumo politikos, ji gali susidurti su teisinių pasekmių rizika ir prarasti vartotojų pasitikėjimą. Be to, tai gali sukelti baudų už BDAR reikalavimų nesilaikymą.</p><p>Sukurti privatumo politiką, atitinkančią BDAR, reikia išsamiai aprašyti, kokius asmens duomenis renkate, kaip juos naudojate ir kokias teises turi vartotojai. Taip pat svarbu įtraukti kontaktinę informaciją ir informaciją apie duomenų saugojimo laikotarpius.</p><p>Privatumo politika apima visą asmens duomenų tvarkymą, o slapukų politika konkrečiai nurodo, kaip svetainė naudoja slapukus ir kokius duomenis jie renka. Abi politikos yra svarbios, tačiau jos aptaria skirtingus aspektus.</p><p>Privatumo politika gali apsaugoti nuo teisinių problemų, nes ji aiškiai nurodo, kaip tvarkomi asmens duomenys ir kokios yra vartotojų teisės. Tai padeda užtikrinti, kad verslas laikytųsi teisės aktų ir sumažina teisinių ginčų riziką.</p><p>Aiški privatumo politikos komunikacija padeda vartotojams suprasti, kaip duomenys yra naudojami ir saugomi. Tai didina pasitikėjimą ir skatina vartotojus aktyviai dalyvauti, žinant, kad jų informacija yra saugi.</p><p>Privatumo politikos veiksmingumą galima įvertinti analizuojant vartotojų atsiliepimus, stebint, ar yra skundų dėl duomenų tvarkymo, ir reguliariai peržiūrint politiką, kad ji atitiktų naujausius teisės aktus. Taip pat svarbu atlikti auditą, kad įsitikintumėte, jog politika yra taikoma praktikoje.</p><p>Generated 2026-05-22T17:59:42+00:00</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>Privatumo politika yra dokumentas, kuriame paaiškinama, kaip verslas renka, naudoja ir saugo vartotojų asmeninę informaciją. Ji reikalinga, kad verslas užtikrintų skaidrumą ir pasitikėjimą, taip pat atitiktų teisės aktus.</p><p>Privatumo politika padeda verslui laikytis BDAR reikalavimų, nurodydama, kokius duomenis renka, kaip juos naudoja ir kokias teises turi vartotojai. Tai leidžia užtikrinti, kad asmeninė informacija būtų tvarkoma teisėtai ir saugiai.</p><p>Svetainės privatumo politika turėtų būti atnaujinama bent kartą per metus arba kai pasikeičia duomenų tvarkymo praktika. Atnaujinimai taip pat būtini, jei įsigalioja nauji teisės aktai ar reglamentai.</p><p>Svetainės lankytojai turėtų pasitikėti privatumo politika, jei ji yra aiški, skaidri ir atitinka teisės aktus. Taip pat svarbu, kad verslas būtų atviras dėl duomenų naudojimo ir suteiktų vartotojams galimybę kontroliuoti savo informaciją.</p><p>Jei svetainė neturi privatumo politikos, ji gali susidurti su teisinių pasekmių rizika ir prarasti vartotojų pasitikėjimą. Be to, tai gali sukelti baudų už BDAR reikalavimų nesilaikymą.</p><p>Sukurti privatumo politiką, atitinkančią BDAR, reikia išsamiai aprašyti, kokius asmens duomenis renkate, kaip juos naudojate ir kokias teises turi vartotojai. Taip pat svarbu įtraukti kontaktinę informaciją ir informaciją apie duomenų saugojimo laikotarpius.</p><p>Privatumo politika apima visą asmens duomenų tvarkymą, o slapukų politika konkrečiai nurodo, kaip svetainė naudoja slapukus ir kokius duomenis jie renka. Abi politikos yra svarbios, tačiau jos aptaria skirtingus aspektus.</p><p>Privatumo politika gali apsaugoti nuo teisinių problemų, nes ji aiškiai nurodo, kaip tvarkomi asmens duomenys ir kokios yra vartotojų teisės. Tai padeda užtikrinti, kad verslas laikytųsi teisės aktų ir sumažina teisinių ginčų riziką.</p><p>Aiški privatumo politikos komunikacija padeda vartotojams suprasti, kaip duomenys yra naudojami ir saugomi. Tai didina pasitikėjimą ir skatina vartotojus aktyviai dalyvauti, žinant, kad jų informacija yra saugi.</p><p>Privatumo politikos veiksmingumą galima įvertinti analizuojant vartotojų atsiliepimus, stebint, ar yra skundų dėl duomenų tvarkymo, ir reguliariai peržiūrint politiką, kad ji atitiktų naujausius teisės aktus. Taip pat svarbu atlikti auditą, kad įsitikintumėte, jog politika yra taikoma praktikoje.</p><p>Generated 2026-05-22T18:17:21+00:00</p>
 </section>
 
 
 
-
-<aside class="internal-links" aria-label="Related Veriva UAB topics">
-<h2>Related</h2>
+<aside class="internal-links" aria-label="Susijusios Veriva UAB temos">
+<h2>Susiję straipsniai</h2>
 <ul>
 
-<li><a href="/bdar-6-straipsnis" data-internal="cluster">bdar 6 straipsnis apžvalga</a></li>
+<li><a href="/seo/bdar-6-straipsnis" data-internal="cluster">bdar 6 straipsnis apžvalga</a></li>
 
-<li><a href="/bdar-klinikoms-lietuvoje" data-internal="cluster">bdar klinikoms lietuvoje procesas</a></li>
+<li><a href="/seo/bdar-klinikoms-lietuvoje" data-internal="cluster">bdar klinikoms lietuvoje procesas</a></li>
 
-<li><a href="/bdar-konsultacija-vilniuje" data-internal="cluster">bdar konsultacija vilniuje procesas</a></li>
+<li><a href="/seo/bdar-konsultacija-vilniuje" data-internal="cluster">bdar konsultacija vilniuje procesas</a></li>
 
 <li><a href="https://veriva.lt/" data-internal="permanent">Pradžia</a></li>
 
@@ -530,7 +495,7 @@ gtag('consent', 'default', {
 </div>
 
 
-<section class="faq" aria-label="Frequently Asked Questions">
+<section class="faq" aria-label="Dažniausi klausimai">
 <h2>Dažniausi klausimai</h2>
 
 <details>
@@ -586,7 +551,7 @@ gtag('consent', 'default', {
 </section>
 
 
-<section class="citations" aria-label="Sources">
+<section class="citations" aria-label="Šaltiniai">
 <h2>Šaltiniai</h2>
 <ol>
 
@@ -604,7 +569,7 @@ gtag('consent', 'default', {
 </section>
 
 
-<p class="timestamp">Generated 2026-05-22T17:59:42+00:00</p>
+<p class="timestamp">Generated 2026-05-22T18:18:10+00:00</p>
 
 
 
@@ -703,21 +668,10 @@ function closeMob(){
 
 
 <script>
-/* Self-contained nav: burger toggle + scroll shadow. Replaces
-   /public/main.js for clients that do not host it. */
-(function(){
-  var b=document.getElementById('nav-burger'),m=document.getElementById('nav-mobile');
-  if(b&&m){b.addEventListener('click',function(){var o=m.classList.toggle('open');b.classList.toggle('open',o);b.setAttribute('aria-expanded',o);});}
-  var n=document.getElementById('nav');
-  if(n){addEventListener('scroll',function(){n.classList.toggle('scrolled',scrollY>10);},{passive:true});}
-})();
-</script>
-
-<script>
 /* Reading time auto-calc (200 wpm). Server pre-fills #reading-time so
    the value renders before JS executes; this script only refines it
    client-side if the body word count differs from the server estimate. */
-(function(){var el=document.getElementById('reading-time');if(!el)return;var body=document.querySelector('.seo-article')||document.querySelector('.prose');if(!body)return;var words=body.innerText.trim().split(/\s+/).length;var mins=Math.max(1,Math.round(words/200));el.textContent=mins+' min read';})();
+(function(){var el=document.getElementById('reading-time');if(!el)return;var body=document.querySelector('.seo-article')||document.querySelector('.prose');if(!body)return;var words=body.innerText.trim().split(/\s+/).length;var mins=Math.max(1,Math.round(words/200));el.textContent=mins+' min. skaitymo';})();
 </script>
 </body>
 </html>

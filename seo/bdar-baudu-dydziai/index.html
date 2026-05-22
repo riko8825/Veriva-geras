@@ -38,96 +38,195 @@
 
 
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
-<!-- LIVE Veriva site stylesheet — brand tokens, fonts, base resets -->
-<link rel="stylesheet" href="https://veriva.lt/assets/css/index.css">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
-/* Chrome positioning + SEO article body — light theme to match
-   veriva.lt (cream bg). Kept minimal: index.css supplies the tokens. */
-:root{--vk:#07111f;--vcy:#00b4d8;--vgold:#c8962a;--vblue:#1a47cc;--vcream:#f8f7f4}
+/* ===================================================================
+   Veriva blog-post chrome — ported 1:1 from veriva.lt blog/template.html
+   =================================================================== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#07111f;background:#f8f7f4;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:90px}
-.v-ticker{position:fixed;top:0;left:0;right:0;z-index:250;background:#07111f;border-bottom:1px solid rgba(0,180,216,.18);padding:8px 0;overflow:hidden;white-space:nowrap}
-.v-ticker-track{display:inline-flex;animation:v-tick 38s linear infinite}
-.v-ticker-track span{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.85);padding:0 22px}
-.v-ticker-track .dot{color:rgba(255,255,255,.3);padding:0 4px}
-@keyframes v-tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.v-ticker:hover .v-ticker-track{animation-play-state:paused}
-.v-nav{position:fixed;top:34px;left:0;right:0;z-index:200;background:rgba(7,17,31,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06)}
-.v-nw{max-width:1140px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px}
-.v-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.v-logo span{font-family:'Syne',system-ui,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.04em}
-.v-nl{display:flex;align-items:center;gap:2px;list-style:none}
-.v-nl a{display:block;padding:7px 13px;font-size:13px;font-weight:500;color:rgba(255,255,255,.55);text-decoration:none;border-radius:7px;transition:all .2s}
-.v-nl a:hover{color:#fff;background:rgba(255,255,255,.07)}
-.v-nl a.v-cta{background:#1a47cc;color:#fff;padding:8px 18px;border-radius:8px;font-weight:700}
-.v-nl a.v-cta:hover{background:#2255e0}
-.v-burger{display:none;background:none;border:none;color:#fff;cursor:pointer;padding:6px}
-.v-mob{display:none;position:fixed;inset:0;top:94px;background:#07111f;z-index:199;padding:24px;flex-direction:column;gap:4px}
-.v-mob.open{display:flex}
-.v-mob a{font-size:17px;font-weight:600;color:rgba(255,255,255,.75);text-decoration:none;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07)}
-.v-mob a:last-child{color:#e8b84b;font-weight:800;border:none;margin-top:8px}
-@media(max-width:880px){.v-nl{display:none}.v-burger{display:block}}
+:root{
+  --ink:#07111f;--ink2:#0c1a2e;
+  --blue:#1a47cc;--blue2:#2255e0;
+  --cyan:#00b4d8;--gold:#c8962a;--gold-strong:#7d5b14;--gold2:#e8b84b;
+  --red:#dc2626;
+  --white:#fff;--cream:#f8f7f4;
+  --g50:#f3f2ee;--g100:#eae8e2;--g300:#c5c2b8;--g500:#6f6a5e;--g600:#5a564c;--g700:#44413b;
+  --border:rgba(7,17,31,.09);--border2:rgba(7,17,31,.15);
+  --ease:cubic-bezier(.4,0,.2,1);--t:.2s var(--ease);
+  --ease-out-quint:cubic-bezier(.23,1,.32,1);
+  --ease-out-cubic:cubic-bezier(.33,1,.68,1);
+  --ease-in-out-cubic:cubic-bezier(.645,.045,.355,1);
+  --max:1140px;
+  --read-max:720px;
+  --ff:'Plus Jakarta Sans',system-ui,sans-serif;
+  --ffd:'Syne',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--ff);color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:60px}
+a{color:var(--blue2);text-decoration:none;transition:color var(--t)}
+a:hover{color:var(--blue)}
 
-/* SEO article — light theme on cream bg */
-.seo-article{max-width:760px;margin:0 auto;padding:56px 24px 80px}
-.seo-article h1{font-family:'Syne',sans-serif;font-size:clamp(30px,4.5vw,44px);font-weight:800;line-height:1.15;letter-spacing:-.02em;color:#07111f;margin:0 0 20px}
-.seo-article h2{font-family:'Syne',sans-serif;font-size:clamp(20px,2.6vw,28px);font-weight:700;line-height:1.25;color:#07111f;margin:48px 0 16px}
-.seo-article h3{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:#07111f;margin:28px 0 10px}
-.seo-article p{font-size:16px;color:#44413b;line-height:1.75;margin:0 0 18px}
-.seo-article a{color:#1a47cc;text-decoration:underline;text-underline-offset:3px}
-.seo-article a:hover{color:#2255e0}
-.seo-article .lead{font-size:18px;color:#07111f;font-weight:500;padding:14px 0 22px;margin:20px 0 30px;line-height:1.6;border-bottom:1px solid rgba(7,17,31,.1)}
-.seo-article img.hero{display:block;width:100%;height:auto;border-radius:10px;margin:28px 0 44px;aspect-ratio:1200/630;object-fit:cover}
-.seo-article ul,.seo-article ol{margin:0 0 18px;padding-left:22px;color:#44413b;line-height:1.7}
-.seo-article li{margin:0 0 8px}
-.seo-article .table-wrap{overflow-x:auto;margin:32px 0}
-.seo-article table{width:100%;border-collapse:collapse;font-size:14px;border:1px solid rgba(7,17,31,.12)}
-.seo-article table thead{background:#07111f;color:#fff}
-.seo-article table th{padding:12px 14px;text-align:left;font-weight:600}
-.seo-article table td{padding:11px 14px;border-bottom:1px solid rgba(7,17,31,.08);color:#44413b}
-.seo-article .article-meta{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:12px;color:#837e72;margin:0 0 28px;padding-bottom:22px;border-bottom:1px solid rgba(7,17,31,.1)}
-.seo-article .reviewed-note{font-size:12px;color:#837e72;font-style:italic;margin:0 0 24px;padding:6px 0 6px 12px;border-left:3px solid #c8962a}
-.seo-article .toc{background:#fff;border:1px solid rgba(7,17,31,.1);border-radius:10px;padding:20px 24px;margin:0 0 36px}
-.seo-article .toc__label{display:block;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#1a47cc;margin-bottom:12px}
-.seo-article .toc__list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px;counter-reset:toc}
-.seo-article .toc__list li{counter-increment:toc;font-size:13px}
-.seo-article .toc__list li::before{content:counter(toc) ". ";color:#c8962a;font-weight:700}
-.seo-article .toc__list a{color:#44413b;text-decoration:none}
-.seo-article .toc__list a:hover{color:#1a47cc}
-.seo-article .faq{margin:56px 0 32px}
-.seo-article .faq details{border-top:1px solid rgba(7,17,31,.1);padding:18px 0}
-.seo-article .faq details:last-child{border-bottom:1px solid rgba(7,17,31,.1)}
-.seo-article .faq summary{cursor:pointer;font-weight:700;font-family:'Syne',sans-serif;color:#07111f;font-size:15px;list-style:none;display:flex;justify-content:space-between;gap:16px}
-.seo-article .faq summary::-webkit-details-marker{display:none}
-.seo-article .faq summary::after{content:'+';color:#c8962a;font-weight:700;font-size:20px}
-.seo-article .faq details[open] summary::after{content:'\2212'}
-.seo-article .faq details p{margin:14px 0 0;color:#44413b;font-size:14px}
-.seo-article .article-cta,.seo-article .cta-block{background:#07111f;border-radius:12px;padding:34px;margin:48px 0;text-align:center}
-.seo-article .article-cta h3,.seo-article .cta-block h3{font-family:'Syne',sans-serif;color:#fff;font-size:21px;font-weight:800;margin:0 0 10px}
-.seo-article .article-cta p,.seo-article .cta-block p{color:rgba(255,255,255,.7);font-size:14px;margin:0 0 22px}
-.seo-article .citations{margin:56px 0 32px;padding-top:28px;border-top:1px solid rgba(7,17,31,.12)}
-.seo-article .citations h2{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#1a47cc;margin:0 0 16px}
-.seo-article .citations ol{margin:0;padding-left:20px;color:#837e72;font-size:13px;line-height:1.7}
-.seo-article .citations a{color:#1a47cc}
-.seo-article aside.internal-links{margin:44px 0;padding:22px 0;border-top:1px solid rgba(7,17,31,.1);border-bottom:1px solid rgba(7,17,31,.1)}
-.seo-article aside.internal-links h2{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#1a47cc;margin:0 0 12px}
-.seo-article aside.internal-links ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
-.seo-article .timestamp,.seo-article .ext-sources{display:none}
-.gbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px;padding:13px 26px;font-family:inherit}
-.gbtn-gold,.gbtn-ghost{background:#c8962a;color:#fff}
-.gbtn-gold:hover,.gbtn-ghost:hover{background:#e8b84b}
+/* === A11Y === */
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--blue2);outline-offset:3px;border-radius:4px}
+.nav-cta:focus-visible,.cta-inline-btn:focus-visible{outline-color:var(--gold2);outline-offset:3px}
+.skip-link{position:absolute;top:-100px;left:16px;background:var(--ink);color:#fff;padding:12px 18px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;z-index:300;transition:top .2s var(--ease-out-cubic)}
+.skip-link:focus{top:8px}
+
+/* === REVEAL ON SCROLL === */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease-out-quint),transform .6s var(--ease-out-quint);will-change:opacity,transform}
+.reveal.in{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+::selection{background:rgba(26,71,204,.18)}
+
+/* === NAV (blog post — 8 items, no ticker) === */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,17,31,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07)}
+.nw{max-width:var(--max);margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nl{display:flex;align-items:center;gap:2px;list-style:none}
+.nl a{display:block;padding:7px 13px;font-size:13px;font-weight:500;color:rgba(255,255,255,.55);text-decoration:none;border-radius:7px;transition:all var(--t)}
+.nl a:hover{color:#fff;background:rgba(255,255,255,.07)}
+.nav-cta{background:var(--blue)!important;color:#fff!important;padding:8px 18px!important;border-radius:8px!important;font-weight:700!important;font-size:13px!important;transition:all var(--t)!important}
+.nav-cta:hover{background:var(--blue2)!important;transform:translateY(-1px)!important}
+.hamburger{display:none;background:none;border:none;color:#fff;cursor:pointer;padding:6px}
+.mob-menu{display:none;position:fixed;inset:0;top:60px;background:var(--ink);z-index:199;padding:24px;flex-direction:column;gap:4px}
+.mob-menu.open{display:flex}
+.mob-menu a{font-size:17px;font-weight:600;color:rgba(255,255,255,.75);text-decoration:none;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.mob-menu a:last-child{color:var(--gold2);font-weight:800;border:none;margin-top:8px}
+
+/* === ARTICLE HERO (.ah) — dark, holds breadcrumbs + H1 + sub === */
+.ah{padding:64px 24px 40px;background:var(--ink);color:#fff;position:relative;overflow:hidden}
+.ah::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(26,71,204,.1),transparent 50%),radial-gradient(circle at 80% 70%,rgba(200,150,42,.05),transparent 55%);pointer-events:none}
+.ah-w{max-width:var(--read-max);margin:0 auto;position:relative;z-index:1}
+.ah-crumbs{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:18px;letter-spacing:.04em}
+.ah-crumbs a{color:rgba(255,255,255,.65)}
+.ah-crumbs a:hover{color:#fff}
+.ah h1{font-family:var(--ffd);font-size:clamp(32px,4.2vw,52px);line-height:1.08;letter-spacing:-.025em;margin-bottom:20px;font-weight:700;color:#fff}
+.ah-sub{font-size:17px;color:rgba(255,255,255,.7);line-height:1.7;font-weight:300}
+
+/* === ARTICLE BODY (.ab / .prose) === */
+.ab{padding:56px 24px 88px;background:var(--cream)}
+.ab-w{max-width:var(--read-max);margin:0 auto}
+.prose{font-size:16px;line-height:1.75;color:var(--g700)}
+.prose > * + *{margin-top:1.2em}
+.prose h2{font-family:var(--ffd);font-size:clamp(22px,2.4vw,28px);line-height:1.14;letter-spacing:-.022em;color:var(--ink);margin-top:2.2em;margin-bottom:.5em;font-weight:700;scroll-margin-top:120px}
+.prose h3{font-family:var(--ffd);font-size:19px;line-height:1.2;letter-spacing:-.018em;color:var(--ink);margin-top:1.8em;margin-bottom:.4em;font-weight:700}
+.prose section:first-child h2{margin-top:0}
+.prose p{font-size:16.5px;line-height:1.75;color:var(--g700);margin:0 0 1.2em}
+.prose section{margin-top:1.2em}
+.prose strong{color:var(--ink);font-weight:700}
+.prose em{color:var(--blue2);font-style:italic}
+.prose ul,.prose ol{padding-left:24px;margin:0 0 1.2em}
+.prose ul li{position:relative;padding-left:18px;margin-bottom:.5em;list-style:none}
+.prose ul li::before{content:'';position:absolute;left:0;top:.65em;width:8px;height:8px;background:var(--blue2);border-radius:2px;transform:rotate(45deg)}
+.prose ol{counter-reset:num;list-style:none}
+.prose ol li{counter-increment:num;position:relative;padding-left:32px;margin-bottom:.6em;list-style:none}
+.prose ol li::before{content:counter(num);position:absolute;left:0;top:0;width:24px;height:24px;background:var(--ink);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;font-family:var(--ffd)}
+.prose blockquote{padding:20px 24px;background:var(--white);border-left:3px solid var(--blue2);border-radius:0 8px 8px 0;font-style:italic;color:var(--ink);margin:1.5em 0}
+.prose blockquote p{font-size:17px;line-height:1.7}
+.prose a{color:var(--blue2);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;transition:color .2s var(--ease-out-cubic)}
+.prose a:hover{color:var(--blue);text-decoration-thickness:2px;text-underline-offset:4px}
+.prose hr{border:none;border-top:1px solid var(--border);margin:2.5em 0}
+
+/* hero image — emitted by intent templates as <img class="hero"> */
+.prose img.hero,img.hero{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--border);margin:2em 0;aspect-ratio:1200/630;object-fit:cover}
+
+/* tables — comparison table + markdown pipe fallback */
+.prose table,table.comparison{width:100%;border-collapse:collapse;margin:1.5em 0;font-size:14.5px}
+.prose th,.prose td,table.comparison th,table.comparison td{padding:12px 14px;border-bottom:1px solid var(--border);text-align:left}
+.prose th,table.comparison th{background:var(--g50);font-weight:700;color:var(--ink);font-size:13px;letter-spacing:.02em}
+.table-wrap{overflow-x:auto;margin:1.5em 0}
+
+/* === LEAD / DEFINITION (featured snippet) — .lead from intent tmpl === */
+.lead{font-size:17px;color:var(--ink);font-weight:400;line-height:1.7;border-left:3px solid var(--blue2);padding:16px 22px;margin:0 0 28px;background:rgba(26,71,204,.04);border-radius:0 8px 8px 0}
+
+/* === ARTICLE META + REVIEWED NOTE (sit just under the hero) === */
+.article-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g500);margin:0 0 20px}
+.reviewed-note{font-size:12px;color:var(--g500);font-style:italic;margin:0 0 24px;padding:6px 0 6px 12px;border-left:3px solid var(--gold)}
+
+/* === TOC === */
+.toc{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:22px 26px;margin:0 0 40px}
+.toc__label{font-family:var(--ff);font-size:11px;font-weight:800;color:var(--blue2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;display:block}
+.toc__list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;counter-reset:toc}
+.toc__list li{counter-increment:toc;display:flex;align-items:baseline;gap:12px;font-size:14px;list-style:none}
+.toc__list li::before{content:counter(toc,decimal-leading-zero);color:var(--g300);font-size:11.5px;font-weight:700;font-family:var(--ffd);min-width:20px;flex-shrink:0}
+.toc__list a{color:var(--g700);text-decoration:none;line-height:1.5}
+.toc__list a:hover{color:var(--blue2)}
+
+/* === CTA — .gbtn pill (.cta-row) + .article-cta / .cta-block boxes
+       mapped onto the blog .cta-inline dark card look === */
+.gbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;border-radius:8px;text-decoration:none!important;font-weight:700;font-size:13.5px;padding:13px 24px;font-family:var(--ff);background:var(--blue2);color:#fff!important;transition:background .25s var(--ease-out-cubic),transform .2s var(--ease-out-cubic),box-shadow .25s var(--ease-out-cubic)}
+@media(hover:hover){.gbtn:hover{background:var(--blue);color:#fff!important;transform:translateY(-1px);box-shadow:0 8px 20px rgba(34,85,224,.3)}}
+.gbtn:active{transform:translateY(0) scale(.98)}
 .cta-row{display:flex;flex-wrap:wrap;gap:14px;margin:30px 0}
-.v-foot{background:#030b17;padding:56px 24px 32px;margin-top:64px}
-.v-ftw{max-width:1140px;margin:0 auto}
-.v-ft-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:40px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.06)}
-.v-ft-about{font-size:13px;color:rgba(255,255,255,.32);line-height:1.7;margin-top:12px;max-width:260px}
-.v-ft-links{list-style:none;display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:8px}
-.v-ft-links a{font-size:13px;color:rgba(255,255,255,.4);text-decoration:none}
-.v-ft-links a:hover{color:#fff}
-.v-ft-bot{padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:11.5px;color:rgba(255,255,255,.22)}
+.article-cta,.cta-block{margin:48px 0;padding:32px;background:var(--ink);color:#fff;border-radius:12px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden;text-align:left}
+.article-cta::before,.cta-block::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 30%,rgba(26,71,204,.18),transparent 55%);pointer-events:none}
+.article-cta > *,.cta-block > *{position:relative;z-index:1}
+.article-cta h3,.cta-block h3{font-family:var(--ffd);font-size:22px;line-height:1.14;letter-spacing:-.02em;font-weight:700;color:#fff;margin:0}
+.article-cta p,.cta-block p{font-size:15px;color:rgba(255,255,255,.92);line-height:1.65;font-weight:400;margin:0}
+.article-cta .gbtn,.cta-block .gbtn{align-self:flex-start;margin-top:6px}
+
+/* === FAQ — base.html veriva path emits <section class="faq"> with
+       <details>; styled to match the blog FAQ card list === */
+.faq{margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+.faq > h2{font-family:var(--ffd);font-size:24px;letter-spacing:-.022em;color:var(--ink);margin-bottom:24px;font-weight:700}
+.faq details{border:1px solid var(--border);border-radius:10px;background:var(--white);margin-bottom:14px;overflow:hidden}
+.faq summary{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;font-family:var(--ff);font-size:14.5px;font-weight:600;color:var(--ink);list-style:none;transition:background .25s var(--ease-out-cubic)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:hover{background:var(--g50)}
+.faq summary::after{content:'+';width:22px;height:22px;border-radius:50%;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:300;flex-shrink:0;color:var(--ink);transition:background .3s,color .3s,transform .35s}
+.faq details[open] summary::after{content:'+';background:var(--blue2);color:#fff;transform:rotate(45deg)}
+.faq details p{padding:0 22px 18px;font-size:14px;line-height:1.7;color:var(--g700);margin:0}
+
+/* === CITATIONS + INTERNAL LINKS === */
+.citations{margin-top:48px;padding-top:28px;border-top:1px solid var(--border)}
+.citations h2{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue2);margin:0 0 16px}
+.citations ol{margin:0;padding-left:20px;color:var(--g500);font-size:13px;line-height:1.7}
+.citations a{color:var(--blue2)}
+aside.internal-links{margin:44px 0;padding:22px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+aside.internal-links h2{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--blue2);margin:0 0 12px}
+aside.internal-links ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+aside.internal-links a{color:var(--g700)}
+aside.internal-links a:hover{color:var(--blue2)}
+
+/* === ARTICLE FOOTER (About + method note + Back to Blog) === */
+.article-footer{margin-top:48px;padding:28px 30px;background:var(--white);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:10px}
+.article-footer__label{font-family:var(--ffd);font-size:13px;font-weight:700;color:var(--ink);margin-bottom:10px}
+.article-footer__text{font-size:14px;line-height:1.7;color:var(--g700);margin:0 0 10px}
+.article-footer__method{font-size:13px;line-height:1.65;color:var(--g500);font-style:italic;margin:0 0 16px}
+.article-back{font-size:13px;font-weight:700;color:var(--blue2)}
+
+.timestamp{display:none}
+
+/* === SITE FOOTER (blog post — 4-column) === */
+footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;margin-top:0}
+.ftw{max-width:var(--max);margin:0 auto}
+.ft-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.06)}
+.ft-about{font-size:13px;line-height:1.65;color:rgba(255,255,255,.55);margin-top:8px}
+.ft-ch{font-family:var(--ffd);font-size:13px;font-weight:700;color:#fff;margin-bottom:14px;letter-spacing:.02em}
+.ft-links{display:flex;flex-direction:column;gap:9px;list-style:none}
+.ft-links a{font-size:13px;color:rgba(255,255,255,.55);transition:color var(--t)}
+.ft-links a:hover{color:#fff}
+.ft-bot{padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:11.5px;color:rgba(255,255,255,.4)}
+.ft-leg{display:flex;gap:18px}
+
+/* === RESPONSIVE === */
+@media(max-width:768px){
+  .nl{display:none}
+  .hamburger{display:block}
+  .ah h1{font-size:30px;letter-spacing:-.022em}
+  .ah-sub{font-size:15.5px}
+  .prose h2{font-size:22px;line-height:1.18}
+  .prose h3{font-size:17px}
+  .article-cta,.cta-block{padding:24px}
+  .article-cta h3,.cta-block h3{font-size:19px}
+  .ft-top{grid-template-columns:1fr 1fr;gap:28px}
+}
 </style>
 
 
@@ -226,7 +325,7 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#07111f;backgrou
   ]
 }
 </script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "BDAR Baudų Dydžiai Verslui — Kaip Išvengti Nuostolių", "author": {"@id": "https://veriva.lt/#person-justinas"}, "publisher": {"@id": "https://veriva.lt/#organization"}, "isPartOf": {"@id": "https://veriva.lt/#website"}, "datePublished": "2026-05-22T16:52:53+00:00", "dateModified": "2026-05-22T16:52:53Z", "mainEntityOfPage": "https://veriva.lt/seo/bdar-baudu-dydziai", "description": "Sužinokite, kokie yra BDAR baudų dydžiai ir kaip jūsų verslas gali jų išvengti. Konkretūs pavyzdžiai ir ekspertų įžvalgos.", "image": "https://veriva.lt/seo/bdar-baudu-dydziai/hero.webp", "inLanguage": "lt-LT"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "BDAR Baudų Dydžiai Verslui — Kaip Išvengti Nuostolių", "author": {"@id": "https://veriva.lt/#person-justinas"}, "publisher": {"@id": "https://veriva.lt/#organization"}, "isPartOf": {"@id": "https://veriva.lt/#website"}, "datePublished": "2026-05-22T17:59:43+00:00", "dateModified": "2026-05-22T17:59:43Z", "mainEntityOfPage": "https://veriva.lt/seo/bdar-baudu-dydziai", "description": "Sužinokite, kokie yra BDAR baudų dydžiai ir kaip jūsų verslas gali jų išvengti. Konkretūs pavyzdžiai ir ekspertų įžvalgos.", "image": "https://veriva.lt/seo/bdar-baudu-dydziai/hero.webp", "inLanguage": "lt-LT"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "inLanguage": "lt-LT", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pradžia", "item": "https://veriva.lt/"}, {"@type": "ListItem", "position": 2, "name": "BDAR Baudų Dydžiai: Verslo Rizikos ir Pasekmės", "item": "https://veriva.lt/seo/bdar-baudu-dydziai"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "@id": "https://veriva.lt/#organization", "name": "Veriva UAB", "url": "https://veriva.lt", "sameAs": []}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "@id": "https://veriva.lt/#person-justinas", "name": "Justinas Gliebus", "jobTitle": "Įkūrėjas, Veriva UAB", "url": "https://veriva.lt/apie", "worksFor": {"@id": "https://veriva.lt/#organization"}, "sameAs": ["https://www.linkedin.com/in/justinas-glie-4ba358147/"]}</script>
@@ -251,50 +350,62 @@ gtag('consent', 'default', {
 
 
 
-<div class="v-ticker"><div class="v-ticker-track">
-  <span>BDAR atitiktis</span><span class="dot">·</span>
-  <span>NIS2 / TIS2</span><span class="dot">·</span>
-  <span>120+ auditų</span><span class="dot">·</span>
-  <span>€0 VDAI baudų</span><span class="dot">·</span>
-  <span>DPO outsourcing</span><span class="dot">·</span>
-  <span>Kibernetinis saugumas</span><span class="dot">·</span>
-  <span>BDAR atitiktis</span><span class="dot">·</span>
-  <span>NIS2 / TIS2</span><span class="dot">·</span>
-  <span>120+ auditų</span><span class="dot">·</span>
-  <span>€0 VDAI baudų</span><span class="dot">·</span>
-  <span>DPO outsourcing</span><span class="dot">·</span>
-  <span>Kibernetinis saugumas</span><span class="dot">·</span>
-</div></div>
-<nav class="v-nav">
-  <div class="v-nw">
-    <a href="https://veriva.lt/" class="v-logo" aria-label="Veriva">
-      <svg aria-hidden="true" fill="none" height="32" viewBox="0 0 64 64" width="32" xmlns="http://www.w3.org/2000/svg"><path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#fff" transform="translate(8,8)"/><path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="rgba(255,255,255,0.5)" transform="translate(8,8)"/></svg>
-      <span>VERIVA</span>
+<a href="#main" class="skip-link">Pereiti prie turinio</a>
+
+<!-- NAV — 1:1 su veriva.lt blog post -->
+<nav id="nav" aria-label="Pagrindinis meniu">
+  <div class="nw">
+    <a href="https://veriva.lt/" id="nav-logo-wrap" aria-label="Veriva — pradinis" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+      <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#ffffff" transform="translate(8,8)"/>
+        <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="rgba(255,255,255,0.5)" transform="translate(8,8)"/>
+      </svg>
+      <span style="font-family:Syne,system-ui,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.04em">VERIVA</span>
     </a>
-    <ul class="v-nl">
-      <li><a href="https://veriva.lt/">Pradžia</a></li>
+    <ul class="nl">
+      <li><a href="https://veriva.lt/#paslaugos">Paslaugos</a></li>
+      <li><a href="https://veriva.lt/#apie">Apie mus</a></li>
+      <li><a href="https://veriva.lt/#komanda">Komanda</a></li>
+      <li><a href="https://veriva.lt/#auditas">Kaip dirbame</a></li>
+      <li><a href="https://veriva.lt/#atsiliepimai">Rezultatai</a></li>
+      <li><a href="https://veriva.lt/#kainos">Kainos</a></li>
       <li><a href="https://veriva.lt/blog.html">Tinklaraštis</a></li>
-      <li><a href="https://veriva.lt/brief.html">Užsakyti auditą</a></li>
-      <li><a href="https://veriva.lt/privatumas.html">Privatumas</a></li>
-      <li><a href="https://veriva.lt/#kontaktai" class="v-cta">Gauti pilną BDAR auditą nemokamai</a></li>
+      <li><a href="https://veriva.lt/#kontaktai" class="nav-cta">Susisiekti</a></li>
     </ul>
-    <button class="v-burger" id="v-burger" aria-label="Meniu">
-      <svg fill="none" height="22" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="22"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <button class="hamburger" onclick="toggleMob()" aria-label="Meniu" aria-expanded="false" aria-controls="mob-menu">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
   </div>
 </nav>
-<div class="v-mob" id="v-mob">
-  <a href="https://veriva.lt/">Pradžia</a>
-  <a href="https://veriva.lt/blog.html">Tinklaraštis</a>
-  <a href="https://veriva.lt/brief.html">Užsakyti auditą</a>
-  <a href="https://veriva.lt/privatumas.html">Privatumas</a>
-  <a href="https://veriva.lt/#kontaktai">Gauti pilną BDAR auditą nemokamai</a>
+<div class="mob-menu" id="mob-menu">
+  <a href="https://veriva.lt/#paslaugos" onclick="closeMob()">Paslaugos</a>
+  <a href="https://veriva.lt/#apie" onclick="closeMob()">Apie mus</a>
+  <a href="https://veriva.lt/#komanda" onclick="closeMob()">Komanda</a>
+  <a href="https://veriva.lt/#auditas" onclick="closeMob()">Kaip dirbame</a>
+  <a href="https://veriva.lt/#atsiliepimai" onclick="closeMob()">Rezultatai</a>
+  <a href="https://veriva.lt/#kainos" onclick="closeMob()">Kainos</a>
+  <a href="https://veriva.lt/blog.html" onclick="closeMob()">Tinklaraštis</a>
+  <a href="https://veriva.lt/#kontaktai" onclick="closeMob()">Susisiekti →</a>
 </div>
 
+<!-- MAIN + ARTICLE HERO — opened here, closed in veriva_footer() -->
+<main id="main" tabindex="-1">
+<article>
+<header class="ah">
+  <div class="ah-w">
+    <div class="ah-crumbs"><a href="https://veriva.lt/">Pradžia</a> &nbsp;/&nbsp; <a href="https://veriva.lt/blog.html">Tinklaraštis</a></div>
+    <h1>BDAR Baudų Dydžiai: Verslo Rizikos ir Pasekmės</h1>
+    <p class="ah-sub">Sužinokite, kokie yra BDAR baudų dydžiai ir kaip jūsų verslas gali jų išvengti. Konkretūs pavyzdžiai ir ekspertų įžvalgos.</p>
+  </div>
+</header>
+<section class="ab">
+  <div class="ab-w">
+    <div class="prose">
 
 
-<main class="seo-article">
-<h1>BDAR Baudų Dydžiai: Verslo Rizikos ir Pasekmės</h1>
+
+
+
 
 
 
@@ -407,7 +518,7 @@ gtag('consent', 'default', {
 
 
 <section class="faq" aria-label="Frequently Asked Questions">
-<h2>FAQ</h2>
+<h2>Dažniausi klausimai</h2>
 
 <details>
 <summary>Kas yra BDAR ir kokias baudas jis numato?</summary>
@@ -463,7 +574,7 @@ gtag('consent', 'default', {
 
 
 <section class="citations" aria-label="Sources">
-<h2>Sources</h2>
+<h2>Šaltiniai</h2>
 <ol>
 
 <li>lrv.lt. <a href="https://lrv.lt/lt/naujienos/bdar-baudos-dydziai" rel="nofollow noopener" target="_blank">lrv.lt</a> (accessed May 2026)</li>
@@ -480,38 +591,99 @@ gtag('consent', 'default', {
 </section>
 
 
-<p class="timestamp">Generated 2026-05-22T16:52:53+00:00</p>
+<p class="timestamp">Generated 2026-05-22T17:59:43+00:00</p>
+
+
+
+
+  </div>
+  </div>
+</section>
+</article>
 </main>
 
-
-
-<footer class="v-foot">
-  <div class="v-ftw">
-    <div class="v-ft-top">
+<footer>
+  <div class="ftw">
+    <div class="ft-top">
       <div>
-        <a href="https://veriva.lt/" class="v-logo" aria-label="Veriva" style="margin-bottom:14px">
-          <svg aria-hidden="true" fill="none" height="32" viewBox="0 0 64 64" width="32" xmlns="http://www.w3.org/2000/svg"><path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#fff" transform="translate(8,8)"/><path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="rgba(255,255,255,0.5)" transform="translate(8,8)"/></svg>
-          <span>VERIVA</span>
+        <a href="https://veriva.lt/" aria-label="Veriva" style="display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:16px">
+          <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#ffffff" transform="translate(8,8)"/>
+            <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="rgba(255,255,255,0.5)" transform="translate(8,8)"/>
+          </svg>
+          <span style="font-family:Syne,system-ui,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.04em">VERIVA</span>
         </a>
-        <p class="v-ft-about">Teisė + IT vienoje komandoje. 120+ klientų, €0 VDAI baudų — nuo 2017 m.</p>
+        <p class="ft-about">Teisė + IT vienoje komandoje. 120+ klientų, €0 VDAI baudų nuo 2017 m.</p>
       </div>
-      <ul class="v-ft-links">
-        <li><a href="https://veriva.lt/">Pradžia</a></li>
-        <li><a href="https://veriva.lt/blog.html">Tinklaraštis</a></li>
-        <li><a href="https://veriva.lt/brief.html">Užsakyti auditą</a></li>
-        <li><a href="https://veriva.lt/privatumas.html">Privatumo politika</a></li>
-        <li><a href="https://veriva.lt/slapukai.html">Slapukai</a></li>
-      </ul>
+      <div>
+        <div class="ft-ch">Paslaugos</div>
+        <ul class="ft-links">
+          <li><a href="https://veriva.lt/#paslaugos">BDAR atitiktis</a></li>
+          <li><a href="https://veriva.lt/#paslaugos">Kibernetinis saugumas</a></li>
+          <li><a href="https://veriva.lt/#paslaugos">Mokymai</a></li>
+          <li><a href="https://veriva.lt/#paslaugos">DPO outsourcing</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-ch">Įmonė</div>
+        <ul class="ft-links">
+          <li><a href="https://veriva.lt/#atsiliepimai">Rezultatai</a></li>
+          <li><a href="https://veriva.lt/#kainos">Kainos</a></li>
+          <li><a href="https://veriva.lt/blog.html">Tinklaraštis</a></li>
+          <li><a href="https://veriva.lt/#kontaktai">Kontaktai</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-ch">Kontaktai</div>
+        <ul class="ft-links">
+          <li><a href="mailto:info@veriva.lt">info@veriva.lt</a></li>
+          <li><a href="tel:+37064003632">+370 640 03632</a></li>
+          <li><span style="color:rgba(255,255,255,.38)">Švitrigailos g. 11K-109</span></li>
+          <li><span style="color:rgba(255,255,255,.38)">LT-03228 Vilnius</span></li>
+        </ul>
+      </div>
     </div>
-    <div class="v-ft-bot">
-      <span>&copy; 2026 Veriva UAB. Visos teisės saugomos.</span>
-      <span>veriva.lt</span>
+    <div class="ft-bot">
+      <span>&copy; 2026 Veriva UAB · Įmonės kodas: 306162111</span>
+      <div class="ft-leg">
+        <a href="https://veriva.lt/privatumas.html">Privatumo politika</a>
+        <a href="https://veriva.lt/slapukai.html">Slapukų politika</a>
+      </div>
     </div>
   </div>
 </footer>
+
 <script>
-(function(){var b=document.getElementById('v-burger'),m=document.getElementById('v-mob');
-if(b&&m)b.addEventListener('click',function(){m.classList.toggle('open');});})();
+// Mobile nav (1:1 su veriva.lt blog post)
+function toggleMob(){
+  var menu = document.getElementById('mob-menu');
+  var btn = document.querySelector('.hamburger');
+  var isOpen = menu.classList.toggle('open');
+  if (btn) btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+}
+function closeMob(){
+  var menu = document.getElementById('mob-menu');
+  var btn = document.querySelector('.hamburger');
+  if (menu) menu.classList.remove('open');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+}
+
+// Scroll-triggered reveal (Kowalski pattern)
+(function(){
+  var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var targets = document.querySelectorAll('.prose h2, .prose h3, .toc, .article-cta, .cta-block, blockquote, .faq, aside.internal-links, .lead, .article-footer, .prose figure');
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    targets.forEach(function(el){ el.classList.add('in'); });
+    return;
+  }
+  targets.forEach(function(el){ el.classList.add('reveal'); });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  targets.forEach(function(el){ io.observe(el); });
+})();
 </script>
 
 
@@ -532,7 +704,7 @@ if(b&&m)b.addEventListener('click',function(){m.classList.toggle('open');});})()
 /* Reading time auto-calc (200 wpm). Server pre-fills #reading-time so
    the value renders before JS executes; this script only refines it
    client-side if the body word count differs from the server estimate. */
-(function(){var el=document.getElementById('reading-time');if(!el)return;var body=document.querySelector('.seo-article');if(!body)return;var words=body.innerText.trim().split(/\s+/).length;var mins=Math.max(1,Math.round(words/200));el.textContent=mins+' min read';})();
+(function(){var el=document.getElementById('reading-time');if(!el)return;var body=document.querySelector('.seo-article')||document.querySelector('.prose');if(!body)return;var words=body.innerText.trim().split(/\s+/).length;var mins=Math.max(1,Math.round(words/200));el.textContent=mins+' min read';})();
 </script>
 </body>
 </html>

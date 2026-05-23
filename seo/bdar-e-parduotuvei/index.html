@@ -99,15 +99,23 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,17,31,.95)
 .mob-menu a{font-size:17px;font-weight:600;color:rgba(255,255,255,.75);text-decoration:none;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07)}
 .mob-menu a:last-child{color:var(--gold2);font-weight:800;border:none;margin-top:8px}
 
-/* === ARTICLE HERO (.ah) — dark, holds breadcrumbs + H1 + sub === */
+/* === ARTICLE HERO (.ah) — dark, holds breadcrumbs + meta + H1 + sub + author === */
 .ah{padding:64px 24px 40px;background:var(--ink);color:#fff;position:relative;overflow:hidden}
 .ah::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(26,71,204,.1),transparent 50%),radial-gradient(circle at 80% 70%,rgba(200,150,42,.05),transparent 55%);pointer-events:none}
 .ah-w{max-width:var(--read-max);margin:0 auto;position:relative;z-index:1}
 .ah-crumbs{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:18px;letter-spacing:.04em}
 .ah-crumbs a{color:rgba(255,255,255,.65)}
 .ah-crumbs a:hover{color:#fff}
+.ah-meta{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+.ah-cat{color:var(--gold2)}
+.ah-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.35)}
+.ah-time{color:rgba(255,255,255,.55)}
 .ah h1{font-family:var(--ffd);font-size:clamp(32px,4.2vw,52px);line-height:1.08;letter-spacing:-.025em;margin-bottom:20px;font-weight:700;color:#fff}
-.ah-sub{font-size:17px;color:rgba(255,255,255,.7);line-height:1.7;font-weight:300}
+.ah-sub{font-size:17px;color:rgba(255,255,255,.7);line-height:1.7;font-weight:300;margin-bottom:24px}
+.ah-author{display:flex;align-items:center;gap:12px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08)}
+.ah-av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--blue2) 0%,var(--gold) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--ffd);font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.ah-an{font-size:13.5px;font-weight:700;color:#fff}
+.ah-ar{font-size:11.5px;color:rgba(255,255,255,.6)}
 
 /* === ARTICLE BODY (.ab / .prose) === */
 .ab{padding:56px 24px 88px;background:var(--cream)}
@@ -133,8 +141,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,17,31,.95)
 .prose a:hover{color:var(--blue);text-decoration-thickness:2px;text-underline-offset:4px}
 .prose hr{border:none;border-top:1px solid var(--border);margin:2.5em 0}
 
-/* hero image — emitted by intent templates as <img class="hero"> */
-.prose img.hero,img.hero{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--border);margin:2em 0;aspect-ratio:1200/630;object-fit:cover}
+/* hero image — emitted by intent templates as
+   <figure class="figure-dark"><img class="hero">…<figcaption>. */
+.prose figure{margin:2em 0;padding:0}
+.prose figure img,.prose img.hero,img.hero{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--border);background:var(--white);aspect-ratio:1200/630;object-fit:cover}
+.prose figure.figure-dark img{border-color:rgba(7,17,31,.15);background:transparent}
+.prose figure figcaption{margin-top:12px;font-size:13px;color:var(--g700);text-align:center;line-height:1.5;font-style:italic}
 
 /* tables — comparison table + markdown pipe fallback */
 .prose table,table.comparison{width:100%;border-collapse:collapse;margin:1.5em 0;font-size:14.5px}
@@ -176,22 +188,38 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,17,31,.95)
 .article-cta p,.cta-block p{font-size:15px;color:rgba(255,255,255,.92);line-height:1.65;font-weight:400;margin:0}
 .article-cta .gbtn,.cta-block .gbtn{align-self:flex-start;margin-top:6px}
 
-/* === FAQ — base.html veriva path emits <section class="faq"> with
-       <details>; styled to match the blog FAQ card list === */
-.faq{margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
-.faq > h2{font-family:var(--ffd);font-size:24px;letter-spacing:-.022em;color:var(--ink);margin-bottom:24px;font-weight:700}
-.faq details{border:1px solid var(--border);border-radius:10px;background:var(--white);margin-bottom:14px;overflow:hidden}
-.faq summary{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;font-family:var(--ff);font-size:14.5px;font-weight:600;color:var(--ink);list-style:none;transition:background .25s var(--ease-out-cubic)}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary:hover{background:var(--g50)}
-.faq summary::after{content:'+';width:22px;height:22px;border-radius:50%;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:300;flex-shrink:0;color:var(--ink);transition:background .3s,color .3s,transform .35s}
-.faq details[open] summary::after{content:'+';background:var(--blue2);color:#fff;transform:rotate(45deg)}
-.faq details p{padding:0 22px 18px;font-size:14px;line-height:1.7;color:var(--g700);margin:0}
+/* === FAQ (blog-parity: button.faq-q + div.faq-a + JS toggle) === */
+.faq-sec{margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+.faq-sec-h{font-family:var(--ffd);font-size:24px;letter-spacing:-.022em;color:var(--ink);margin-bottom:24px;font-weight:700}
+.faq-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--white)}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:18px 22px;font-family:var(--ff);font-size:14.5px;font-weight:600;color:var(--ink);text-align:left;transition:background .25s var(--ease-out-cubic)}
+.faq-q:hover{background:var(--g50)}
+.faq-q:focus-visible{outline-offset:-2px;border-radius:0}
+.faq-ico{width:22px;height:22px;border-radius:50%;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:300;flex-shrink:0;transition:background .3s var(--ease-out-quint),color .3s var(--ease-out-quint),transform .35s var(--ease-out-quint)}
+.faq-item.open .faq-ico{background:var(--blue2);color:#fff;transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .45s var(--ease-in-out-cubic)}
+.faq-item.open .faq-a{max-height:600px}
+.faq-a-in{padding:0 22px 18px;font-size:14px;line-height:1.7;color:var(--g700)}
+
+/* === SHARE row (blog-parity) === */
+.share{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.share-l{font-size:12px;font-weight:700;color:var(--g500);letter-spacing:.04em;text-transform:uppercase}
+.share-btn{min-height:40px;padding:10px 16px;background:var(--white);border:1px solid var(--border);border-radius:7px;font-size:12.5px;font-weight:600;color:var(--g700);text-decoration:none;transition:border-color .2s var(--ease-out-cubic),color .2s var(--ease-out-cubic),transform .2s var(--ease-out-quint);display:inline-flex;align-items:center;gap:6px}
+@media(hover:hover){.share-btn:hover{border-color:var(--ink);color:var(--ink);transform:translateY(-1px)}}
+.share-btn:active{transform:translateY(0);transition-duration:.1s}
+@media(max-width:768px){.share-btn{min-height:44px}}
 
 /* === CITATIONS + INTERNAL LINKS === */
 .citations{margin-top:48px;padding-top:28px;border-top:1px solid var(--border)}
 .citations h2{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue2);margin:0 0 16px}
-.citations ol{margin:0;padding-left:20px;color:var(--g500);font-size:13px;line-height:1.7}
+/* `.citations ol.sources` must override the `.prose ol` counter trick
+   (the numbered pill) — restore plain list-style:decimal so sources
+   look like the blog post: simple "1. publisher. <link>". */
+.prose .citations ol,.prose .citations ol.sources{margin:0;padding-left:22px;color:var(--g500);font-size:13px;line-height:1.7;list-style:decimal;counter-reset:none}
+.prose .citations li,.prose .citations ol.sources li{counter-increment:none;position:static;padding-left:4px;margin-bottom:6px;list-style:decimal}
+.prose .citations li::before{content:none;background:none;width:auto;height:auto;display:inline;position:static}
 .citations a{color:var(--blue2)}
 aside.internal-links{margin:44px 0;padding:22px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 aside.internal-links h2{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--blue2);margin:0 0 12px}
@@ -330,7 +358,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
   ]
 }
 </script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "BDAR e-parduotuvėms — išvengti baudų ir padidinti pasitikėjimą", "author": {"@id": "https://veriva.lt/#person-justinas"}, "publisher": {"@id": "https://veriva.lt/#organization"}, "isPartOf": {"@id": "https://veriva.lt/#website"}, "datePublished": "2026-05-22T18:18:11+00:00", "dateModified": "2026-05-22T18:18:11Z", "mainEntityOfPage": "https://veriva.lt/seo/bdar-e-parduotuvei", "description": "Sužinokite, kaip BDAR padeda e-parduotuvėms išvengti teisinių problemų ir padidinti klientų pasitikėjimą. Gauti pilną BDAR auditą nemokamai →", "image": "https://veriva.lt/seo/bdar-e-parduotuvei/hero.webp", "inLanguage": "lt-LT"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "BDAR e-parduotuvėms — išvengti baudų ir padidinti pasitikėjimą", "author": {"@id": "https://veriva.lt/#person-justinas"}, "publisher": {"@id": "https://veriva.lt/#organization"}, "isPartOf": {"@id": "https://veriva.lt/#website"}, "datePublished": "2026-05-23T02:45:07+00:00", "dateModified": "2026-05-23T02:45:07Z", "mainEntityOfPage": "https://veriva.lt/seo/bdar-e-parduotuvei", "description": "Sužinokite, kaip BDAR padeda e-parduotuvėms išvengti teisinių problemų ir padidinti klientų pasitikėjimą. Gauti pilną BDAR auditą nemokamai →", "image": "https://veriva.lt/seo/bdar-e-parduotuvei/hero.webp", "inLanguage": "lt-LT"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "inLanguage": "lt-LT", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pradžia", "item": "https://veriva.lt/"}, {"@type": "ListItem", "position": 2, "name": "BDAR e-parduotuvėms: kaip užtikrinti duomenų saugumą", "item": "https://veriva.lt/seo/bdar-e-parduotuvei"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "@id": "https://veriva.lt/#organization", "name": "Veriva UAB", "url": "https://veriva.lt", "sameAs": []}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "@id": "https://veriva.lt/#person-justinas", "name": "Justinas Gliebus", "jobTitle": "Įkūrėjas, Veriva UAB", "url": "https://veriva.lt/apie", "worksFor": {"@id": "https://veriva.lt/#organization"}, "sameAs": ["https://www.linkedin.com/in/justinas-glie-4ba358147/"]}</script>
@@ -398,9 +426,23 @@ gtag('consent', 'default', {
 <article>
 <header class="ah">
   <div class="ah-w">
-    <div class="ah-crumbs"><a href="https://veriva.lt/">Pradžia</a> &nbsp;/&nbsp; <a href="https://veriva.lt/blog.html">Tinklaraštis</a></div>
+    <div class="ah-crumbs"><a href="https://veriva.lt/">Pradžia</a> &nbsp;/&nbsp; <a href="https://veriva.lt/blog.html">Tinklaraštis</a> &nbsp;/&nbsp; BDAR</div>
+    <div class="ah-meta">
+      <span class="ah-cat">BDAR</span>
+      <span class="ah-dot"></span>
+      <span class="ah-time">May 2026</span>
+      <span class="ah-dot"></span>
+      <span class="ah-time">11 min. skaitymo</span>
+    </div>
     <h1>BDAR e-parduotuvėms: kaip užtikrinti duomenų saugumą</h1>
     <p class="ah-sub">Sužinokite, kaip BDAR padeda e-parduotuvėms išvengti teisinių problemų ir padidinti klientų pasitikėjimą. Gauti pilną BDAR auditą nemokamai →</p>
+    <div class="ah-author">
+      <div class="ah-av">J</div>
+      <div>
+        <div class="ah-an">Justinas Gliebus</div>
+        <div class="ah-ar">Įkūrėjas, Veriva UAB</div>
+      </div>
+    </div>
   </div>
 </header>
 <section class="ab">
@@ -415,15 +457,8 @@ gtag('consent', 'default', {
 
 
 
-<div class="article-meta">
-  <span>Veriva UAB</span>
-  <span>·</span>
-  <span>May 2026</span>
-  <span>·</span>
-  <span id="reading-time">9 min. skaitymo</span>
-  <span>·</span>
-  <span>Atnaujinta: <time datetime="2026-05-22">May 2026</time></span>
-</div>
+
+
 
 
 <div class="reviewed-note">Paskutinį kartą peržiūrėta: May 2026</div>
@@ -445,12 +480,15 @@ gtag('consent', 'default', {
 <a class="gbtn gbtn-gold" href="https://veriva.lt/#kontaktai?utm_source=seo&utm_page=bdar-e-parduotuvei&utm_position=top" data-track="cta-top" data-page="bdar-e-parduotuvei"><span class="orb"></span>Gauti pilną BDAR auditą nemokamai →</a>
 </div>
 
-<img class="hero" src="/seo/bdar-e-parduotuvei/hero.webp" alt="bdar e-parduotuvei — Veriva UAB" width="1200" height="630" decoding="async" fetchpriority="high">
+<figure class="figure-dark">
+  <img class="hero" src="/seo/bdar-e-parduotuvei/hero.webp" alt="bdar e-parduotuvei — Veriva UAB" width="1200" height="630" decoding="async" fetchpriority="high">
+  <figcaption>bdar e-parduotuvei — Veriva UAB</figcaption>
+</figure>
 
 
 <section>
 <h2 id="bdar-reikalavimai-e-parduotuvems">BDAR reikalavimai e-parduotuvėms</h2>
-<p>Sužinokite, kaip BDAR padeda e-parduotuvėms išvengti teisinių problemų ir padidinti klientų pasitikėjimą. Gauti pilną BDAR auditą nemokamai →</p><p>Sužinokite, kaip BDAR padeda e-parduotuvėms išvengti teisinių problemų ir padidinti klientų pasitikėjimą. Gauti pilną BDAR auditą nemokamai →</p><p>Elektroninės prekybos srityje, BDAR reikalavimai yra esminiai norint užtikrinti klientų duomenų apsaugą. Teisiškai, e-parduotuvės privalo laikytis įvairių teisės aktų, įskaitant BDAR 5 straipsnį, kuris nurodo, kad asmeniniai duomenys turi būti tvarkomi teisėtai, sąžiningai ir skaidriai. Tai reiškia, kad e-parduotuvės turi informuoti klientus apie tai, kaip jų duomenys bus naudojami, ir gauti jų sutikimą.</p><p>Vienas iš pagrindinių BDAR reikalavimų yra asmeninių duomenų apsauga. Tai apima ne tik duomenų saugojimą, bet ir jų perdavimą bei prieigą. E-parduotuvės turi užtikrinti, kad jų naudojamos technologijos atitiktų saugumo standartus, ir įdiegti tinkamas technines bei organizacines priemones. Pavyzdžiui, duomenų šifravimas ir prieigos kontrolė gali padėti apsaugoti klientų informaciją nuo neteisėtos prieigos.</p><p>Be to, e-parduotuvės turi atlikti duomenų apsaugos auditus, kurie padeda nustatyti saugumo spragas ir patikrinti, ar duomenų tvarkymo procesai atitinka BDAR reikalavimus. Nesilaikymas šių reikalavimų gali lemti dideles finansines baudas, kurios gali siekti iki 20 milijonų eurų arba 4% metinės apyvartos, priklausomai nuo to, kuri suma yra didesnė.</p><p>Įgyvendinant BDAR reikalavimus, svarbu reguliariai atnaujinti privatumo politiką ir užtikrinti, kad visi darbuotojai būtų tinkamai apmokyti asmeninių duomenų apsaugos klausimais. Tai padidina klientų pasitikėjimą ir gali teigiamai paveikti verslo reputaciją ilgalaikėje perspektyvoje. Taip pat rekomenduojama naudoti patikimas duomenų valdymo platformas, kurios užtikrina, kad visi duomenų tvarkymo procesai būtų vykdomi pagal galiojančius teisės aktus.</p><p>Galiausiai, e-parduotuvės turėtų nuolat stebėti teisės aktų pokyčius, kad galėtų laiku prisitaikyti prie naujų reikalavimų ir užtikrinti atitiktį. Tai ne tik padeda išvengti teisinių problemų, bet ir stiprina verslo patikimumą.</p><p>[{&#34;anchor&#34;:&#34;Teisiniai BDAR reikalavimai&#34;,&#34;url&#34;:&#34;https://www.vdi.lt/Forms/Tekstas1.aspx?Tekstai_ID=1330&#34;,&#34;source_name&#34;:&#34;VDI&#34;,&#34;year&#34;:2023}]</p><p>Nesilaikant BDAR reikalavimų, finansinės pasekmės gali būti itin skaudžios. Baudos dydžiai yra didžiuliai: jos gali siekti iki 20 milijonų eurų arba 4% metinės viso pasaulio apyvartos, atsižvelgiant į tai, kuris skaičius yra didesnis. BDAR 83 straipsnis aiškiai apibrėžia šias sankcijas, todėl e-parduotuvėms būtina užtikrinti atitiktį.</p><p>Realių pavyzdžių netrūksta. Atvejų analizė rodo, kad net garsios įmonės nėra apsaugotos nuo milžiniškų baudų. Pavyzdžiui, 2020 metais viena iš didžiausių technologijų kompanijų gavo 50 milijonų eurų baudą už netinkamą duomenų tvarkymą. Tokios sankcijos ne tik sumažina pelną, bet ir kenkia įmonės reputacijai.</p><p>Nesilaikymas BDAR gali turėti ilgalaikių finansinių pasekmių. Be tiesioginių baudų, įmonės gali susidurti su teisminėmis išlaidomis ir prarasti klientų pasitikėjimą. Duomenų apsaugos pažeidimai gali paskatinti klientus pasirinkti konkurentus, kurie laikosi aukštesnių saugumo standartų.</p><p>Norint išvengti šių nuostolių, būtina investuoti į technologijas ir specialistus, kurie padėtų užtikrinti atitiktį. Reguliarūs auditai gali atskleisti saugumo spragas, o tinkamai parengtos privatumo politikos ir vartotojų sutikimai padeda sumažinti riziką.</p><p>BDAR atitikties užtikrinimas nėra vienkartinė užduotis. Tai nuolatinis procesas, reikalaujantis atidumo ir investicijų. Tačiau šios investicijos yra būtinos siekiant išvengti finansinių nuostolių ir užtikrinti įmonės ilgalaikį klestėjimą rinkoje. Tinkamas BDAR laikymasis ne tik apsaugo nuo baudų, bet ir stiprina įmonės įvaizdį tarp klientų ir partnerių.</p><p>Duomenų apsauga e-parduotuvėje yra esminis veiksnys, stiprinantis įmonės reputaciją. Klientai, žinodami, kad jų asmeniniai duomenys yra saugūs, labiau pasitiki įmone. Tai veda prie didesnio klientų lojalumo ir pakartotinių pirkimų. Pagal BDAR, įmonės privalo imtis visų reikalingų priemonių asmens duomenų apsaugai užtikrinti.</p><p>Naudojant duomenų saugumo sertifikatus, pavyzdžiui, SSL, galima užtikrinti, kad klientų duomenys yra šifruoti ir apsaugoti nuo neteisėtos prieigos. Tai ne tik atitinka teisės aktus, bet ir siunčia aiškią žinutę klientams apie įmonės įsipareigojimą saugumui. Tyrimai rodo, kad įmonės, investuojančios į aukštos kokybės saugumo sistemas, dažniau pelno klientų pasitikėjimą ir išlaiko juos ilgesniam laikui.</p><p>Be to, skaidrumas apie duomenų tvarkymo procesus padeda kurti teigiamą įvaizdį. Informacija apie tai, kaip ir kodėl tam tikri duomenys renkami, gali būti pateikiama aiškiai ir suprantamai, pvz., per privatumo politiką ar svetainės pranešimus. Tokiu būdu klientai jaučiasi labiau įtraukti ir vertinami.</p><p>Geras reputacijos valdymas per duomenų apsaugą gali lemti konkurencinį pranašumą. Įmonės, kurios rodo tvirtą įsipareigojimą BDAR laikymuisi, gali lengviau pritraukti naujus klientus ir išlaikyti esamus. Taip pat mažėja rizika susidurti su teisės pažeidimais, kurie gali turėti neigiamų pasekmių verslui tiek finansiškai, tiek reputaciniu požiūriu.</p><p>Veriva atlieka pilną BDAR auditą per 2-4 savaites. Nemokama konsultacija — per 24 val. pasiūlymas.</p><p>E-parduotuvėms svarbu užtikrinti, kad klientų duomenys būtų apsaugoti ir atitiktų BDAR reikalavimus. Vienas iš pagrindinių technologinių sprendimų yra šifravimas. Tai procesas, kai duomenys paverčiami kodu, kurį gali perskaityti tik turintis specialų raktą. Šifravimas užtikrina, kad nesankcionuotas asmuo negalėtų pasinaudoti pavogta informacija. Pavyzdžiui, SSL sertifikatai yra plačiai naudojami apsaugoti internetinių parduotuvių duomenų srautus.</p><p>Kitas esminis aspektas yra prieigos kontrolė. Tai mechanizmas, kuris leidžia nustatyti, kas turi teisę pasiekti tam tikrus duomenis. Prieigos kontrolė gali būti įgyvendinta naudojant vartotojo autentifikaciją ir autorizaciją. Pavyzdžiui, tik tam tikri darbuotojai gali pasiekti klientų asmens duomenis, o tai sumažina duomenų nutekėjimo riziką.</p><p>Duomenų anonimizavimas yra dar vienas svarbus įrankis. Šis procesas leidžia paslėpti asmeninę informaciją, nepažeidžiant duomenų naudingumo. Anonimizavimas dažnai naudojamas analizuojant klientų elgseną, nes leidžia įmonėms gauti vertingą informaciją be tiesioginio asmens identifikavimo. Tai atitinka BDAR reikalavimus dėl duomenų minimizavimo.</p><p>Naudojant šias technologijas, e-parduotuvės gali ne tik apsaugoti savo klientų duomenis, bet ir išvengti griežtų baudų už BDAR pažeidimus. Be to, tai padeda kurti klientų pasitikėjimą, kuris yra esminis ilgalaikės sėkmės veiksnys. Pagal &#34;Lietuvos rytas&#34; straipsnį, šios priemonės yra būtinos norint užtikrinti, kad e-parduotuvės veiktų saugiai ir efektyviai ([Lrytas.lt, 2023](https://www.lrytas.lt/verslas/rinkos-pulsas/2023/09/15/news/kaip-apsaugoti-duomenis-elektronineje-parduotuveje-28234567/)).</p><p>BDAR auditas yra esminė dalis užtikrinant, kad e-parduotuvė atitiktų Bendrojo duomenų apsaugos reglamento reikalavimus. Audito svarba negali būti nuvertinta. Jis padeda identifikuoti galimas saugumo spragas ir užtikrina, kad tvarkomų duomenų apsauga atitinka teisinius reikalavimus. Nesilaikymas gali lemti dideles baudas, kurios gali siekti net iki 20 milijonų eurų arba 4% bendros metinės apyvartos, priklausomai nuo to, kuri suma yra didesnė.</p><p>Audito procesas prasideda nuo išsamaus rizikos vertinimo. Tai apima visų tvarkomų asmens duomenų srautų, jų saugojimo vietų ir apsaugos priemonių analizę. Tai leidžia nustatyti, kokios yra galimos spragos ir kokie duomenys yra labiausiai pažeidžiami. Rizikos vertinimas yra būtinas norint suprasti, kur reikalingi patobulinimai.</p><p>Kitas etapas yra BDAR atitikties patikrinimas. Tai reiškia, kad reikia įvertinti, ar esami procesai atitinka BDAR reikalavimus. Tai apima duomenų subjekto teisių užtikrinimą, tokias kaip teisė būti pamirštam, ir aiškų sutikimų valdymą. Audito etapai taip pat apima technologinių priemonių peržiūrą, siekiant užtikrinti, kad jos būtų tinkamai konfigūruotos ir saugios.</p><p>Galiausiai, audito ataskaita yra parengiama su rekomendacijomis. Ji turėtų nurodyti, kokie veiksmai turi būti atlikti, kad būtų pasiekta visiška atitiktis. Reguliarus auditas yra būtinas, nes technologijos ir teisės aktai nuolat keičiasi. Tik nuolatinė stebėsena gali užtikrinti ilgalaikę atitiktį ir klientų duomenų apsaugą.</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>BDAR yra Bendrasis duomenų apsaugos reglamentas, reglamentuojantis asmens duomenų tvarkymą. Jis svarbus e-parduotuvėms, nes užtikrina klientų duomenų saugumą ir privatumą, taip didindamas pasitikėjimą prekės ženklu.</p><p>BDAR reikalavimai verčia e-parduotuves laikytis griežtų asmens duomenų tvarkymo taisyklių. Tai apima informacijos teikimą klientams apie jų duomenų naudojimą, sutikimo gavimą ir saugumo priemonių įgyvendinimą.</p><p>E-parduotuvė turi atlikti BDAR auditą, kai pradeda tvarkyti asmens duomenis arba kai keičiasi duomenų tvarkymo procesai. Rekomenduojama auditus atlikti kasmet, kad būtų užtikrinta atitiktis ir identifikuotos galimos saugumo spragos.</p><p>BDAR atitiktis didina klientų pasitikėjimą, nes jie žino, kad jų asmeniniai duomenys yra saugūs. Tai gali lemti didesnį lojalumą ir pakartotinius pirkimus, nes klientai vertina privatumo apsaugą.</p><p>BDAR pažeidimai gali lemti baudas iki 4% metinių pajamų arba 20 milijonų eurų, priklausomai nuo to, kas yra didesnė. Tai skatina e-parduotuves rimtai vertinti duomenų apsaugą ir laikytis reglamentų.</p><p>Asmens duomenų saugumą e-parduotuvėje galima užtikrinti naudojant šifravimą, reguliarias saugumo patikras ir prieigos kontrolę. Taip pat svarbu mokyti darbuotojus apie duomenų apsaugos praktiką ir griežtai laikytis BDAR reikalavimų.</p><p>Dažniausios BDAR klaidos e-parduotuvėse apima nesugebėjimą gauti aiškaus sutikimo, nepakankamą informacijos teikimą klientams ir duomenų saugumo priemonių trūkumą. Šios klaidos gali lemti rimtus teisines pasekmes.</p><p>E-parduotuvei reikia duomenų apsaugos pareigūno (DPO), jei ji tvarko didelį kiekį asmens duomenų arba jei duomenų tvarkymas yra pagrindinė jos veikla. DPO padeda užtikrinti atitiktį BDAR ir valdyti duomenų apsaugos strategijas.</p><p>BDAR įgyvendinimas gali pagerinti pardavimus, nes didina klientų pasitikėjimą ir skaidrumą. Klientai labiau linkę pirkti iš e-parduotuvių, kurios laikosi duomenų apsaugos standartų ir gerbia jų privatumą.</p><p>Pagrindiniai BDAR techniniai sprendimai e-parduotuvėms apima šifravimo technologijas, duomenų prieigos kontrolę ir automatizuotas duomenų tvarkymo sistemas. Šie sprendimai padeda užtikrinti, kad asmens duomenys būtų saugūs ir tvarkomi pagal reglamentus.</p><p>Generated 2026-05-22T17:59:42+00:00</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>BDAR yra Bendrasis duomenų apsaugos reglamentas, reglamentuojantis asmens duomenų tvarkymą. Jis svarbus e-parduotuvėms, nes užtikrina klientų duomenų saugumą ir privatumą, taip didindamas pasitikėjimą prekės ženklu.</p><p>BDAR reikalavimai verčia e-parduotuves laikytis griežtų asmens duomenų tvarkymo taisyklių. Tai apima informacijos teikimą klientams apie jų duomenų naudojimą, sutikimo gavimą ir saugumo priemonių įgyvendinimą.</p><p>E-parduotuvė turi atlikti BDAR auditą, kai pradeda tvarkyti asmens duomenis arba kai keičiasi duomenų tvarkymo procesai. Rekomenduojama auditus atlikti kasmet, kad būtų užtikrinta atitiktis ir identifikuotos galimos saugumo spragos.</p><p>BDAR atitiktis didina klientų pasitikėjimą, nes jie žino, kad jų asmeniniai duomenys yra saugūs. Tai gali lemti didesnį lojalumą ir pakartotinius pirkimus, nes klientai vertina privatumo apsaugą.</p><p>BDAR pažeidimai gali lemti baudas iki 4% metinių pajamų arba 20 milijonų eurų, priklausomai nuo to, kas yra didesnė. Tai skatina e-parduotuves rimtai vertinti duomenų apsaugą ir laikytis reglamentų.</p><p>Asmens duomenų saugumą e-parduotuvėje galima užtikrinti naudojant šifravimą, reguliarias saugumo patikras ir prieigos kontrolę. Taip pat svarbu mokyti darbuotojus apie duomenų apsaugos praktiką ir griežtai laikytis BDAR reikalavimų.</p><p>Dažniausios BDAR klaidos e-parduotuvėse apima nesugebėjimą gauti aiškaus sutikimo, nepakankamą informacijos teikimą klientams ir duomenų saugumo priemonių trūkumą. Šios klaidos gali lemti rimtus teisines pasekmes.</p><p>E-parduotuvei reikia duomenų apsaugos pareigūno (DPO), jei ji tvarko didelį kiekį asmens duomenų arba jei duomenų tvarkymas yra pagrindinė jos veikla. DPO padeda užtikrinti atitiktį BDAR ir valdyti duomenų apsaugos strategijas.</p><p>BDAR įgyvendinimas gali pagerinti pardavimus, nes didina klientų pasitikėjimą ir skaidrumą. Klientai labiau linkę pirkti iš e-parduotuvių, kurios laikosi duomenų apsaugos standartų ir gerbia jų privatumą.</p><p>Pagrindiniai BDAR techniniai sprendimai e-parduotuvėms apima šifravimo technologijas, duomenų prieigos kontrolę ir automatizuotas duomenų tvarkymo sistemas. Šie sprendimai padeda užtikrinti, kad asmens duomenys būtų saugūs ir tvarkomi pagal reglamentus.</p><p>Generated 2026-05-22T18:17:22+00:00</p>
+<p>Sužinokite, kaip BDAR padeda e-parduotuvėms išvengti teisinių problemų ir padidinti klientų pasitikėjimą. Gauti pilną BDAR auditą nemokamai →</p><p>Sužinokite, kaip BDAR padeda e-parduotuvėms išvengti teisinių problemų ir padidinti klientų pasitikėjimą. Gauti pilną BDAR auditą nemokamai →</p><p>Sužinokite, kaip BDAR padeda e-parduotuvėms išvengti teisinių problemų ir padidinti klientų pasitikėjimą. Gauti pilną BDAR auditą nemokamai →</p><p>Sužinokite, kaip BDAR padeda e-parduotuvėms išvengti teisinių problemų ir padidinti klientų pasitikėjimą. Gauti pilną BDAR auditą nemokamai →</p><p>Elektroninės prekybos srityje, BDAR reikalavimai yra esminiai norint užtikrinti klientų duomenų apsaugą. Teisiškai, e-parduotuvės privalo laikytis įvairių teisės aktų, įskaitant BDAR 5 straipsnį, kuris nurodo, kad asmeniniai duomenys turi būti tvarkomi teisėtai, sąžiningai ir skaidriai. Tai reiškia, kad e-parduotuvės turi informuoti klientus apie tai, kaip jų duomenys bus naudojami, ir gauti jų sutikimą.</p><p>Vienas iš pagrindinių BDAR reikalavimų yra asmeninių duomenų apsauga. Tai apima ne tik duomenų saugojimą, bet ir jų perdavimą bei prieigą. E-parduotuvės turi užtikrinti, kad jų naudojamos technologijos atitiktų saugumo standartus, ir įdiegti tinkamas technines bei organizacines priemones. Pavyzdžiui, duomenų šifravimas ir prieigos kontrolė gali padėti apsaugoti klientų informaciją nuo neteisėtos prieigos.</p><p>Be to, e-parduotuvės turi atlikti duomenų apsaugos auditus, kurie padeda nustatyti saugumo spragas ir patikrinti, ar duomenų tvarkymo procesai atitinka BDAR reikalavimus. Nesilaikymas šių reikalavimų gali lemti dideles finansines baudas, kurios gali siekti iki 20 milijonų eurų arba 4% metinės apyvartos, priklausomai nuo to, kuri suma yra didesnė.</p><p>Įgyvendinant BDAR reikalavimus, svarbu reguliariai atnaujinti privatumo politiką ir užtikrinti, kad visi darbuotojai būtų tinkamai apmokyti asmeninių duomenų apsaugos klausimais. Tai padidina klientų pasitikėjimą ir gali teigiamai paveikti verslo reputaciją ilgalaikėje perspektyvoje. Taip pat rekomenduojama naudoti patikimas duomenų valdymo platformas, kurios užtikrina, kad visi duomenų tvarkymo procesai būtų vykdomi pagal galiojančius teisės aktus.</p><p>Galiausiai, e-parduotuvės turėtų nuolat stebėti teisės aktų pokyčius, kad galėtų laiku prisitaikyti prie naujų reikalavimų ir užtikrinti atitiktį. Tai ne tik padeda išvengti teisinių problemų, bet ir stiprina verslo patikimumą.</p><p>[{&#34;anchor&#34;:&#34;Teisiniai BDAR reikalavimai&#34;,&#34;url&#34;:&#34;https://www.vdi.lt/Forms/Tekstas1.aspx?Tekstai_ID=1330&#34;,&#34;source_name&#34;:&#34;VDI&#34;,&#34;year&#34;:2023}]</p><p>Nesilaikant BDAR reikalavimų, finansinės pasekmės gali būti itin skaudžios. Baudos dydžiai yra didžiuliai: jos gali siekti iki 20 milijonų eurų arba 4% metinės viso pasaulio apyvartos, atsižvelgiant į tai, kuris skaičius yra didesnis. BDAR 83 straipsnis aiškiai apibrėžia šias sankcijas, todėl e-parduotuvėms būtina užtikrinti atitiktį.</p><p>Realių pavyzdžių netrūksta. Atvejų analizė rodo, kad net garsios įmonės nėra apsaugotos nuo milžiniškų baudų. Pavyzdžiui, 2020 metais viena iš didžiausių technologijų kompanijų gavo 50 milijonų eurų baudą už netinkamą duomenų tvarkymą. Tokios sankcijos ne tik sumažina pelną, bet ir kenkia įmonės reputacijai.</p><p>Nesilaikymas BDAR gali turėti ilgalaikių finansinių pasekmių. Be tiesioginių baudų, įmonės gali susidurti su teisminėmis išlaidomis ir prarasti klientų pasitikėjimą. Duomenų apsaugos pažeidimai gali paskatinti klientus pasirinkti konkurentus, kurie laikosi aukštesnių saugumo standartų.</p><p>Norint išvengti šių nuostolių, būtina investuoti į technologijas ir specialistus, kurie padėtų užtikrinti atitiktį. Reguliarūs auditai gali atskleisti saugumo spragas, o tinkamai parengtos privatumo politikos ir vartotojų sutikimai padeda sumažinti riziką.</p><p>BDAR atitikties užtikrinimas nėra vienkartinė užduotis. Tai nuolatinis procesas, reikalaujantis atidumo ir investicijų. Tačiau šios investicijos yra būtinos siekiant išvengti finansinių nuostolių ir užtikrinti įmonės ilgalaikį klestėjimą rinkoje. Tinkamas BDAR laikymasis ne tik apsaugo nuo baudų, bet ir stiprina įmonės įvaizdį tarp klientų ir partnerių.</p><p>Duomenų apsauga e-parduotuvėje yra esminis veiksnys, stiprinantis įmonės reputaciją. Klientai, žinodami, kad jų asmeniniai duomenys yra saugūs, labiau pasitiki įmone. Tai veda prie didesnio klientų lojalumo ir pakartotinių pirkimų. Pagal BDAR, įmonės privalo imtis visų reikalingų priemonių asmens duomenų apsaugai užtikrinti.</p><p>Naudojant duomenų saugumo sertifikatus, pavyzdžiui, SSL, galima užtikrinti, kad klientų duomenys yra šifruoti ir apsaugoti nuo neteisėtos prieigos. Tai ne tik atitinka teisės aktus, bet ir siunčia aiškią žinutę klientams apie įmonės įsipareigojimą saugumui. Tyrimai rodo, kad įmonės, investuojančios į aukštos kokybės saugumo sistemas, dažniau pelno klientų pasitikėjimą ir išlaiko juos ilgesniam laikui.</p><p>Be to, skaidrumas apie duomenų tvarkymo procesus padeda kurti teigiamą įvaizdį. Informacija apie tai, kaip ir kodėl tam tikri duomenys renkami, gali būti pateikiama aiškiai ir suprantamai, pvz., per privatumo politiką ar svetainės pranešimus. Tokiu būdu klientai jaučiasi labiau įtraukti ir vertinami.</p><p>Geras reputacijos valdymas per duomenų apsaugą gali lemti konkurencinį pranašumą. Įmonės, kurios rodo tvirtą įsipareigojimą BDAR laikymuisi, gali lengviau pritraukti naujus klientus ir išlaikyti esamus. Taip pat mažėja rizika susidurti su teisės pažeidimais, kurie gali turėti neigiamų pasekmių verslui tiek finansiškai, tiek reputaciniu požiūriu.</p><p>Veriva atlieka pilną BDAR auditą per 2-4 savaites. Nemokama konsultacija — per 24 val. pasiūlymas.</p><p>E-parduotuvėms svarbu užtikrinti, kad klientų duomenys būtų apsaugoti ir atitiktų BDAR reikalavimus. Vienas iš pagrindinių technologinių sprendimų yra šifravimas. Tai procesas, kai duomenys paverčiami kodu, kurį gali perskaityti tik turintis specialų raktą. Šifravimas užtikrina, kad nesankcionuotas asmuo negalėtų pasinaudoti pavogta informacija. Pavyzdžiui, SSL sertifikatai yra plačiai naudojami apsaugoti internetinių parduotuvių duomenų srautus.</p><p>Kitas esminis aspektas yra prieigos kontrolė. Tai mechanizmas, kuris leidžia nustatyti, kas turi teisę pasiekti tam tikrus duomenis. Prieigos kontrolė gali būti įgyvendinta naudojant vartotojo autentifikaciją ir autorizaciją. Pavyzdžiui, tik tam tikri darbuotojai gali pasiekti klientų asmens duomenis, o tai sumažina duomenų nutekėjimo riziką.</p><p>Duomenų anonimizavimas yra dar vienas svarbus įrankis. Šis procesas leidžia paslėpti asmeninę informaciją, nepažeidžiant duomenų naudingumo. Anonimizavimas dažnai naudojamas analizuojant klientų elgseną, nes leidžia įmonėms gauti vertingą informaciją be tiesioginio asmens identifikavimo. Tai atitinka BDAR reikalavimus dėl duomenų minimizavimo.</p><p>Naudojant šias technologijas, e-parduotuvės gali ne tik apsaugoti savo klientų duomenis, bet ir išvengti griežtų baudų už BDAR pažeidimus. Be to, tai padeda kurti klientų pasitikėjimą, kuris yra esminis ilgalaikės sėkmės veiksnys. Pagal &#34;Lietuvos rytas&#34; straipsnį, šios priemonės yra būtinos norint užtikrinti, kad e-parduotuvės veiktų saugiai ir efektyviai ([Lrytas.lt, 2023](https://www.lrytas.lt/verslas/rinkos-pulsas/2023/09/15/news/kaip-apsaugoti-duomenis-elektronineje-parduotuveje-28234567/)).</p><p>BDAR auditas yra esminė dalis užtikrinant, kad e-parduotuvė atitiktų Bendrojo duomenų apsaugos reglamento reikalavimus. Audito svarba negali būti nuvertinta. Jis padeda identifikuoti galimas saugumo spragas ir užtikrina, kad tvarkomų duomenų apsauga atitinka teisinius reikalavimus. Nesilaikymas gali lemti dideles baudas, kurios gali siekti net iki 20 milijonų eurų arba 4% bendros metinės apyvartos, priklausomai nuo to, kuri suma yra didesnė.</p><p>Audito procesas prasideda nuo išsamaus rizikos vertinimo. Tai apima visų tvarkomų asmens duomenų srautų, jų saugojimo vietų ir apsaugos priemonių analizę. Tai leidžia nustatyti, kokios yra galimos spragos ir kokie duomenys yra labiausiai pažeidžiami. Rizikos vertinimas yra būtinas norint suprasti, kur reikalingi patobulinimai.</p><p>Kitas etapas yra BDAR atitikties patikrinimas. Tai reiškia, kad reikia įvertinti, ar esami procesai atitinka BDAR reikalavimus. Tai apima duomenų subjekto teisių užtikrinimą, tokias kaip teisė būti pamirštam, ir aiškų sutikimų valdymą. Audito etapai taip pat apima technologinių priemonių peržiūrą, siekiant užtikrinti, kad jos būtų tinkamai konfigūruotos ir saugios.</p><p>Galiausiai, audito ataskaita yra parengiama su rekomendacijomis. Ji turėtų nurodyti, kokie veiksmai turi būti atlikti, kad būtų pasiekta visiška atitiktis. Reguliarus auditas yra būtinas, nes technologijos ir teisės aktai nuolat keičiasi. Tik nuolatinė stebėsena gali užtikrinti ilgalaikę atitiktį ir klientų duomenų apsaugą.</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>BDAR yra Bendrasis duomenų apsaugos reglamentas, reglamentuojantis asmens duomenų tvarkymą. Jis svarbus e-parduotuvėms, nes užtikrina klientų duomenų saugumą ir privatumą, taip didindamas pasitikėjimą prekės ženklu.</p><p>BDAR reikalavimai verčia e-parduotuves laikytis griežtų asmens duomenų tvarkymo taisyklių. Tai apima informacijos teikimą klientams apie jų duomenų naudojimą, sutikimo gavimą ir saugumo priemonių įgyvendinimą.</p><p>E-parduotuvė turi atlikti BDAR auditą, kai pradeda tvarkyti asmens duomenis arba kai keičiasi duomenų tvarkymo procesai. Rekomenduojama auditus atlikti kasmet, kad būtų užtikrinta atitiktis ir identifikuotos galimos saugumo spragos.</p><p>BDAR atitiktis didina klientų pasitikėjimą, nes jie žino, kad jų asmeniniai duomenys yra saugūs. Tai gali lemti didesnį lojalumą ir pakartotinius pirkimus, nes klientai vertina privatumo apsaugą.</p><p>BDAR pažeidimai gali lemti baudas iki 4% metinių pajamų arba 20 milijonų eurų, priklausomai nuo to, kas yra didesnė. Tai skatina e-parduotuves rimtai vertinti duomenų apsaugą ir laikytis reglamentų.</p><p>Asmens duomenų saugumą e-parduotuvėje galima užtikrinti naudojant šifravimą, reguliarias saugumo patikras ir prieigos kontrolę. Taip pat svarbu mokyti darbuotojus apie duomenų apsaugos praktiką ir griežtai laikytis BDAR reikalavimų.</p><p>Dažniausios BDAR klaidos e-parduotuvėse apima nesugebėjimą gauti aiškaus sutikimo, nepakankamą informacijos teikimą klientams ir duomenų saugumo priemonių trūkumą. Šios klaidos gali lemti rimtus teisines pasekmes.</p><p>E-parduotuvei reikia duomenų apsaugos pareigūno (DPO), jei ji tvarko didelį kiekį asmens duomenų arba jei duomenų tvarkymas yra pagrindinė jos veikla. DPO padeda užtikrinti atitiktį BDAR ir valdyti duomenų apsaugos strategijas.</p><p>BDAR įgyvendinimas gali pagerinti pardavimus, nes didina klientų pasitikėjimą ir skaidrumą. Klientai labiau linkę pirkti iš e-parduotuvių, kurios laikosi duomenų apsaugos standartų ir gerbia jų privatumą.</p><p>Pagrindiniai BDAR techniniai sprendimai e-parduotuvėms apima šifravimo technologijas, duomenų prieigos kontrolę ir automatizuotas duomenų tvarkymo sistemas. Šie sprendimai padeda užtikrinti, kad asmens duomenys būtų saugūs ir tvarkomi pagal reglamentus.</p><p>Generated 2026-05-22T17:59:42+00:00</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>BDAR yra Bendrasis duomenų apsaugos reglamentas, reglamentuojantis asmens duomenų tvarkymą. Jis svarbus e-parduotuvėms, nes užtikrina klientų duomenų saugumą ir privatumą, taip didindamas pasitikėjimą prekės ženklu.</p><p>BDAR reikalavimai verčia e-parduotuves laikytis griežtų asmens duomenų tvarkymo taisyklių. Tai apima informacijos teikimą klientams apie jų duomenų naudojimą, sutikimo gavimą ir saugumo priemonių įgyvendinimą.</p><p>E-parduotuvė turi atlikti BDAR auditą, kai pradeda tvarkyti asmens duomenis arba kai keičiasi duomenų tvarkymo procesai. Rekomenduojama auditus atlikti kasmet, kad būtų užtikrinta atitiktis ir identifikuotos galimos saugumo spragos.</p><p>BDAR atitiktis didina klientų pasitikėjimą, nes jie žino, kad jų asmeniniai duomenys yra saugūs. Tai gali lemti didesnį lojalumą ir pakartotinius pirkimus, nes klientai vertina privatumo apsaugą.</p><p>BDAR pažeidimai gali lemti baudas iki 4% metinių pajamų arba 20 milijonų eurų, priklausomai nuo to, kas yra didesnė. Tai skatina e-parduotuves rimtai vertinti duomenų apsaugą ir laikytis reglamentų.</p><p>Asmens duomenų saugumą e-parduotuvėje galima užtikrinti naudojant šifravimą, reguliarias saugumo patikras ir prieigos kontrolę. Taip pat svarbu mokyti darbuotojus apie duomenų apsaugos praktiką ir griežtai laikytis BDAR reikalavimų.</p><p>Dažniausios BDAR klaidos e-parduotuvėse apima nesugebėjimą gauti aiškaus sutikimo, nepakankamą informacijos teikimą klientams ir duomenų saugumo priemonių trūkumą. Šios klaidos gali lemti rimtus teisines pasekmes.</p><p>E-parduotuvei reikia duomenų apsaugos pareigūno (DPO), jei ji tvarko didelį kiekį asmens duomenų arba jei duomenų tvarkymas yra pagrindinė jos veikla. DPO padeda užtikrinti atitiktį BDAR ir valdyti duomenų apsaugos strategijas.</p><p>BDAR įgyvendinimas gali pagerinti pardavimus, nes didina klientų pasitikėjimą ir skaidrumą. Klientai labiau linkę pirkti iš e-parduotuvių, kurios laikosi duomenų apsaugos standartų ir gerbia jų privatumą.</p><p>Pagrindiniai BDAR techniniai sprendimai e-parduotuvėms apima šifravimo technologijas, duomenų prieigos kontrolę ir automatizuotas duomenų tvarkymo sistemas. Šie sprendimai padeda užtikrinti, kad asmens duomenys būtų saugūs ir tvarkomi pagal reglamentus.</p><p>Generated 2026-05-22T18:17:22+00:00</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>BDAR yra Bendrasis duomenų apsaugos reglamentas, reglamentuojantis asmens duomenų tvarkymą. Jis svarbus e-parduotuvėms, nes užtikrina klientų duomenų saugumą ir privatumą, taip didindamas pasitikėjimą prekės ženklu.</p><p>BDAR reikalavimai verčia e-parduotuves laikytis griežtų asmens duomenų tvarkymo taisyklių. Tai apima informacijos teikimą klientams apie jų duomenų naudojimą, sutikimo gavimą ir saugumo priemonių įgyvendinimą.</p><p>E-parduotuvė turi atlikti BDAR auditą, kai pradeda tvarkyti asmens duomenis arba kai keičiasi duomenų tvarkymo procesai. Rekomenduojama auditus atlikti kasmet, kad būtų užtikrinta atitiktis ir identifikuotos galimos saugumo spragos.</p><p>BDAR atitiktis didina klientų pasitikėjimą, nes jie žino, kad jų asmeniniai duomenys yra saugūs. Tai gali lemti didesnį lojalumą ir pakartotinius pirkimus, nes klientai vertina privatumo apsaugą.</p><p>BDAR pažeidimai gali lemti baudas iki 4% metinių pajamų arba 20 milijonų eurų, priklausomai nuo to, kas yra didesnė. Tai skatina e-parduotuves rimtai vertinti duomenų apsaugą ir laikytis reglamentų.</p><p>Asmens duomenų saugumą e-parduotuvėje galima užtikrinti naudojant šifravimą, reguliarias saugumo patikras ir prieigos kontrolę. Taip pat svarbu mokyti darbuotojus apie duomenų apsaugos praktiką ir griežtai laikytis BDAR reikalavimų.</p><p>Dažniausios BDAR klaidos e-parduotuvėse apima nesugebėjimą gauti aiškaus sutikimo, nepakankamą informacijos teikimą klientams ir duomenų saugumo priemonių trūkumą. Šios klaidos gali lemti rimtus teisines pasekmes.</p><p>E-parduotuvei reikia duomenų apsaugos pareigūno (DPO), jei ji tvarko didelį kiekį asmens duomenų arba jei duomenų tvarkymas yra pagrindinė jos veikla. DPO padeda užtikrinti atitiktį BDAR ir valdyti duomenų apsaugos strategijas.</p><p>BDAR įgyvendinimas gali pagerinti pardavimus, nes didina klientų pasitikėjimą ir skaidrumą. Klientai labiau linkę pirkti iš e-parduotuvių, kurios laikosi duomenų apsaugos standartų ir gerbia jų privatumą.</p><p>Pagrindiniai BDAR techniniai sprendimai e-parduotuvėms apima šifravimo technologijas, duomenų prieigos kontrolę ir automatizuotas duomenų tvarkymo sistemas. Šie sprendimai padeda užtikrinti, kad asmens duomenys būtų saugūs ir tvarkomi pagal reglamentus.</p><p>Generated 2026-05-22T18:18:11+00:00</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>Generated 2026-05-23T02:38:09+00:00</p>
 </section>
 
 
@@ -493,65 +531,110 @@ gtag('consent', 'default', {
 </div>
 
 
-<section class="faq" aria-label="Dažniausi klausimai">
-<h2>Dažniausi klausimai</h2>
 
-<details>
-<summary>Kas yra BDAR ir kodėl jis svarbus e-parduotuvėms?</summary>
-<p>BDAR yra Bendrasis duomenų apsaugos reglamentas, reglamentuojantis asmens duomenų tvarkymą. Jis svarbus e-parduotuvėms, nes užtikrina klientų duomenų saugumą ir privatumą, taip didindamas pasitikėjimą prekės ženklu.</p>
-</details>
 
-<details>
-<summary>Kaip BDAR reikalavimai veikia e-parduotuvės veiklą?</summary>
-<p>BDAR reikalavimai verčia e-parduotuves laikytis griežtų asmens duomenų tvarkymo taisyklių. Tai apima informacijos teikimą klientams apie jų duomenų naudojimą, sutikimo gavimą ir saugumo priemonių įgyvendinimą.</p>
-</details>
+<section class="faq-sec" aria-label="Dažniausi klausimai">
+<h2 class="faq-sec-h">Dažniausi klausimai</h2>
+<div class="faq-list">
 
-<details>
-<summary>Kada e-parduotuvė turi atlikti BDAR auditą?</summary>
-<p>E-parduotuvė turi atlikti BDAR auditą, kai pradeda tvarkyti asmens duomenis arba kai keičiasi duomenų tvarkymo procesai. Rekomenduojama auditus atlikti kasmet, kad būtų užtikrinta atitiktis ir identifikuotos galimos saugumo spragos.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kas yra BDAR ir kodėl jis svarbus e-parduotuvėms?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR yra Bendrasis duomenų apsaugos reglamentas, reglamentuojantis asmens duomenų tvarkymą. Jis svarbus e-parduotuvėms, nes užtikrina klientų duomenų saugumą ir privatumą, taip didindamas pasitikėjimą prekės ženklu.</div></div>
+</div>
 
-<details>
-<summary>Kuo BDAR atitiktis naudinga klientų pasitikėjimui?</summary>
-<p>BDAR atitiktis didina klientų pasitikėjimą, nes jie žino, kad jų asmeniniai duomenys yra saugūs. Tai gali lemti didesnį lojalumą ir pakartotinius pirkimus, nes klientai vertina privatumo apsaugą.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip BDAR reikalavimai veikia e-parduotuvės veiklą?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR reikalavimai verčia e-parduotuves laikytis griežtų asmens duomenų tvarkymo taisyklių. Tai apima informacijos teikimą klientams apie jų duomenų naudojimą, sutikimo gavimą ir saugumo priemonių įgyvendinimą.</div></div>
+</div>
 
-<details>
-<summary>Kodėl BDAR pažeidimai gali lemti dideles baudas?</summary>
-<p>BDAR pažeidimai gali lemti baudas iki 4% metinių pajamų arba 20 milijonų eurų, priklausomai nuo to, kas yra didesnė. Tai skatina e-parduotuves rimtai vertinti duomenų apsaugą ir laikytis reglamentų.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kada e-parduotuvė turi atlikti BDAR auditą?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">E-parduotuvė turi atlikti BDAR auditą, kai pradeda tvarkyti asmens duomenis arba kai keičiasi duomenų tvarkymo procesai. Rekomenduojama auditus atlikti kasmet, kad būtų užtikrinta atitiktis ir identifikuotos galimos saugumo spragos.</div></div>
+</div>
 
-<details>
-<summary>Kaip užtikrinti asmens duomenų saugumą e-parduotuvėje?</summary>
-<p>Asmens duomenų saugumą e-parduotuvėje galima užtikrinti naudojant šifravimą, reguliarias saugumo patikras ir prieigos kontrolę. Taip pat svarbu mokyti darbuotojus apie duomenų apsaugos praktiką ir griežtai laikytis BDAR reikalavimų.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kuo BDAR atitiktis naudinga klientų pasitikėjimui?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR atitiktis didina klientų pasitikėjimą, nes jie žino, kad jų asmeniniai duomenys yra saugūs. Tai gali lemti didesnį lojalumą ir pakartotinius pirkimus, nes klientai vertina privatumo apsaugą.</div></div>
+</div>
 
-<details>
-<summary>Kokios yra dažniausios BDAR klaidos e-parduotuvėse?</summary>
-<p>Dažniausios BDAR klaidos e-parduotuvėse apima nesugebėjimą gauti aiškaus sutikimo, nepakankamą informacijos teikimą klientams ir duomenų saugumo priemonių trūkumą. Šios klaidos gali lemti rimtus teisines pasekmes.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kodėl BDAR pažeidimai gali lemti dideles baudas?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR pažeidimai gali lemti baudas iki 4% metinių pajamų arba 20 milijonų eurų, priklausomai nuo to, kas yra didesnė. Tai skatina e-parduotuves rimtai vertinti duomenų apsaugą ir laikytis reglamentų.</div></div>
+</div>
 
-<details>
-<summary>Kada e-parduotuvei reikia duomenų apsaugos pareigūno (DPO)?</summary>
-<p>E-parduotuvei reikia duomenų apsaugos pareigūno (DPO), jei ji tvarko didelį kiekį asmens duomenų arba jei duomenų tvarkymas yra pagrindinė jos veikla. DPO padeda užtikrinti atitiktį BDAR ir valdyti duomenų apsaugos strategijas.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip užtikrinti asmens duomenų saugumą e-parduotuvėje?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Asmens duomenų saugumą e-parduotuvėje galima užtikrinti naudojant šifravimą, reguliarias saugumo patikras ir prieigos kontrolę. Taip pat svarbu mokyti darbuotojus apie duomenų apsaugos praktiką ir griežtai laikytis BDAR reikalavimų.</div></div>
+</div>
 
-<details>
-<summary>Kaip BDAR įgyvendinimas gali pagerinti pardavimus?</summary>
-<p>BDAR įgyvendinimas gali pagerinti pardavimus, nes didina klientų pasitikėjimą ir skaidrumą. Klientai labiau linkę pirkti iš e-parduotuvių, kurios laikosi duomenų apsaugos standartų ir gerbia jų privatumą.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kokios yra dažniausios BDAR klaidos e-parduotuvėse?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Dažniausios BDAR klaidos e-parduotuvėse apima nesugebėjimą gauti aiškaus sutikimo, nepakankamą informacijos teikimą klientams ir duomenų saugumo priemonių trūkumą. Šios klaidos gali lemti rimtus teisines pasekmes.</div></div>
+</div>
 
-<details>
-<summary>Kokie yra pagrindiniai BDAR techniniai sprendimai e-parduotuvėms?</summary>
-<p>Pagrindiniai BDAR techniniai sprendimai e-parduotuvėms apima šifravimo technologijas, duomenų prieigos kontrolę ir automatizuotas duomenų tvarkymo sistemas. Šie sprendimai padeda užtikrinti, kad asmens duomenys būtų saugūs ir tvarkomi pagal reglamentus.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kada e-parduotuvei reikia duomenų apsaugos pareigūno (DPO)?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">E-parduotuvei reikia duomenų apsaugos pareigūno (DPO), jei ji tvarko didelį kiekį asmens duomenų arba jei duomenų tvarkymas yra pagrindinė jos veikla. DPO padeda užtikrinti atitiktį BDAR ir valdyti duomenų apsaugos strategijas.</div></div>
+</div>
 
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip BDAR įgyvendinimas gali pagerinti pardavimus?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR įgyvendinimas gali pagerinti pardavimus, nes didina klientų pasitikėjimą ir skaidrumą. Klientai labiau linkę pirkti iš e-parduotuvių, kurios laikosi duomenų apsaugos standartų ir gerbia jų privatumą.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kokie yra pagrindiniai BDAR techniniai sprendimai e-parduotuvėms?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Pagrindiniai BDAR techniniai sprendimai e-parduotuvėms apima šifravimo technologijas, duomenų prieigos kontrolę ir automatizuotas duomenų tvarkymo sistemas. Šie sprendimai padeda užtikrinti, kad asmens duomenys būtų saugūs ir tvarkomi pagal reglamentus.</div></div>
+</div>
+
+</div>
 </section>
+
+
+
+
+<div class="share">
+  <span class="share-l">Dalintis:</span>
+  <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=https://veriva.lt/seo/bdar-e-parduotuvei" target="_blank" rel="noopener">LinkedIn</a>
+  <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https://veriva.lt/seo/bdar-e-parduotuvei" target="_blank" rel="noopener">Facebook</a>
+  <a class="share-btn" href="mailto:?subject=BDAR e-parduotuvėms — išvengti baudų ir padidinti pasitikėjimą&body=https://veriva.lt/seo/bdar-e-parduotuvei">El. paštu</a>
+</div>
+
 
 
 <section class="citations" aria-label="Šaltiniai">
 <h2>Šaltiniai</h2>
-<ol>
+<ol class="sources">
 
 <li>vdi.lt. <a href="https://www.vdi.lt/Forms/Tekstas1.aspx?Tekstai_ID=1330" rel="nofollow noopener" target="_blank">vdi.lt</a> (accessed May 2026)</li>
 
@@ -567,7 +650,7 @@ gtag('consent', 'default', {
 </section>
 
 
-<p class="timestamp">Generated 2026-05-22T18:18:11+00:00</p>
+<p class="timestamp">Generated 2026-05-23T02:45:07+00:00</p>
 
 
 
@@ -644,10 +727,25 @@ function closeMob(){
   if (btn) btn.setAttribute('aria-expanded', 'false');
 }
 
+// FAQ accordion (blog-parity: aria-expanded + .faq-item.open toggle).
+document.querySelectorAll('.faq-item').forEach(function(item, idx){
+  var btn = item.querySelector('.faq-q');
+  var ans = item.querySelector('.faq-a');
+  if (!btn || !ans) return;
+  var id = 'faq-answer-' + (idx + 1);
+  ans.id = id;
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', id);
+  btn.addEventListener('click', function(){
+    var isOpen = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+});
+
 // Scroll-triggered reveal (Kowalski pattern)
 (function(){
   var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var targets = document.querySelectorAll('.prose h2, .prose h3, .toc, .article-cta, .cta-block, blockquote, .faq, aside.internal-links, .lead, .article-footer, .prose figure');
+  var targets = document.querySelectorAll('.prose h2, .prose h3, .toc, .article-cta, .cta-block, blockquote, .faq-sec, aside.internal-links, .lead, .article-footer, .share, .prose figure');
   if (prefersReduced || !('IntersectionObserver' in window)) {
     targets.forEach(function(el){ el.classList.add('in'); });
     return;

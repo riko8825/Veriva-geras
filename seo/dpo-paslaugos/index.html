@@ -99,15 +99,23 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,17,31,.95)
 .mob-menu a{font-size:17px;font-weight:600;color:rgba(255,255,255,.75);text-decoration:none;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07)}
 .mob-menu a:last-child{color:var(--gold2);font-weight:800;border:none;margin-top:8px}
 
-/* === ARTICLE HERO (.ah) — dark, holds breadcrumbs + H1 + sub === */
+/* === ARTICLE HERO (.ah) — dark, holds breadcrumbs + meta + H1 + sub + author === */
 .ah{padding:64px 24px 40px;background:var(--ink);color:#fff;position:relative;overflow:hidden}
 .ah::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(26,71,204,.1),transparent 50%),radial-gradient(circle at 80% 70%,rgba(200,150,42,.05),transparent 55%);pointer-events:none}
 .ah-w{max-width:var(--read-max);margin:0 auto;position:relative;z-index:1}
 .ah-crumbs{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:18px;letter-spacing:.04em}
 .ah-crumbs a{color:rgba(255,255,255,.65)}
 .ah-crumbs a:hover{color:#fff}
+.ah-meta{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+.ah-cat{color:var(--gold2)}
+.ah-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.35)}
+.ah-time{color:rgba(255,255,255,.55)}
 .ah h1{font-family:var(--ffd);font-size:clamp(32px,4.2vw,52px);line-height:1.08;letter-spacing:-.025em;margin-bottom:20px;font-weight:700;color:#fff}
-.ah-sub{font-size:17px;color:rgba(255,255,255,.7);line-height:1.7;font-weight:300}
+.ah-sub{font-size:17px;color:rgba(255,255,255,.7);line-height:1.7;font-weight:300;margin-bottom:24px}
+.ah-author{display:flex;align-items:center;gap:12px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08)}
+.ah-av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--blue2) 0%,var(--gold) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--ffd);font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.ah-an{font-size:13.5px;font-weight:700;color:#fff}
+.ah-ar{font-size:11.5px;color:rgba(255,255,255,.6)}
 
 /* === ARTICLE BODY (.ab / .prose) === */
 .ab{padding:56px 24px 88px;background:var(--cream)}
@@ -133,8 +141,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,17,31,.95)
 .prose a:hover{color:var(--blue);text-decoration-thickness:2px;text-underline-offset:4px}
 .prose hr{border:none;border-top:1px solid var(--border);margin:2.5em 0}
 
-/* hero image — emitted by intent templates as <img class="hero"> */
-.prose img.hero,img.hero{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--border);margin:2em 0;aspect-ratio:1200/630;object-fit:cover}
+/* hero image — emitted by intent templates as
+   <figure class="figure-dark"><img class="hero">…<figcaption>. */
+.prose figure{margin:2em 0;padding:0}
+.prose figure img,.prose img.hero,img.hero{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--border);background:var(--white);aspect-ratio:1200/630;object-fit:cover}
+.prose figure.figure-dark img{border-color:rgba(7,17,31,.15);background:transparent}
+.prose figure figcaption{margin-top:12px;font-size:13px;color:var(--g700);text-align:center;line-height:1.5;font-style:italic}
 
 /* tables — comparison table + markdown pipe fallback */
 .prose table,table.comparison{width:100%;border-collapse:collapse;margin:1.5em 0;font-size:14.5px}
@@ -176,22 +188,38 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,17,31,.95)
 .article-cta p,.cta-block p{font-size:15px;color:rgba(255,255,255,.92);line-height:1.65;font-weight:400;margin:0}
 .article-cta .gbtn,.cta-block .gbtn{align-self:flex-start;margin-top:6px}
 
-/* === FAQ — base.html veriva path emits <section class="faq"> with
-       <details>; styled to match the blog FAQ card list === */
-.faq{margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
-.faq > h2{font-family:var(--ffd);font-size:24px;letter-spacing:-.022em;color:var(--ink);margin-bottom:24px;font-weight:700}
-.faq details{border:1px solid var(--border);border-radius:10px;background:var(--white);margin-bottom:14px;overflow:hidden}
-.faq summary{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;font-family:var(--ff);font-size:14.5px;font-weight:600;color:var(--ink);list-style:none;transition:background .25s var(--ease-out-cubic)}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary:hover{background:var(--g50)}
-.faq summary::after{content:'+';width:22px;height:22px;border-radius:50%;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:300;flex-shrink:0;color:var(--ink);transition:background .3s,color .3s,transform .35s}
-.faq details[open] summary::after{content:'+';background:var(--blue2);color:#fff;transform:rotate(45deg)}
-.faq details p{padding:0 22px 18px;font-size:14px;line-height:1.7;color:var(--g700);margin:0}
+/* === FAQ (blog-parity: button.faq-q + div.faq-a + JS toggle) === */
+.faq-sec{margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+.faq-sec-h{font-family:var(--ffd);font-size:24px;letter-spacing:-.022em;color:var(--ink);margin-bottom:24px;font-weight:700}
+.faq-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--white)}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:18px 22px;font-family:var(--ff);font-size:14.5px;font-weight:600;color:var(--ink);text-align:left;transition:background .25s var(--ease-out-cubic)}
+.faq-q:hover{background:var(--g50)}
+.faq-q:focus-visible{outline-offset:-2px;border-radius:0}
+.faq-ico{width:22px;height:22px;border-radius:50%;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:300;flex-shrink:0;transition:background .3s var(--ease-out-quint),color .3s var(--ease-out-quint),transform .35s var(--ease-out-quint)}
+.faq-item.open .faq-ico{background:var(--blue2);color:#fff;transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .45s var(--ease-in-out-cubic)}
+.faq-item.open .faq-a{max-height:600px}
+.faq-a-in{padding:0 22px 18px;font-size:14px;line-height:1.7;color:var(--g700)}
+
+/* === SHARE row (blog-parity) === */
+.share{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.share-l{font-size:12px;font-weight:700;color:var(--g500);letter-spacing:.04em;text-transform:uppercase}
+.share-btn{min-height:40px;padding:10px 16px;background:var(--white);border:1px solid var(--border);border-radius:7px;font-size:12.5px;font-weight:600;color:var(--g700);text-decoration:none;transition:border-color .2s var(--ease-out-cubic),color .2s var(--ease-out-cubic),transform .2s var(--ease-out-quint);display:inline-flex;align-items:center;gap:6px}
+@media(hover:hover){.share-btn:hover{border-color:var(--ink);color:var(--ink);transform:translateY(-1px)}}
+.share-btn:active{transform:translateY(0);transition-duration:.1s}
+@media(max-width:768px){.share-btn{min-height:44px}}
 
 /* === CITATIONS + INTERNAL LINKS === */
 .citations{margin-top:48px;padding-top:28px;border-top:1px solid var(--border)}
 .citations h2{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue2);margin:0 0 16px}
-.citations ol{margin:0;padding-left:20px;color:var(--g500);font-size:13px;line-height:1.7}
+/* `.citations ol.sources` must override the `.prose ol` counter trick
+   (the numbered pill) — restore plain list-style:decimal so sources
+   look like the blog post: simple "1. publisher. <link>". */
+.prose .citations ol,.prose .citations ol.sources{margin:0;padding-left:22px;color:var(--g500);font-size:13px;line-height:1.7;list-style:decimal;counter-reset:none}
+.prose .citations li,.prose .citations ol.sources li{counter-increment:none;position:static;padding-left:4px;margin-bottom:6px;list-style:decimal}
+.prose .citations li::before{content:none;background:none;width:auto;height:auto;display:inline;position:static}
 .citations a{color:var(--blue2)}
 aside.internal-links{margin:44px 0;padding:22px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 aside.internal-links h2{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--blue2);margin:0 0 12px}
@@ -330,7 +358,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
   ]
 }
 </script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "DPO paslaugos įmonėms — mažesnės išlaidos, daugiau saugumo", "author": {"@id": "https://veriva.lt/#person-justinas"}, "publisher": {"@id": "https://veriva.lt/#organization"}, "isPartOf": {"@id": "https://veriva.lt/#website"}, "datePublished": "2026-05-22T18:18:11+00:00", "dateModified": "2026-05-22T18:18:11Z", "mainEntityOfPage": "https://veriva.lt/seo/dpo-paslaugos", "description": "Atraskite, kaip DPO paslaugos gali sumažinti išlaidas iki 80% ir užtikrinti BDAR atitiktį jūsų įmonei. Gauti pilną BDAR auditą nemokamai →", "image": "https://veriva.lt/seo/dpo-paslaugos/hero.webp", "inLanguage": "lt-LT"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "DPO paslaugos įmonėms — mažesnės išlaidos, daugiau saugumo", "author": {"@id": "https://veriva.lt/#person-justinas"}, "publisher": {"@id": "https://veriva.lt/#organization"}, "isPartOf": {"@id": "https://veriva.lt/#website"}, "datePublished": "2026-05-23T02:45:08+00:00", "dateModified": "2026-05-23T02:45:08Z", "mainEntityOfPage": "https://veriva.lt/seo/dpo-paslaugos", "description": "Atraskite, kaip DPO paslaugos gali sumažinti išlaidas iki 80% ir užtikrinti BDAR atitiktį jūsų įmonei. Gauti pilną BDAR auditą nemokamai →", "image": "https://veriva.lt/seo/dpo-paslaugos/hero.webp", "inLanguage": "lt-LT"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "inLanguage": "lt-LT", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pradžia", "item": "https://veriva.lt/"}, {"@type": "ListItem", "position": 2, "name": "DPO paslaugos: mažesnės išlaidos, daugiau saugumo", "item": "https://veriva.lt/seo/dpo-paslaugos"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "@id": "https://veriva.lt/#organization", "name": "Veriva UAB", "url": "https://veriva.lt", "sameAs": []}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "@id": "https://veriva.lt/#person-justinas", "name": "Justinas Gliebus", "jobTitle": "Įkūrėjas, Veriva UAB", "url": "https://veriva.lt/apie", "worksFor": {"@id": "https://veriva.lt/#organization"}, "sameAs": ["https://www.linkedin.com/in/justinas-glie-4ba358147/"]}</script>
@@ -398,9 +426,23 @@ gtag('consent', 'default', {
 <article>
 <header class="ah">
   <div class="ah-w">
-    <div class="ah-crumbs"><a href="https://veriva.lt/">Pradžia</a> &nbsp;/&nbsp; <a href="https://veriva.lt/blog.html">Tinklaraštis</a></div>
+    <div class="ah-crumbs"><a href="https://veriva.lt/">Pradžia</a> &nbsp;/&nbsp; <a href="https://veriva.lt/blog.html">Tinklaraštis</a> &nbsp;/&nbsp; DPO</div>
+    <div class="ah-meta">
+      <span class="ah-cat">DPO</span>
+      <span class="ah-dot"></span>
+      <span class="ah-time">May 2026</span>
+      <span class="ah-dot"></span>
+      <span class="ah-time">11 min. skaitymo</span>
+    </div>
     <h1>DPO paslaugos: mažesnės išlaidos, daugiau saugumo</h1>
     <p class="ah-sub">Atraskite, kaip DPO paslaugos gali sumažinti išlaidas iki 80% ir užtikrinti BDAR atitiktį jūsų įmonei. Gauti pilną BDAR auditą nemokamai →</p>
+    <div class="ah-author">
+      <div class="ah-av">J</div>
+      <div>
+        <div class="ah-an">Justinas Gliebus</div>
+        <div class="ah-ar">Įkūrėjas, Veriva UAB</div>
+      </div>
+    </div>
   </div>
 </header>
 <section class="ab">
@@ -415,15 +457,8 @@ gtag('consent', 'default', {
 
 
 
-<div class="article-meta">
-  <span>Veriva UAB</span>
-  <span>·</span>
-  <span>May 2026</span>
-  <span>·</span>
-  <span id="reading-time">9 min. skaitymo</span>
-  <span>·</span>
-  <span>Atnaujinta: <time datetime="2026-05-22">May 2026</time></span>
-</div>
+
+
 
 
 <div class="reviewed-note">Paskutinį kartą peržiūrėta: May 2026</div>
@@ -445,7 +480,10 @@ gtag('consent', 'default', {
 <a class="gbtn gbtn-gold" href="https://veriva.lt/#kontaktai?utm_source=seo&utm_page=dpo-paslaugos&utm_position=top" data-track="cta-top" data-page="dpo-paslaugos"><span class="orb"></span>Gauti pilną BDAR auditą nemokamai →</a>
 </div>
 
-<img class="hero" src="/seo/dpo-paslaugos/hero.webp" alt="dpo paslaugos — Veriva UAB" width="1200" height="630" decoding="async" fetchpriority="high">
+<figure class="figure-dark">
+  <img class="hero" src="/seo/dpo-paslaugos/hero.webp" alt="dpo paslaugos — Veriva UAB" width="1200" height="630" decoding="async" fetchpriority="high">
+  <figcaption>dpo paslaugos — Veriva UAB</figcaption>
+</figure>
 
 
 <div class="table-wrap">
@@ -459,7 +497,7 @@ gtag('consent', 'default', {
 
 <section>
 <h2 id="kodel-verta-rinktis-dpo-paslaugas">Kodėl verta rinktis DPO paslaugas?</h2>
-<p>Atraskite, kaip DPO paslaugos gali sumažinti išlaidas iki 80% ir užtikrinti BDAR atitiktį jūsų įmonei. Gauti pilną BDAR auditą nemokamai →</p><p>Atraskite, kaip DPO paslaugos gali sumažinti išlaidas iki 80% ir užtikrinti BDAR atitiktį jūsų įmonei. Gauti pilną BDAR auditą nemokamai →</p><p>DPO paslaugos, kaip išorinė duomenų apsaugos pareigūno funkcija, padeda įmonėms sutaupyti ir užtikrinti atitiktį BDAR (Bendrojo duomenų apsaugos reglamento) reikalavimams. Įmonės, samdančios DPO, gali sumažinti administracines išlaidas, nes nereikia išlaikyti nuolatinio darbuotojo. Remiantis 2023 metų duomenimis, vidutinės DPO paslaugų kainos Lietuvoje svyruoja nuo 3,2 iki 4,8 tūkst. EUR per metus. Tokiu būdu, įmonės gali optimizuoti biudžetą, tuo pačiu užtikrindamos, kad jų duomenų apsaugos praktika atitinka teisės aktus.</p><p>DPO paslaugos teikėjai dažnai turi patirties ir žinių, leidžiančių jiems greitai reaguoti į besikeičiančius teisės aktus ir pramonės standartus. Tai ypač svarbu, kai kalbama apie BDAR reikalavimus, kurie gali būti sudėtingi ir pasikeisti. DPO gali padėti nustatyti ir įgyvendinti tinkamas politikos priemones, kad būtų užtikrintas atitikties lygis ir sumažinta rizika dėl galimų baudų. BDAR numato, kad pažeidimų atveju įmonėms gali būti skiriamos baudos iki 20 milijonų EUR arba 4 % metinių pasaulinių pajamų — priklausomai nuo to, kuris skaičius yra didesnis.</p><p>Be to, DPO paslaugos padeda įmonėms geriau suprasti savo klientų duomenų valdymo praktiką. Tai gali padidinti klientų pasitikėjimą ir lojalumą, nes jie žino, kad jų asmeninė informacija yra saugoma ir tvarkoma atsakingai. Įmonės, kurios investuoja į DPO paslaugas, gali pasinaudoti šia galimybe ir pagerinti savo reputaciją rinkoje. Tokiu būdu, DPO paslaugos ne tik padeda užtikrinti teisinę atitiktį, bet ir gali tapti strateginiu pranašumu konkurencinėje aplinkoje.</p><p>DPO paslaugos atlieka esminį vaidmenį užtikrinant duomenų saugumą ir BDAR atitiktį. Duomenų apsaugos pareigūnai (DPO) ne tik konsultuoja įmones, bet ir prižiūri jų veiklos atitiktį Europos Sąjungos reglamentams. Pirmiausia, DPO padeda įmonėms identifikuoti ir vertinti duomenų tvarkymo rizikas. Tai apima asmens duomenų, tokių kaip vardai, adresai, finansinė informacija, analizę. DPO rekomenduoja geriausias praktikas, kad būtų sumažinta potenciali žala.</p><p>Be to, DPO atlieka mokymus darbuotojams, kad jie suprastų BDAR reikalavimus. Tinkamas darbuotojų informavimas sumažina klaidų tikimybę ir sustiprina organizacijos vidinę kultūrą. Taip pat, DPO stebi, ar įmonė tinkamai reaguoja į duomenų pažeidimus. Pasitikėjimas ir skaidrumas su klientais yra būtinas norint išlaikyti gerą verslo reputaciją.</p><p>DPO paslaugos taip pat apima reguliarius auditų atlikimus. Tai leidžia įmonėms nuolat įvertinti savo duomenų apsaugos strategijas. Audito rezultatai gali parodyti, kur reikia tobulinti sistemas, kad būtų išvengta galimų pažeidimų. BDAR reikalavimai reikalauja, kad įmonės praneštų apie duomenų pažeidimus per 72 valandas, todėl greitas ir efektyvus DPO veiksmas yra būtinas.</p><p>Galiausiai, DPO paslaugos padeda įmonėms ne tik atitikti teisinius reikalavimus, bet ir didinti klientų pasitikėjimą. Visi šie aspektai prisideda prie sėkmingos verslo strategijos, kurioje duomenų apsauga yra prioritetas. DPO paslaugų teikimas yra ypač svarbus įmonėms, kurios tvarko didelius kiekius asmens duomenų.  Taip užtikrinama, kad visi veiksmai būtų vykdomi laikantis BDAR principų ir geriausių praktikų.</p><p>Išorinių DPO paslaugų teikimas turi kelis privalumus, palyginti su vidiniu DPO pareigūnu. Pirma, išoriniai DPO suteikia nepriklausomą požiūrį į duomenų apsaugos praktikas. Tai leidžia objektyviau įvertinti esamas procedūras ir identifikuoti silpnas vietas. Antra, išoriniai DPO dažnai turi didesnę ekspertizę ir patirtį, nes dirba su įvairiomis organizacijomis. Tokiu būdu jie gali pasiūlyti geriausias praktikas, remdamiesi savo patirtimi kitose įmonėse. Pavyzdžiui, specialistai, dirbantys DPO paslaugas teikiančiose įmonėse, dažnai turi sertifikatus ir nuolatos tobulina savo žinias apie BDAR reglamentus.</p><p>Be to, išoriniai DPO teikia lankstumo pranašumą. Įmonės gali pasirinkti paslaugas pagal savo poreikius, o ne laikytis fiksuoto vidinio DPO atlyginimo ir darbo laiko. Tai gali būti ypač naudinga mažoms ir vidutinėms įmonėms, kurios neturi galimybių samdyti pilno etato DPO. Taip pat, išoriniai DPO leidžia sumažinti administracines išlaidas ir sumažinti riziką, susijusią su darbuotojų atostogomis ar ligomis.</p><p>Galiausiai, išoriniai DPO gali greičiau reaguoti į pokyčius teisės aktuose ir naujas technologijas, kurios gali paveikti duomenų apsaugą. Jie nuolat stebi naujausias tendencijas ir atnaujinimus, todėl gali užtikrinti, kad įmonės atitiktų BDAR reikalavimus. Tai yra ypač svarbu, nes BDAR pažeidimai gali sukelti dideles finansines baudas, kurios gali siekti iki 20 milijonų eurų arba 4% metinių pajamų, priklausomai nuo to, kuris skaičius didesnis. Išoriniai DPO paslaugų teikimas užtikrina greitą atsakymą ir lankstumą, kuris yra būtinas šiuolaikiniame verslo pasaulyje.</p><p>Veriva atlieka pilną BDAR auditą per 2-4 savaites. Nemokama konsultacija — per 24 val. pasiūlymas.</p><p>Įmonėms, dirbančioms su asmeniniais duomenimis, DPO paslaugos tampa būtinos, kai jos pradeda tvarkyti didelį kiekį jautrių duomenų. Jei jūsų organizacija renka, saugo ar analizuoja asmens informaciją, kaip antai vardus, adresus ar finansinius duomenis, būtina užtikrinti atitiktį BDAR reikalavimams. Tai ypač aktualu įmonėms, kurios veikia skaitmeninėje erdvėje, kur duomenų srautas yra didelis ir nuolatinis.</p><p>Be to, DPO paslaugos yra svarbios, kai įmonė planuoja plėtrą į naujas rinkas. Skirtingose šalyse galioja skirtingi duomenų apsaugos įstatymai, todėl profesionalios DPO paslaugos gali padėti išvengti teisinių komplikacijų.</p><p>Jei jūsų organizacija dažnai susiduria su duomenų pažeidimais ar incidentais, tai yra rimtas signalas, jog reikia DPO paslaugų. Tokiais atvejais išoriniai ekspertai gali padėti sukurti efektyvias duomenų apsaugos strategijas, kurios sumažins riziką ir užtikrins atitiktį.</p><p>Taip pat įmonės, turinčios 250 ir daugiau darbuotojų, privalo turėti paskirtą DPO. Tai yra reikalavimas, numatytas BDAR. Mažesnės įmonės taip pat gali pasinaudoti DPO paslaugomis, kad pagerintų savo duomenų valdymo procesus ir sumažintų galimų baudų riziką.</p><p>Galų gale, jei jūsų įmonė nori išlaikyti gerą reputaciją ir pasitikėjimą klientų akyse, DPO paslaugos yra veiksminga investicija. Atitiktis BDAR ne tik apsaugo jus nuo finansinių nuostolių, bet ir stiprina jūsų prekės ženklo vertę.</p><p>Priklausomai nuo jūsų įmonės dydžio ir veiklos pobūdžio, DPO paslaugų teikimas gali būti esminis žingsnis siekiant užtikrinti, kad įmonės tvarkomi duomenys būtų saugūs ir teisėti.</p><p>Pasirinkti tinkamą DPO (Duomenų apsaugos pareigūno) paslaugų teikėją yra svarbus žingsnis, užtikrinantis, kad jūsų organizacija atitiktų BDAR reikalavimus. Pirmiausia, vertinkite teikėjo patirtį. Patikimi DPO paslaugų teikėjai turėtų turėti patirties dirbant su organizacijomis, panašiomis į jūsų. Tai užtikrins, kad jie supranta specifinius iššūkius, su kuriais galite susidurti. Antra, atkreipkite dėmesį į teikėjo kvalifikacijas. DPO turi turėti tinkamas žinias apie duomenų apsaugos teisę ir praktikas. Tai gali būti teisiniai išsilavinimai arba sertifikatai, tokie kaip CIPP/E. Trečia, patikrinkite teikėjo reputaciją. Klientų atsiliepimai ir rekomendacijos gali atskleisti, ar teikėjas laikosi aukštų etikos standartų. Ketvirta, įvertinkite, ar teikėjas siūlo individualizuotas paslaugas. Kiekviena organizacija yra unikali, todėl svarbu, kad DPO paslaugos būtų pritaikytos jūsų poreikiams. Galiausiai, pasidomėkite teikėjo gebėjimu užtikrinti greitą atsakymą ir lankstumą. DPO turi būti pasiekiamas ir reaguoti į kylančias problemas, kad užtikrintų sklandų duomenų valdymą. Pasirinkimas turėtų būti pagrįstas ne tik kaina, bet ir teikiamų paslaugų kokybe. Remiantis Vz.lt (2023), „teikėjo pasirinkimas turi būti pagrįstas patirtimi, reputacija ir paslaugų pritaikymu“.</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>DPO (Duomenų apsaugos pareigūnas) yra specialistas, atsakingas už asmens duomenų apsaugą ir BDAR atitiktį. Įmonei DPO reikia, kai ji tvarko didelį kiekį asmens duomenų arba vykdo reguliarias duomenų tvarkymo operacijas.</p><p>DPO paslaugos padeda įmonėms suprasti ir įgyvendinti BDAR reikalavimus, teikdamos ekspertines konsultacijas ir praktinius sprendimus. Tai apima duomenų tvarkymo politikų kūrimą ir darbuotojų mokymus, siekiant sumažinti riziką.</p><p>Vidinis DPO dirba įmonės struktūroje ir yra atsakingas už nuolatinę duomenų apsaugos priežiūrą. Išorinis DPO, priešingai, yra nepriklausomas konsultantas, teikiantis paslaugas kelioms įmonėms ir turintis platesnę patirtį.</p><p>Pagrindiniai DPO paslaugų privalumai apima teisinę apsaugą, efektyvią duomenų valdymo praktiką ir geresnį įmonės reputacijos valdymą. Be to, DPO padeda sumažinti galimų baudų riziką ir užtikrina sklandų duomenų tvarkymą.</p><p>Pasirinkdami DPO paslaugų teikėją, atkreipkite dėmesį į jų patirtį, sertifikatus ir klientų atsiliepimus. Taip pat svarbu, kad teikėjas būtų gerai susipažinęs su jūsų konkrečia pramone ir jos reikalavimais.</p><p>DPO paslaugų kainos Lietuvoje gali svyruoti nuo 500 iki 2000 eurų per mėnesį, priklausomai nuo paslaugų apimties ir teikėjo patirties. Kainos gali skirtis ir priklausomai nuo įmonės dydžio bei duomenų tvarkymo sudėtingumo.</p><p>DPO paslaugos gali sumažinti įmonės išlaidas, optimizuojant duomenų tvarkymo procesus ir užtikrinant, kad būtų išvengta baudų už BDAR pažeidimus. Taip pat efektyvios duomenų valdymo praktikos gali sumažinti operacines išlaidas.</p><p>Verta svarstyti DPO paslaugų įsigijimą, kai įmonė pradeda tvarkyti didelį kiekį asmens duomenų arba planuoja plėtrą į naujas rinkas. Taip pat, jei įmonė nori užtikrinti BDAR atitiktį ir sumažinti galimų pažeidimų riziką.</p><p>DPO paslaugos pagerina duomenų saugumą, teikdamos rekomendacijas dėl duomenų apsaugos priemonių ir procedūrų. Tai apima nuolatinį duomenų tvarkymo auditą ir darbuotojų mokymus, siekiant užtikrinti, kad visi žinotų apie saugumo reikalavimus.</p><p>DPO paslaugų teikėjai siūlo sprendimus, tokius kaip duomenų tvarkymo politikų kūrimas, rizikos vertinimas ir mokymai darbuotojams. Be to, jie gali padėti įgyvendinti technines ir organizacines priemones, skirtas duomenų apsaugai.</p><p>Generated 2026-05-22T17:59:43+00:00</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>DPO (Duomenų apsaugos pareigūnas) yra specialistas, atsakingas už asmens duomenų apsaugą ir BDAR atitiktį. Įmonei DPO reikia, kai ji tvarko didelį kiekį asmens duomenų arba vykdo reguliarias duomenų tvarkymo operacijas.</p><p>DPO paslaugos padeda įmonėms suprasti ir įgyvendinti BDAR reikalavimus, teikdamos ekspertines konsultacijas ir praktinius sprendimus. Tai apima duomenų tvarkymo politikų kūrimą ir darbuotojų mokymus, siekiant sumažinti riziką.</p><p>Vidinis DPO dirba įmonės struktūroje ir yra atsakingas už nuolatinę duomenų apsaugos priežiūrą. Išorinis DPO, priešingai, yra nepriklausomas konsultantas, teikiantis paslaugas kelioms įmonėms ir turintis platesnę patirtį.</p><p>Pagrindiniai DPO paslaugų privalumai apima teisinę apsaugą, efektyvią duomenų valdymo praktiką ir geresnį įmonės reputacijos valdymą. Be to, DPO padeda sumažinti galimų baudų riziką ir užtikrina sklandų duomenų tvarkymą.</p><p>Pasirinkdami DPO paslaugų teikėją, atkreipkite dėmesį į jų patirtį, sertifikatus ir klientų atsiliepimus. Taip pat svarbu, kad teikėjas būtų gerai susipažinęs su jūsų konkrečia pramone ir jos reikalavimais.</p><p>DPO paslaugų kainos Lietuvoje gali svyruoti nuo 500 iki 2000 eurų per mėnesį, priklausomai nuo paslaugų apimties ir teikėjo patirties. Kainos gali skirtis ir priklausomai nuo įmonės dydžio bei duomenų tvarkymo sudėtingumo.</p><p>DPO paslaugos gali sumažinti įmonės išlaidas, optimizuojant duomenų tvarkymo procesus ir užtikrinant, kad būtų išvengta baudų už BDAR pažeidimus. Taip pat efektyvios duomenų valdymo praktikos gali sumažinti operacines išlaidas.</p><p>Verta svarstyti DPO paslaugų įsigijimą, kai įmonė pradeda tvarkyti didelį kiekį asmens duomenų arba planuoja plėtrą į naujas rinkas. Taip pat, jei įmonė nori užtikrinti BDAR atitiktį ir sumažinti galimų pažeidimų riziką.</p><p>DPO paslaugos pagerina duomenų saugumą, teikdamos rekomendacijas dėl duomenų apsaugos priemonių ir procedūrų. Tai apima nuolatinį duomenų tvarkymo auditą ir darbuotojų mokymus, siekiant užtikrinti, kad visi žinotų apie saugumo reikalavimus.</p><p>DPO paslaugų teikėjai siūlo sprendimus, tokius kaip duomenų tvarkymo politikų kūrimas, rizikos vertinimas ir mokymai darbuotojams. Be to, jie gali padėti įgyvendinti technines ir organizacines priemones, skirtas duomenų apsaugai.</p><p>Generated 2026-05-22T18:17:22+00:00</p>
+<p>Atraskite, kaip DPO paslaugos gali sumažinti išlaidas iki 80% ir užtikrinti BDAR atitiktį jūsų įmonei. Gauti pilną BDAR auditą nemokamai →</p><p>Atraskite, kaip DPO paslaugos gali sumažinti išlaidas iki 80% ir užtikrinti BDAR atitiktį jūsų įmonei. Gauti pilną BDAR auditą nemokamai →</p><p>Atraskite, kaip DPO paslaugos gali sumažinti išlaidas iki 80% ir užtikrinti BDAR atitiktį jūsų įmonei. Gauti pilną BDAR auditą nemokamai →</p><p>Atraskite, kaip DPO paslaugos gali sumažinti išlaidas iki 80% ir užtikrinti BDAR atitiktį jūsų įmonei. Gauti pilną BDAR auditą nemokamai →</p><p>DPO paslaugos, kaip išorinė duomenų apsaugos pareigūno funkcija, padeda įmonėms sutaupyti ir užtikrinti atitiktį BDAR (Bendrojo duomenų apsaugos reglamento) reikalavimams. Įmonės, samdančios DPO, gali sumažinti administracines išlaidas, nes nereikia išlaikyti nuolatinio darbuotojo. Remiantis 2023 metų duomenimis, vidutinės DPO paslaugų kainos Lietuvoje svyruoja nuo 3,2 iki 4,8 tūkst. EUR per metus. Tokiu būdu, įmonės gali optimizuoti biudžetą, tuo pačiu užtikrindamos, kad jų duomenų apsaugos praktika atitinka teisės aktus.</p><p>DPO paslaugos teikėjai dažnai turi patirties ir žinių, leidžiančių jiems greitai reaguoti į besikeičiančius teisės aktus ir pramonės standartus. Tai ypač svarbu, kai kalbama apie BDAR reikalavimus, kurie gali būti sudėtingi ir pasikeisti. DPO gali padėti nustatyti ir įgyvendinti tinkamas politikos priemones, kad būtų užtikrintas atitikties lygis ir sumažinta rizika dėl galimų baudų. BDAR numato, kad pažeidimų atveju įmonėms gali būti skiriamos baudos iki 20 milijonų EUR arba 4 % metinių pasaulinių pajamų — priklausomai nuo to, kuris skaičius yra didesnis.</p><p>Be to, DPO paslaugos padeda įmonėms geriau suprasti savo klientų duomenų valdymo praktiką. Tai gali padidinti klientų pasitikėjimą ir lojalumą, nes jie žino, kad jų asmeninė informacija yra saugoma ir tvarkoma atsakingai. Įmonės, kurios investuoja į DPO paslaugas, gali pasinaudoti šia galimybe ir pagerinti savo reputaciją rinkoje. Tokiu būdu, DPO paslaugos ne tik padeda užtikrinti teisinę atitiktį, bet ir gali tapti strateginiu pranašumu konkurencinėje aplinkoje.</p><p>DPO paslaugos atlieka esminį vaidmenį užtikrinant duomenų saugumą ir BDAR atitiktį. Duomenų apsaugos pareigūnai (DPO) ne tik konsultuoja įmones, bet ir prižiūri jų veiklos atitiktį Europos Sąjungos reglamentams. Pirmiausia, DPO padeda įmonėms identifikuoti ir vertinti duomenų tvarkymo rizikas. Tai apima asmens duomenų, tokių kaip vardai, adresai, finansinė informacija, analizę. DPO rekomenduoja geriausias praktikas, kad būtų sumažinta potenciali žala.</p><p>Be to, DPO atlieka mokymus darbuotojams, kad jie suprastų BDAR reikalavimus. Tinkamas darbuotojų informavimas sumažina klaidų tikimybę ir sustiprina organizacijos vidinę kultūrą. Taip pat, DPO stebi, ar įmonė tinkamai reaguoja į duomenų pažeidimus. Pasitikėjimas ir skaidrumas su klientais yra būtinas norint išlaikyti gerą verslo reputaciją.</p><p>DPO paslaugos taip pat apima reguliarius auditų atlikimus. Tai leidžia įmonėms nuolat įvertinti savo duomenų apsaugos strategijas. Audito rezultatai gali parodyti, kur reikia tobulinti sistemas, kad būtų išvengta galimų pažeidimų. BDAR reikalavimai reikalauja, kad įmonės praneštų apie duomenų pažeidimus per 72 valandas, todėl greitas ir efektyvus DPO veiksmas yra būtinas.</p><p>Galiausiai, DPO paslaugos padeda įmonėms ne tik atitikti teisinius reikalavimus, bet ir didinti klientų pasitikėjimą. Visi šie aspektai prisideda prie sėkmingos verslo strategijos, kurioje duomenų apsauga yra prioritetas. DPO paslaugų teikimas yra ypač svarbus įmonėms, kurios tvarko didelius kiekius asmens duomenų.  Taip užtikrinama, kad visi veiksmai būtų vykdomi laikantis BDAR principų ir geriausių praktikų.</p><p>Išorinių DPO paslaugų teikimas turi kelis privalumus, palyginti su vidiniu DPO pareigūnu. Pirma, išoriniai DPO suteikia nepriklausomą požiūrį į duomenų apsaugos praktikas. Tai leidžia objektyviau įvertinti esamas procedūras ir identifikuoti silpnas vietas. Antra, išoriniai DPO dažnai turi didesnę ekspertizę ir patirtį, nes dirba su įvairiomis organizacijomis. Tokiu būdu jie gali pasiūlyti geriausias praktikas, remdamiesi savo patirtimi kitose įmonėse. Pavyzdžiui, specialistai, dirbantys DPO paslaugas teikiančiose įmonėse, dažnai turi sertifikatus ir nuolatos tobulina savo žinias apie BDAR reglamentus.</p><p>Be to, išoriniai DPO teikia lankstumo pranašumą. Įmonės gali pasirinkti paslaugas pagal savo poreikius, o ne laikytis fiksuoto vidinio DPO atlyginimo ir darbo laiko. Tai gali būti ypač naudinga mažoms ir vidutinėms įmonėms, kurios neturi galimybių samdyti pilno etato DPO. Taip pat, išoriniai DPO leidžia sumažinti administracines išlaidas ir sumažinti riziką, susijusią su darbuotojų atostogomis ar ligomis.</p><p>Galiausiai, išoriniai DPO gali greičiau reaguoti į pokyčius teisės aktuose ir naujas technologijas, kurios gali paveikti duomenų apsaugą. Jie nuolat stebi naujausias tendencijas ir atnaujinimus, todėl gali užtikrinti, kad įmonės atitiktų BDAR reikalavimus. Tai yra ypač svarbu, nes BDAR pažeidimai gali sukelti dideles finansines baudas, kurios gali siekti iki 20 milijonų eurų arba 4% metinių pajamų, priklausomai nuo to, kuris skaičius didesnis. Išoriniai DPO paslaugų teikimas užtikrina greitą atsakymą ir lankstumą, kuris yra būtinas šiuolaikiniame verslo pasaulyje.</p><p>Veriva atlieka pilną BDAR auditą per 2-4 savaites. Nemokama konsultacija — per 24 val. pasiūlymas.</p><p>Įmonėms, dirbančioms su asmeniniais duomenimis, DPO paslaugos tampa būtinos, kai jos pradeda tvarkyti didelį kiekį jautrių duomenų. Jei jūsų organizacija renka, saugo ar analizuoja asmens informaciją, kaip antai vardus, adresus ar finansinius duomenis, būtina užtikrinti atitiktį BDAR reikalavimams. Tai ypač aktualu įmonėms, kurios veikia skaitmeninėje erdvėje, kur duomenų srautas yra didelis ir nuolatinis.</p><p>Be to, DPO paslaugos yra svarbios, kai įmonė planuoja plėtrą į naujas rinkas. Skirtingose šalyse galioja skirtingi duomenų apsaugos įstatymai, todėl profesionalios DPO paslaugos gali padėti išvengti teisinių komplikacijų.</p><p>Jei jūsų organizacija dažnai susiduria su duomenų pažeidimais ar incidentais, tai yra rimtas signalas, jog reikia DPO paslaugų. Tokiais atvejais išoriniai ekspertai gali padėti sukurti efektyvias duomenų apsaugos strategijas, kurios sumažins riziką ir užtikrins atitiktį.</p><p>Taip pat įmonės, turinčios 250 ir daugiau darbuotojų, privalo turėti paskirtą DPO. Tai yra reikalavimas, numatytas BDAR. Mažesnės įmonės taip pat gali pasinaudoti DPO paslaugomis, kad pagerintų savo duomenų valdymo procesus ir sumažintų galimų baudų riziką.</p><p>Galų gale, jei jūsų įmonė nori išlaikyti gerą reputaciją ir pasitikėjimą klientų akyse, DPO paslaugos yra veiksminga investicija. Atitiktis BDAR ne tik apsaugo jus nuo finansinių nuostolių, bet ir stiprina jūsų prekės ženklo vertę.</p><p>Priklausomai nuo jūsų įmonės dydžio ir veiklos pobūdžio, DPO paslaugų teikimas gali būti esminis žingsnis siekiant užtikrinti, kad įmonės tvarkomi duomenys būtų saugūs ir teisėti.</p><p>Pasirinkti tinkamą DPO (Duomenų apsaugos pareigūno) paslaugų teikėją yra svarbus žingsnis, užtikrinantis, kad jūsų organizacija atitiktų BDAR reikalavimus. Pirmiausia, vertinkite teikėjo patirtį. Patikimi DPO paslaugų teikėjai turėtų turėti patirties dirbant su organizacijomis, panašiomis į jūsų. Tai užtikrins, kad jie supranta specifinius iššūkius, su kuriais galite susidurti. Antra, atkreipkite dėmesį į teikėjo kvalifikacijas. DPO turi turėti tinkamas žinias apie duomenų apsaugos teisę ir praktikas. Tai gali būti teisiniai išsilavinimai arba sertifikatai, tokie kaip CIPP/E. Trečia, patikrinkite teikėjo reputaciją. Klientų atsiliepimai ir rekomendacijos gali atskleisti, ar teikėjas laikosi aukštų etikos standartų. Ketvirta, įvertinkite, ar teikėjas siūlo individualizuotas paslaugas. Kiekviena organizacija yra unikali, todėl svarbu, kad DPO paslaugos būtų pritaikytos jūsų poreikiams. Galiausiai, pasidomėkite teikėjo gebėjimu užtikrinti greitą atsakymą ir lankstumą. DPO turi būti pasiekiamas ir reaguoti į kylančias problemas, kad užtikrintų sklandų duomenų valdymą. Pasirinkimas turėtų būti pagrįstas ne tik kaina, bet ir teikiamų paslaugų kokybe. Remiantis Vz.lt (2023), „teikėjo pasirinkimas turi būti pagrįstas patirtimi, reputacija ir paslaugų pritaikymu“.</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>DPO (Duomenų apsaugos pareigūnas) yra specialistas, atsakingas už asmens duomenų apsaugą ir BDAR atitiktį. Įmonei DPO reikia, kai ji tvarko didelį kiekį asmens duomenų arba vykdo reguliarias duomenų tvarkymo operacijas.</p><p>DPO paslaugos padeda įmonėms suprasti ir įgyvendinti BDAR reikalavimus, teikdamos ekspertines konsultacijas ir praktinius sprendimus. Tai apima duomenų tvarkymo politikų kūrimą ir darbuotojų mokymus, siekiant sumažinti riziką.</p><p>Vidinis DPO dirba įmonės struktūroje ir yra atsakingas už nuolatinę duomenų apsaugos priežiūrą. Išorinis DPO, priešingai, yra nepriklausomas konsultantas, teikiantis paslaugas kelioms įmonėms ir turintis platesnę patirtį.</p><p>Pagrindiniai DPO paslaugų privalumai apima teisinę apsaugą, efektyvią duomenų valdymo praktiką ir geresnį įmonės reputacijos valdymą. Be to, DPO padeda sumažinti galimų baudų riziką ir užtikrina sklandų duomenų tvarkymą.</p><p>Pasirinkdami DPO paslaugų teikėją, atkreipkite dėmesį į jų patirtį, sertifikatus ir klientų atsiliepimus. Taip pat svarbu, kad teikėjas būtų gerai susipažinęs su jūsų konkrečia pramone ir jos reikalavimais.</p><p>DPO paslaugų kainos Lietuvoje gali svyruoti nuo 500 iki 2000 eurų per mėnesį, priklausomai nuo paslaugų apimties ir teikėjo patirties. Kainos gali skirtis ir priklausomai nuo įmonės dydžio bei duomenų tvarkymo sudėtingumo.</p><p>DPO paslaugos gali sumažinti įmonės išlaidas, optimizuojant duomenų tvarkymo procesus ir užtikrinant, kad būtų išvengta baudų už BDAR pažeidimus. Taip pat efektyvios duomenų valdymo praktikos gali sumažinti operacines išlaidas.</p><p>Verta svarstyti DPO paslaugų įsigijimą, kai įmonė pradeda tvarkyti didelį kiekį asmens duomenų arba planuoja plėtrą į naujas rinkas. Taip pat, jei įmonė nori užtikrinti BDAR atitiktį ir sumažinti galimų pažeidimų riziką.</p><p>DPO paslaugos pagerina duomenų saugumą, teikdamos rekomendacijas dėl duomenų apsaugos priemonių ir procedūrų. Tai apima nuolatinį duomenų tvarkymo auditą ir darbuotojų mokymus, siekiant užtikrinti, kad visi žinotų apie saugumo reikalavimus.</p><p>DPO paslaugų teikėjai siūlo sprendimus, tokius kaip duomenų tvarkymo politikų kūrimas, rizikos vertinimas ir mokymai darbuotojams. Be to, jie gali padėti įgyvendinti technines ir organizacines priemones, skirtas duomenų apsaugai.</p><p>Generated 2026-05-22T17:59:43+00:00</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>DPO (Duomenų apsaugos pareigūnas) yra specialistas, atsakingas už asmens duomenų apsaugą ir BDAR atitiktį. Įmonei DPO reikia, kai ji tvarko didelį kiekį asmens duomenų arba vykdo reguliarias duomenų tvarkymo operacijas.</p><p>DPO paslaugos padeda įmonėms suprasti ir įgyvendinti BDAR reikalavimus, teikdamos ekspertines konsultacijas ir praktinius sprendimus. Tai apima duomenų tvarkymo politikų kūrimą ir darbuotojų mokymus, siekiant sumažinti riziką.</p><p>Vidinis DPO dirba įmonės struktūroje ir yra atsakingas už nuolatinę duomenų apsaugos priežiūrą. Išorinis DPO, priešingai, yra nepriklausomas konsultantas, teikiantis paslaugas kelioms įmonėms ir turintis platesnę patirtį.</p><p>Pagrindiniai DPO paslaugų privalumai apima teisinę apsaugą, efektyvią duomenų valdymo praktiką ir geresnį įmonės reputacijos valdymą. Be to, DPO padeda sumažinti galimų baudų riziką ir užtikrina sklandų duomenų tvarkymą.</p><p>Pasirinkdami DPO paslaugų teikėją, atkreipkite dėmesį į jų patirtį, sertifikatus ir klientų atsiliepimus. Taip pat svarbu, kad teikėjas būtų gerai susipažinęs su jūsų konkrečia pramone ir jos reikalavimais.</p><p>DPO paslaugų kainos Lietuvoje gali svyruoti nuo 500 iki 2000 eurų per mėnesį, priklausomai nuo paslaugų apimties ir teikėjo patirties. Kainos gali skirtis ir priklausomai nuo įmonės dydžio bei duomenų tvarkymo sudėtingumo.</p><p>DPO paslaugos gali sumažinti įmonės išlaidas, optimizuojant duomenų tvarkymo procesus ir užtikrinant, kad būtų išvengta baudų už BDAR pažeidimus. Taip pat efektyvios duomenų valdymo praktikos gali sumažinti operacines išlaidas.</p><p>Verta svarstyti DPO paslaugų įsigijimą, kai įmonė pradeda tvarkyti didelį kiekį asmens duomenų arba planuoja plėtrą į naujas rinkas. Taip pat, jei įmonė nori užtikrinti BDAR atitiktį ir sumažinti galimų pažeidimų riziką.</p><p>DPO paslaugos pagerina duomenų saugumą, teikdamos rekomendacijas dėl duomenų apsaugos priemonių ir procedūrų. Tai apima nuolatinį duomenų tvarkymo auditą ir darbuotojų mokymus, siekiant užtikrinti, kad visi žinotų apie saugumo reikalavimus.</p><p>DPO paslaugų teikėjai siūlo sprendimus, tokius kaip duomenų tvarkymo politikų kūrimas, rizikos vertinimas ir mokymai darbuotojams. Be to, jie gali padėti įgyvendinti technines ir organizacines priemones, skirtas duomenų apsaugai.</p><p>Generated 2026-05-22T18:17:22+00:00</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>DPO (Duomenų apsaugos pareigūnas) yra specialistas, atsakingas už asmens duomenų apsaugą ir BDAR atitiktį. Įmonei DPO reikia, kai ji tvarko didelį kiekį asmens duomenų arba vykdo reguliarias duomenų tvarkymo operacijas.</p><p>DPO paslaugos padeda įmonėms suprasti ir įgyvendinti BDAR reikalavimus, teikdamos ekspertines konsultacijas ir praktinius sprendimus. Tai apima duomenų tvarkymo politikų kūrimą ir darbuotojų mokymus, siekiant sumažinti riziką.</p><p>Vidinis DPO dirba įmonės struktūroje ir yra atsakingas už nuolatinę duomenų apsaugos priežiūrą. Išorinis DPO, priešingai, yra nepriklausomas konsultantas, teikiantis paslaugas kelioms įmonėms ir turintis platesnę patirtį.</p><p>Pagrindiniai DPO paslaugų privalumai apima teisinę apsaugą, efektyvią duomenų valdymo praktiką ir geresnį įmonės reputacijos valdymą. Be to, DPO padeda sumažinti galimų baudų riziką ir užtikrina sklandų duomenų tvarkymą.</p><p>Pasirinkdami DPO paslaugų teikėją, atkreipkite dėmesį į jų patirtį, sertifikatus ir klientų atsiliepimus. Taip pat svarbu, kad teikėjas būtų gerai susipažinęs su jūsų konkrečia pramone ir jos reikalavimais.</p><p>DPO paslaugų kainos Lietuvoje gali svyruoti nuo 500 iki 2000 eurų per mėnesį, priklausomai nuo paslaugų apimties ir teikėjo patirties. Kainos gali skirtis ir priklausomai nuo įmonės dydžio bei duomenų tvarkymo sudėtingumo.</p><p>DPO paslaugos gali sumažinti įmonės išlaidas, optimizuojant duomenų tvarkymo procesus ir užtikrinant, kad būtų išvengta baudų už BDAR pažeidimus. Taip pat efektyvios duomenų valdymo praktikos gali sumažinti operacines išlaidas.</p><p>Verta svarstyti DPO paslaugų įsigijimą, kai įmonė pradeda tvarkyti didelį kiekį asmens duomenų arba planuoja plėtrą į naujas rinkas. Taip pat, jei įmonė nori užtikrinti BDAR atitiktį ir sumažinti galimų pažeidimų riziką.</p><p>DPO paslaugos pagerina duomenų saugumą, teikdamos rekomendacijas dėl duomenų apsaugos priemonių ir procedūrų. Tai apima nuolatinį duomenų tvarkymo auditą ir darbuotojų mokymus, siekiant užtikrinti, kad visi žinotų apie saugumo reikalavimus.</p><p>DPO paslaugų teikėjai siūlo sprendimus, tokius kaip duomenų tvarkymo politikų kūrimas, rizikos vertinimas ir mokymai darbuotojams. Be to, jie gali padėti įgyvendinti technines ir organizacines priemones, skirtas duomenų apsaugai.</p><p>Generated 2026-05-22T18:18:11+00:00</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>Generated 2026-05-23T02:38:09+00:00</p>
 </section>
 
 
@@ -502,65 +540,110 @@ gtag('consent', 'default', {
 </div>
 
 
-<section class="faq" aria-label="Dažniausi klausimai">
-<h2>Dažniausi klausimai</h2>
 
-<details>
-<summary>Kas yra DPO ir kada įmonei jo reikia?</summary>
-<p>DPO (Duomenų apsaugos pareigūnas) yra specialistas, atsakingas už asmens duomenų apsaugą ir BDAR atitiktį. Įmonei DPO reikia, kai ji tvarko didelį kiekį asmens duomenų arba vykdo reguliarias duomenų tvarkymo operacijas.</p>
-</details>
 
-<details>
-<summary>Kaip DPO paslaugos padeda užtikrinti BDAR atitiktį?</summary>
-<p>DPO paslaugos padeda įmonėms suprasti ir įgyvendinti BDAR reikalavimus, teikdamos ekspertines konsultacijas ir praktinius sprendimus. Tai apima duomenų tvarkymo politikų kūrimą ir darbuotojų mokymus, siekiant sumažinti riziką.</p>
-</details>
+<section class="faq-sec" aria-label="Dažniausi klausimai">
+<h2 class="faq-sec-h">Dažniausi klausimai</h2>
+<div class="faq-list">
 
-<details>
-<summary>Kuo skiriasi vidinis ir išorinis DPO?</summary>
-<p>Vidinis DPO dirba įmonės struktūroje ir yra atsakingas už nuolatinę duomenų apsaugos priežiūrą. Išorinis DPO, priešingai, yra nepriklausomas konsultantas, teikiantis paslaugas kelioms įmonėms ir turintis platesnę patirtį.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kas yra DPO ir kada įmonei jo reikia?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">DPO (Duomenų apsaugos pareigūnas) yra specialistas, atsakingas už asmens duomenų apsaugą ir BDAR atitiktį. Įmonei DPO reikia, kai ji tvarko didelį kiekį asmens duomenų arba vykdo reguliarias duomenų tvarkymo operacijas.</div></div>
+</div>
 
-<details>
-<summary>Kokie yra pagrindiniai DPO paslaugų privalumai?</summary>
-<p>Pagrindiniai DPO paslaugų privalumai apima teisinę apsaugą, efektyvią duomenų valdymo praktiką ir geresnį įmonės reputacijos valdymą. Be to, DPO padeda sumažinti galimų baudų riziką ir užtikrina sklandų duomenų tvarkymą.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip DPO paslaugos padeda užtikrinti BDAR atitiktį?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">DPO paslaugos padeda įmonėms suprasti ir įgyvendinti BDAR reikalavimus, teikdamos ekspertines konsultacijas ir praktinius sprendimus. Tai apima duomenų tvarkymo politikų kūrimą ir darbuotojų mokymus, siekiant sumažinti riziką.</div></div>
+</div>
 
-<details>
-<summary>Kaip pasirinkti patikimą DPO paslaugų teikėją?</summary>
-<p>Pasirinkdami DPO paslaugų teikėją, atkreipkite dėmesį į jų patirtį, sertifikatus ir klientų atsiliepimus. Taip pat svarbu, kad teikėjas būtų gerai susipažinęs su jūsų konkrečia pramone ir jos reikalavimais.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kuo skiriasi vidinis ir išorinis DPO?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Vidinis DPO dirba įmonės struktūroje ir yra atsakingas už nuolatinę duomenų apsaugos priežiūrą. Išorinis DPO, priešingai, yra nepriklausomas konsultantas, teikiantis paslaugas kelioms įmonėms ir turintis platesnę patirtį.</div></div>
+</div>
 
-<details>
-<summary>Kokios yra DPO paslaugų kainos Lietuvoje?</summary>
-<p>DPO paslaugų kainos Lietuvoje gali svyruoti nuo 500 iki 2000 eurų per mėnesį, priklausomai nuo paslaugų apimties ir teikėjo patirties. Kainos gali skirtis ir priklausomai nuo įmonės dydžio bei duomenų tvarkymo sudėtingumo.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kokie yra pagrindiniai DPO paslaugų privalumai?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Pagrindiniai DPO paslaugų privalumai apima teisinę apsaugą, efektyvią duomenų valdymo praktiką ir geresnį įmonės reputacijos valdymą. Be to, DPO padeda sumažinti galimų baudų riziką ir užtikrina sklandų duomenų tvarkymą.</div></div>
+</div>
 
-<details>
-<summary>Kaip DPO paslaugos gali sumažinti įmonės išlaidas?</summary>
-<p>DPO paslaugos gali sumažinti įmonės išlaidas, optimizuojant duomenų tvarkymo procesus ir užtikrinant, kad būtų išvengta baudų už BDAR pažeidimus. Taip pat efektyvios duomenų valdymo praktikos gali sumažinti operacines išlaidas.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip pasirinkti patikimą DPO paslaugų teikėją?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Pasirinkdami DPO paslaugų teikėją, atkreipkite dėmesį į jų patirtį, sertifikatus ir klientų atsiliepimus. Taip pat svarbu, kad teikėjas būtų gerai susipažinęs su jūsų konkrečia pramone ir jos reikalavimais.</div></div>
+</div>
 
-<details>
-<summary>Kada verta svarstyti DPO paslaugų įsigijimą?</summary>
-<p>Verta svarstyti DPO paslaugų įsigijimą, kai įmonė pradeda tvarkyti didelį kiekį asmens duomenų arba planuoja plėtrą į naujas rinkas. Taip pat, jei įmonė nori užtikrinti BDAR atitiktį ir sumažinti galimų pažeidimų riziką.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kokios yra DPO paslaugų kainos Lietuvoje?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">DPO paslaugų kainos Lietuvoje gali svyruoti nuo 500 iki 2000 eurų per mėnesį, priklausomai nuo paslaugų apimties ir teikėjo patirties. Kainos gali skirtis ir priklausomai nuo įmonės dydžio bei duomenų tvarkymo sudėtingumo.</div></div>
+</div>
 
-<details>
-<summary>Kaip DPO paslaugos pagerina duomenų saugumą?</summary>
-<p>DPO paslaugos pagerina duomenų saugumą, teikdamos rekomendacijas dėl duomenų apsaugos priemonių ir procedūrų. Tai apima nuolatinį duomenų tvarkymo auditą ir darbuotojų mokymus, siekiant užtikrinti, kad visi žinotų apie saugumo reikalavimus.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip DPO paslaugos gali sumažinti įmonės išlaidas?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">DPO paslaugos gali sumažinti įmonės išlaidas, optimizuojant duomenų tvarkymo procesus ir užtikrinant, kad būtų išvengta baudų už BDAR pažeidimus. Taip pat efektyvios duomenų valdymo praktikos gali sumažinti operacines išlaidas.</div></div>
+</div>
 
-<details>
-<summary>Kokius sprendimus siūlo DPO paslaugų teikėjai?</summary>
-<p>DPO paslaugų teikėjai siūlo sprendimus, tokius kaip duomenų tvarkymo politikų kūrimas, rizikos vertinimas ir mokymai darbuotojams. Be to, jie gali padėti įgyvendinti technines ir organizacines priemones, skirtas duomenų apsaugai.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kada verta svarstyti DPO paslaugų įsigijimą?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Verta svarstyti DPO paslaugų įsigijimą, kai įmonė pradeda tvarkyti didelį kiekį asmens duomenų arba planuoja plėtrą į naujas rinkas. Taip pat, jei įmonė nori užtikrinti BDAR atitiktį ir sumažinti galimų pažeidimų riziką.</div></div>
+</div>
 
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip DPO paslaugos pagerina duomenų saugumą?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">DPO paslaugos pagerina duomenų saugumą, teikdamos rekomendacijas dėl duomenų apsaugos priemonių ir procedūrų. Tai apima nuolatinį duomenų tvarkymo auditą ir darbuotojų mokymus, siekiant užtikrinti, kad visi žinotų apie saugumo reikalavimus.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kokius sprendimus siūlo DPO paslaugų teikėjai?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">DPO paslaugų teikėjai siūlo sprendimus, tokius kaip duomenų tvarkymo politikų kūrimas, rizikos vertinimas ir mokymai darbuotojams. Be to, jie gali padėti įgyvendinti technines ir organizacines priemones, skirtas duomenų apsaugai.</div></div>
+</div>
+
+</div>
 </section>
+
+
+
+
+<div class="share">
+  <span class="share-l">Dalintis:</span>
+  <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=https://veriva.lt/seo/dpo-paslaugos" target="_blank" rel="noopener">LinkedIn</a>
+  <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https://veriva.lt/seo/dpo-paslaugos" target="_blank" rel="noopener">Facebook</a>
+  <a class="share-btn" href="mailto:?subject=DPO paslaugos įmonėms — mažesnės išlaidos, daugiau saugumo&body=https://veriva.lt/seo/dpo-paslaugos">El. paštu</a>
+</div>
+
 
 
 <section class="citations" aria-label="Šaltiniai">
 <h2>Šaltiniai</h2>
-<ol>
+<ol class="sources">
 
 <li>verslilietuva.lt. <a href="https://www.verslilietuva.lt/lt/verslo-informacija/duomenu-apsauga/" rel="nofollow noopener" target="_blank">verslilietuva.lt</a> (accessed May 2026)</li>
 
@@ -576,7 +659,7 @@ gtag('consent', 'default', {
 </section>
 
 
-<p class="timestamp">Generated 2026-05-22T18:18:11+00:00</p>
+<p class="timestamp">Generated 2026-05-23T02:45:08+00:00</p>
 
 
 
@@ -653,10 +736,25 @@ function closeMob(){
   if (btn) btn.setAttribute('aria-expanded', 'false');
 }
 
+// FAQ accordion (blog-parity: aria-expanded + .faq-item.open toggle).
+document.querySelectorAll('.faq-item').forEach(function(item, idx){
+  var btn = item.querySelector('.faq-q');
+  var ans = item.querySelector('.faq-a');
+  if (!btn || !ans) return;
+  var id = 'faq-answer-' + (idx + 1);
+  ans.id = id;
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', id);
+  btn.addEventListener('click', function(){
+    var isOpen = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+});
+
 // Scroll-triggered reveal (Kowalski pattern)
 (function(){
   var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var targets = document.querySelectorAll('.prose h2, .prose h3, .toc, .article-cta, .cta-block, blockquote, .faq, aside.internal-links, .lead, .article-footer, .prose figure');
+  var targets = document.querySelectorAll('.prose h2, .prose h3, .toc, .article-cta, .cta-block, blockquote, .faq-sec, aside.internal-links, .lead, .article-footer, .share, .prose figure');
   if (prefersReduced || !('IntersectionObserver' in window)) {
     targets.forEach(function(el){ el.classList.add('in'); });
     return;

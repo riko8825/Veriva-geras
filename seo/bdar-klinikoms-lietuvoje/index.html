@@ -99,15 +99,23 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,17,31,.95)
 .mob-menu a{font-size:17px;font-weight:600;color:rgba(255,255,255,.75);text-decoration:none;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07)}
 .mob-menu a:last-child{color:var(--gold2);font-weight:800;border:none;margin-top:8px}
 
-/* === ARTICLE HERO (.ah) — dark, holds breadcrumbs + H1 + sub === */
+/* === ARTICLE HERO (.ah) — dark, holds breadcrumbs + meta + H1 + sub + author === */
 .ah{padding:64px 24px 40px;background:var(--ink);color:#fff;position:relative;overflow:hidden}
 .ah::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(26,71,204,.1),transparent 50%),radial-gradient(circle at 80% 70%,rgba(200,150,42,.05),transparent 55%);pointer-events:none}
 .ah-w{max-width:var(--read-max);margin:0 auto;position:relative;z-index:1}
 .ah-crumbs{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:18px;letter-spacing:.04em}
 .ah-crumbs a{color:rgba(255,255,255,.65)}
 .ah-crumbs a:hover{color:#fff}
+.ah-meta{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+.ah-cat{color:var(--gold2)}
+.ah-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.35)}
+.ah-time{color:rgba(255,255,255,.55)}
 .ah h1{font-family:var(--ffd);font-size:clamp(32px,4.2vw,52px);line-height:1.08;letter-spacing:-.025em;margin-bottom:20px;font-weight:700;color:#fff}
-.ah-sub{font-size:17px;color:rgba(255,255,255,.7);line-height:1.7;font-weight:300}
+.ah-sub{font-size:17px;color:rgba(255,255,255,.7);line-height:1.7;font-weight:300;margin-bottom:24px}
+.ah-author{display:flex;align-items:center;gap:12px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08)}
+.ah-av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--blue2) 0%,var(--gold) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--ffd);font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.ah-an{font-size:13.5px;font-weight:700;color:#fff}
+.ah-ar{font-size:11.5px;color:rgba(255,255,255,.6)}
 
 /* === ARTICLE BODY (.ab / .prose) === */
 .ab{padding:56px 24px 88px;background:var(--cream)}
@@ -133,8 +141,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,17,31,.95)
 .prose a:hover{color:var(--blue);text-decoration-thickness:2px;text-underline-offset:4px}
 .prose hr{border:none;border-top:1px solid var(--border);margin:2.5em 0}
 
-/* hero image — emitted by intent templates as <img class="hero"> */
-.prose img.hero,img.hero{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--border);margin:2em 0;aspect-ratio:1200/630;object-fit:cover}
+/* hero image — emitted by intent templates as
+   <figure class="figure-dark"><img class="hero">…<figcaption>. */
+.prose figure{margin:2em 0;padding:0}
+.prose figure img,.prose img.hero,img.hero{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--border);background:var(--white);aspect-ratio:1200/630;object-fit:cover}
+.prose figure.figure-dark img{border-color:rgba(7,17,31,.15);background:transparent}
+.prose figure figcaption{margin-top:12px;font-size:13px;color:var(--g700);text-align:center;line-height:1.5;font-style:italic}
 
 /* tables — comparison table + markdown pipe fallback */
 .prose table,table.comparison{width:100%;border-collapse:collapse;margin:1.5em 0;font-size:14.5px}
@@ -176,22 +188,38 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,17,31,.95)
 .article-cta p,.cta-block p{font-size:15px;color:rgba(255,255,255,.92);line-height:1.65;font-weight:400;margin:0}
 .article-cta .gbtn,.cta-block .gbtn{align-self:flex-start;margin-top:6px}
 
-/* === FAQ — base.html veriva path emits <section class="faq"> with
-       <details>; styled to match the blog FAQ card list === */
-.faq{margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
-.faq > h2{font-family:var(--ffd);font-size:24px;letter-spacing:-.022em;color:var(--ink);margin-bottom:24px;font-weight:700}
-.faq details{border:1px solid var(--border);border-radius:10px;background:var(--white);margin-bottom:14px;overflow:hidden}
-.faq summary{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;font-family:var(--ff);font-size:14.5px;font-weight:600;color:var(--ink);list-style:none;transition:background .25s var(--ease-out-cubic)}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary:hover{background:var(--g50)}
-.faq summary::after{content:'+';width:22px;height:22px;border-radius:50%;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:300;flex-shrink:0;color:var(--ink);transition:background .3s,color .3s,transform .35s}
-.faq details[open] summary::after{content:'+';background:var(--blue2);color:#fff;transform:rotate(45deg)}
-.faq details p{padding:0 22px 18px;font-size:14px;line-height:1.7;color:var(--g700);margin:0}
+/* === FAQ (blog-parity: button.faq-q + div.faq-a + JS toggle) === */
+.faq-sec{margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+.faq-sec-h{font-family:var(--ffd);font-size:24px;letter-spacing:-.022em;color:var(--ink);margin-bottom:24px;font-weight:700}
+.faq-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--white)}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:18px 22px;font-family:var(--ff);font-size:14.5px;font-weight:600;color:var(--ink);text-align:left;transition:background .25s var(--ease-out-cubic)}
+.faq-q:hover{background:var(--g50)}
+.faq-q:focus-visible{outline-offset:-2px;border-radius:0}
+.faq-ico{width:22px;height:22px;border-radius:50%;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:300;flex-shrink:0;transition:background .3s var(--ease-out-quint),color .3s var(--ease-out-quint),transform .35s var(--ease-out-quint)}
+.faq-item.open .faq-ico{background:var(--blue2);color:#fff;transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .45s var(--ease-in-out-cubic)}
+.faq-item.open .faq-a{max-height:600px}
+.faq-a-in{padding:0 22px 18px;font-size:14px;line-height:1.7;color:var(--g700)}
+
+/* === SHARE row (blog-parity) === */
+.share{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.share-l{font-size:12px;font-weight:700;color:var(--g500);letter-spacing:.04em;text-transform:uppercase}
+.share-btn{min-height:40px;padding:10px 16px;background:var(--white);border:1px solid var(--border);border-radius:7px;font-size:12.5px;font-weight:600;color:var(--g700);text-decoration:none;transition:border-color .2s var(--ease-out-cubic),color .2s var(--ease-out-cubic),transform .2s var(--ease-out-quint);display:inline-flex;align-items:center;gap:6px}
+@media(hover:hover){.share-btn:hover{border-color:var(--ink);color:var(--ink);transform:translateY(-1px)}}
+.share-btn:active{transform:translateY(0);transition-duration:.1s}
+@media(max-width:768px){.share-btn{min-height:44px}}
 
 /* === CITATIONS + INTERNAL LINKS === */
 .citations{margin-top:48px;padding-top:28px;border-top:1px solid var(--border)}
 .citations h2{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue2);margin:0 0 16px}
-.citations ol{margin:0;padding-left:20px;color:var(--g500);font-size:13px;line-height:1.7}
+/* `.citations ol.sources` must override the `.prose ol` counter trick
+   (the numbered pill) — restore plain list-style:decimal so sources
+   look like the blog post: simple "1. publisher. <link>". */
+.prose .citations ol,.prose .citations ol.sources{margin:0;padding-left:22px;color:var(--g500);font-size:13px;line-height:1.7;list-style:decimal;counter-reset:none}
+.prose .citations li,.prose .citations ol.sources li{counter-increment:none;position:static;padding-left:4px;margin-bottom:6px;list-style:decimal}
+.prose .citations li::before{content:none;background:none;width:auto;height:auto;display:inline;position:static}
 .citations a{color:var(--blue2)}
 aside.internal-links{margin:44px 0;padding:22px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 aside.internal-links h2{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--blue2);margin:0 0 12px}
@@ -330,7 +358,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
   ]
 }
 </script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "BDAR klinikoms Lietuvoje — atitiktis ir baudos", "author": {"@id": "https://veriva.lt/#person-justinas"}, "publisher": {"@id": "https://veriva.lt/#organization"}, "isPartOf": {"@id": "https://veriva.lt/#website"}, "datePublished": "2026-05-22T18:18:10+00:00", "dateModified": "2026-05-22T18:18:10Z", "mainEntityOfPage": "https://veriva.lt/seo/bdar-klinikoms-lietuvoje", "description": "Sužinokite, kaip BDAR atitiktis veikia klinikas Lietuvoje ir kokios yra galimos baudos. Gauti pilną BDAR auditą nemokamai →", "image": "https://veriva.lt/seo/bdar-klinikoms-lietuvoje/hero.webp", "inLanguage": "lt-LT"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "BDAR klinikoms Lietuvoje — atitiktis ir baudos", "author": {"@id": "https://veriva.lt/#person-justinas"}, "publisher": {"@id": "https://veriva.lt/#organization"}, "isPartOf": {"@id": "https://veriva.lt/#website"}, "datePublished": "2026-05-23T02:45:07+00:00", "dateModified": "2026-05-23T02:45:07Z", "mainEntityOfPage": "https://veriva.lt/seo/bdar-klinikoms-lietuvoje", "description": "Sužinokite, kaip BDAR atitiktis veikia klinikas Lietuvoje ir kokios yra galimos baudos. Gauti pilną BDAR auditą nemokamai →", "image": "https://veriva.lt/seo/bdar-klinikoms-lietuvoje/hero.webp", "inLanguage": "lt-LT"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "inLanguage": "lt-LT", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pradžia", "item": "https://veriva.lt/"}, {"@type": "ListItem", "position": 2, "name": "BDAR reikalavimai klinikoms Lietuvoje", "item": "https://veriva.lt/seo/bdar-klinikoms-lietuvoje"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "@id": "https://veriva.lt/#organization", "name": "Veriva UAB", "url": "https://veriva.lt", "sameAs": []}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "@id": "https://veriva.lt/#person-justinas", "name": "Justinas Gliebus", "jobTitle": "Įkūrėjas, Veriva UAB", "url": "https://veriva.lt/apie", "worksFor": {"@id": "https://veriva.lt/#organization"}, "sameAs": ["https://www.linkedin.com/in/justinas-glie-4ba358147/"]}</script>
@@ -398,9 +426,23 @@ gtag('consent', 'default', {
 <article>
 <header class="ah">
   <div class="ah-w">
-    <div class="ah-crumbs"><a href="https://veriva.lt/">Pradžia</a> &nbsp;/&nbsp; <a href="https://veriva.lt/blog.html">Tinklaraštis</a></div>
+    <div class="ah-crumbs"><a href="https://veriva.lt/">Pradžia</a> &nbsp;/&nbsp; <a href="https://veriva.lt/blog.html">Tinklaraštis</a> &nbsp;/&nbsp; BDAR</div>
+    <div class="ah-meta">
+      <span class="ah-cat">BDAR</span>
+      <span class="ah-dot"></span>
+      <span class="ah-time">May 2026</span>
+      <span class="ah-dot"></span>
+      <span class="ah-time">11 min. skaitymo</span>
+    </div>
     <h1>BDAR reikalavimai klinikoms Lietuvoje</h1>
     <p class="ah-sub">Sužinokite, kaip BDAR atitiktis veikia klinikas Lietuvoje ir kokios yra galimos baudos. Gauti pilną BDAR auditą nemokamai →</p>
+    <div class="ah-author">
+      <div class="ah-av">J</div>
+      <div>
+        <div class="ah-an">Justinas Gliebus</div>
+        <div class="ah-ar">Įkūrėjas, Veriva UAB</div>
+      </div>
+    </div>
   </div>
 </header>
 <section class="ab">
@@ -415,15 +457,8 @@ gtag('consent', 'default', {
 
 
 
-<div class="article-meta">
-  <span>Veriva UAB</span>
-  <span>·</span>
-  <span>May 2026</span>
-  <span>·</span>
-  <span id="reading-time">9 min. skaitymo</span>
-  <span>·</span>
-  <span>Atnaujinta: <time datetime="2026-05-22">May 2026</time></span>
-</div>
+
+
 
 
 <div class="reviewed-note">Paskutinį kartą peržiūrėta: May 2026</div>
@@ -445,12 +480,15 @@ gtag('consent', 'default', {
 <a class="gbtn gbtn-gold" href="https://veriva.lt/#kontaktai?utm_source=seo&utm_page=bdar-klinikoms-lietuvoje&utm_position=top" data-track="cta-top" data-page="bdar-klinikoms-lietuvoje"><span class="orb"></span>Gauti pilną BDAR auditą nemokamai →</a>
 </div>
 
-<img class="hero" src="/seo/bdar-klinikoms-lietuvoje/hero.webp" alt="bdar klinikoms lietuvoje — Veriva UAB" width="1200" height="630" decoding="async" fetchpriority="high">
+<figure class="figure-dark">
+  <img class="hero" src="/seo/bdar-klinikoms-lietuvoje/hero.webp" alt="bdar klinikoms lietuvoje — Veriva UAB" width="1200" height="630" decoding="async" fetchpriority="high">
+  <figcaption>bdar klinikoms lietuvoje — Veriva UAB</figcaption>
+</figure>
 
 
 <section>
 <h2 id="kas-yra-bdar-ir-kodel-tai-svarbu-klinikoms">Kas yra BDAR ir kodėl tai svarbu klinikoms?</h2>
-<p>Sužinokite, kaip BDAR atitiktis veikia klinikas Lietuvoje ir kokios yra galimos baudos. Gauti pilną BDAR auditą nemokamai →</p><p>Sužinokite, kaip BDAR atitiktis veikia klinikas Lietuvoje ir kokios yra galimos baudos. Gauti pilną BDAR auditą nemokamai →</p><p>BDAR arba Bendrasis duomenų apsaugos reglamentas yra esminis teisės aktas, reglamentuojantis asmeninių duomenų apsaugą Europos Sąjungoje. Jo tikslas – užtikrinti, kad asmens duomenys būtų tvarkomi teisėtai, sąžiningai ir skaidriai. Klinikinė praktika Lietuvoje privalo griežtai laikytis šio reglamento, nes sveikatos priežiūros paslaugos dažnai apima jautrių asmeninių duomenų tvarkymą.</p><p>Pagrindinės BDAR sąvokos, tokios kaip „duomenų valdytojas“ ir „duomenų tvarkytojas“, yra svarbios sveikatos priežiūros sektoriuje. Duomenų valdytojas – tai subjektas, kuris nustato duomenų tvarkymo tikslus ir būdus. Klinikos dažniausiai atlieka šį vaidmenį. Duomenų tvarkytojas – subjektas, tvarkantis duomenis duomenų valdytojo vardu.</p><p>Klinikinė praktika turi užtikrinti, kad jų pacientų asmeninė informacija būtų apsaugota nuo neteisėtos prieigos ir netinkamo naudojimo. Tai reiškia, kad būtina įgyvendinti technines ir organizacines saugumo priemones, tokias kaip šifravimas ir duomenų anonimizavimas.</p><p>Be to, BDAR reikalauja, kad duomenų subjektai turėtų teisę susipažinti su savo duomenimis, juos taisyti ir, tam tikrais atvejais, reikalauti jų ištrynimo. Tai didina pacientų pasitikėjimą sveikatos priežiūros paslaugomis ir skatina atsakingą duomenų valdymą klinikose.</p><p>Neužtikrinus tinkamo duomenų apsaugos lygio, klinikos gali susidurti su didelėmis baudomis. BDAR numato, kad pažeidimai gali kainuoti iki 20 milijonų eurų arba 4% metinės pasaulinės apyvartos, priklausomai nuo to, kuri suma yra didesnė. Todėl klinikos privalo investuoti į duomenų apsaugos strategijas, kad išvengtų finansinių nuostolių ir reputacijos žalos.</p><p>Medicinos įstaigos Lietuvoje privalo laikytis griežtų BDAR reikalavimų, kad užtikrintų pacientų duomenų apsaugą. Šios taisyklės ypač svarbios sveikatos priežiūros sektoriuje dėl jautrios informacijos, kurią tvarko klinikos. Pagal BDAR, duomenų tvarkymas turi būti teisėtas, sąžiningas ir skaidrus. Tai reiškia, kad klinikos privalo aiškiai informuoti pacientus apie jų duomenų naudojimą, užtikrinant, kad šie duomenys būtų naudojami tik konkrečiais ir teisėtais tikslais.</p><p>Sveikatos priežiūros įstaigos taip pat turi atsižvelgti į pacientų teisės aspektus. Tai apima teisę susipažinti su savo duomenimis, teisę į duomenų ištaisymą ir teisę į duomenų ištrynimą tam tikrais atvejais. Klinikos turi įdiegti procedūras, leidžiančias greitai ir efektyviai atsakyti į tokius pacientų prašymus. Nepakankamas dėmesys šiems reikalavimams gali sukelti rimtų teisinių pasekmių, įskaitant dideles baudas.</p><p>Be to, BDAR straipsniai reikalauja, kad sveikatos priežiūros įstaigos atliktų duomenų apsaugos poveikio vertinimus (DPIA) prieš pradedant bet kokį naują duomenų tvarkymo procesą, kuris gali kelti didelę riziką. Tai padeda nustatyti ir spręsti galimas duomenų apsaugos problemas iš anksto. Taip pat būtina užtikrinti, kad visi darbuotojai būtų tinkamai apmokyti ir suprastų BDAR reikalavimus bei jų svarbą kasdienėje veikloje.</p><p>Laikymasis šių specifinių reikalavimų yra ne tik teisinė prievolė, bet ir svarbi pacientų pasitikėjimo dalis. Remiantis BDAR, bet kokia duomenų saugumo pažeidimo atveju klinikos privalo nedelsiant informuoti atitinkamas institucijas ir, jei būtina, pačius pacientus. Tai užtikrina, kad duomenų saugumo pažeidimai būtų valdomi skaidriai ir atsakingai.</p><p>BDAR įgyvendinimas sveikatos priežiūros sektoriuje reikalauja nuolatinio dėmesio ir investicijų. Nepaisant to, šie reikalavimai padeda apsaugoti pacientų privatumą ir užtikrina, kad jų duomenys būtų tvarkomi atsakingai ir saugiai.</p><p>BDAR pažeidimai klinikoms Lietuvoje gali sukelti rimtų finansinių ir teisinių pasekmių. Europos Sąjungos Bendrasis duomenų apsaugos reglamentas (BDAR) numato griežtas baudas už nesilaikymą. Šios baudos gali siekti iki 20 milijonų eurų arba 4% metinių pasaulinių pajamų, priklausomai nuo to, kuri suma yra didesnė (baudos). Tokios sankcijos gali reikšmingai paveikti klinikos finansinę būklę ir veiklos tęstinumą.</p><p>Be finansinių nuostolių, klinikos gali susidurti su teisės aktais numatytomis pasekmėmis. BDAR pažeidimai gali privesti prie teismo procesų, kurie dažnai yra brangūs ir ilgi (teisės aktai). Teisinės išlaidos, įskaitant advokatų honorarus ir galimus kompensacinius mokėjimus nukentėjusiems asmenims, gali dar labiau padidinti finansinę naštą.</p><p>Klinikos taip pat gali prarasti pacientų pasitikėjimą, jei jų asmens duomenys nebūtų tinkamai saugomi. Tai gali lemti pacientų sumažėjimą ir neigiamą poveikį reputacijai. Laikantis BDAR reikalavimų, būtina turėti aiškų duomenų apsaugos planą ir nuolat atnaujinti savo saugumo priemones (atsakomybė). Tai ne tik padeda išvengti galimų pažeidimų, bet ir stiprina pacientų pasitikėjimą jūsų paslaugomis.</p><p>Klinikos turi būti ypač atidžios, nes BDAR reikalavimai yra privalomi visoms sveikatos priežiūros įstaigoms. Nuolatinis darbuotojų mokymas ir sistemų atnaujinimas yra esminiai veiksniai siekiant užtikrinti atitiktį BDAR. Tai padeda ne tik išvengti galimų pažeidimų, bet ir užtikrina, kad klinikos veiktų efektyviai ir saugiai, laikydamosi visų teisinių reikalavimų.</p><p>Veriva atlieka pilną BDAR auditą per 2-4 savaites. Nemokama konsultacija — per 24 val. pasiūlymas.</p><p>Klinikoms Lietuvoje BDAR atitiktis yra būtina ne tik dėl teisinių reikalavimų, bet ir dėl pacientų pasitikėjimo. Pirmasis žingsnis užtikrinant atitiktį – aiškus atitikties planas. Šis planas turėtų apimti visus duomenų tvarkymo aspektus, nuo surinkimo iki sunaikinimo. Jis turi būti reguliariai atnaujinamas, atsižvelgiant į teisės aktų pasikeitimus. Klinikos privalo paskirti duomenų apsaugos pareigūną, kuris bus atsakingas už BDAR reikalavimų įgyvendinimą. Šis specialistas stebės, kaip laikomasi taisyklių, ir bus pagrindinis kontaktinis asmuo su priežiūros institucijomis.</p><p>Antrasis žingsnis – procesų peržiūra. Tai apima visų duomenų apdorojimo procedūrų analizę ir pritaikymą BDAR reikalavimams. Klinikos turi įvertinti, ar jų duomenų rinkimo ir tvarkymo praktikos atitinka BDAR nuostatas. Jei reikia, procesai turi būti pertvarkyti, siekiant sumažinti surinktų duomenų kiekį iki minimumo ir užtikrinti jų saugumą.</p><p>Praktikoje tai reiškia, kad klinikos turi atlikti rizikos vertinimus ir įdiegti technines bei organizacines priemones, tokias kaip duomenų šifravimas ir prieigos kontrolė. Taip pat svarbu užtikrinti, kad visi darbuotojai būtų tinkamai apmokyti apie BDAR reikalavimus ir jų svarbą. Mokymai turėtų būti reguliarūs ir apimti tiek teorinius, tiek praktinius aspektus.</p><p>Galiausiai, būtina užtikrinti, kad klinikos turėtų veiksmingas duomenų apsaugos sistemos stebėjimo ir ataskaitų teikimo procedūras. Tai padės greitai nustatyti ir išspręsti galimus saugumo pažeidimus. Tinkamai įgyvendinti BDAR reikalavimai ne tik apsaugo nuo teisinių pasekmių, bet ir stiprina pacientų pasitikėjimą, o tai yra esminis veiksnys sėkmingai klinikos veiklai.</p><p>Technologijos ir paslaugos yra esminiai įrankiai, padedantys klinikoms Lietuvoje laikytis BDAR reikalavimų. Naudojant BDAR programinę įrangą, klinikos gali efektyviai tvarkyti asmens duomenų apsaugą. Tokia programinė įranga automatizuoja duomenų tvarkymo procesus, užtikrindama, kad visos procedūros atitiktų teisės aktus. Tai padeda sumažinti žmogaus klaidų riziką ir užtikrina duomenų saugumą.</p><p>Duomenų šifravimas yra dar vienas svarbus elementas, apsaugantis pacientų informaciją nuo neteisėtos prieigos. Šifravimo technologijos užtikrina, kad duomenys būtų skaitomi tik įgaliotiems asmenims, net jei jie patenka į netinkamas rankas. Tai ypač svarbu, kai duomenys perduodami arba saugomi debesyse.</p><p>Mokymai darbuotojams taip pat yra būtini. Klinikos privalo reguliariai organizuoti BDAR mokymus, kad darbuotojai būtų informuoti apie naujausias taisykles ir geriausias praktikas. Tai padeda sumažinti pažeidimų riziką, nes visi darbuotojai žino, kaip tinkamai tvarkyti asmens duomenis.</p><p>Be to, klinikos gali pasinaudoti specializuotomis konsultacinėmis paslaugomis, kurios padeda įvertinti ir pagerinti esamas duomenų apsaugos strategijas. Konsultantai gali atlikti BDAR atitikties auditą, identifikuoti silpnąsias vietas ir pasiūlyti sprendimus jų pašalinimui.</p><p>Investavimas į šiuos įrankius ir paslaugas yra ne tik teisės aktuose numatyta pareiga, bet ir protinga verslo praktika. Tai padeda išvengti didelių baudų už BDAR pažeidimus ir užtikrina pacientų pasitikėjimą. Dabartinėje skaitmeninėje eroje duomenų apsauga yra svarbesnė nei bet kada anksčiau.</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>BDAR, arba Bendrasis duomenų apsaugos reglamentas, yra Europos Sąjungos teisės aktas, reguliuojantis asmens duomenų tvarkymą. Lietuvoje klinikos privalo laikytis šio reglamento reikalavimų, kad užtikrintų pacientų duomenų saugumą ir privatumą.</p><p>Klinikoms reikia duomenų apsaugos pareigūno, kai jos tvarko didelius kiekius asmens duomenų arba specialių kategorijų duomenis, tokius kaip sveikatos informacija. Taip pat, jeigu duomenų tvarkymas yra pagrindinė klinikos veikla, pareigūnas yra būtinas.</p><p>BDAR pažeidimai gali sukelti dideles finansines baudas, kurios gali siekti iki 20 milijonų eurų arba 4% metinių pajamų. Be to, klinikos reputacija gali būti smarkiai pažeista, o pacientų pasitikėjimas sumažėjęs.</p><p>BDAR suteikia didesnes teises asmenims dėl jų duomenų ir reikalauja didesnio skaidrumo iš organizacijų. Ankstesni įstatymai nebuvo tokie griežti ir nesuteikė tokių aiškių taisyklių dėl duomenų tvarkymo.</p><p>BDAR atitiktį klinikoje galima užtikrinti atlikus duomenų apsaugos auditą, rengiant aiškias politikos ir procedūras. Taip pat svarbu mokyti personalą apie BDAR reikalavimus ir reguliariai atnaujinti praktikas.</p><p>Dažniausios BDAR pažeidimų baudos klinikoms gali svyruoti nuo 10 000 eurų iki 20 milijonų eurų, priklausomai nuo pažeidimo sunkumo. Taip pat gali būti taikomos laikinos veiklos sustabdymo priemonės.</p><p>Mokymas apie BDAR yra svarbus, kad personalas suprastų savo pareigas ir atsakomybę dėl asmens duomenų apsaugos. Gerai apmokytas personalas gali sumažinti pažeidimų riziką ir užtikrinti, kad klinika laikytųsi teisės aktų.</p><p>BDAR reikalauja, kad pacientų duomenys būtų tvarkomi teisėtai, skaidriai ir saugiai. Klinikos turi gauti paciento sutikimą prieš tvarkydamos jo asmens duomenis ir užtikrinti, kad duomenys būtų saugiai laikomi.</p><p>BDAR atitikties užtikrinimui galima naudoti įvairius įrankius, pvz., duomenų apsaugos valdymo sistemas, dokumentacijos valdymo programas ir rizikos vertinimo įrankius. Taip pat svarbu naudoti slaptažodžius ir šifravimo technologijas.</p><p>BDAR reikalauja, kad telemedicinos paslaugos užtikrintų pacientų duomenų apsaugą, net ir nuotolinio konsultavimo metu. Klinikos privalo taikyti saugias komunikacijos priemones ir gauti paciento sutikimą duomenų tvarkymui.</p><p>Generated 2026-05-22T17:59:42+00:00</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>BDAR, arba Bendrasis duomenų apsaugos reglamentas, yra Europos Sąjungos teisės aktas, reguliuojantis asmens duomenų tvarkymą. Lietuvoje klinikos privalo laikytis šio reglamento reikalavimų, kad užtikrintų pacientų duomenų saugumą ir privatumą.</p><p>Klinikoms reikia duomenų apsaugos pareigūno, kai jos tvarko didelius kiekius asmens duomenų arba specialių kategorijų duomenis, tokius kaip sveikatos informacija. Taip pat, jeigu duomenų tvarkymas yra pagrindinė klinikos veikla, pareigūnas yra būtinas.</p><p>BDAR pažeidimai gali sukelti dideles finansines baudas, kurios gali siekti iki 20 milijonų eurų arba 4% metinių pajamų. Be to, klinikos reputacija gali būti smarkiai pažeista, o pacientų pasitikėjimas sumažėjęs.</p><p>BDAR suteikia didesnes teises asmenims dėl jų duomenų ir reikalauja didesnio skaidrumo iš organizacijų. Ankstesni įstatymai nebuvo tokie griežti ir nesuteikė tokių aiškių taisyklių dėl duomenų tvarkymo.</p><p>BDAR atitiktį klinikoje galima užtikrinti atlikus duomenų apsaugos auditą, rengiant aiškias politikos ir procedūras. Taip pat svarbu mokyti personalą apie BDAR reikalavimus ir reguliariai atnaujinti praktikas.</p><p>Dažniausios BDAR pažeidimų baudos klinikoms gali svyruoti nuo 10 000 eurų iki 20 milijonų eurų, priklausomai nuo pažeidimo sunkumo. Taip pat gali būti taikomos laikinos veiklos sustabdymo priemonės.</p><p>Mokymas apie BDAR yra svarbus, kad personalas suprastų savo pareigas ir atsakomybę dėl asmens duomenų apsaugos. Gerai apmokytas personalas gali sumažinti pažeidimų riziką ir užtikrinti, kad klinika laikytųsi teisės aktų.</p><p>BDAR reikalauja, kad pacientų duomenys būtų tvarkomi teisėtai, skaidriai ir saugiai. Klinikos turi gauti paciento sutikimą prieš tvarkydamos jo asmens duomenis ir užtikrinti, kad duomenys būtų saugiai laikomi.</p><p>BDAR atitikties užtikrinimui galima naudoti įvairius įrankius, pvz., duomenų apsaugos valdymo sistemas, dokumentacijos valdymo programas ir rizikos vertinimo įrankius. Taip pat svarbu naudoti slaptažodžius ir šifravimo technologijas.</p><p>BDAR reikalauja, kad telemedicinos paslaugos užtikrintų pacientų duomenų apsaugą, net ir nuotolinio konsultavimo metu. Klinikos privalo taikyti saugias komunikacijos priemones ir gauti paciento sutikimą duomenų tvarkymui.</p><p>Generated 2026-05-22T18:17:21+00:00</p>
+<p>Sužinokite, kaip BDAR atitiktis veikia klinikas Lietuvoje ir kokios yra galimos baudos. Gauti pilną BDAR auditą nemokamai →</p><p>Sužinokite, kaip BDAR atitiktis veikia klinikas Lietuvoje ir kokios yra galimos baudos. Gauti pilną BDAR auditą nemokamai →</p><p>Sužinokite, kaip BDAR atitiktis veikia klinikas Lietuvoje ir kokios yra galimos baudos. Gauti pilną BDAR auditą nemokamai →</p><p>Sužinokite, kaip BDAR atitiktis veikia klinikas Lietuvoje ir kokios yra galimos baudos. Gauti pilną BDAR auditą nemokamai →</p><p>BDAR arba Bendrasis duomenų apsaugos reglamentas yra esminis teisės aktas, reglamentuojantis asmeninių duomenų apsaugą Europos Sąjungoje. Jo tikslas – užtikrinti, kad asmens duomenys būtų tvarkomi teisėtai, sąžiningai ir skaidriai. Klinikinė praktika Lietuvoje privalo griežtai laikytis šio reglamento, nes sveikatos priežiūros paslaugos dažnai apima jautrių asmeninių duomenų tvarkymą.</p><p>Pagrindinės BDAR sąvokos, tokios kaip „duomenų valdytojas“ ir „duomenų tvarkytojas“, yra svarbios sveikatos priežiūros sektoriuje. Duomenų valdytojas – tai subjektas, kuris nustato duomenų tvarkymo tikslus ir būdus. Klinikos dažniausiai atlieka šį vaidmenį. Duomenų tvarkytojas – subjektas, tvarkantis duomenis duomenų valdytojo vardu.</p><p>Klinikinė praktika turi užtikrinti, kad jų pacientų asmeninė informacija būtų apsaugota nuo neteisėtos prieigos ir netinkamo naudojimo. Tai reiškia, kad būtina įgyvendinti technines ir organizacines saugumo priemones, tokias kaip šifravimas ir duomenų anonimizavimas.</p><p>Be to, BDAR reikalauja, kad duomenų subjektai turėtų teisę susipažinti su savo duomenimis, juos taisyti ir, tam tikrais atvejais, reikalauti jų ištrynimo. Tai didina pacientų pasitikėjimą sveikatos priežiūros paslaugomis ir skatina atsakingą duomenų valdymą klinikose.</p><p>Neužtikrinus tinkamo duomenų apsaugos lygio, klinikos gali susidurti su didelėmis baudomis. BDAR numato, kad pažeidimai gali kainuoti iki 20 milijonų eurų arba 4% metinės pasaulinės apyvartos, priklausomai nuo to, kuri suma yra didesnė. Todėl klinikos privalo investuoti į duomenų apsaugos strategijas, kad išvengtų finansinių nuostolių ir reputacijos žalos.</p><p>Medicinos įstaigos Lietuvoje privalo laikytis griežtų BDAR reikalavimų, kad užtikrintų pacientų duomenų apsaugą. Šios taisyklės ypač svarbios sveikatos priežiūros sektoriuje dėl jautrios informacijos, kurią tvarko klinikos. Pagal BDAR, duomenų tvarkymas turi būti teisėtas, sąžiningas ir skaidrus. Tai reiškia, kad klinikos privalo aiškiai informuoti pacientus apie jų duomenų naudojimą, užtikrinant, kad šie duomenys būtų naudojami tik konkrečiais ir teisėtais tikslais.</p><p>Sveikatos priežiūros įstaigos taip pat turi atsižvelgti į pacientų teisės aspektus. Tai apima teisę susipažinti su savo duomenimis, teisę į duomenų ištaisymą ir teisę į duomenų ištrynimą tam tikrais atvejais. Klinikos turi įdiegti procedūras, leidžiančias greitai ir efektyviai atsakyti į tokius pacientų prašymus. Nepakankamas dėmesys šiems reikalavimams gali sukelti rimtų teisinių pasekmių, įskaitant dideles baudas.</p><p>Be to, BDAR straipsniai reikalauja, kad sveikatos priežiūros įstaigos atliktų duomenų apsaugos poveikio vertinimus (DPIA) prieš pradedant bet kokį naują duomenų tvarkymo procesą, kuris gali kelti didelę riziką. Tai padeda nustatyti ir spręsti galimas duomenų apsaugos problemas iš anksto. Taip pat būtina užtikrinti, kad visi darbuotojai būtų tinkamai apmokyti ir suprastų BDAR reikalavimus bei jų svarbą kasdienėje veikloje.</p><p>Laikymasis šių specifinių reikalavimų yra ne tik teisinė prievolė, bet ir svarbi pacientų pasitikėjimo dalis. Remiantis BDAR, bet kokia duomenų saugumo pažeidimo atveju klinikos privalo nedelsiant informuoti atitinkamas institucijas ir, jei būtina, pačius pacientus. Tai užtikrina, kad duomenų saugumo pažeidimai būtų valdomi skaidriai ir atsakingai.</p><p>BDAR įgyvendinimas sveikatos priežiūros sektoriuje reikalauja nuolatinio dėmesio ir investicijų. Nepaisant to, šie reikalavimai padeda apsaugoti pacientų privatumą ir užtikrina, kad jų duomenys būtų tvarkomi atsakingai ir saugiai.</p><p>BDAR pažeidimai klinikoms Lietuvoje gali sukelti rimtų finansinių ir teisinių pasekmių. Europos Sąjungos Bendrasis duomenų apsaugos reglamentas (BDAR) numato griežtas baudas už nesilaikymą. Šios baudos gali siekti iki 20 milijonų eurų arba 4% metinių pasaulinių pajamų, priklausomai nuo to, kuri suma yra didesnė (baudos). Tokios sankcijos gali reikšmingai paveikti klinikos finansinę būklę ir veiklos tęstinumą.</p><p>Be finansinių nuostolių, klinikos gali susidurti su teisės aktais numatytomis pasekmėmis. BDAR pažeidimai gali privesti prie teismo procesų, kurie dažnai yra brangūs ir ilgi (teisės aktai). Teisinės išlaidos, įskaitant advokatų honorarus ir galimus kompensacinius mokėjimus nukentėjusiems asmenims, gali dar labiau padidinti finansinę naštą.</p><p>Klinikos taip pat gali prarasti pacientų pasitikėjimą, jei jų asmens duomenys nebūtų tinkamai saugomi. Tai gali lemti pacientų sumažėjimą ir neigiamą poveikį reputacijai. Laikantis BDAR reikalavimų, būtina turėti aiškų duomenų apsaugos planą ir nuolat atnaujinti savo saugumo priemones (atsakomybė). Tai ne tik padeda išvengti galimų pažeidimų, bet ir stiprina pacientų pasitikėjimą jūsų paslaugomis.</p><p>Klinikos turi būti ypač atidžios, nes BDAR reikalavimai yra privalomi visoms sveikatos priežiūros įstaigoms. Nuolatinis darbuotojų mokymas ir sistemų atnaujinimas yra esminiai veiksniai siekiant užtikrinti atitiktį BDAR. Tai padeda ne tik išvengti galimų pažeidimų, bet ir užtikrina, kad klinikos veiktų efektyviai ir saugiai, laikydamosi visų teisinių reikalavimų.</p><p>Veriva atlieka pilną BDAR auditą per 2-4 savaites. Nemokama konsultacija — per 24 val. pasiūlymas.</p><p>Klinikoms Lietuvoje BDAR atitiktis yra būtina ne tik dėl teisinių reikalavimų, bet ir dėl pacientų pasitikėjimo. Pirmasis žingsnis užtikrinant atitiktį – aiškus atitikties planas. Šis planas turėtų apimti visus duomenų tvarkymo aspektus, nuo surinkimo iki sunaikinimo. Jis turi būti reguliariai atnaujinamas, atsižvelgiant į teisės aktų pasikeitimus. Klinikos privalo paskirti duomenų apsaugos pareigūną, kuris bus atsakingas už BDAR reikalavimų įgyvendinimą. Šis specialistas stebės, kaip laikomasi taisyklių, ir bus pagrindinis kontaktinis asmuo su priežiūros institucijomis.</p><p>Antrasis žingsnis – procesų peržiūra. Tai apima visų duomenų apdorojimo procedūrų analizę ir pritaikymą BDAR reikalavimams. Klinikos turi įvertinti, ar jų duomenų rinkimo ir tvarkymo praktikos atitinka BDAR nuostatas. Jei reikia, procesai turi būti pertvarkyti, siekiant sumažinti surinktų duomenų kiekį iki minimumo ir užtikrinti jų saugumą.</p><p>Praktikoje tai reiškia, kad klinikos turi atlikti rizikos vertinimus ir įdiegti technines bei organizacines priemones, tokias kaip duomenų šifravimas ir prieigos kontrolė. Taip pat svarbu užtikrinti, kad visi darbuotojai būtų tinkamai apmokyti apie BDAR reikalavimus ir jų svarbą. Mokymai turėtų būti reguliarūs ir apimti tiek teorinius, tiek praktinius aspektus.</p><p>Galiausiai, būtina užtikrinti, kad klinikos turėtų veiksmingas duomenų apsaugos sistemos stebėjimo ir ataskaitų teikimo procedūras. Tai padės greitai nustatyti ir išspręsti galimus saugumo pažeidimus. Tinkamai įgyvendinti BDAR reikalavimai ne tik apsaugo nuo teisinių pasekmių, bet ir stiprina pacientų pasitikėjimą, o tai yra esminis veiksnys sėkmingai klinikos veiklai.</p><p>Technologijos ir paslaugos yra esminiai įrankiai, padedantys klinikoms Lietuvoje laikytis BDAR reikalavimų. Naudojant BDAR programinę įrangą, klinikos gali efektyviai tvarkyti asmens duomenų apsaugą. Tokia programinė įranga automatizuoja duomenų tvarkymo procesus, užtikrindama, kad visos procedūros atitiktų teisės aktus. Tai padeda sumažinti žmogaus klaidų riziką ir užtikrina duomenų saugumą.</p><p>Duomenų šifravimas yra dar vienas svarbus elementas, apsaugantis pacientų informaciją nuo neteisėtos prieigos. Šifravimo technologijos užtikrina, kad duomenys būtų skaitomi tik įgaliotiems asmenims, net jei jie patenka į netinkamas rankas. Tai ypač svarbu, kai duomenys perduodami arba saugomi debesyse.</p><p>Mokymai darbuotojams taip pat yra būtini. Klinikos privalo reguliariai organizuoti BDAR mokymus, kad darbuotojai būtų informuoti apie naujausias taisykles ir geriausias praktikas. Tai padeda sumažinti pažeidimų riziką, nes visi darbuotojai žino, kaip tinkamai tvarkyti asmens duomenis.</p><p>Be to, klinikos gali pasinaudoti specializuotomis konsultacinėmis paslaugomis, kurios padeda įvertinti ir pagerinti esamas duomenų apsaugos strategijas. Konsultantai gali atlikti BDAR atitikties auditą, identifikuoti silpnąsias vietas ir pasiūlyti sprendimus jų pašalinimui.</p><p>Investavimas į šiuos įrankius ir paslaugas yra ne tik teisės aktuose numatyta pareiga, bet ir protinga verslo praktika. Tai padeda išvengti didelių baudų už BDAR pažeidimus ir užtikrina pacientų pasitikėjimą. Dabartinėje skaitmeninėje eroje duomenų apsauga yra svarbesnė nei bet kada anksčiau.</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>BDAR, arba Bendrasis duomenų apsaugos reglamentas, yra Europos Sąjungos teisės aktas, reguliuojantis asmens duomenų tvarkymą. Lietuvoje klinikos privalo laikytis šio reglamento reikalavimų, kad užtikrintų pacientų duomenų saugumą ir privatumą.</p><p>Klinikoms reikia duomenų apsaugos pareigūno, kai jos tvarko didelius kiekius asmens duomenų arba specialių kategorijų duomenis, tokius kaip sveikatos informacija. Taip pat, jeigu duomenų tvarkymas yra pagrindinė klinikos veikla, pareigūnas yra būtinas.</p><p>BDAR pažeidimai gali sukelti dideles finansines baudas, kurios gali siekti iki 20 milijonų eurų arba 4% metinių pajamų. Be to, klinikos reputacija gali būti smarkiai pažeista, o pacientų pasitikėjimas sumažėjęs.</p><p>BDAR suteikia didesnes teises asmenims dėl jų duomenų ir reikalauja didesnio skaidrumo iš organizacijų. Ankstesni įstatymai nebuvo tokie griežti ir nesuteikė tokių aiškių taisyklių dėl duomenų tvarkymo.</p><p>BDAR atitiktį klinikoje galima užtikrinti atlikus duomenų apsaugos auditą, rengiant aiškias politikos ir procedūras. Taip pat svarbu mokyti personalą apie BDAR reikalavimus ir reguliariai atnaujinti praktikas.</p><p>Dažniausios BDAR pažeidimų baudos klinikoms gali svyruoti nuo 10 000 eurų iki 20 milijonų eurų, priklausomai nuo pažeidimo sunkumo. Taip pat gali būti taikomos laikinos veiklos sustabdymo priemonės.</p><p>Mokymas apie BDAR yra svarbus, kad personalas suprastų savo pareigas ir atsakomybę dėl asmens duomenų apsaugos. Gerai apmokytas personalas gali sumažinti pažeidimų riziką ir užtikrinti, kad klinika laikytųsi teisės aktų.</p><p>BDAR reikalauja, kad pacientų duomenys būtų tvarkomi teisėtai, skaidriai ir saugiai. Klinikos turi gauti paciento sutikimą prieš tvarkydamos jo asmens duomenis ir užtikrinti, kad duomenys būtų saugiai laikomi.</p><p>BDAR atitikties užtikrinimui galima naudoti įvairius įrankius, pvz., duomenų apsaugos valdymo sistemas, dokumentacijos valdymo programas ir rizikos vertinimo įrankius. Taip pat svarbu naudoti slaptažodžius ir šifravimo technologijas.</p><p>BDAR reikalauja, kad telemedicinos paslaugos užtikrintų pacientų duomenų apsaugą, net ir nuotolinio konsultavimo metu. Klinikos privalo taikyti saugias komunikacijos priemones ir gauti paciento sutikimą duomenų tvarkymui.</p><p>Generated 2026-05-22T17:59:42+00:00</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>BDAR, arba Bendrasis duomenų apsaugos reglamentas, yra Europos Sąjungos teisės aktas, reguliuojantis asmens duomenų tvarkymą. Lietuvoje klinikos privalo laikytis šio reglamento reikalavimų, kad užtikrintų pacientų duomenų saugumą ir privatumą.</p><p>Klinikoms reikia duomenų apsaugos pareigūno, kai jos tvarko didelius kiekius asmens duomenų arba specialių kategorijų duomenis, tokius kaip sveikatos informacija. Taip pat, jeigu duomenų tvarkymas yra pagrindinė klinikos veikla, pareigūnas yra būtinas.</p><p>BDAR pažeidimai gali sukelti dideles finansines baudas, kurios gali siekti iki 20 milijonų eurų arba 4% metinių pajamų. Be to, klinikos reputacija gali būti smarkiai pažeista, o pacientų pasitikėjimas sumažėjęs.</p><p>BDAR suteikia didesnes teises asmenims dėl jų duomenų ir reikalauja didesnio skaidrumo iš organizacijų. Ankstesni įstatymai nebuvo tokie griežti ir nesuteikė tokių aiškių taisyklių dėl duomenų tvarkymo.</p><p>BDAR atitiktį klinikoje galima užtikrinti atlikus duomenų apsaugos auditą, rengiant aiškias politikos ir procedūras. Taip pat svarbu mokyti personalą apie BDAR reikalavimus ir reguliariai atnaujinti praktikas.</p><p>Dažniausios BDAR pažeidimų baudos klinikoms gali svyruoti nuo 10 000 eurų iki 20 milijonų eurų, priklausomai nuo pažeidimo sunkumo. Taip pat gali būti taikomos laikinos veiklos sustabdymo priemonės.</p><p>Mokymas apie BDAR yra svarbus, kad personalas suprastų savo pareigas ir atsakomybę dėl asmens duomenų apsaugos. Gerai apmokytas personalas gali sumažinti pažeidimų riziką ir užtikrinti, kad klinika laikytųsi teisės aktų.</p><p>BDAR reikalauja, kad pacientų duomenys būtų tvarkomi teisėtai, skaidriai ir saugiai. Klinikos turi gauti paciento sutikimą prieš tvarkydamos jo asmens duomenis ir užtikrinti, kad duomenys būtų saugiai laikomi.</p><p>BDAR atitikties užtikrinimui galima naudoti įvairius įrankius, pvz., duomenų apsaugos valdymo sistemas, dokumentacijos valdymo programas ir rizikos vertinimo įrankius. Taip pat svarbu naudoti slaptažodžius ir šifravimo technologijas.</p><p>BDAR reikalauja, kad telemedicinos paslaugos užtikrintų pacientų duomenų apsaugą, net ir nuotolinio konsultavimo metu. Klinikos privalo taikyti saugias komunikacijos priemones ir gauti paciento sutikimą duomenų tvarkymui.</p><p>Generated 2026-05-22T18:17:21+00:00</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>BDAR, arba Bendrasis duomenų apsaugos reglamentas, yra Europos Sąjungos teisės aktas, reguliuojantis asmens duomenų tvarkymą. Lietuvoje klinikos privalo laikytis šio reglamento reikalavimų, kad užtikrintų pacientų duomenų saugumą ir privatumą.</p><p>Klinikoms reikia duomenų apsaugos pareigūno, kai jos tvarko didelius kiekius asmens duomenų arba specialių kategorijų duomenis, tokius kaip sveikatos informacija. Taip pat, jeigu duomenų tvarkymas yra pagrindinė klinikos veikla, pareigūnas yra būtinas.</p><p>BDAR pažeidimai gali sukelti dideles finansines baudas, kurios gali siekti iki 20 milijonų eurų arba 4% metinių pajamų. Be to, klinikos reputacija gali būti smarkiai pažeista, o pacientų pasitikėjimas sumažėjęs.</p><p>BDAR suteikia didesnes teises asmenims dėl jų duomenų ir reikalauja didesnio skaidrumo iš organizacijų. Ankstesni įstatymai nebuvo tokie griežti ir nesuteikė tokių aiškių taisyklių dėl duomenų tvarkymo.</p><p>BDAR atitiktį klinikoje galima užtikrinti atlikus duomenų apsaugos auditą, rengiant aiškias politikos ir procedūras. Taip pat svarbu mokyti personalą apie BDAR reikalavimus ir reguliariai atnaujinti praktikas.</p><p>Dažniausios BDAR pažeidimų baudos klinikoms gali svyruoti nuo 10 000 eurų iki 20 milijonų eurų, priklausomai nuo pažeidimo sunkumo. Taip pat gali būti taikomos laikinos veiklos sustabdymo priemonės.</p><p>Mokymas apie BDAR yra svarbus, kad personalas suprastų savo pareigas ir atsakomybę dėl asmens duomenų apsaugos. Gerai apmokytas personalas gali sumažinti pažeidimų riziką ir užtikrinti, kad klinika laikytųsi teisės aktų.</p><p>BDAR reikalauja, kad pacientų duomenys būtų tvarkomi teisėtai, skaidriai ir saugiai. Klinikos turi gauti paciento sutikimą prieš tvarkydamos jo asmens duomenis ir užtikrinti, kad duomenys būtų saugiai laikomi.</p><p>BDAR atitikties užtikrinimui galima naudoti įvairius įrankius, pvz., duomenų apsaugos valdymo sistemas, dokumentacijos valdymo programas ir rizikos vertinimo įrankius. Taip pat svarbu naudoti slaptažodžius ir šifravimo technologijas.</p><p>BDAR reikalauja, kad telemedicinos paslaugos užtikrintų pacientų duomenų apsaugą, net ir nuotolinio konsultavimo metu. Klinikos privalo taikyti saugias komunikacijos priemones ir gauti paciento sutikimą duomenų tvarkymui.</p><p>Generated 2026-05-22T18:18:10+00:00</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>Generated 2026-05-23T02:38:09+00:00</p>
 </section>
 
 
@@ -497,65 +535,110 @@ gtag('consent', 'default', {
 </div>
 
 
-<section class="faq" aria-label="Dažniausi klausimai">
-<h2>Dažniausi klausimai</h2>
 
-<details>
-<summary>Kas yra BDAR ir kaip jis taikomas klinikoms Lietuvoje?</summary>
-<p>BDAR, arba Bendrasis duomenų apsaugos reglamentas, yra Europos Sąjungos teisės aktas, reguliuojantis asmens duomenų tvarkymą. Lietuvoje klinikos privalo laikytis šio reglamento reikalavimų, kad užtikrintų pacientų duomenų saugumą ir privatumą.</p>
-</details>
 
-<details>
-<summary>Kada klinikai reikia duomenų apsaugos pareigūno?</summary>
-<p>Klinikoms reikia duomenų apsaugos pareigūno, kai jos tvarko didelius kiekius asmens duomenų arba specialių kategorijų duomenis, tokius kaip sveikatos informacija. Taip pat, jeigu duomenų tvarkymas yra pagrindinė klinikos veikla, pareigūnas yra būtinas.</p>
-</details>
+<section class="faq-sec" aria-label="Dažniausi klausimai">
+<h2 class="faq-sec-h">Dažniausi klausimai</h2>
+<div class="faq-list">
 
-<details>
-<summary>Kaip BDAR pažeidimai gali paveikti medicinos įstaigą?</summary>
-<p>BDAR pažeidimai gali sukelti dideles finansines baudas, kurios gali siekti iki 20 milijonų eurų arba 4% metinių pajamų. Be to, klinikos reputacija gali būti smarkiai pažeista, o pacientų pasitikėjimas sumažėjęs.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kas yra BDAR ir kaip jis taikomas klinikoms Lietuvoje?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR, arba Bendrasis duomenų apsaugos reglamentas, yra Europos Sąjungos teisės aktas, reguliuojantis asmens duomenų tvarkymą. Lietuvoje klinikos privalo laikytis šio reglamento reikalavimų, kad užtikrintų pacientų duomenų saugumą ir privatumą.</div></div>
+</div>
 
-<details>
-<summary>Kuo BDAR skiriasi nuo ankstesnių duomenų apsaugos įstatymų?</summary>
-<p>BDAR suteikia didesnes teises asmenims dėl jų duomenų ir reikalauja didesnio skaidrumo iš organizacijų. Ankstesni įstatymai nebuvo tokie griežti ir nesuteikė tokių aiškių taisyklių dėl duomenų tvarkymo.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kada klinikai reikia duomenų apsaugos pareigūno?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Klinikoms reikia duomenų apsaugos pareigūno, kai jos tvarko didelius kiekius asmens duomenų arba specialių kategorijų duomenis, tokius kaip sveikatos informacija. Taip pat, jeigu duomenų tvarkymas yra pagrindinė klinikos veikla, pareigūnas yra būtinas.</div></div>
+</div>
 
-<details>
-<summary>Kaip užtikrinti BDAR atitiktį klinikoje?</summary>
-<p>BDAR atitiktį klinikoje galima užtikrinti atlikus duomenų apsaugos auditą, rengiant aiškias politikos ir procedūras. Taip pat svarbu mokyti personalą apie BDAR reikalavimus ir reguliariai atnaujinti praktikas.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip BDAR pažeidimai gali paveikti medicinos įstaigą?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR pažeidimai gali sukelti dideles finansines baudas, kurios gali siekti iki 20 milijonų eurų arba 4% metinių pajamų. Be to, klinikos reputacija gali būti smarkiai pažeista, o pacientų pasitikėjimas sumažėjęs.</div></div>
+</div>
 
-<details>
-<summary>Kokios yra dažniausios BDAR pažeidimų baudos klinikoms?</summary>
-<p>Dažniausios BDAR pažeidimų baudos klinikoms gali svyruoti nuo 10 000 eurų iki 20 milijonų eurų, priklausomai nuo pažeidimo sunkumo. Taip pat gali būti taikomos laikinos veiklos sustabdymo priemonės.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kuo BDAR skiriasi nuo ankstesnių duomenų apsaugos įstatymų?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR suteikia didesnes teises asmenims dėl jų duomenų ir reikalauja didesnio skaidrumo iš organizacijų. Ankstesni įstatymai nebuvo tokie griežti ir nesuteikė tokių aiškių taisyklių dėl duomenų tvarkymo.</div></div>
+</div>
 
-<details>
-<summary>Kodėl svarbu mokyti personalą apie BDAR?</summary>
-<p>Mokymas apie BDAR yra svarbus, kad personalas suprastų savo pareigas ir atsakomybę dėl asmens duomenų apsaugos. Gerai apmokytas personalas gali sumažinti pažeidimų riziką ir užtikrinti, kad klinika laikytųsi teisės aktų.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip užtikrinti BDAR atitiktį klinikoje?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR atitiktį klinikoje galima užtikrinti atlikus duomenų apsaugos auditą, rengiant aiškias politikos ir procedūras. Taip pat svarbu mokyti personalą apie BDAR reikalavimus ir reguliariai atnaujinti praktikas.</div></div>
+</div>
 
-<details>
-<summary>Kaip BDAR įtakoja pacientų duomenų tvarkymą?</summary>
-<p>BDAR reikalauja, kad pacientų duomenys būtų tvarkomi teisėtai, skaidriai ir saugiai. Klinikos turi gauti paciento sutikimą prieš tvarkydamos jo asmens duomenis ir užtikrinti, kad duomenys būtų saugiai laikomi.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kokios yra dažniausios BDAR pažeidimų baudos klinikoms?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Dažniausios BDAR pažeidimų baudos klinikoms gali svyruoti nuo 10 000 eurų iki 20 milijonų eurų, priklausomai nuo pažeidimo sunkumo. Taip pat gali būti taikomos laikinos veiklos sustabdymo priemonės.</div></div>
+</div>
 
-<details>
-<summary>Kokius įrankius galima naudoti BDAR atitikties užtikrinimui?</summary>
-<p>BDAR atitikties užtikrinimui galima naudoti įvairius įrankius, pvz., duomenų apsaugos valdymo sistemas, dokumentacijos valdymo programas ir rizikos vertinimo įrankius. Taip pat svarbu naudoti slaptažodžius ir šifravimo technologijas.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kodėl svarbu mokyti personalą apie BDAR?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Mokymas apie BDAR yra svarbus, kad personalas suprastų savo pareigas ir atsakomybę dėl asmens duomenų apsaugos. Gerai apmokytas personalas gali sumažinti pažeidimų riziką ir užtikrinti, kad klinika laikytųsi teisės aktų.</div></div>
+</div>
 
-<details>
-<summary>Kaip BDAR veikia telemedicinos paslaugas?</summary>
-<p>BDAR reikalauja, kad telemedicinos paslaugos užtikrintų pacientų duomenų apsaugą, net ir nuotolinio konsultavimo metu. Klinikos privalo taikyti saugias komunikacijos priemones ir gauti paciento sutikimą duomenų tvarkymui.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip BDAR įtakoja pacientų duomenų tvarkymą?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR reikalauja, kad pacientų duomenys būtų tvarkomi teisėtai, skaidriai ir saugiai. Klinikos turi gauti paciento sutikimą prieš tvarkydamos jo asmens duomenis ir užtikrinti, kad duomenys būtų saugiai laikomi.</div></div>
+</div>
 
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kokius įrankius galima naudoti BDAR atitikties užtikrinimui?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR atitikties užtikrinimui galima naudoti įvairius įrankius, pvz., duomenų apsaugos valdymo sistemas, dokumentacijos valdymo programas ir rizikos vertinimo įrankius. Taip pat svarbu naudoti slaptažodžius ir šifravimo technologijas.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip BDAR veikia telemedicinos paslaugas?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR reikalauja, kad telemedicinos paslaugos užtikrintų pacientų duomenų apsaugą, net ir nuotolinio konsultavimo metu. Klinikos privalo taikyti saugias komunikacijos priemones ir gauti paciento sutikimą duomenų tvarkymui.</div></div>
+</div>
+
+</div>
 </section>
+
+
+
+
+<div class="share">
+  <span class="share-l">Dalintis:</span>
+  <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=https://veriva.lt/seo/bdar-klinikoms-lietuvoje" target="_blank" rel="noopener">LinkedIn</a>
+  <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https://veriva.lt/seo/bdar-klinikoms-lietuvoje" target="_blank" rel="noopener">Facebook</a>
+  <a class="share-btn" href="mailto:?subject=BDAR klinikoms Lietuvoje — atitiktis ir baudos&body=https://veriva.lt/seo/bdar-klinikoms-lietuvoje">El. paštu</a>
+</div>
+
 
 
 <section class="citations" aria-label="Šaltiniai">
 <h2>Šaltiniai</h2>
-<ol>
+<ol class="sources">
 
 <li>eugdpr.org. <a href="https://eugdpr.org/" rel="nofollow noopener" target="_blank">eugdpr.org</a> (accessed May 2026)</li>
 
@@ -571,7 +654,7 @@ gtag('consent', 'default', {
 </section>
 
 
-<p class="timestamp">Generated 2026-05-22T18:18:10+00:00</p>
+<p class="timestamp">Generated 2026-05-23T02:45:07+00:00</p>
 
 
 
@@ -648,10 +731,25 @@ function closeMob(){
   if (btn) btn.setAttribute('aria-expanded', 'false');
 }
 
+// FAQ accordion (blog-parity: aria-expanded + .faq-item.open toggle).
+document.querySelectorAll('.faq-item').forEach(function(item, idx){
+  var btn = item.querySelector('.faq-q');
+  var ans = item.querySelector('.faq-a');
+  if (!btn || !ans) return;
+  var id = 'faq-answer-' + (idx + 1);
+  ans.id = id;
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', id);
+  btn.addEventListener('click', function(){
+    var isOpen = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+});
+
 // Scroll-triggered reveal (Kowalski pattern)
 (function(){
   var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var targets = document.querySelectorAll('.prose h2, .prose h3, .toc, .article-cta, .cta-block, blockquote, .faq, aside.internal-links, .lead, .article-footer, .prose figure');
+  var targets = document.querySelectorAll('.prose h2, .prose h3, .toc, .article-cta, .cta-block, blockquote, .faq-sec, aside.internal-links, .lead, .article-footer, .share, .prose figure');
   if (prefersReduced || !('IntersectionObserver' in window)) {
     targets.forEach(function(el){ el.classList.add('in'); });
     return;

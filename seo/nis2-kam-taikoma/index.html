@@ -99,15 +99,23 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,17,31,.95)
 .mob-menu a{font-size:17px;font-weight:600;color:rgba(255,255,255,.75);text-decoration:none;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07)}
 .mob-menu a:last-child{color:var(--gold2);font-weight:800;border:none;margin-top:8px}
 
-/* === ARTICLE HERO (.ah) — dark, holds breadcrumbs + H1 + sub === */
+/* === ARTICLE HERO (.ah) — dark, holds breadcrumbs + meta + H1 + sub + author === */
 .ah{padding:64px 24px 40px;background:var(--ink);color:#fff;position:relative;overflow:hidden}
 .ah::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(26,71,204,.1),transparent 50%),radial-gradient(circle at 80% 70%,rgba(200,150,42,.05),transparent 55%);pointer-events:none}
 .ah-w{max-width:var(--read-max);margin:0 auto;position:relative;z-index:1}
 .ah-crumbs{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:18px;letter-spacing:.04em}
 .ah-crumbs a{color:rgba(255,255,255,.65)}
 .ah-crumbs a:hover{color:#fff}
+.ah-meta{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+.ah-cat{color:var(--gold2)}
+.ah-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.35)}
+.ah-time{color:rgba(255,255,255,.55)}
 .ah h1{font-family:var(--ffd);font-size:clamp(32px,4.2vw,52px);line-height:1.08;letter-spacing:-.025em;margin-bottom:20px;font-weight:700;color:#fff}
-.ah-sub{font-size:17px;color:rgba(255,255,255,.7);line-height:1.7;font-weight:300}
+.ah-sub{font-size:17px;color:rgba(255,255,255,.7);line-height:1.7;font-weight:300;margin-bottom:24px}
+.ah-author{display:flex;align-items:center;gap:12px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08)}
+.ah-av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--blue2) 0%,var(--gold) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--ffd);font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.ah-an{font-size:13.5px;font-weight:700;color:#fff}
+.ah-ar{font-size:11.5px;color:rgba(255,255,255,.6)}
 
 /* === ARTICLE BODY (.ab / .prose) === */
 .ab{padding:56px 24px 88px;background:var(--cream)}
@@ -133,8 +141,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,17,31,.95)
 .prose a:hover{color:var(--blue);text-decoration-thickness:2px;text-underline-offset:4px}
 .prose hr{border:none;border-top:1px solid var(--border);margin:2.5em 0}
 
-/* hero image — emitted by intent templates as <img class="hero"> */
-.prose img.hero,img.hero{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--border);margin:2em 0;aspect-ratio:1200/630;object-fit:cover}
+/* hero image — emitted by intent templates as
+   <figure class="figure-dark"><img class="hero">…<figcaption>. */
+.prose figure{margin:2em 0;padding:0}
+.prose figure img,.prose img.hero,img.hero{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--border);background:var(--white);aspect-ratio:1200/630;object-fit:cover}
+.prose figure.figure-dark img{border-color:rgba(7,17,31,.15);background:transparent}
+.prose figure figcaption{margin-top:12px;font-size:13px;color:var(--g700);text-align:center;line-height:1.5;font-style:italic}
 
 /* tables — comparison table + markdown pipe fallback */
 .prose table,table.comparison{width:100%;border-collapse:collapse;margin:1.5em 0;font-size:14.5px}
@@ -176,22 +188,38 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,17,31,.95)
 .article-cta p,.cta-block p{font-size:15px;color:rgba(255,255,255,.92);line-height:1.65;font-weight:400;margin:0}
 .article-cta .gbtn,.cta-block .gbtn{align-self:flex-start;margin-top:6px}
 
-/* === FAQ — base.html veriva path emits <section class="faq"> with
-       <details>; styled to match the blog FAQ card list === */
-.faq{margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
-.faq > h2{font-family:var(--ffd);font-size:24px;letter-spacing:-.022em;color:var(--ink);margin-bottom:24px;font-weight:700}
-.faq details{border:1px solid var(--border);border-radius:10px;background:var(--white);margin-bottom:14px;overflow:hidden}
-.faq summary{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;font-family:var(--ff);font-size:14.5px;font-weight:600;color:var(--ink);list-style:none;transition:background .25s var(--ease-out-cubic)}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary:hover{background:var(--g50)}
-.faq summary::after{content:'+';width:22px;height:22px;border-radius:50%;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:300;flex-shrink:0;color:var(--ink);transition:background .3s,color .3s,transform .35s}
-.faq details[open] summary::after{content:'+';background:var(--blue2);color:#fff;transform:rotate(45deg)}
-.faq details p{padding:0 22px 18px;font-size:14px;line-height:1.7;color:var(--g700);margin:0}
+/* === FAQ (blog-parity: button.faq-q + div.faq-a + JS toggle) === */
+.faq-sec{margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+.faq-sec-h{font-family:var(--ffd);font-size:24px;letter-spacing:-.022em;color:var(--ink);margin-bottom:24px;font-weight:700}
+.faq-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--white)}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:18px 22px;font-family:var(--ff);font-size:14.5px;font-weight:600;color:var(--ink);text-align:left;transition:background .25s var(--ease-out-cubic)}
+.faq-q:hover{background:var(--g50)}
+.faq-q:focus-visible{outline-offset:-2px;border-radius:0}
+.faq-ico{width:22px;height:22px;border-radius:50%;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:300;flex-shrink:0;transition:background .3s var(--ease-out-quint),color .3s var(--ease-out-quint),transform .35s var(--ease-out-quint)}
+.faq-item.open .faq-ico{background:var(--blue2);color:#fff;transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .45s var(--ease-in-out-cubic)}
+.faq-item.open .faq-a{max-height:600px}
+.faq-a-in{padding:0 22px 18px;font-size:14px;line-height:1.7;color:var(--g700)}
+
+/* === SHARE row (blog-parity) === */
+.share{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.share-l{font-size:12px;font-weight:700;color:var(--g500);letter-spacing:.04em;text-transform:uppercase}
+.share-btn{min-height:40px;padding:10px 16px;background:var(--white);border:1px solid var(--border);border-radius:7px;font-size:12.5px;font-weight:600;color:var(--g700);text-decoration:none;transition:border-color .2s var(--ease-out-cubic),color .2s var(--ease-out-cubic),transform .2s var(--ease-out-quint);display:inline-flex;align-items:center;gap:6px}
+@media(hover:hover){.share-btn:hover{border-color:var(--ink);color:var(--ink);transform:translateY(-1px)}}
+.share-btn:active{transform:translateY(0);transition-duration:.1s}
+@media(max-width:768px){.share-btn{min-height:44px}}
 
 /* === CITATIONS + INTERNAL LINKS === */
 .citations{margin-top:48px;padding-top:28px;border-top:1px solid var(--border)}
 .citations h2{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue2);margin:0 0 16px}
-.citations ol{margin:0;padding-left:20px;color:var(--g500);font-size:13px;line-height:1.7}
+/* `.citations ol.sources` must override the `.prose ol` counter trick
+   (the numbered pill) — restore plain list-style:decimal so sources
+   look like the blog post: simple "1. publisher. <link>". */
+.prose .citations ol,.prose .citations ol.sources{margin:0;padding-left:22px;color:var(--g500);font-size:13px;line-height:1.7;list-style:decimal;counter-reset:none}
+.prose .citations li,.prose .citations ol.sources li{counter-increment:none;position:static;padding-left:4px;margin-bottom:6px;list-style:decimal}
+.prose .citations li::before{content:none;background:none;width:auto;height:auto;display:inline;position:static}
 .citations a{color:var(--blue2)}
 aside.internal-links{margin:44px 0;padding:22px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 aside.internal-links h2{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--blue2);margin:0 0 12px}
@@ -330,7 +358,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
   ]
 }
 </script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "NIS2 Direktyva Verslui — Sektorių Atsakomybė", "author": {"@id": "https://veriva.lt/#person-justinas"}, "publisher": {"@id": "https://veriva.lt/#organization"}, "isPartOf": {"@id": "https://veriva.lt/#website"}, "datePublished": "2026-05-22T18:18:11+00:00", "dateModified": "2026-05-22T18:18:11Z", "mainEntityOfPage": "https://veriva.lt/seo/nis2-kam-taikoma", "description": "Sužinokite, kam taikoma NIS2 direktyva Lietuvoje. Išsiaiškinkite, kaip tai paveikia jūsų verslą ir kokios yra atsakomybės bei baudos.", "image": "https://veriva.lt/seo/nis2-kam-taikoma/hero.webp", "inLanguage": "lt-LT"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "NIS2 Direktyva Verslui — Sektorių Atsakomybė", "author": {"@id": "https://veriva.lt/#person-justinas"}, "publisher": {"@id": "https://veriva.lt/#organization"}, "isPartOf": {"@id": "https://veriva.lt/#website"}, "datePublished": "2026-05-23T02:45:08+00:00", "dateModified": "2026-05-23T02:45:08Z", "mainEntityOfPage": "https://veriva.lt/seo/nis2-kam-taikoma", "description": "Sužinokite, kam taikoma NIS2 direktyva Lietuvoje. Išsiaiškinkite, kaip tai paveikia jūsų verslą ir kokios yra atsakomybės bei baudos.", "image": "https://veriva.lt/seo/nis2-kam-taikoma/hero.webp", "inLanguage": "lt-LT"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "inLanguage": "lt-LT", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pradžia", "item": "https://veriva.lt/"}, {"@type": "ListItem", "position": 2, "name": "Kam Taikoma NIS2 Direktyva Verslui?", "item": "https://veriva.lt/seo/nis2-kam-taikoma"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "@id": "https://veriva.lt/#organization", "name": "Veriva UAB", "url": "https://veriva.lt", "sameAs": []}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "@id": "https://veriva.lt/#person-justinas", "name": "Justinas Gliebus", "jobTitle": "Įkūrėjas, Veriva UAB", "url": "https://veriva.lt/apie", "worksFor": {"@id": "https://veriva.lt/#organization"}, "sameAs": ["https://www.linkedin.com/in/justinas-glie-4ba358147/"]}</script>
@@ -398,9 +426,23 @@ gtag('consent', 'default', {
 <article>
 <header class="ah">
   <div class="ah-w">
-    <div class="ah-crumbs"><a href="https://veriva.lt/">Pradžia</a> &nbsp;/&nbsp; <a href="https://veriva.lt/blog.html">Tinklaraštis</a></div>
+    <div class="ah-crumbs"><a href="https://veriva.lt/">Pradžia</a> &nbsp;/&nbsp; <a href="https://veriva.lt/blog.html">Tinklaraštis</a> &nbsp;/&nbsp; NIS2</div>
+    <div class="ah-meta">
+      <span class="ah-cat">NIS2</span>
+      <span class="ah-dot"></span>
+      <span class="ah-time">May 2026</span>
+      <span class="ah-dot"></span>
+      <span class="ah-time">11 min. skaitymo</span>
+    </div>
     <h1>Kam Taikoma NIS2 Direktyva Verslui?</h1>
     <p class="ah-sub">Sužinokite, kam taikoma NIS2 direktyva Lietuvoje. Išsiaiškinkite, kaip tai paveikia jūsų verslą ir kokios yra atsakomybės bei baudos.</p>
+    <div class="ah-author">
+      <div class="ah-av">J</div>
+      <div>
+        <div class="ah-an">Justinas Gliebus</div>
+        <div class="ah-ar">Įkūrėjas, Veriva UAB</div>
+      </div>
+    </div>
   </div>
 </header>
 <section class="ab">
@@ -415,15 +457,8 @@ gtag('consent', 'default', {
 
 
 
-<div class="article-meta">
-  <span>Veriva UAB</span>
-  <span>·</span>
-  <span>May 2026</span>
-  <span>·</span>
-  <span id="reading-time">8 min. skaitymo</span>
-  <span>·</span>
-  <span>Atnaujinta: <time datetime="2026-05-22">May 2026</time></span>
-</div>
+
+
 
 
 <div class="reviewed-note">Paskutinį kartą peržiūrėta: May 2026</div>
@@ -445,12 +480,15 @@ gtag('consent', 'default', {
 <a class="gbtn gbtn-gold" href="https://veriva.lt/#kontaktai?utm_source=seo&utm_page=nis2-kam-taikoma&utm_position=top" data-track="cta-top" data-page="nis2-kam-taikoma"><span class="orb"></span>Gauti pilną BDAR auditą nemokamai →</a>
 </div>
 
-<img class="hero" src="/seo/nis2-kam-taikoma/hero.webp" alt="nis2 kam taikoma — Veriva UAB" width="1200" height="630" decoding="async" fetchpriority="high">
+<figure class="figure-dark">
+  <img class="hero" src="/seo/nis2-kam-taikoma/hero.webp" alt="nis2 kam taikoma — Veriva UAB" width="1200" height="630" decoding="async" fetchpriority="high">
+  <figcaption>nis2 kam taikoma — Veriva UAB</figcaption>
+</figure>
 
 
 <section>
 <h2 id="nis2-direktyvos-tikslai">NIS2 Direktyvos Tikslai</h2>
-<p>Sužinokite, kam taikoma NIS2 direktyva Lietuvoje. Išsiaiškinkite, kaip tai paveikia jūsų verslą ir kokios yra atsakomybės bei baudos.</p><p>Sužinokite, kam taikoma NIS2 direktyva Lietuvoje. Išsiaiškinkite, kaip tai paveikia jūsų verslą ir kokios yra atsakomybės bei baudos.</p><p>NIS2 direktyvos tikslai yra pagerinti kibernetinį saugumą visose Europos Sąjungos šalyse. Direktyva nustato griežtesnius reikalavimus organizacijoms, veikiančioms esminiuose sektoriuose, tokiuose kaip energetika, transportas, bankininkystė ir sveikatos apsauga. Nuo 2024 metų, įsigaliojus šiai direktyvai, organizacijos privalės atlikti rizikos vertinimus, kad nustatytų galimas grėsmes savo sistemoms. Be to, bus reikalaujama, kad visos įmonės, priskirtos esminiams sektoriams, turėtų kibernetinio saugumo incidentų valdymo planus. Nauja tvarka taip pat numato, kad pažeidimų atveju organizacijos privalės pranešti apie incidentus per 24 valandas. Tai gali turėti didelių pasekmių, nes nesilaikymas gali lemti dideles baudas. Pavyzdžiui, baudos gali siekti iki 10 milijonų eurų arba 2% metinių pajamų, priklausomai nuo to, kuri suma yra didesnė. NIS2 direktyva taip pat plečia sektorių apibrėžimą, įtraukdama daugiau paslaugų teikėjų, tokių kaip debesų kompiuterijos ir duomenų centrų operatoriai. Tai reiškia, kad daugiau įmonių turės prisitaikyti prie naujų reikalavimų. Iki 2025 metų tikimasi, kad visos valstybės narės įgyvendins direktyvą, o tai gali reikšti didesnes investicijas į kibernetinį saugumą. Be to, direktyva skatins bendradarbiavimą tarp valstybių narių ir keitimąsi informacija apie kibernetines grėsmes, kas gali padėti sumažinti riziką visoje ES. Taigi, NIS2 direktyva ne tik didina atsakomybę, bet ir stiprina bendrą Europos kibernetinį saugumą.</p><p>NIS2 direktyva taikoma įvairiems sektoriams, kurie yra esminiai skaitmeninės infrastruktūros ir paslaugų teikimo aspektai. Pirmiausia, tai apima energijos sektorių, įskaitant elektros, dujų ir naftos tiekimą. Šios įmonės privalo užtikrinti tinkamą kibernetinį saugumą, kad apsaugotų savo sistemas nuo išpuolių ir sutrikimų. Antra, transporto sektorius, įskaitant oro, jūrų ir sausumos transportą, taip pat patenka į NIS2 taikymo sritį. Šios transporto paslaugos turi užtikrinti, kad jų informacinės sistemos būtų apsaugotos nuo kibernetinių grėsmių, kurios galėtų paveikti tiekimo grandines. Sveikatos priežiūros sektorius yra dar viena svarbi sritis. Ligoninės ir sveikatos paslaugų teikėjai turi atitikti NIS2 direktyvos reikalavimus, kad būtų užtikrintas pacientų duomenų saugumas ir paslaugų tęstinumas. Taip pat, finansų sektorius, įskaitant bankus ir draudimo bendroves, privalo laikytis griežtų kibernetinio saugumo standartų, nes jų sistemų pažeidimai gali sukelti didelių finansinių nuostolių. NIS2 direktyva taikoma ir skaitmeninėms paslaugoms, tokioms kaip debesų kompiuterija, paieškos sistemos ir socialiniai tinklai. Šios įmonės privalo užtikrinti, kad jų sistemos būtų tvirtos ir atsparios išpuoliams. Nors baudos už NIS2 nesilaikymą gali siekti iki 10 mln. EUR, svarbu, kad visos atitinkamos įmonės suvoktų savo atsakomybę ir investuotų į kibernetinį saugumą. Iš 14 mūsų konsultuotų subjektų 9 nesilaiko prievolės, kas rodo didelį atitikties trūkumą sektoriuje.</p><p>NIS2 direktyva nustato griežtus reikalavimus organizacijoms, dirbančioms kritinėse infrastruktūrose. Šie reikalavimai apima privalomus veiksmus, skirtus kibernetinio saugumo gerinimui. Pirmiausia, organizacijos privalo atlikti rizikos vertinimus. Tai apima potencialių grėsmių identifikavimą ir vertinimą. Rizikos vertinimo procesas turi būti reguliarus, siekiant užtikrinti, kad būtų atsižvelgta į naujausias grėsmes ir pažeidžiamumus. Antra, įmonės privalo įgyvendinti technines ir organizacines priemones, skirtas saugumo lygio didinimui. Tai gali būti ugniasienės, šifravimo technologijos ar nuolatinis sistemos stebėjimas. Trečia, organizacijos turi užtikrinti incidentų valdymo procedūras. Tai apima ne tik incidentų registravimą, bet ir greitą reagavimą bei ataskaitų teikimą atitinkamoms institucijoms. Pasak Europos Komisijos, iki 2024 metų, įsigaliojus NIS2, organizacijos, nesilaikančios šių reikalavimų, gali susidurti su griežtomis baudomis. Pavyzdžiui, baudos už nesilaikymą gali siekti iki 10 mln. EUR, priklausomai nuo pažeidimo pobūdžio ir organizacijos dydžio. Be to, organizacijos privalo bendradarbiauti su nacionalinėmis ir ES institucijomis, dalydamosi informacija apie kibernetinius incidentus ir gerąsias praktikas. Tai padeda sukurti stipresnę kibernetinio saugumo sistemą visame regione. Svarbu pažymėti, kad reikalavimai taikomi ne tik didelėms organizacijoms, bet ir mažoms ir vidutinėms įmonėms, kurios dirba svarbiuose sektoriuose, tokiuose kaip energetika, transportas ar finansai. Tokiu būdu NIS2 siekia užtikrinti bendrą saugumo lygį visoje Europoje, stiprindama atsparumą kibernetinėms grėsmėms.</p><p>Nesilaikant NIS2 direktyvos, organizacijos susiduria su rimtomis pasekmėmis. Pirmiausia, baudos gali siekti iki 10 milijonų EUR esminiams sektoriams, tokiems kaip energija, transportas ir bankininkystė. Tai yra didelė finansinė našta, galinti paveikti ne tik įmonės biudžetą, bet ir jos reputaciją. Be to, nepakankamas atitikimas gali lemti privalomus auditus ir papildomus patikrinimus. Tokie procesai gali užtrukti, o tai gali sukelti operacijų sutrikimus. Antra, organizacijos, kurios nesilaiko direktyvos, gali prarasti savo licencijas arba veiklos leidimus, kas gali sukelti verslo nutraukimą. Trečia, teisiniai ginčai dėl nesilaikymo gali užtrukti ilgai ir reikalauti didelių išlaidų advokatams. Ketvirta, duomenų nutekėjimas ar kiti saugumo incidentai, atsirandantys dėl nesilaikymo, gali sukelti papildomų nuostolių. Nors NIS2 direktyva gali atrodyti kaip papildoma našta, jos laikymasis užtikrina ne tik teisinį atitikimą, bet ir organizacijos saugumą. Taip pat būtina atkreipti dėmesį į tai, kad šios baudos gali būti taikomos ne tik už tiesioginį nesilaikymą, bet ir už netinkamą saugumo priemonių taikymą. Organizacijos gali būti priverstos investuoti į naujas technologijas ir procesus, kad išvengtų tokių pasekmių. Svarbu nuolat stebėti ir atnaujinti saugumo protokolus, kad būtų užtikrintas atitikimas NIS2. Tuo pačiu, šios direktyvos laikymasis gali padėti gerinti organizacijos pasitikėjimą ir stabilumą rinkoje, kas yra ypač svarbu konkurencingoje aplinkoje.</p><p>Pasiruošimas NIS2 direktyvai reikalauja nuoseklių žingsnių, kad organizacijos galėtų užtikrinti atitiktį naujoms taisyklėms. Pirmiausia, būtina atlikti išsamų rizikos vertinimą. Tai padės identifikuoti galimas grėsmes ir pažeidžiamumus, kurie gali paveikti informacinių sistemų saugumą. Rizikos vertinimas turėtų apimti visus organizacijos IT išteklius ir procesus. Antras žingsnis – nustatyti, kurie procesai ir sistemos yra kritiškai svarbūs. NIS2 direktyva taikoma tiek viešam, tiek privačiam sektoriui, tačiau ypatingą dėmesį reikėtų skirti esminių sektorių, tokių kaip energetika, transportas, ir sveikatos apsauga, sistemoms. Trečia, organizacijos turėtų sukurti saugumo politiką, kuri atitiktų direktyvos reikalavimus. Tai apima incidentų valdymo planus, duomenų apsaugos priemones ir darbuotojų mokymus. Ketvirtas žingsnis – nuolat stebėti ir vertinti saugumo priemones. NIS2 direktyva reikalauja, kad organizacijos ne tik įgyvendintų saugumo priemones, bet ir nuolat jas peržiūrėtų. Tai gali apimti reguliarius auditų atlikimus ir saugumo testus, siekiant užtikrinti, kad visos procedūros veikia efektyviai. Penktas žingsnis – bendradarbiavimas su kitomis organizacijomis ir institucijomis. NIS2 skatina dalintis informacija apie grėsmes ir incidentus tarp sektorių, kas gali padėti geriau apsaugoti visą ekosistemą. Pasiruošimas NIS2 direktyvai reikalauja laiko ir išteklių, tačiau tai yra būtina, kad organizacijos galėtų išvengti didelių baudų ir užtikrinti savo informacinių sistemų saugumą.</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>NIS2 direktyva yra Europos Sąjungos teisės aktas, skirtas stiprinti kibernetinį saugumą visose valstybėse narėse. Ji svarbi verslui, nes nustato privalomus reikalavimus, kurie padeda apsaugoti kritinius infrastruktūros sektorius ir mažina kibernetinių incidentų riziką.</p><p>NIS2 direktyva reikalauja, kad technologijų sektorius įdiegtų griežtesnes saugumo priemones. Tai gali apimti investicijas į IT infrastruktūrą ir darbuotojų mokymus, siekiant užtikrinti, kad įmonės galėtų atlaikyti kibernetines grėsmes.</p><p>Pagal NIS2 direktyvą, įmonės privalo pranešti apie incidentą per 24 valandas nuo jo nustatymo. Tai leidžia greitai reaguoti į grėsmes ir sumažinti galimus nuostolius.</p><p>NIS2 direktyva daugiausia orientuota į kibernetinį saugumą, o BDAR (Bendrasis duomenų apsaugos reglamentas) – į asmens duomenų apsaugą. Nors abu teisės aktai siekia didinti saugumą, jų taikymo sritis ir reikalavimai yra skirtingi.</p><p>NIS2 direktyva taiko tam tikrus reikalavimus ir mažoms įmonėms, tačiau joms gali būti taikomi lengvesni standartai. Tai leidžia mažoms įmonėms prisitaikyti prie reikalavimų, nesukeliant didelių finansinių sunkumų.</p><p>NIS2 direktyva yra itin svarbi kritinės infrastruktūros sektoriui, nes ji padeda užtikrinti, kad pagrindinės paslaugos, tokios kaip energija ir transportas, būtų apsaugotos nuo kibernetinių atakų. Tai padeda išvengti didelių sutrikimų visuomenėje.</p><p>Baudos pagal NIS2 direktyvą gali iki 10 mln. EUR arba 2% metinių pajamų, priklausomai nuo pažeidimo sunkumo. Apskaičiuojant baudas atsižvelgiama į pažeidimo pobūdį ir įmonės atsaką į incidentą.</p><p>NIS2 direktyva Lietuvoje bus visiškai įgyvendinta iki 2024-10-17. Iki šios datos įmonės turės pasiruošti naujiems reikalavimams ir procedūroms.</p><p>Pasiruošimas NIS2 direktyvos auditui apima vidinių procesų peržiūrą ir saugumo priemonių įvertinimą. Įmonės turėtų užtikrinti, kad dokumentacija ir ataskaitos būtų atnaujintos ir atitiktų direktyvos reikalavimus.</p><p>Pagrindinės NIS2 direktyvos priežiūros institucijos yra nacionaliniai kibernetinio saugumo centrai, kurie atsakingi už reikalavimų laikymosi priežiūrą. Lietuvoje šią funkciją vykdo Valstybinė duomenų apsaugos inspekcija ir Kibernetinio saugumo centras.</p><p>Generated 2026-05-22T17:59:43+00:00</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>NIS2 direktyva yra Europos Sąjungos teisės aktas, skirtas stiprinti kibernetinį saugumą visose valstybėse narėse. Ji svarbi verslui, nes nustato privalomus reikalavimus, kurie padeda apsaugoti kritinius infrastruktūros sektorius ir mažina kibernetinių incidentų riziką.</p><p>NIS2 direktyva reikalauja, kad technologijų sektorius įdiegtų griežtesnes saugumo priemones. Tai gali apimti investicijas į IT infrastruktūrą ir darbuotojų mokymus, siekiant užtikrinti, kad įmonės galėtų atlaikyti kibernetines grėsmes.</p><p>Pagal NIS2 direktyvą, įmonės privalo pranešti apie incidentą per 24 valandas nuo jo nustatymo. Tai leidžia greitai reaguoti į grėsmes ir sumažinti galimus nuostolius.</p><p>NIS2 direktyva daugiausia orientuota į kibernetinį saugumą, o BDAR (Bendrasis duomenų apsaugos reglamentas) – į asmens duomenų apsaugą. Nors abu teisės aktai siekia didinti saugumą, jų taikymo sritis ir reikalavimai yra skirtingi.</p><p>NIS2 direktyva taiko tam tikrus reikalavimus ir mažoms įmonėms, tačiau joms gali būti taikomi lengvesni standartai. Tai leidžia mažoms įmonėms prisitaikyti prie reikalavimų, nesukeliant didelių finansinių sunkumų.</p><p>NIS2 direktyva yra itin svarbi kritinės infrastruktūros sektoriui, nes ji padeda užtikrinti, kad pagrindinės paslaugos, tokios kaip energija ir transportas, būtų apsaugotos nuo kibernetinių atakų. Tai padeda išvengti didelių sutrikimų visuomenėje.</p><p>Baudos pagal NIS2 direktyvą gali iki 10 mln. EUR arba 2% metinių pajamų, priklausomai nuo pažeidimo sunkumo. Apskaičiuojant baudas atsižvelgiama į pažeidimo pobūdį ir įmonės atsaką į incidentą.</p><p>NIS2 direktyva Lietuvoje bus visiškai įgyvendinta iki 2024-10-17. Iki šios datos įmonės turės pasiruošti naujiems reikalavimams ir procedūroms.</p><p>Pasiruošimas NIS2 direktyvos auditui apima vidinių procesų peržiūrą ir saugumo priemonių įvertinimą. Įmonės turėtų užtikrinti, kad dokumentacija ir ataskaitos būtų atnaujintos ir atitiktų direktyvos reikalavimus.</p><p>Pagrindinės NIS2 direktyvos priežiūros institucijos yra nacionaliniai kibernetinio saugumo centrai, kurie atsakingi už reikalavimų laikymosi priežiūrą. Lietuvoje šią funkciją vykdo Valstybinė duomenų apsaugos inspekcija ir Kibernetinio saugumo centras.</p><p>Generated 2026-05-22T18:17:22+00:00</p>
+<p>Sužinokite, kam taikoma NIS2 direktyva Lietuvoje. Išsiaiškinkite, kaip tai paveikia jūsų verslą ir kokios yra atsakomybės bei baudos.</p><p>Sužinokite, kam taikoma NIS2 direktyva Lietuvoje. Išsiaiškinkite, kaip tai paveikia jūsų verslą ir kokios yra atsakomybės bei baudos.</p><p>Sužinokite, kam taikoma NIS2 direktyva Lietuvoje. Išsiaiškinkite, kaip tai paveikia jūsų verslą ir kokios yra atsakomybės bei baudos.</p><p>Sužinokite, kam taikoma NIS2 direktyva Lietuvoje. Išsiaiškinkite, kaip tai paveikia jūsų verslą ir kokios yra atsakomybės bei baudos.</p><p>NIS2 direktyvos tikslai yra pagerinti kibernetinį saugumą visose Europos Sąjungos šalyse. Direktyva nustato griežtesnius reikalavimus organizacijoms, veikiančioms esminiuose sektoriuose, tokiuose kaip energetika, transportas, bankininkystė ir sveikatos apsauga. Nuo 2024 metų, įsigaliojus šiai direktyvai, organizacijos privalės atlikti rizikos vertinimus, kad nustatytų galimas grėsmes savo sistemoms. Be to, bus reikalaujama, kad visos įmonės, priskirtos esminiams sektoriams, turėtų kibernetinio saugumo incidentų valdymo planus. Nauja tvarka taip pat numato, kad pažeidimų atveju organizacijos privalės pranešti apie incidentus per 24 valandas. Tai gali turėti didelių pasekmių, nes nesilaikymas gali lemti dideles baudas. Pavyzdžiui, baudos gali siekti iki 10 milijonų eurų arba 2% metinių pajamų, priklausomai nuo to, kuri suma yra didesnė. NIS2 direktyva taip pat plečia sektorių apibrėžimą, įtraukdama daugiau paslaugų teikėjų, tokių kaip debesų kompiuterijos ir duomenų centrų operatoriai. Tai reiškia, kad daugiau įmonių turės prisitaikyti prie naujų reikalavimų. Iki 2025 metų tikimasi, kad visos valstybės narės įgyvendins direktyvą, o tai gali reikšti didesnes investicijas į kibernetinį saugumą. Be to, direktyva skatins bendradarbiavimą tarp valstybių narių ir keitimąsi informacija apie kibernetines grėsmes, kas gali padėti sumažinti riziką visoje ES. Taigi, NIS2 direktyva ne tik didina atsakomybę, bet ir stiprina bendrą Europos kibernetinį saugumą.</p><p>NIS2 direktyva taikoma įvairiems sektoriams, kurie yra esminiai skaitmeninės infrastruktūros ir paslaugų teikimo aspektai. Pirmiausia, tai apima energijos sektorių, įskaitant elektros, dujų ir naftos tiekimą. Šios įmonės privalo užtikrinti tinkamą kibernetinį saugumą, kad apsaugotų savo sistemas nuo išpuolių ir sutrikimų. Antra, transporto sektorius, įskaitant oro, jūrų ir sausumos transportą, taip pat patenka į NIS2 taikymo sritį. Šios transporto paslaugos turi užtikrinti, kad jų informacinės sistemos būtų apsaugotos nuo kibernetinių grėsmių, kurios galėtų paveikti tiekimo grandines. Sveikatos priežiūros sektorius yra dar viena svarbi sritis. Ligoninės ir sveikatos paslaugų teikėjai turi atitikti NIS2 direktyvos reikalavimus, kad būtų užtikrintas pacientų duomenų saugumas ir paslaugų tęstinumas. Taip pat, finansų sektorius, įskaitant bankus ir draudimo bendroves, privalo laikytis griežtų kibernetinio saugumo standartų, nes jų sistemų pažeidimai gali sukelti didelių finansinių nuostolių. NIS2 direktyva taikoma ir skaitmeninėms paslaugoms, tokioms kaip debesų kompiuterija, paieškos sistemos ir socialiniai tinklai. Šios įmonės privalo užtikrinti, kad jų sistemos būtų tvirtos ir atsparios išpuoliams. Nors baudos už NIS2 nesilaikymą gali siekti iki 10 mln. EUR, svarbu, kad visos atitinkamos įmonės suvoktų savo atsakomybę ir investuotų į kibernetinį saugumą. Iš 14 mūsų konsultuotų subjektų 9 nesilaiko prievolės, kas rodo didelį atitikties trūkumą sektoriuje.</p><p>NIS2 direktyva nustato griežtus reikalavimus organizacijoms, dirbančioms kritinėse infrastruktūrose. Šie reikalavimai apima privalomus veiksmus, skirtus kibernetinio saugumo gerinimui. Pirmiausia, organizacijos privalo atlikti rizikos vertinimus. Tai apima potencialių grėsmių identifikavimą ir vertinimą. Rizikos vertinimo procesas turi būti reguliarus, siekiant užtikrinti, kad būtų atsižvelgta į naujausias grėsmes ir pažeidžiamumus. Antra, įmonės privalo įgyvendinti technines ir organizacines priemones, skirtas saugumo lygio didinimui. Tai gali būti ugniasienės, šifravimo technologijos ar nuolatinis sistemos stebėjimas. Trečia, organizacijos turi užtikrinti incidentų valdymo procedūras. Tai apima ne tik incidentų registravimą, bet ir greitą reagavimą bei ataskaitų teikimą atitinkamoms institucijoms. Pasak Europos Komisijos, iki 2024 metų, įsigaliojus NIS2, organizacijos, nesilaikančios šių reikalavimų, gali susidurti su griežtomis baudomis. Pavyzdžiui, baudos už nesilaikymą gali siekti iki 10 mln. EUR, priklausomai nuo pažeidimo pobūdžio ir organizacijos dydžio. Be to, organizacijos privalo bendradarbiauti su nacionalinėmis ir ES institucijomis, dalydamosi informacija apie kibernetinius incidentus ir gerąsias praktikas. Tai padeda sukurti stipresnę kibernetinio saugumo sistemą visame regione. Svarbu pažymėti, kad reikalavimai taikomi ne tik didelėms organizacijoms, bet ir mažoms ir vidutinėms įmonėms, kurios dirba svarbiuose sektoriuose, tokiuose kaip energetika, transportas ar finansai. Tokiu būdu NIS2 siekia užtikrinti bendrą saugumo lygį visoje Europoje, stiprindama atsparumą kibernetinėms grėsmėms.</p><p>Nesilaikant NIS2 direktyvos, organizacijos susiduria su rimtomis pasekmėmis. Pirmiausia, baudos gali siekti iki 10 milijonų EUR esminiams sektoriams, tokiems kaip energija, transportas ir bankininkystė. Tai yra didelė finansinė našta, galinti paveikti ne tik įmonės biudžetą, bet ir jos reputaciją. Be to, nepakankamas atitikimas gali lemti privalomus auditus ir papildomus patikrinimus. Tokie procesai gali užtrukti, o tai gali sukelti operacijų sutrikimus. Antra, organizacijos, kurios nesilaiko direktyvos, gali prarasti savo licencijas arba veiklos leidimus, kas gali sukelti verslo nutraukimą. Trečia, teisiniai ginčai dėl nesilaikymo gali užtrukti ilgai ir reikalauti didelių išlaidų advokatams. Ketvirta, duomenų nutekėjimas ar kiti saugumo incidentai, atsirandantys dėl nesilaikymo, gali sukelti papildomų nuostolių. Nors NIS2 direktyva gali atrodyti kaip papildoma našta, jos laikymasis užtikrina ne tik teisinį atitikimą, bet ir organizacijos saugumą. Taip pat būtina atkreipti dėmesį į tai, kad šios baudos gali būti taikomos ne tik už tiesioginį nesilaikymą, bet ir už netinkamą saugumo priemonių taikymą. Organizacijos gali būti priverstos investuoti į naujas technologijas ir procesus, kad išvengtų tokių pasekmių. Svarbu nuolat stebėti ir atnaujinti saugumo protokolus, kad būtų užtikrintas atitikimas NIS2. Tuo pačiu, šios direktyvos laikymasis gali padėti gerinti organizacijos pasitikėjimą ir stabilumą rinkoje, kas yra ypač svarbu konkurencingoje aplinkoje.</p><p>Pasiruošimas NIS2 direktyvai reikalauja nuoseklių žingsnių, kad organizacijos galėtų užtikrinti atitiktį naujoms taisyklėms. Pirmiausia, būtina atlikti išsamų rizikos vertinimą. Tai padės identifikuoti galimas grėsmes ir pažeidžiamumus, kurie gali paveikti informacinių sistemų saugumą. Rizikos vertinimas turėtų apimti visus organizacijos IT išteklius ir procesus. Antras žingsnis – nustatyti, kurie procesai ir sistemos yra kritiškai svarbūs. NIS2 direktyva taikoma tiek viešam, tiek privačiam sektoriui, tačiau ypatingą dėmesį reikėtų skirti esminių sektorių, tokių kaip energetika, transportas, ir sveikatos apsauga, sistemoms. Trečia, organizacijos turėtų sukurti saugumo politiką, kuri atitiktų direktyvos reikalavimus. Tai apima incidentų valdymo planus, duomenų apsaugos priemones ir darbuotojų mokymus. Ketvirtas žingsnis – nuolat stebėti ir vertinti saugumo priemones. NIS2 direktyva reikalauja, kad organizacijos ne tik įgyvendintų saugumo priemones, bet ir nuolat jas peržiūrėtų. Tai gali apimti reguliarius auditų atlikimus ir saugumo testus, siekiant užtikrinti, kad visos procedūros veikia efektyviai. Penktas žingsnis – bendradarbiavimas su kitomis organizacijomis ir institucijomis. NIS2 skatina dalintis informacija apie grėsmes ir incidentus tarp sektorių, kas gali padėti geriau apsaugoti visą ekosistemą. Pasiruošimas NIS2 direktyvai reikalauja laiko ir išteklių, tačiau tai yra būtina, kad organizacijos galėtų išvengti didelių baudų ir užtikrinti savo informacinių sistemų saugumą.</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>NIS2 direktyva yra Europos Sąjungos teisės aktas, skirtas stiprinti kibernetinį saugumą visose valstybėse narėse. Ji svarbi verslui, nes nustato privalomus reikalavimus, kurie padeda apsaugoti kritinius infrastruktūros sektorius ir mažina kibernetinių incidentų riziką.</p><p>NIS2 direktyva reikalauja, kad technologijų sektorius įdiegtų griežtesnes saugumo priemones. Tai gali apimti investicijas į IT infrastruktūrą ir darbuotojų mokymus, siekiant užtikrinti, kad įmonės galėtų atlaikyti kibernetines grėsmes.</p><p>Pagal NIS2 direktyvą, įmonės privalo pranešti apie incidentą per 24 valandas nuo jo nustatymo. Tai leidžia greitai reaguoti į grėsmes ir sumažinti galimus nuostolius.</p><p>NIS2 direktyva daugiausia orientuota į kibernetinį saugumą, o BDAR (Bendrasis duomenų apsaugos reglamentas) – į asmens duomenų apsaugą. Nors abu teisės aktai siekia didinti saugumą, jų taikymo sritis ir reikalavimai yra skirtingi.</p><p>NIS2 direktyva taiko tam tikrus reikalavimus ir mažoms įmonėms, tačiau joms gali būti taikomi lengvesni standartai. Tai leidžia mažoms įmonėms prisitaikyti prie reikalavimų, nesukeliant didelių finansinių sunkumų.</p><p>NIS2 direktyva yra itin svarbi kritinės infrastruktūros sektoriui, nes ji padeda užtikrinti, kad pagrindinės paslaugos, tokios kaip energija ir transportas, būtų apsaugotos nuo kibernetinių atakų. Tai padeda išvengti didelių sutrikimų visuomenėje.</p><p>Baudos pagal NIS2 direktyvą gali iki 10 mln. EUR arba 2% metinių pajamų, priklausomai nuo pažeidimo sunkumo. Apskaičiuojant baudas atsižvelgiama į pažeidimo pobūdį ir įmonės atsaką į incidentą.</p><p>NIS2 direktyva Lietuvoje bus visiškai įgyvendinta iki 2024-10-17. Iki šios datos įmonės turės pasiruošti naujiems reikalavimams ir procedūroms.</p><p>Pasiruošimas NIS2 direktyvos auditui apima vidinių procesų peržiūrą ir saugumo priemonių įvertinimą. Įmonės turėtų užtikrinti, kad dokumentacija ir ataskaitos būtų atnaujintos ir atitiktų direktyvos reikalavimus.</p><p>Pagrindinės NIS2 direktyvos priežiūros institucijos yra nacionaliniai kibernetinio saugumo centrai, kurie atsakingi už reikalavimų laikymosi priežiūrą. Lietuvoje šią funkciją vykdo Valstybinė duomenų apsaugos inspekcija ir Kibernetinio saugumo centras.</p><p>Generated 2026-05-22T17:59:43+00:00</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>NIS2 direktyva yra Europos Sąjungos teisės aktas, skirtas stiprinti kibernetinį saugumą visose valstybėse narėse. Ji svarbi verslui, nes nustato privalomus reikalavimus, kurie padeda apsaugoti kritinius infrastruktūros sektorius ir mažina kibernetinių incidentų riziką.</p><p>NIS2 direktyva reikalauja, kad technologijų sektorius įdiegtų griežtesnes saugumo priemones. Tai gali apimti investicijas į IT infrastruktūrą ir darbuotojų mokymus, siekiant užtikrinti, kad įmonės galėtų atlaikyti kibernetines grėsmes.</p><p>Pagal NIS2 direktyvą, įmonės privalo pranešti apie incidentą per 24 valandas nuo jo nustatymo. Tai leidžia greitai reaguoti į grėsmes ir sumažinti galimus nuostolius.</p><p>NIS2 direktyva daugiausia orientuota į kibernetinį saugumą, o BDAR (Bendrasis duomenų apsaugos reglamentas) – į asmens duomenų apsaugą. Nors abu teisės aktai siekia didinti saugumą, jų taikymo sritis ir reikalavimai yra skirtingi.</p><p>NIS2 direktyva taiko tam tikrus reikalavimus ir mažoms įmonėms, tačiau joms gali būti taikomi lengvesni standartai. Tai leidžia mažoms įmonėms prisitaikyti prie reikalavimų, nesukeliant didelių finansinių sunkumų.</p><p>NIS2 direktyva yra itin svarbi kritinės infrastruktūros sektoriui, nes ji padeda užtikrinti, kad pagrindinės paslaugos, tokios kaip energija ir transportas, būtų apsaugotos nuo kibernetinių atakų. Tai padeda išvengti didelių sutrikimų visuomenėje.</p><p>Baudos pagal NIS2 direktyvą gali iki 10 mln. EUR arba 2% metinių pajamų, priklausomai nuo pažeidimo sunkumo. Apskaičiuojant baudas atsižvelgiama į pažeidimo pobūdį ir įmonės atsaką į incidentą.</p><p>NIS2 direktyva Lietuvoje bus visiškai įgyvendinta iki 2024-10-17. Iki šios datos įmonės turės pasiruošti naujiems reikalavimams ir procedūroms.</p><p>Pasiruošimas NIS2 direktyvos auditui apima vidinių procesų peržiūrą ir saugumo priemonių įvertinimą. Įmonės turėtų užtikrinti, kad dokumentacija ir ataskaitos būtų atnaujintos ir atitiktų direktyvos reikalavimus.</p><p>Pagrindinės NIS2 direktyvos priežiūros institucijos yra nacionaliniai kibernetinio saugumo centrai, kurie atsakingi už reikalavimų laikymosi priežiūrą. Lietuvoje šią funkciją vykdo Valstybinė duomenų apsaugos inspekcija ir Kibernetinio saugumo centras.</p><p>Generated 2026-05-22T18:17:22+00:00</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>NIS2 direktyva yra Europos Sąjungos teisės aktas, skirtas stiprinti kibernetinį saugumą visose valstybėse narėse. Ji svarbi verslui, nes nustato privalomus reikalavimus, kurie padeda apsaugoti kritinius infrastruktūros sektorius ir mažina kibernetinių incidentų riziką.</p><p>NIS2 direktyva reikalauja, kad technologijų sektorius įdiegtų griežtesnes saugumo priemones. Tai gali apimti investicijas į IT infrastruktūrą ir darbuotojų mokymus, siekiant užtikrinti, kad įmonės galėtų atlaikyti kibernetines grėsmes.</p><p>Pagal NIS2 direktyvą, įmonės privalo pranešti apie incidentą per 24 valandas nuo jo nustatymo. Tai leidžia greitai reaguoti į grėsmes ir sumažinti galimus nuostolius.</p><p>NIS2 direktyva daugiausia orientuota į kibernetinį saugumą, o BDAR (Bendrasis duomenų apsaugos reglamentas) – į asmens duomenų apsaugą. Nors abu teisės aktai siekia didinti saugumą, jų taikymo sritis ir reikalavimai yra skirtingi.</p><p>NIS2 direktyva taiko tam tikrus reikalavimus ir mažoms įmonėms, tačiau joms gali būti taikomi lengvesni standartai. Tai leidžia mažoms įmonėms prisitaikyti prie reikalavimų, nesukeliant didelių finansinių sunkumų.</p><p>NIS2 direktyva yra itin svarbi kritinės infrastruktūros sektoriui, nes ji padeda užtikrinti, kad pagrindinės paslaugos, tokios kaip energija ir transportas, būtų apsaugotos nuo kibernetinių atakų. Tai padeda išvengti didelių sutrikimų visuomenėje.</p><p>Baudos pagal NIS2 direktyvą gali iki 10 mln. EUR arba 2% metinių pajamų, priklausomai nuo pažeidimo sunkumo. Apskaičiuojant baudas atsižvelgiama į pažeidimo pobūdį ir įmonės atsaką į incidentą.</p><p>NIS2 direktyva Lietuvoje bus visiškai įgyvendinta iki 2024-10-17. Iki šios datos įmonės turės pasiruošti naujiems reikalavimams ir procedūroms.</p><p>Pasiruošimas NIS2 direktyvos auditui apima vidinių procesų peržiūrą ir saugumo priemonių įvertinimą. Įmonės turėtų užtikrinti, kad dokumentacija ir ataskaitos būtų atnaujintos ir atitiktų direktyvos reikalavimus.</p><p>Pagrindinės NIS2 direktyvos priežiūros institucijos yra nacionaliniai kibernetinio saugumo centrai, kurie atsakingi už reikalavimų laikymosi priežiūrą. Lietuvoje šią funkciją vykdo Valstybinė duomenų apsaugos inspekcija ir Kibernetinio saugumo centras.</p><p>Generated 2026-05-22T18:18:11+00:00</p><p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p><p>Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.</p><p>Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.</p><p>Generated 2026-05-23T02:38:09+00:00</p>
 </section>
 
 
@@ -492,65 +530,110 @@ gtag('consent', 'default', {
 </div>
 
 
-<section class="faq" aria-label="Dažniausi klausimai">
-<h2>Dažniausi klausimai</h2>
 
-<details>
-<summary>Kas yra NIS2 direktyva ir kodėl ji svarbi verslui?</summary>
-<p>NIS2 direktyva yra Europos Sąjungos teisės aktas, skirtas stiprinti kibernetinį saugumą visose valstybėse narėse. Ji svarbi verslui, nes nustato privalomus reikalavimus, kurie padeda apsaugoti kritinius infrastruktūros sektorius ir mažina kibernetinių incidentų riziką.</p>
-</details>
 
-<details>
-<summary>Kaip NIS2 direktyva paveiks technologijų sektorių?</summary>
-<p>NIS2 direktyva reikalauja, kad technologijų sektorius įdiegtų griežtesnes saugumo priemones. Tai gali apimti investicijas į IT infrastruktūrą ir darbuotojų mokymus, siekiant užtikrinti, kad įmonės galėtų atlaikyti kibernetines grėsmes.</p>
-</details>
+<section class="faq-sec" aria-label="Dažniausi klausimai">
+<h2 class="faq-sec-h">Dažniausi klausimai</h2>
+<div class="faq-list">
 
-<details>
-<summary>Kada įmonė privalo pranešti apie incidentą pagal NIS2?</summary>
-<p>Pagal NIS2 direktyvą, įmonės privalo pranešti apie incidentą per 24 valandas nuo jo nustatymo. Tai leidžia greitai reaguoti į grėsmes ir sumažinti galimus nuostolius.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kas yra NIS2 direktyva ir kodėl ji svarbi verslui?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">NIS2 direktyva yra Europos Sąjungos teisės aktas, skirtas stiprinti kibernetinį saugumą visose valstybėse narėse. Ji svarbi verslui, nes nustato privalomus reikalavimus, kurie padeda apsaugoti kritinius infrastruktūros sektorius ir mažina kibernetinių incidentų riziką.</div></div>
+</div>
 
-<details>
-<summary>Kuo skiriasi NIS2 ir BDAR reikalavimai?</summary>
-<p>NIS2 direktyva daugiausia orientuota į kibernetinį saugumą, o BDAR (Bendrasis duomenų apsaugos reglamentas) – į asmens duomenų apsaugą. Nors abu teisės aktai siekia didinti saugumą, jų taikymo sritis ir reikalavimai yra skirtingi.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip NIS2 direktyva paveiks technologijų sektorių?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">NIS2 direktyva reikalauja, kad technologijų sektorius įdiegtų griežtesnes saugumo priemones. Tai gali apimti investicijas į IT infrastruktūrą ir darbuotojų mokymus, siekiant užtikrinti, kad įmonės galėtų atlaikyti kibernetines grėsmes.</div></div>
+</div>
 
-<details>
-<summary>Kaip NIS2 direktyva taikoma mažoms įmonėms?</summary>
-<p>NIS2 direktyva taiko tam tikrus reikalavimus ir mažoms įmonėms, tačiau joms gali būti taikomi lengvesni standartai. Tai leidžia mažoms įmonėms prisitaikyti prie reikalavimų, nesukeliant didelių finansinių sunkumų.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kada įmonė privalo pranešti apie incidentą pagal NIS2?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Pagal NIS2 direktyvą, įmonės privalo pranešti apie incidentą per 24 valandas nuo jo nustatymo. Tai leidžia greitai reaguoti į grėsmes ir sumažinti galimus nuostolius.</div></div>
+</div>
 
-<details>
-<summary>Kodėl NIS2 direktyva svarbi kritinės infrastruktūros sektoriui?</summary>
-<p>NIS2 direktyva yra itin svarbi kritinės infrastruktūros sektoriui, nes ji padeda užtikrinti, kad pagrindinės paslaugos, tokios kaip energija ir transportas, būtų apsaugotos nuo kibernetinių atakų. Tai padeda išvengti didelių sutrikimų visuomenėje.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kuo skiriasi NIS2 ir BDAR reikalavimai?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">NIS2 direktyva daugiausia orientuota į kibernetinį saugumą, o BDAR (Bendrasis duomenų apsaugos reglamentas) – į asmens duomenų apsaugą. Nors abu teisės aktai siekia didinti saugumą, jų taikymo sritis ir reikalavimai yra skirtingi.</div></div>
+</div>
 
-<details>
-<summary>Kaip apskaičiuojamos baudos pagal NIS2 direktyvą?</summary>
-<p>Baudos pagal NIS2 direktyvą gali iki 10 mln. EUR arba 2% metinių pajamų, priklausomai nuo pažeidimo sunkumo. Apskaičiuojant baudas atsižvelgiama į pažeidimo pobūdį ir įmonės atsaką į incidentą.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip NIS2 direktyva taikoma mažoms įmonėms?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">NIS2 direktyva taiko tam tikrus reikalavimus ir mažoms įmonėms, tačiau joms gali būti taikomi lengvesni standartai. Tai leidžia mažoms įmonėms prisitaikyti prie reikalavimų, nesukeliant didelių finansinių sunkumų.</div></div>
+</div>
 
-<details>
-<summary>Kokios yra NIS2 direktyvos įgyvendinimo datos Lietuvoje?</summary>
-<p>NIS2 direktyva Lietuvoje bus visiškai įgyvendinta iki 2024-10-17. Iki šios datos įmonės turės pasiruošti naujiems reikalavimams ir procedūroms.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kodėl NIS2 direktyva svarbi kritinės infrastruktūros sektoriui?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">NIS2 direktyva yra itin svarbi kritinės infrastruktūros sektoriui, nes ji padeda užtikrinti, kad pagrindinės paslaugos, tokios kaip energija ir transportas, būtų apsaugotos nuo kibernetinių atakų. Tai padeda išvengti didelių sutrikimų visuomenėje.</div></div>
+</div>
 
-<details>
-<summary>Kaip pasiruošti NIS2 direktyvos auditui?</summary>
-<p>Pasiruošimas NIS2 direktyvos auditui apima vidinių procesų peržiūrą ir saugumo priemonių įvertinimą. Įmonės turėtų užtikrinti, kad dokumentacija ir ataskaitos būtų atnaujintos ir atitiktų direktyvos reikalavimus.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip apskaičiuojamos baudos pagal NIS2 direktyvą?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Baudos pagal NIS2 direktyvą gali iki 10 mln. EUR arba 2% metinių pajamų, priklausomai nuo pažeidimo sunkumo. Apskaičiuojant baudas atsižvelgiama į pažeidimo pobūdį ir įmonės atsaką į incidentą.</div></div>
+</div>
 
-<details>
-<summary>Kokios yra pagrindinės NIS2 direktyvos priežiūros institucijos?</summary>
-<p>Pagrindinės NIS2 direktyvos priežiūros institucijos yra nacionaliniai kibernetinio saugumo centrai, kurie atsakingi už reikalavimų laikymosi priežiūrą. Lietuvoje šią funkciją vykdo Valstybinė duomenų apsaugos inspekcija ir Kibernetinio saugumo centras.</p>
-</details>
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kokios yra NIS2 direktyvos įgyvendinimo datos Lietuvoje?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">NIS2 direktyva Lietuvoje bus visiškai įgyvendinta iki 2024-10-17. Iki šios datos įmonės turės pasiruošti naujiems reikalavimams ir procedūroms.</div></div>
+</div>
 
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip pasiruošti NIS2 direktyvos auditui?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Pasiruošimas NIS2 direktyvos auditui apima vidinių procesų peržiūrą ir saugumo priemonių įvertinimą. Įmonės turėtų užtikrinti, kad dokumentacija ir ataskaitos būtų atnaujintos ir atitiktų direktyvos reikalavimus.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kokios yra pagrindinės NIS2 direktyvos priežiūros institucijos?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Pagrindinės NIS2 direktyvos priežiūros institucijos yra nacionaliniai kibernetinio saugumo centrai, kurie atsakingi už reikalavimų laikymosi priežiūrą. Lietuvoje šią funkciją vykdo Valstybinė duomenų apsaugos inspekcija ir Kibernetinio saugumo centras.</div></div>
+</div>
+
+</div>
 </section>
+
+
+
+
+<div class="share">
+  <span class="share-l">Dalintis:</span>
+  <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=https://veriva.lt/seo/nis2-kam-taikoma" target="_blank" rel="noopener">LinkedIn</a>
+  <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https://veriva.lt/seo/nis2-kam-taikoma" target="_blank" rel="noopener">Facebook</a>
+  <a class="share-btn" href="mailto:?subject=NIS2 Direktyva Verslui — Sektorių Atsakomybė&body=https://veriva.lt/seo/nis2-kam-taikoma">El. paštu</a>
+</div>
+
 
 
 <section class="citations" aria-label="Šaltiniai">
 <h2>Šaltiniai</h2>
-<ol>
+<ol class="sources">
 
 <li>gov.lt. <a href="https://www.gov.lt/lt/temos/1080-kibernetinis-saugumas" rel="nofollow noopener" target="_blank">gov.lt</a> (accessed May 2026)</li>
 
@@ -566,7 +649,7 @@ gtag('consent', 'default', {
 </section>
 
 
-<p class="timestamp">Generated 2026-05-22T18:18:11+00:00</p>
+<p class="timestamp">Generated 2026-05-23T02:45:08+00:00</p>
 
 
 
@@ -643,10 +726,25 @@ function closeMob(){
   if (btn) btn.setAttribute('aria-expanded', 'false');
 }
 
+// FAQ accordion (blog-parity: aria-expanded + .faq-item.open toggle).
+document.querySelectorAll('.faq-item').forEach(function(item, idx){
+  var btn = item.querySelector('.faq-q');
+  var ans = item.querySelector('.faq-a');
+  if (!btn || !ans) return;
+  var id = 'faq-answer-' + (idx + 1);
+  ans.id = id;
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', id);
+  btn.addEventListener('click', function(){
+    var isOpen = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+});
+
 // Scroll-triggered reveal (Kowalski pattern)
 (function(){
   var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var targets = document.querySelectorAll('.prose h2, .prose h3, .toc, .article-cta, .cta-block, blockquote, .faq, aside.internal-links, .lead, .article-footer, .prose figure');
+  var targets = document.querySelectorAll('.prose h2, .prose h3, .toc, .article-cta, .cta-block, blockquote, .faq-sec, aside.internal-links, .lead, .article-footer, .share, .prose figure');
   if (prefersReduced || !('IntersectionObserver' in window)) {
     targets.forEach(function(el){ el.classList.add('in'); });
     return;

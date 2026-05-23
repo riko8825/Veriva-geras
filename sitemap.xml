@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://veriva.lt/seo/nis2-atitiktis</loc>
+    <loc>https://veriva.lt/seo/nis2-direktyva-kam-taikoma</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -58,6 +58,11 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/nacionalinio-kibernetinio-saugumo-centro-mokymai</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/nis2-atitiktis</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

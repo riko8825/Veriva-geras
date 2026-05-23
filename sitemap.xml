@@ -1,68 +1,58 @@
 <?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://veriva.lt/seo/privatumo-politika-svetainei</loc>
-    <lastmod>2026-05-22</lastmod>
+    <loc>https://veriva.lt/seo/bdar-6-straipsnis</loc>
+    <lastmod>2026-05-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/bdar-auditas-lietuvoje</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/seo/bdar-klinikoms-lietuvoje</loc>
-    <lastmod>2026-05-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://veriva.lt/seo/bdar-konsultacija-vilniuje</loc>
-    <lastmod>2026-05-22</lastmod>
+    <loc>https://veriva.lt/seo/bdar-baudu-dydziai</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-buhalterijoms</loc>
-    <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-e-parduotuvei</loc>
-    <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/seo/bdar-auditas-lietuvoje</loc>
-    <lastmod>2026-05-22</lastmod>
+    <loc>https://veriva.lt/seo/bdar-klinikoms-lietuvoje</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/bdar-konsultacija-vilniuje</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/dpo-paslaugos</loc>
-    <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/seo/bdar-6-straipsnis</loc>
-    <lastmod>2026-05-22</lastmod>
+    <loc>https://veriva.lt/seo/nacionalinio-kibernetinio-saugumo-centro-mokymai</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-kam-taikoma</loc>
-    <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/seo/bdar-baudu-dydziai</loc>
-    <lastmod>2026-05-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://veriva.lt/seo/nacionalinio-kibernetinio-saugumo-centro-mokymai</loc>
-    <lastmod>2026-05-21</lastmod>
+    <loc>https://veriva.lt/seo/privatumo-politika-svetainei</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

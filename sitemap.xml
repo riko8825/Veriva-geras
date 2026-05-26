@@ -101,10 +101,16 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/seo/informacijos-saugumo-politika</loc>
+    <loc>https://veriva.lt/seo/duomenu-tvarkymo-sutartis</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/informacijos-saugumo-politika</loc>
+    <lastmod>2026-05-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/kibernetinio-saugumo-mokymai</loc>

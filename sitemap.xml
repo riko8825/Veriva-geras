@@ -11,17 +11,17 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/privatumas</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://veriva.lt/slapukai</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://veriva.lt/blog/bdar-6-straipsnis-teiseto-tvarkymo-pagrindai</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/blog/bdar-baudos-lietuvoje</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/blog/dpo-funkcija-vadovas</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -36,62 +36,57 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/blog/dpo-funkcija-vadovas</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://veriva.lt/blog/bdar-6-straipsnis-teiseto-tvarkymo-pagrindai</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://veriva.lt/privatumas</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-6-straipsnis</loc>
     <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-auditas-lietuvoje</loc>
     <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-baudu-dydziai</loc>
     <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-buhalterijoms</loc>
     <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-e-parduotuvei</loc>
     <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-klinikoms-lietuvoje</loc>
     <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-konsultacija-vilniuje</loc>
     <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/dpo-paslaugos</loc>
     <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/duomenu-apsaugos-pareigunas</loc>
@@ -106,10 +101,16 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/seo/kibernetinio-saugumo-mokymai</loc>
+    <loc>https://veriva.lt/seo/informacijos-saugumo-politika</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/kibernetinio-saugumo-mokymai</loc>
+    <lastmod>2026-05-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/nacionalinio-kibernetinio-saugumo-centro-mokymai</loc>
@@ -127,7 +128,7 @@
     <loc>https://veriva.lt/seo/nis2-direktyva-kam-taikoma</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-kam-taikoma</loc>
@@ -139,7 +140,7 @@
     <loc>https://veriva.lt/seo/nis2-reikalavimai</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/privatumo-politika-svetainei</loc>
@@ -157,6 +158,11 @@
     <loc>https://veriva.lt/seo/valdymo-sistemos-kibernetinio-saugumo-auditas</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/slapukai</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>

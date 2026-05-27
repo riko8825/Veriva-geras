@@ -1,11 +1,362 @@
 # SESSION_STATUS
 
-**Data**: 2026-05-12
-**Sesijos tikslas**: DPO pillar straipsnio publikavimas (4-agent pre/post-publish ratas) + copyright hotfix project-wide + KI-013 redirect architecture dokumentavimas.
+**Data**: 2026-05-27
+**Sesijos tikslas**: RC duomenų nutekėjimo 2026 hot news blog post — sukurti kokybišką straipsnį apie šviežią incidentą (Registrų centras prarado >600 tūkst. NT registro įrašų per Migracijos departamento paskyras), kol search volume didžiausias per ateinančias 2 savaites. Mišri B2C+B2B orientacija, su frontend + SEO audit'u prieš deploy.
 
 ---
 
-## Paskutinė sesija: 2026-05-12 — dpo-pillar-publish
+## Paskutinė sesija: 2026-05-27 — rc-nutekejimo-blog-post
+
+### Ką padarėme
+
+**Kontekstas**: Vartotojas pateikė konkretų brief'ą: slug `/blog/registru-centro-duomenu-nutekejimas-2026`, struktūra (chronologija + duomenys + RC savitarna + scam'ai + verslo CTA), 4 target keywords, info iš interneto (hot news). Greitis = pozicija — Google dabar indeksuoja viską apie šį įvykį.
+
+**1. Info gathering (4× WebSearch lygiagrečiai)**:
+- LRT, 15min, Respublika, tv3.lt — chronologija (sausis–balandis ataka, 04-03 pirmas signalas ne iš RC, 04-13 RC preliminarus, 05-07 oficialus VDAI pranešimas), faktai (600k+ įrašų, €111k žala, asmens kodai + NT adresai pavogti, telefonai/email/banko/sandoriai nenutekėjo)
+- VDAI pareiškimas: iki €60k bauda RC (viešojo sektoriaus lubų dydis), atskirų skundų NEnagrinės
+- Atakos vektorius: Migracijos departamento paskyros, prisijungimai iš užsienio valstybės
+- RC paleidžia savitarnos modulį asmeniniam patikrinimui
+
+**2. Failo struktūra (commit `966d666`, +1108/-5)**:
+- `blog/registru-centro-duomenu-nutekejimas-2026.html` — 947 lines, ~2400 ž., 11 min skaitymo
+  - NewsArticle (ne BlogPosting — hot news E-E-A-T) + BreadcrumbList + FAQPage (12 Q/A)
+  - 2× Person authors (Marina + Justinas) su `jobTitle` ir `worksFor`
+  - 6 H2: chronologija (timeline su `::before` dot'ais), kokie duomenys (lentelė), kaip pasitikrinti (žingsniai + external link), ko tikėtis (scam patterns + VDAI), 6 žingsniai gyventojui, 3 pamokos verslui
+  - 7 šaltinių sąrašas straipsnio gale + inline citations
+  - 2 CTA blokai (vidury verslo focus, pabaigoje universalus)
+- `assets/img/blog/rc-nutekejimas-hero.svg` — 129 lines, 1200×630, Veriva brand (page-builder agent)
+- `blog.html` — nauja kortelė PIRMOJE vietoje su `.bc-hot-badge` raudonu "Aktualu"; bonus: 5 esamų straipsnių `.html` suffix'ai pakeisti į clean URLs (atitinka s21 KI-013)
+- `sitemap.xml` — naujas URL `priority 0.9`, `changefreq daily`, `lastmod 2026-05-27`
+
+**3. 3 paraleliai paleisti audit agentai**:
+- **page-builder** — sukūrė hero SVG (DB cilindrų stack + sulaužyta spyna + €111k žalos kortelė, layout identiškas `bdar-baudos-hero.svg`)
+- **frontend-revizorius** (verdict: NEEDS WORK → FIXED) — 4 P1 fix'ai:
+  - Inline `style="color:var(--red)"` lentelėje → `.status-stolen` klasė (4×)
+  - Lentelė į `.table-wrap` su `overflow-x:auto` mobile saugumui
+  - `.callout-red strong` kontrasto fix #dc2626 → #b91c1c (WCAG AA)
+  - `<section class="rel">` + `aria-label="Susiję straipsniai"` (landmark)
+  - 12× `rel="noopener"` → `rel="noopener noreferrer"`
+- **seo-specialistas** (verdict: FIX FIRST → 2/3 FIXED) — P0/P1 fix'ai:
+  - `datePublished` ISO 8601 su laiku `2026-05-27T09:00:00+03:00` (article meta + schema)
+  - FAQ schema ↔ HTML 8 klausimai sinchronizuoti (Google rich result reikalauja exact match)
+  - `author` Organization → 2× Person (Marina + Justinas)
+  - Definition trumpinta 74 → 58 ž. (AI Overview snippet'as netrimina)
+
+**4. Git operations**:
+- Stash unstaged docs (4 docs + token-audit.mjs orphan)
+- `git pull --rebase origin main` — 3 SEO Bot auto-deploy commits (`b133c96`, `8577e60`, `60fcfe3`) integruoti per rebase
+- Sitemap'as auto-resolved (SEO Bot pridėjo 3 naujus seo/* — `duomenu-tvarkymo-sutartis`, `informacijos-saugumo-politika`, `sutikimas-tvarkyti-asmens-duomenis`)
+- Push OK → final commit `966d666`
+- Stash unstash'as → docs/* atgal į working tree
+
+**5. Production verifikacija (curl, ~70s po push)**:
+- ✅ `/blog/registru-centro-duomenu-nutekejimas-2026` → 200 OK, 0 redirect hops
+- ✅ `.html` versija → 308 → clean URL
+- ✅ Hero SVG → 200 OK (7.8KB)
+- ✅ Blog index 200, sitemap 200 su RC URL įrašu
+- ✅ Lokalus HTTP serveris stoppped post-deploy
+
+### Kas liko / nepatvirtinta
+
+**GSC actions (TAVO action)**:
+- Manual URL Inspection + Request Indexing GSC'e — kritinis greičiui hot news cycle'e
+- Submit sitemap update (auto-discover su nauju `lastmod 2026-05-27` turi veikti, bet manual nudge geriau)
+- Monitor SERP positions per 7-14 dienų primary KW (predicted: 3-8 rank "RC duomenų nutekėjimas 2026", 1-3 FAQ rich result "ar mano duomenys pavogti")
+
+**Šios sesijos technical debt**:
+- **og:image yra SVG** — sisteminis Veriva pattern'as (visi 4 hero failai SVG). LinkedIn/Twitter share preview gali nesirodyti dalyje platformų. Reikia atskiros sesijos: konvertuoti visus blog hero SVG → 1200×630 WebP per `sharp` arba `puppeteer` SVG→PNG rendering. P1, ne šio scope'o
+- **Hero SVG nepatikrintas vizualiai** — tikiu page-builder agentu, bet nepamatačiau Chrome'e prieš commit. Galimas vizualinis bug live'e
+- **Internal link į DPO pillarą** verslo CTA sekcijoje nepridėtas (yra tik straipsnio pamokų sekcijoje). SEO P1
+- **Definition `<strong>` tag dubliuoja** schema'os `description` formuluotę (per žemas KW density risk, ne kritinis)
+- **Straipsnis nr. 4 (planuojamas)** — paliktas tekstinis teaser callout'e be hard link'o (kaip vartotojas pasirinko brief'e). Reikės kurti atskirą "verslo atsakomybės" straipsnį
+
+**Carry-over nuo s21** (nepasikeitė):
+- ~~KI-013 Redirect Architecture~~ — ✅ UŽDARYTAS s21
+- KI-012 hero SVG placeholder DPO + BDAR 6 str. pillaruose (vis dar laukia)
+- SEO engine generator quality (atskira sesija SEO-Claude-code)
+- Frontend P0 sisteminis (inline styles, figure testimonial, h3 CTA) 5 pillaruose
+- 5 Sensitive env vars blog automation runtime
+- Multi-page skeletons (paslaugos/apie/kainos/kontaktai/404)
+- brief.html inline `<style>` extract
+- `scripts/token-audit.mjs` orphan untracked failas (ne šios sesijos)
+
+### Kitas žingsnis
+
+1. **GSC submit + monitoring** (TU, šiandien + 7-14d) — Request Indexing GSC'e, monitor SERP positions ir FAQ rich result aktyvavimą primary KW
+2. **Straipsnis nr. 4 — verslo atsakomybė po RC incidento** (~2-3h, kol news momentum aktyvus) — pillar fokusas: 3rd-party rizika, DPA sutartys, kada esi „valdytojas" / „tvarkytojas" pagal BDAR
+3. **Hero SVG → WebP konversija batch'as** (~30 min, jei nori) — visiems 5 esamiems blog hero failams + naujam RC hero, kad social share preview veiktų visose platformose
+
+### Production verifikacija (live)
+
+| Test | Statusas |
+|---|---|
+| `/blog/registru-centro-duomenu-nutekejimas-2026` → 200 OK, 0 hops | ✅ |
+| `.html` → 308 → clean URL | ✅ |
+| Hero SVG 200 OK (7.8KB) | ✅ |
+| Blog index 200 (nauja kortelė pirma, "Aktualu" badge) | ✅ |
+| Sitemap 200 su RC URL, priority 0.9 daily | ✅ |
+| Commit `966d666` push'intas main | ✅ |
+| Vercel deploy READY ~40s | ✅ |
+
+---
+
+## Sesija #21: 2026-05-26 — gsc-non-indexed-fix
+
+### Ką padarėme
+
+**Kontekstas**: Vartotojas pateikė 5 CSV failus su GSC non-indexed URL'ais. 8 unikalios problemų kategorijos: apex/www canonical konfliktas, double redirect chain (307→308), canonical/cleanURL mismatch, WordPress legacy URLs (`/wp-login.php`, `/wp-json/`, `/privatumo-politika/`, `/kibernetinis-saugumas/`, `/mokymai/`, `/pagrindinis/`), trailing slash normalization.
+
+**1. Diagnozė (curl-driven)**:
+- **Bug #1** — apex → www buvo **307 (temp)**, ne 301. Google neinterpret'ino kaip nuolatinį canonical.
+- **Bug #2** — Double redirect chain: `veriva.lt/brief.html` → 307 → `www.veriva.lt/brief.html` → 308 → `www.veriva.lt/brief` (2 hops).
+- **Bug #3** — Canonical mismatch: sitemap'ai ir HTML canonical tag'ai naudojo apex (`https://veriva.lt/...`), bet Vercel primary domain buvo `www.veriva.lt` → apex 307 redirect'ino į www → Google sumišęs.
+- **Bug #4** — WordPress legacy URLs 307 redirect'inosi į www, kur 404. Reikėjo redirect į home (Vercel nepalaiko 410 status code custom redirects).
+- **Bug #5** — `brief.html` canonical = `/brief.html`, bet Vercel `cleanUrls: true` reiškia, kad `/brief` yra real URL. Canonical turi sutapti su clean URL.
+
+**2. Fix'ai (commit `3282627`, 32 failai)**:
+- **Vercel Domains UI**: `veriva.lt` (apex) padarytas Primary Production, `www.veriva.lt` → 308 Permanent Redirect → apex. Tai apsuko anksčiau buvusią kryptį.
+- **`vercel.json` redirects** (+25 redirects): 8 `.html` → cleanURL (brief/blog/slapukai/privatumas/paslaugos/apie/kainos/kontaktai), 5 WP legacy (`/wp-login.php`, `/wp-admin/*`, `/wp-json/*`, `/wp-includes/*`, `/wp-content/*` → `/`), 4 LT path (`/privatumo-politika` → `/privatumas`, `/pagrindinis` → `/`, `/kibernetinis-saugumas` → `/`, `/mokymai` → `/`).
+- **Canonical + og:url tags** (11 files): `.html` pašalinta iš canonical ir og:url visuose root HTML + blog/*.html + blog/template.html.
+- **Internal hrefs** (17 HTML files batch sed'u): visi `href="/blog.html"`, `/brief.html`, `/privatumas.html`, `/slapukai.html`, ir absolute `https://veriva.lt/*.html` → clean URL (apima root + blog + seo).
+- **Sitemap.xml**: 12 → 28 URLs. Pridėti: `/`, `/blog`, `/privatumas`, `/slapukai`, 5 blog posts, 3 nauji seo (`/seo/kibernetinio-saugumo-mokymai`, `/seo/tis2-istatymas`, `/seo/valdymo-sistemos-kibernetinio-saugumo-auditas` — atsirado per rebase merge nuo SEO Bot per sesijos vidurį).
+- **blog/template.html**: schema.org JSON-LD `@id`, `url`, `mainEntityOfPage` + 3 social share linkų `{{POST_SLUG}}.html` → `{{POST_SLUG}}`.
+
+**3. Verifikacija (curl post-deploy)**:
+- ✅ `veriva.lt/` → 200 OK
+- ✅ `www.veriva.lt/` → 308 → apex (vienas hop)
+- ✅ `veriva.lt/{brief,blog,slapukai,privatumas}.html` → 308 → clean
+- ✅ `veriva.lt/blog/bdar-baudos-lietuvoje.html` → 308 → `/blog/bdar-baudos-lietuvoje`
+- ✅ WP legacy (be slash): `/wp-login.php`, `/wp-json` → 308 → `/`
+- ✅ Sitemap accessible, 28 `<loc>` entries
+- ⚠️ `www.veriva.lt/brief.html` → 2 hops (www→apex.html→clean). Acceptable Google'ui.
+- ⚠️ WP legacy su trailing slash → 2 hops (`/wp-json/` → `/wp-json` → `/`). Acceptable.
+
+**4. Git operations**:
+- Push REJECTED — remote turėjo 3 SEO Bot commits (per sesijos vidurį auto-deploy nauji seo puslapiai)
+- `git stash` (4 docs) + `git pull --rebase` → CONFLICT `sitemap.xml`
+- Manual merge: paimti SEO Bot pridėtus 3 naujus seo URL'us + mano pridėtus 9 core URLs
+- Naujiems seo puslapiams pritaikytas tas pats sed (internal `.html` link'ai → clean)
+- `git rebase --continue` → final commit `3282627` (32 files, +397/-328)
+- Push OK, Vercel deploy READY ~40s
+
+### Kas liko / nepatvirtinta
+
+**GSC veiksmai (TAVO action, ne mano)**:
+- Pateikti "Indeksavimo užklausą" Tier 1-3 URL'ams (limit ~10-12/dieną)
+- Validate fix kiekvienai non-indexed kategorijai (`Page with redirect`, `Duplicate without canonical`, `Alternate page with canonical`, `Crawled — not indexed`)
+- Resubmit sitemap.xml (jei dar nesubmittintas po naujo deploy'o)
+- Timeline: 1-3d Tier 1, 3-7d Tier 2, 7-30d Tier 3, 14-60d WP legacy išmetimas
+
+**Technical debt (šios sesijos)**:
+- Nepatikrinta ar `og:image` URL'ai dar turi `.html` referensų (paskubėjau sed'u, neaudit'inau visų OG/Twitter meta)
+- `<lastmod>` trūksta core sitemap URL'ams (`/`, `/blog`, `/privatumas`, `/slapukai`) — tik blog posts ir seo turi
+- 2-hop redirect'ai (`www→apex→clean` su `.html`) — nereparable be Edge Middleware (Vercel `redirects` neturi hostname matching)
+- WP legacy trailing slash 2-hop (`/wp-json/` → `/wp-json` → `/`) — nereparable be `trailingSlash: true` config
+
+**Carry-over nuo s20**:
+- SEO engine generator quality (hallucinated URLs, repetitive phrasing, external_links floor) — atskira sesija SEO-Claude-code projekte
+- KI-012 hero SVG placeholder (DPO + BDAR 6 str.)
+- ~~KI-013 Redirect Architecture~~ — **UŽDARYTAS šios sesijos** (apex canonical + clean URLs fix)
+- Frontend P0 sisteminiai carry-over (inline styles, figure testimonial, h3 CTA)
+- 5 Sensitive env vars blog automation runtime
+- Multi-page skeletons (paslaugos/apie/kainos/kontaktai/404) NĖRA — vercel.json jau turi jiems redirect'us (no-op kol nesukurti)
+
+### Kitas žingsnis
+
+1. **GSC monitoring** (TU, 2-3d) — pateikti indeksavimo užklausas Tier 1-3 URL'ams, validate fix kiekvienai non-indexed kategorijai
+2. **Multi-page skeletons** (~2-3h) — `/paslaugos`, `/apie`, `/kainos`, `/kontaktai`, `/404` minimum viable. Vercel.json jau parengtas (redirect'ai aktyvūs, bet 404 grąžinama kol nesukurti)
+3. **Generator quality fix** (atskira sesija SEO-Claude-code) — hallucinated URLs allowlist, varied phrasing, external_links 2+ floor
+
+### Production verifikacija (live)
+
+| Test | Statusas |
+|---|---|
+| `https://veriva.lt/` → 200 OK | ✅ |
+| `https://www.veriva.lt/` → 308 → apex (1 hop) | ✅ |
+| `.html` → clean URL (5 root) | ✅ visi 308 |
+| `.html` → clean URL (5 blog posts) | ✅ visi 308 |
+| Sitemap 28 URLs accessible | ✅ |
+| WP legacy → `/` | ✅ (1 hop be slash, 2 hop su slash) |
+| Vercel deploy ddfb6b1→3282627 | ✅ Ready |
+| Commit `3282627` push'intas main | ✅ |
+
+---
+
+## Sesija #20: 2026-05-23 — seo-engine-fix
+
+### Ką padarėme
+
+**Kontekstas**: Vartotojas atsiuntė 2 screenshot'us — `Weekly SEO Generation` workflow (`riko8825/SEO-Claude-code` repo, ne Veriva-geras!) fail'ino su `ERROR: no validated pages in Veriva DB`. 4 failed runs eilę.
+
+**1. Diagnozė (4 root causes per loop)**:
+- **Bug #1 — validator FAQ markup mismatch**: `src/validator/checks_content.py` `_check_faq` skaičiavo TIK `<details>` elementus. Bet `templates/base.html:424-451` veriva chrome (`client_chrome == 'veriva'`) renderina `<div class="faq-item">` (blog-parity rewrite). Generated HTML turėjo 10 FAQ items, validator matydavo 0 → `faq count 0 < 4` HARD_BLOCK. 100% LT runs failed.
+- **Bug #2 — empirra CSS comment leak**: `templates/_chrome_veriva.html:159` turėjo komentarą `/* span the empirra chrome animates ... */`. Multi-client leakage scan substring'iniu būdu žiūri kiekvieną byte'ą HTML'e → `exit 3`.
+- **Bug #3 — empty batch = failure**: `scripts/deploy_veriva.py:259-261` exit'indavo 1 kai `_validated_slugs` grąžindavo tuščią sąrašą (validator-rejected ARBA quality_os cannibalization-demoted page). Net jei prior published puslapiai gyvi — workflow failure → email.
+- **Bug #4 — generator content quality (NE blocker, atskleista)**: hallucinated external URLs (fake delfi/15min/lrytas/vz slugs → 404), repetitive phrasing (16× "BDAR konsultacija gali"), external_links 2+ floor, pillar/supporting cannibalization.
+
+**2. Fix'ai SEO-Claude-code repo'e (3 commits)**:
+- `a7b09b4` — `fix(validator): count veriva .faq-item markup in addition to <details>` (`src/validator/checks_content.py`, +10/-2): `max(details_count, faq_item_count)` + `faq-sec` exempt iš `_check_empty_sections`
+- `e7f7489` — `fix(veriva-chrome): drop 'empirra' substring from CSS comment` (`templates/_chrome_veriva.html`, +1/-1): `empirra` → `default`
+- `673401e` — `fix(deploy-veriva): empty new batch is a no-op, not a failure` (`scripts/deploy_veriva.py`, +17/-2): distinguish `client_live==0` (real failure, exit 1) nuo "nothing new to ship" (no-op, exit 0)
+
+**3. Verifikacija — 7 workflow_dispatch loop'as**:
+- Iter 1 ❌ (post-faq-fix) — atskleidė deploy_veriva no-op bug
+- Iter 2 ✓ NO-OP (`dpo-paslaugos` validator-rejected: `external_links 1 < 2`)
+- Iter 3 ✓ deployed `duomenu-apsaugos-pareigunas`
+- Iter 4 ✓ deployed `duomenu-apsaugos-pareiguno-paslaugos-bvpz`
+- Iter 5 ✓ deployed `nis2-atitiktis`
+- Iter 6 ✓ deployed `nis2-direktyva-kam-taikoma`
+- Iter 7 ✓ deployed `nis2-reikalavimai`
+
+6 ✓ runs paeiliui, 5 nauji LIVE `seo/*` puslapiai. Visi pre-deploy gate'ai (validator + quality_os + multi-client leakage + runtime predeploy) veikia teisingai — gaudo bug'us, leidžia gerus puslapius pro.
+
+**4. Lokalūs testai**: 1012 passed, 3 skipped (`DRY_RUN=true GROQ_API_KEY=test-key-not-real python -m pytest tests/`).
+
+**5. Memory dokumentacija**:
+- **NEW** `memory/reference_seo_engine.md` — pilnas workflow flow (12 steps), 3 sutaisytos klaidos su file:line citations, "Ko NEdaryti" taisyklės, diagnostikos žingsniai (`gh run view`, artifact download, CSV inspection), exit code reference
+- Atnaujinta `memory/MEMORY.md` index su pointer'iu
+- Atnaujinta `memory/project_state.md` — snapshot 2026-05-23 s20, 5 nauji `seo/*` moduliai LIVE statuso lentelėje
+
+**6. Veriva-geras repo gavo 5 auto-deploy commits iš `Empirra SEO Bot`** (paskutinis `nis2-reikalavimai` ~10:58 UTC). Sitemap'as auto-atnaujintas kiekvienam puslapiui.
+
+### Kas liko / nepatvirtinta
+
+**SEO engine generator quality** (atskleista per loop'ą, NE šios sesijos scope):
+- **Hallucinated external URLs** — generator gen'ina fake delfi.lt/15min.lt/lrytas.lt/vz.lt slugus, validator gaudo per `EMPIRRA_VALIDATE_EXTERNAL_LINKS=true`. Fix priklauso citation resolver'iui (`data/verified_citations.yaml` allowlist'as) — atskira sesija SEO-Claude-code projekte
+- **Repetitive phrasing** — `bdar-konsultacija` page'as turėjo 16× "BDAR konsultacija gali" (LT keyword'ai 2-žodžių leidžia trigram'as build'inti pasikartojančius patternus). Validator gaudo per `_check_lt_repetitive_phrasing`, BET tai content quality issue — fix per prompt engineering, ne per validator threshold tweaking
+- **External_links floor (2+)** — `dpo-paslaugos` page'as turėjo tik 1 cited source. Reikia prompt'ui reikalauti `MIN_EXTERNAL_LINKS=2`
+- **Pillar/supporting cannibalization** — `bdar-6-straipsnis-1-dalis` (supporting) 100% primary_keyword overlap su `bdar-6-straipsnis` (pillar). Tai nėra TIKRAS cannibalization (skirtingas content scope), BET detector žiūri tik keyword'ą. Reikia arba whitelist'o pillar→supporting pairs, arba keyword'ų geresnio differentiation'o
+
+**Šios sesijos technical debt**:
+- **Ne'parašytas pytest test'as `deploy_veriva` no-op path'ui** (`673401e`) — verified tik 6 LIVE workflow runs, ne unit testais. Future regression risk
+- **LT `FAQ_MIN_COUNT=4` per žemas pillar'iams** — Veriva blog'as faktiškai naudoja 10-12 FAQ. Validator floor tinka SUPPORTING puslapiams, bet pillar'ams turėtų būti 8+. Reikia thresholds matrix per page_type
+
+**Veriva-geras projekto carry-over** (nepasikeitė nuo s19):
+- KI-012 hero SVG placeholder (DPO + BDAR 6 str. — 2 pillarai dabar)
+- KI-013 Redirect Architecture (Medium, atskira sesija ~30-60 min, prieš GSC submit)
+- Frontend P0 sisteminiai carry-over (inline styles, figure testimonial, h3 CTA hierarchy)
+- 5 Sensitive env vars blog automation runtime
+- Multi-page skeletons (paslaugos/apie/kainos/kontaktai/404) NĖRA
+- brief.html inline `<style>` ~330 lines extract
+- KI-002 newsletter, KI-007 contact/audit-request endpoints
+
+### Kitas žingsnis
+
+1. **Generator quality fix (atskira sesija SEO-Claude-code projekte)** — prompt iteration: drausti hallucinated URLs (verified_citations.yaml allowlist), varied phrasing templates LT 2-žodžių keyword'ams, external_links 2+ floor. NE Veriva-geras scope
+2. **KI-012 sisteminis fix** (~30-40 min) — 2 dedicated hero SVG (DPO + BDAR 6 str. pillar'ams), 1200×630, brand spalvomis
+3. **KI-013 Redirect Architecture** (~30-60 min) — PRIEŠ Google Search Console submit. 5-step plan KNOWN_ISSUES.md
+
+### Production verifikacija (live)
+
+| URL | Statusas |
+|---|---|
+| `https://veriva.lt/seo/duomenu-apsaugos-pareigunas/` | 307 (apex→www) → 200 OK |
+| `https://veriva.lt/seo/duomenu-apsaugos-pareiguno-paslaugos-bvpz/` | 307 → 200 OK |
+| `https://veriva.lt/seo/nis2-atitiktis/` | 307 → 200 OK |
+| `https://veriva.lt/seo/nis2-direktyva-kam-taikoma/` | 307 → 200 OK |
+| `https://veriva.lt/seo/nis2-reikalavimai/` | 307 → 200 OK |
+| SEO Bot commits Veriva-geras main | 5/5 push'inti, sitemap.xml updated |
+| GitHub Actions runs paskutiniai 6 | ✓ success eilėje |
+
+---
+
+## Sesija #19: 2026-05-12 — bdar-6-pillar-publish
+
+### Ką padarėme
+
+**1. BDAR raktažodžių banko išsaugojimas (memory):**
+- Vartotojas pateikė 5 Google autocomplete screenshot'us su BDAR temos raktažodžiais
+- Sukurtas `memory/reference_keywords_bank.md` — 50+ raktažodžių sugrupuoti į 7 kategorijas: A. BDAR straipsniai (teisinis intent), B. Duomenų subjekto teisės, C. Teisėtumo/sutikimo tema, D. Bendri info, E. Komerciniai/paslaugų (Veriva taikinys), F. VDAI ekosistema, G. Pažeidimų/atsakomybės
+- Pažymėti **netinkami** (`bdar angliškai`, `bdar definition`, `badr dental`) ir **jau aprėpti** (DPO, baudos, phishing-mokymai) raktažodžiai
+- 7 strateginių temų idėjos ateities pillarams su slug + KW mapping
+- Atnaujinta `MEMORY.md` index su pointer'iu į keyword bank
+
+**2. BDAR 6 straipsnis pillar (blog/bdar-6-straipsnis-teiseto-tvarkymo-pagrindai.html, 3060 ž., commit `9bb9a89`):**
+- Primary KW: `bdar 6 straipsnis` (info+law intent, 4.7×/1000 density)
+- Autorius: Marina (Teisės ekspertė, BDAR)
+- Title 52 simb.: "BDAR 6 straipsnis: 6 teisėto tvarkymo pagrindai (LT vadovas)"
+- Meta description 157 simb.
+- 8 H2 sekcijos: kas yra + 6 pagrindai sąrašas + sutikimas + teisėtas interesas+LIA + palyginimo lentelė + 5 žingsnių vadovas + dažniausios klaidos + baudų rizika
+- 12 FAQ klausimų (FAQPage schema su acceptedAnswer.text)
+- 5 žingsnių HowTo schema
+- 4 schemos: BlogPosting + BreadcrumbList + FAQPage + HowTo (3 JSON-LD blokai)
+- 16 raktažodžių iš keyword bank natūraliai integruoti į body: `bdar 6 straipsnis` (primary), `bdar 6 str`, `kam taikomas bdar`, `bdar duomenų tvarkymas`, `bdar duomenų valdytojas`, `bdar principai`, `bdar sutikimas`, `bdar reglamentas`, `bdar įstatymas`, `bdar 5 straipsnis`, `bdar 9 straipsnis`, `bdar 32 straipsnis`, `ar organizacija gali tvarkyti asmens duomenis be sutikimo`, `asmens duomenų apsaugos įstatymas`, `teisėtas interesas`, VDAI praktika
+- Komponentai: definition paragraph (featured snippet), TOC 8 punktai, 2 callout + 2 stat-hl + 1 blockquote + 2 cta-inline + testimonial Tomas K. + 3 related cards (BDAR baudos, DPO, NIS2)
+- 2 CTA: mid-article (po `#kaip-pasirinkti`, "Patikrinkite visus 6 BDAR pagrindus...") + final ("Užtikrinkite BDAR 6 str. atitiktį...")
+- Internal links: 4× į `/blog/bdar-baudos-lietuvoje`, `/blog/dpo-funkcija-vadovas`, `/blog/nis2-direktyva-lietuvoje` + `/#kontaktai`
+- External links: eur-lex.europa.eu (BDAR), vdai.lrv.lt, edpb.europa.eu (5/2020 sutikimo + 06/2024 teisėto intereso gairės)
+- Hero img placeholder `bdar-baudos-hero.svg` (KI-012 carry-over)
+
+**3. Pre-publish 4-agent ratas (paraleliai):**
+- frontend-revizorius 15/20 → P0 inline styles (sisteminis), P0 figure testimonial (sisteminis), P0 h3 viduje CTA (sisteminis), P1 faq-ico aria-hidden, P1 og:image SVG
+- seo-specialistas 18/20 INDEXABLE → P1 SVG og:image, P1 `bdar principai` 0× → pridėti exact frazę, P2 HowTo step 4 gramatika
+- qa-tester 16/20 → P0-1 "paskutinė pasirinkimas" → "paskutinis pasirinkimas" (4 vietos!), P0-2 NIS2 datos prieštaravimas (`2025 m. spalio galioja` vs `2024 m. spalio įsigaliojo`), P1 "Ne pakanka" → "Nepakanka" 2 vietose, P1 "pirma, ką tikrina" → "pirmiausia", P2 ADTAĮ data 2018-07-01 → 2018-07-16
+- marketing-analitikas 14/20 → P0 mid-CTA pozicija (klausimas → imperatyvas), P0 testimonial repozicionavimas (perkelti prieš `#klaidos`, ne tarp neigiamų sekcijų), P1 final CTA we-focused → you-focused
+
+**4. 12 P0/P1 fix'ai pritaikyti prieš commit:**
+- Gramatika "paskutinė pasirinkimas" → "paskutinis pasirinkimas" (FAQ schema + HowTo schema + h3 + FAQ HTML, 4 vietos)
+- "Ne pakanka" → "Nepakanka" (FAQ schema + HTML)
+- "Šie dokumentai pirma, ką tikrina" → "Šių dokumentų VDAI patikrinime ieško pirmiausia"
+- NIS2 data unified: "Lietuvoje NIS2 taikoma nuo 2025 m. spalio 17 d., kai įsigaliojo KSĮ" (vietoj prieštaringų 2024 vs 2025)
+- Related card NIS2: "LT NIS2 taikoma nuo 2025-10-17 (KSĮ įsigaliojimas)"
+- ADTAĮ data: 2018-07-01 → 2018-07-16
+- Mid-CTA copy: klausimas "Reikia BDAR audito?" → imperatyvas "Patikrinkite visus 6 BDAR pagrindus per 5 dienas su Veriva auditu" + btn "Gauti nemokamą konsultaciją"
+- Final CTA copy: we-focused "Užsakykite ir patikrinkime" → you-focused "Užtikrinkite BDAR 6 str. atitiktį — auditas per 5 dienas" + urgency "Klaidingas pagrindas — bauda iki 20 mln. EUR"
+- Testimonial repozicionuotas: dabar po mid-CTA, prieš `#klaidos` (ne tarp neigiamų sekcijų)
+- `faq-ico` `+` simbolis — `aria-hidden="true"` ant 12 vietų (a11y screen reader fix)
+- Pridėta naują pastraipą su `BDAR principai` exact fraze (po ADTAĮ paragrafo, secondary KW boost iš 0× → 1×)
+- Intro urgency: "Klaidingas pagrindas — bauda iki 20 mln. EUR arba 4% apyvartos. Patikrinkite per 5 dienas — nemokama konsultacija per 24 val."
+- `wordCount` schema atnaujintas: 2900 → 3060 (po BDAR principai pastraipos)
+
+**5. Blog.html + sitemap.xml + memory atnaujinimai:**
+- `blog.html`: nauja `<a class="bc" data-cat="bdar">` kortelė PIRMA vieta (prieš BDAR baudos), excerpt "Sutikimas — tik vienas iš šešių pagrindų ir dažnai netinkamas..."
+- `sitemap.xml`: +naujas URL su image:image namespace (bdar-baudos-hero.svg placeholder), lastmod 2026-05-12
+- `memory/reference_keywords_bank.md` NEW: 50+ raktažodžių bankas
+- `memory/MEMORY.md`: pridėtas pointer'is į keyword bank
+
+**Git commit + push (1 naujas):**
+- `9bb9a89` — feat(blog): BDAR 6 straipsnis pillar (3 files, +1077/-0)
+
+**Production verifikacija (limited):**
+- Vercel deploy: Ready 17s (`9bb9a89`)
+- `https://www.veriva.lt/blog/bdar-6-straipsnis-teiseto-tvarkymo-pagrindai.html` → 308 → 200 OK (standartinis KI-013 redirect chain pattern)
+- `https://www.veriva.lt/sitemap.xml` → 200 OK, 1 paminėjimas `bdar-6-straipsnis`
+
+### Kas liko / nepatvirtinta
+
+**BDAR 6 straipsnio carry-over:**
+- **KI-012 carry-over (2-oji sesija paeiliui)**: dedicated `bdar-6-straipsnis-hero.svg` 1200×630 — vis dar naudojamas placeholder. KI-012 dabar apima 2 straipsnius (DPO + BDAR 6 str.). Reikia spręsti sistemiškai
+- **Post-deploy 4-agent verifikacija praleista** — s18 standartas buvo "pre + post" agent ratas, šioje sesijoje pakako pre+commit
+- **Frontend P0 sisteminiai carry-over neišspręsti**: inline styles, `<figure>` testimonial semantic violation, `<h3>` viduje `.cta-inline` heading hierarchy break — pasikartoja visuose 5 pillaruose (BDAR baudos, NIS2, Phishing, DPO, BDAR 6 str.), reikia sisteminio fix'o
+- **Mobile real flow nepatikrintas** — agentai naudojo WebFetch (ne puppeteer), FAQ accordion + TOC + responsive nesutikrintas live
+- **Google rich-results test'as** neatliktas (4 schemas parse'inti agentų, bet ne pateikti į search.google.com/test/rich-results)
+- **KW tankis `bdar duomenų tvarkymas` exact frazė tik 1×** (target 2-3×) — gali natūraliai pridėti 1× į `#sesi-pagrindai` sekciją
+
+**Projekto-lygio (perimti iš s18):**
+- **5 Sensitive env vars blog-gen automation** (`GITHUB_TOKEN`, `PEXELS_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`) — cron ketv. 2026-05-14 10:00 LT crash'ins iki pateikimo (2 dienos liko)
+- **KI-013 Redirect Architecture** (Medium, atskira sesija ~30-60 min)
+- **s17 P1 carry-over** (~2.5h): self-collision skip, cache invalidation, chronological sort, warn regression, Vercel timeout audit, sanitizeKeyword prompt injection, escapeHtml `"`
+- **brief.html inline `<style>` ~330 lines** extract
+- **`POST /api/forms/audit-request`** neegzistuoja (KI-007)
+
+### Kitas žingsnis
+
+1. **Blog automation runtime finalization** ⚠️ KRITINIS — cron ketv. 2026-05-14 10:00 LT (2 dienos). Vartotojas pateikia 5 Sensitive env vars + sukuria @VerivaBlogBot per @BotFather + paleidžia `migrations/002_blog_automation.sql`
+2. **KI-012 sisteminis fix**: sukurti 2 dedicated hero SVG (`dpo-funkcija-vadovas-hero.svg` + `bdar-6-straipsnis-hero.svg`) 1200×630 brand spalvomis + atnaujinti meta tags + sitemap.xml (~30-40 min)
+3. **KI-013 Redirect Architecture atskira sesija** (~30-60 min)
+4. **Frontend P0 sisteminis carry-over**: inline styles + figure testimonial + h3 CTA hierarchy 5 pillaruose (~60 min)
+
+### Production verifikacija (live)
+
+| URL | Statusas |
+|---|---|
+| `https://www.veriva.lt/blog/bdar-6-straipsnis-teiseto-tvarkymo-pagrindai.html` | 308 → 200 OK (KI-013 pattern) |
+| `https://www.veriva.lt/sitemap.xml` (+BDAR 6 str. URL) | 200 OK, 1 paminėjimas |
+| Vercel deploy `9bb9a89` | Ready 17s |
+
+---
+
+## Sesija #18: 2026-05-12 — dpo-pillar-publish
 
 ### Ką padarėme
 

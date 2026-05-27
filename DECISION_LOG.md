@@ -4,6 +4,125 @@ Architektūriniai sprendimai. Kiekvienas su data, kontekstu, alternatyvomis, spr
 
 ---
 
+## 2026-05-27 — `NewsArticle` schema hot news straipsniams (NE `BlogPosting`)
+
+**Kontekstas**: Kuriant RC duomenų nutekėjimo straipsnį (s22), reikėjo pasirinkti schema.org tipą. Visi 5 esami Veriva pillarai naudoja `BlogPosting`. Bet RC straipsnis yra hot news su laiko jautrumu (peak 1-2 sav.), ne evergreen pillar.
+
+**Alternatyvos**:
+- A) **`NewsArticle`** (Recommended) — Google News indeksacija, prioritetinis Top Stories carousel'is laiko jautriam content'ui, geresnis E-E-A-T signalas naujienoms
+- B) `BlogPosting` — atitinka esamą Veriva pattern'ą, paprasčiau
+- C) `Article` (parent class) — neutraliausias, bet praranda specifinę naujienų SERP funkcionalumą
+
+**Sprendimas**: **A — NewsArticle** RC straipsniui ir visiems būsimiems hot news straipsniams. `BlogPosting` lieka evergreen pillar'ams (BDAR baudos, DPO, NIS2 vadovai).
+
+**Priežastys**:
+- Hot news 1-2 sav. peak'as — Top Stories carousel'is dažnai > organic SERP rank
+- `datePublished` su ISO 8601 laiku `2026-05-27T09:00:00+03:00` (NewsArticle reikalauja tikslesnio laiko)
+- 2× Person authors (Marina + Justinas) — E-E-A-T stipresnis news context'e
+
+**Reikalavimai**:
+- ISO 8601 `datePublished` su laiku + timezone (ne tik data)
+- 2× `Person` authors (ne `Organization`)
+- `articleSection` aiškus (RC: "Duomenų sauga")
+- Image privalo būti accessible URL'u (1200×630 minimum)
+
+---
+
+## 2026-05-27 — SVG OG image konsistencija (palikta, NE konvertuoti į WebP)
+
+**Kontekstas**: SEO agentas pažymėjo P0 bug — `og:image:type` = `image/svg+xml` (RC hero failas). LinkedIn ir Twitter/X palaiko SVG OG image ribotai → social share preview gali nesirodyti.
+
+**Alternatyvos**:
+- A) **Palikti SVG, atskira sesija batch konversijai** (Recommended) — visi 5 esami Veriva hero failai SVG. RC straipsnis dabar atitinka sisteminį pattern'ą. Vienkartinis fix RC'ui sukurtų inkonsistenciją.
+- B) Konvertuoti tik RC į WebP — vienkartinis fix, bet 5 esami pillarai liks su tuo pačiu problemu
+- C) Batch konversija dabar (5+1 failai) — ~30 min su `sharp` arba `puppeteer` SVG→PNG rendering. Bet šios sesijos scope'as buvo straipsnis, ne hero failų refactor
+
+**Sprendimas**: **A — palikta SVG, batch konversija atskiroje sesijoje**
+
+**Priežastys**:
+- Konsistencija > vienkartinis fix
+- Hot news cycle'as kritinis (greitis = pozicija) — deploy dabar > fix later
+- Batch sesija leis vienodai konvertuoti VISUS hero failus, atnaujinti meta tag'us 5 esamuose pillaruose
+
+**Carry-over į atskirą sesiją**: hero SVG → WebP batch (5+1 failai), patikrinti og:image:type meta, social preview validation (LinkedIn Post Inspector, Twitter Card Validator).
+
+---
+
+## 2026-05-26 — Canonical domain: apex `veriva.lt` (NE `www.veriva.lt`)
+
+**Kontekstas**: GSC CSV eksportas atskleidė 8 non-indexed URL kategorijas. Šakninė priežastis — Vercel Project'o primary domain buvo `www.veriva.lt`, bet sitemap'as ir VISI HTML `<link rel="canonical">` tag'ai naudojo apex (`https://veriva.lt/...`). Apex domain 307 redirect'inosi į www — Google interpretavo kaip "alternate URL su canonical not aligned" ir nesindexavo.
+
+**Alternatyvos**:
+- A) **apex (`veriva.lt`) canonical primary, www → 308 → apex** (Recommended) — atitinka 24+ esamus canonical tag'us + sitemap'ą. Vienas Vercel UI pakeitimas + 4 canonical tag'ų update + 17 internal href'ų pataisymai.
+- B) `www.veriva.lt` primary — atitinka tuometinį Vercel config'ą. Bet reikia perrašyti 24+ canonical tag'us, sitemap.xml ir VISI absolute URL'ai blog/seo puslapiuose. ~80+ failų.
+- C) Palikti kaip yra — Google ir toliau nesindexuos, brand chaos (du URL formatai).
+
+**Sprendimas**: **A — apex primary**
+
+**Priežastys**:
+- **Mažesnis pakeitimų skaičius** (~32 failai vs 80+) — apex jau buvo canonical visuose tag'uose, tereikėjo apsukti Vercel domain config + `.html` → clean URL alignment
+- **Brand simplicity** — `veriva.lt` trumpiau, lengviau diktuoti, atitinka domain registration (NE www subdomain)
+- **Standard'as** — modernios svetainės default'as apex be www (Google, GitHub, Vercel patys)
+- **Sitemap matching** — visi `<loc>` jau apex formate, nereikia regen'inti
+
+**Implementation**: Vercel Dashboard → veriva-geras → Domains: `veriva.lt` `Connect to environment: Production`, `www.veriva.lt` `Redirect to Another Domain: 308 Permanent → veriva.lt`. + commit `3282627` su HTML/sitemap/vercel.json updates.
+
+**Trade-off acknowledged**: 2-hop redirect'ai persistuoja sausais kraštais (`www.veriva.lt/brief.html` → www→apex→clean = 2 hops). Vercel `redirects` nepalaiko hostname matching → reikalauja Edge Middleware. Acceptable Google'ui kol nėra Edge Middleware.
+
+---
+
+## 2026-05-23 — SEO engine deploy contract: empty new batch = no-op exit 0 (NE failure exit 1)
+
+**Kontekstas**: `riko8825/SEO-Claude-code` `scripts/deploy_veriva.py` (deploy step `Weekly SEO Generation` workflow'e) exit'indavo 1 kai `_validated_slugs()` grąžindavo tuščią sąrašą. Tai įvykdavo NORMALIAI kai:
+- Naujas page'as validator-rejected (HARD_BLOCK — pvz. `faq count 0 < 4`, `external_links 1 < 2`)
+- Quality_os pažymėdavo naują page'ą cannibalization loser (žemesnis score nei prior pillar) ir demotindavo į status='failed'
+
+Abiem atvejais prior published puslapiai (pvz., `bdar-6-straipsnis`, `bdar-baudos`) lieka GYVI veriva.lt, jokios žalos. Bet workflow fail'indavo → GitHub Actions failure email vartotojui. Tai create'ino "wolf cried" pattern'ą — kiekviena validator rejection siunčia paging signal'ą.
+
+**Alternatyvos**:
+- A) **Distinguish empty DB (real failure, exit 1) nuo "no-op this run" (exit 0)** (Recommended) — `_batch_integrity()` jau grąžina `client_live`. Jei `client_live > 0` (prior published exists) ir `slugs` tuščias → no-op + log warning + exit 0. Jei `client_live == 0` → tikra failure (DB tuščia arba unreachable), exit 1
+- B) Skip cannibalization demote'ą per bootstrap fazę (kai `client_live < threshold`) — kvepia conditional logic'a, sunku tune'inti, palieka pillar/supporting overlap'ą be sprendimo
+- C) `_validated_slugs` fall-back į PRIOR batch'ą — relaxes strict isolation, gali deploy'inti stale puslapį dukart, sumaišyti `generation_batch_id` semantics
+- D) Exit 0 visada kai slugs tuščias — slepia tikrą "DB visiškai tuščia" failure (gen'eration step crash'ino prieš write)
+
+**Sprendimas**: **A — distinguish empty DB vs no-op via `client_live` check**
+
+**Priežastys**:
+- **Operatorius gauna page'inimą TIK kai reikia rankinio veiksmo** — DB tuščia = config error / cache miss. Validator rejection = generator quality issue (sprendžiamas prompt iteration'u, ne urgent intervention'u)
+- **Workflow ✓ green grąžina signal'o vertę** — failure'ai dabar reiškia REAL infrastructure problemą, ne content issue
+- **Atskleidžia generator quality issues per logs, ne per pager** — `NO-OP: this batch produced no deploy-ready pages` log line + Quality OS reports artifact užfiksuoja faktą be alarm fatigue
+- **Atitinka Empirra deploy filosofiją** — gate'ai EGZISTUOJA, kad blokuotų prastą content'ą; kai gate'as blokuoja → tai sėkmė, ne nesėkmė
+
+**Implementation**: `scripts/deploy_veriva.py` `main()` ~line 259, commit `673401e` SEO-Claude-code repo'e. Naują logic'ą covered'ina 6 LIVE workflow runs verification (NE pytest test'as — technical debt).
+
+**Pamoka**: Pre-deploy gate failure ≠ workflow failure. Jei gate'as BY DESIGN sustabdo prastą page'ą, exit code turi reflect'inti "system worked as intended" (0), ne "operator must investigate" (1). Pager fatigue iš false-positives slopina dėmesį tikriems incident'ams.
+
+---
+
+## 2026-05-23 — Veriva chrome FAQ markup yra blog-parity (`<div class="faq-item">`), NE `<details>`
+
+**Kontekstas**: `templates/base.html:424-451` SEO engine'e turi conditional `{% if client_chrome == 'veriva' %}` block'ą, kuris renderina FAQ kaip `<div class="faq-item">` su `<button class="faq-q">` + `<div class="faq-a">` (blog-parity styling, kad SEO puslapiai atrodytų lygiai taip pat kaip Veriva blog post'ai). Tai yra design intent, ne bug. Bet validator (`src/validator/checks_content.py:_check_faq`) skaičiavo TIK `<details>` elementus — empirra client'o markup'ą. Veriva runs visada gaudavo `faq count 0 < 4` HARD_BLOCK.
+
+**Alternatyvos**:
+- A) **Validator skaičiuoja BOTH markups: `max(details_count, faq_item_count)`** (Recommended) — single source of truth template'as, validator follows. Future-proof'as papildomiems chrome'ams (pridėti naują markup tipą — `.accordion-item`, etc. — paprasta extend'inti)
+- B) Keisti veriva chrome į `<details>` — break'ina blog-parity styling (Veriva blog naudoja button+div accordion JS toggle, ne native `<details>`)
+- C) Per-client validator instances su skirtingais selektoriais — overengineered, sunkiau maintain'inti
+- D) Validator parse'ja JSON-LD FAQPage schema (10 Question entries) ne HTML — keičia kontraktą, schema gali būti out-of-sync su rendered HTML (silent breakage risk)
+
+**Sprendimas**: **A — `max(details_count, faq_item_count)` validator'e**
+
+**Priežastys**:
+- **Template yra design source of truth** — validator turi follow'inti, ne kitaip
+- **Veriva blog-parity styling intentional** — Veriva blog'e button.faq-q + JS toggle aria-expanded yra established UX pattern (s10 set'as)
+- **Trivialus pakeitimas** — 2 eilutės kodo, 0 tests sulaužyta, 0 backward incompatibility
+- **Pridėtas `faq-sec` į `_check_empty_sections` exempt sąrašą** — section class veriva chrome'e yra `.faq-sec`, ne `.faq`. Be šito secondary fix'o validator markin'tų visą FAQ sekciją kaip "empty" (jos content yra div'uose, ne `<p>`)
+
+**Implementation**: `src/validator/checks_content.py` `_check_faq` + `_check_empty_sections`, commit `a7b09b4` SEO-Claude-code repo'e. Lokalus sanity check'as ant downloadinto bdar-konsultacija HTML patvirtino: `errors=[]` po fix'o (anksčiau: `faq count 0 < 4`).
+
+**Pamoka**: Kai client chrome'as override'ina komponento markup'ą, validator turi būti markup-agnostic'as (count by semantic role, ne by specific tag). Hardcoded element selector'iai validator'uose = future maintenance trap.
+
+---
+
 ## 2026-05-12 — Cookiebot GeoIP override: `data-user-country="LT"` (Free planas, force visiems)
 
 **Kontekstas**: Po Cookiebot scan'o atnaujinimo (2026-05-11 14:26 UTC, seni WP markeriai išvalyti) vartotojas vis dar incognito nematė consent banner'io. Diagnozavus `cdreport.js` aptikta, kad Cookiebot pagal default rodo banner'į TIK ES regionams (31 šalies sąrašas `gdpr:[...]` iš `uc.js`). Vartotojas testavo ne iš LT IP. Cookiebot Free planas neturi dashboard "Geographic regulations" toggle (vartotojo screenshot patvirtino).

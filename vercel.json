@@ -53,6 +53,30 @@
   ],
   "redirects": [
     { "source": "/index", "destination": "/", "permanent": true },
-    { "source": "/index.html", "destination": "/", "permanent": true }
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/brief.html", "destination": "/brief", "permanent": true },
+    { "source": "/blog.html", "destination": "/blog", "permanent": true },
+    { "source": "/slapukai.html", "destination": "/slapukai", "permanent": true },
+    { "source": "/privatumas.html", "destination": "/privatumas", "permanent": true },
+    { "source": "/paslaugos.html", "destination": "/paslaugos", "permanent": true },
+    { "source": "/apie.html", "destination": "/apie", "permanent": true },
+    { "source": "/kainos.html", "destination": "/kainos", "permanent": true },
+    { "source": "/kontaktai.html", "destination": "/kontaktai", "permanent": true },
+
+    { "source": "/wp-login.php", "destination": "/", "permanent": true },
+    { "source": "/wp-admin/:path*", "destination": "/", "permanent": true },
+    { "source": "/wp-json/:path*", "destination": "/", "permanent": true },
+    { "source": "/wp-includes/:path*", "destination": "/", "permanent": true },
+    { "source": "/wp-content/:path*", "destination": "/", "permanent": true },
+
+    { "source": "/privatumo-politika", "destination": "/privatumas", "permanent": true },
+    { "source": "/privatumo-politika/", "destination": "/privatumas", "permanent": true },
+    { "source": "/pagrindinis", "destination": "/", "permanent": true },
+    { "source": "/pagrindinis/", "destination": "/", "permanent": true },
+    { "source": "/kibernetinis-saugumas", "destination": "/", "permanent": true },
+    { "source": "/kibernetinis-saugumas/", "destination": "/", "permanent": true },
+    { "source": "/kontaktai/", "destination": "/", "permanent": true },
+    { "source": "/mokymai", "destination": "/", "permanent": true },
+    { "source": "/mokymai/", "destination": "/", "permanent": true }
   ]
 }

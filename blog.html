@@ -10,11 +10,11 @@
 <meta property="og:title" content="Veriva tinklaraštis — BDAR, NIS2, kibernetinis saugumas">
 <meta property="og:description" content="Praktiniai vadovai ir įžvalgos: BDAR atitiktis, NIS2 direktyva, kibernetinis saugumas, DPO funkcija.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://veriva.lt/blog.html">
+<meta property="og:url" content="https://veriva.lt/blog">
 <meta property="og:locale" content="lt_LT">
 <meta name="robots" content="index, follow">
 <meta name="author" content="Veriva UAB">
-<link rel="canonical" href="https://veriva.lt/blog.html">
+<link rel="canonical" href="https://veriva.lt/blog">
 <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
 <link rel="apple-touch-icon" href="/assets/img/favicon.svg">
 <meta name="theme-color" content="#07111f">
@@ -33,8 +33,8 @@
     },
     {
       "@type": "Blog",
-      "@id": "https://veriva.lt/blog.html#blog",
-      "url": "https://veriva.lt/blog.html",
+      "@id": "https://veriva.lt/blog#blog",
+      "url": "https://veriva.lt/blog",
       "name": "Veriva tinklaraštis",
       "description": "BDAR, NIS2 ir kibernetinio saugumo aktualijos Lietuvos verslui.",
       "inLanguage": "lt-LT",
@@ -44,7 +44,7 @@
       "@type": "BreadcrumbList",
       "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Pradžia", "item": "https://veriva.lt/"},
-        {"@type": "ListItem", "position": 2, "name": "Tinklaraštis", "item": "https://veriva.lt/blog.html"}
+        {"@type": "ListItem", "position": 2, "name": "Tinklaraštis", "item": "https://veriva.lt/blog"}
       ]
     }
   ]
@@ -345,6 +345,16 @@ nav{
   padding:6px 10px;border-radius:100px;
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
 }
+.bc-hot-badge{
+  position:absolute;top:14px;right:14px;z-index:2;
+  font-family:var(--ffm);
+  font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:#fff;
+  background:#dc2626;
+  border:1px solid rgba(255,255,255,.15);
+  padding:6px 10px;border-radius:100px;
+  box-shadow:0 4px 14px rgba(220,38,38,.35);
+}
 @media (hover:hover) and (pointer:fine){
   .bp-grid:has(.bc:hover) .bc--soon:not(:hover){opacity:.35}
   .bc--soon:hover{transform:none;border-color:rgba(255,255,255,.07);box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 30px 60px -50px rgba(0,0,0,.7)}
@@ -481,7 +491,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
       <li><a href="/#auditas">Kaip dirbame</a></li>
       <li><a href="/#atsiliepimai">Rezultatai</a></li>
       <li><a href="/#kainos">Kainos</a></li>
-      <li><a href="/blog.html" class="active">Tinklaraštis</a></li>
+      <li><a href="/blog" class="active">Tinklaraštis</a></li>
       <li><a href="/#kontaktai" class="nav-cta">Susisiekti</a></li>
     </ul>
     <button class="hamburger" onclick="document.getElementById('mob-menu').classList.toggle('open')" aria-label="Meniu">
@@ -496,7 +506,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
   <a href="/#auditas">Kaip dirbame</a>
   <a href="/#atsiliepimai">Rezultatai</a>
   <a href="/#kainos">Kainos</a>
-  <a href="/blog.html">Tinklaraštis</a>
+  <a href="/blog">Tinklaraštis</a>
   <a href="/#kontaktai">Susisiekti →</a>
 </div>
 
@@ -527,7 +537,18 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
   <div class="bp-w">
     <div class="bp-grid" id="bp-grid">
 
-      <a href="/blog/bdar-6-straipsnis-teiseto-tvarkymo-pagrindai.html" class="bc" data-cat="bdar">
+      <a href="/blog/registru-centro-duomenu-nutekejimas-2026" class="bc" data-cat="sauga" style="position:relative">
+        <span class="bc-hot-badge">Aktualu</span>
+        <div class="bc-img"><span class="bc-img-icon">RC 2026</span></div>
+        <div class="bc-body">
+          <div class="bc-meta"><span class="bc-cat">Duomenų sauga</span><span class="bc-dot"></span><span class="bc-time">11 min</span></div>
+          <h3 class="bc-title">Registrų centro duomenų nutekėjimas 2026: kas nutiko ir ką daryti</h3>
+          <p class="bc-excerpt">Per 600 tūkst. NT registro įrašų pavogta per Migracijos departamento paskyras. Chronologija, RC savitarna, scam'ai, VDAI tyrimas.</p>
+          <span class="bc-read">Skaityti straipsnį <svg class="bc-read-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4-4 4M21 12H3"/></svg></span>
+        </div>
+      </a>
+
+      <a href="/blog/bdar-6-straipsnis-teiseto-tvarkymo-pagrindai" class="bc" data-cat="bdar">
         <div class="bc-img"><span class="bc-img-icon">6 STR</span></div>
         <div class="bc-body">
           <div class="bc-meta"><span class="bc-cat">BDAR</span><span class="bc-dot"></span><span class="bc-time">13 min</span></div>
@@ -537,7 +558,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
         </div>
       </a>
 
-      <a href="/blog/bdar-baudos-lietuvoje.html" class="bc" data-cat="bdar">
+      <a href="/blog/bdar-baudos-lietuvoje" class="bc" data-cat="bdar">
         <div class="bc-img"><span class="bc-img-icon">BDAR</span></div>
         <div class="bc-body">
           <div class="bc-meta"><span class="bc-cat">BDAR</span><span class="bc-dot"></span><span class="bc-time">15 min</span></div>
@@ -547,7 +568,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
         </div>
       </a>
 
-      <a href="/blog/nis2-direktyva-lietuvoje.html" class="bc" data-cat="nis2">
+      <a href="/blog/nis2-direktyva-lietuvoje" class="bc" data-cat="nis2">
         <div class="bc-img"><span class="bc-img-icon">NIS2</span></div>
         <div class="bc-body">
           <div class="bc-meta"><span class="bc-cat">NIS2</span><span class="bc-dot"></span><span class="bc-time">12 min</span></div>
@@ -557,7 +578,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
         </div>
       </a>
 
-      <a href="/blog/phishing-mokymai-darbuotojams.html" class="bc" data-cat="sauga">
+      <a href="/blog/phishing-mokymai-darbuotojams" class="bc" data-cat="sauga">
         <div class="bc-img"><span class="bc-img-icon">SAUGA</span></div>
         <div class="bc-body">
           <div class="bc-meta"><span class="bc-cat">Kibernetinis saugumas</span><span class="bc-dot"></span><span class="bc-time">11 min</span></div>
@@ -567,7 +588,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
         </div>
       </a>
 
-      <a href="/blog/dpo-funkcija-vadovas.html" class="bc" data-cat="dpo">
+      <a href="/blog/dpo-funkcija-vadovas" class="bc" data-cat="dpo">
         <div class="bc-img"><span class="bc-img-icon">DPO</span></div>
         <div class="bc-body">
           <div class="bc-meta"><span class="bc-cat">DPO</span><span class="bc-dot"></span><span class="bc-time">12 min</span></div>
@@ -645,7 +666,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
         <ul class="ft-links">
           <li><a href="/#atsiliepimai">Rezultatai</a></li>
           <li><a href="/#kainos">Kainos</a></li>
-          <li><a href="/blog.html">Tinklaraštis</a></li>
+          <li><a href="/blog">Tinklaraštis</a></li>
           <li><a href="/#top">BDAR rizikos testas</a></li>
         </ul>
       </div>
@@ -662,8 +683,8 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
     <div class="ft-bot">
       <span>© 2026 Veriva UAB · Įmonės kodas: 306162111</span>
       <div class="ft-leg">
-        <a href="/privatumas.html">Privatumo politika</a>
-        <a href="/slapukai.html">Slapukų politika</a>
+        <a href="/privatumas">Privatumo politika</a>
+        <a href="/slapukai">Slapukų politika</a>
       </div>
     </div>
   </div>

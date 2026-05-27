@@ -75,8 +75,11 @@
     { "source": "/pagrindinis/", "destination": "/", "permanent": true },
     { "source": "/kibernetinis-saugumas", "destination": "/", "permanent": true },
     { "source": "/kibernetinis-saugumas/", "destination": "/", "permanent": true },
-    { "source": "/kontaktai/", "destination": "/", "permanent": true },
+    { "source": "/kontaktai/", "destination": "/#kontaktai", "permanent": true },
+    { "source": "/kontaktai", "destination": "/#kontaktai", "permanent": true },
     { "source": "/mokymai", "destination": "/", "permanent": true },
-    { "source": "/mokymai/", "destination": "/", "permanent": true }
+    { "source": "/mokymai/", "destination": "/", "permanent": true },
+    { "source": "/bdar-atitiktis", "destination": "/seo/bdar-auditas-lietuvoje", "permanent": true },
+    { "source": "/bdar-atitiktis/", "destination": "/seo/bdar-auditas-lietuvoje", "permanent": true }
   ]
 }

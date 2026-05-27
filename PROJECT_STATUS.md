@@ -1,10 +1,11 @@
 # PROJECT_STATUS — Veriva
 
 **Pradžia**: 2026-05-09
-**Paskutinis update**: 2026-05-12 (dpo-pillar-publish)
-**Statusas**: 🟢 4 LIVE blog pillarai (BDAR baudos + NIS2 + Phishing + DPO funkcija), 🟢 frontend stable, 🟡 blog automation RUNTIME blocked, 🟡 KI-013 redirect architecture (Medium, atskira sesija)
-**Production URL**: https://www.veriva.lt (LIVE su Vercel SSL) | https://veriva.lt (apex SSL ✅)
-**Paskutinis commit**: `e24eb78` (fix(footer): © 2025→2026 + KI-013, 2026-05-12)
+**Paskutinis update**: 2026-05-27 (rc-nutekejimo-blog-post, s22)
+**Statusas**: 🟢 **6 LIVE blog pillarai** (+1 RC hot news, s22) + **23 LIVE seo/* puslapiai** (+3 SEO Bot per s22 rebase) · 🟢 SEO architecture stable (apex canonical + clean URLs po s21) · 🟢 SEO engine workflow VEIKIA · 🟢 frontend stable · 🟡 blog automation RUNTIME blocked (5 Sensitive env vars) · 🟡 KI-012 hero SVG carry-over apima 2 straipsnius (NE RC straipsnio — turi dedicated SVG) · ✅ KI-013 redirect architecture UŽDARYTAS (s21)
+**Production URL**: https://veriva.lt (LIVE apex primary, www → 308 → apex) | SSL ✅
+**Paskutinis commit Veriva-geras**: `966d666` (s22 rc-nutekejimo-blog-post, 4 files, +1108/-5)
+**Vercel Domain config**: `veriva.lt` Production primary, `www.veriva.lt` 308 Permanent Redirect → apex
 
 ---
 
@@ -22,6 +23,8 @@
 | `blog/nis2-direktyva-lietuvoje.html` | 🟢 PUBLISHED | Pillar 3700ž., audit 19/20 self / 17/20 frontend, 5 schemas, 3 SVG, Author Justinas (2026-05-10); footer © 2026 (2026-05-12 hotfix) |
 | `blog/phishing-mokymai-darbuotojams.html` | 🟢 PUBLISHED | Pillar 3100ž., audit 19/20 self / 17/20 frontend, 5 schemas, 3 SVG, 6 ext šaltiniai (2026-05-10); footer © 2026 (2026-05-12 hotfix) |
 | `blog/dpo-funkcija-vadovas.html` | 🟢 PUBLISHED (2026-05-12 dpo-pillar-publish, `bc481ea`) | Pillar 2979ž., primary KW "duomenų apsaugos pareigūnas" (480/mo P0), author Marina, 8 H2 + 12 FAQ + HowTo 5 steps, 4 schemas (BlogPosting+Breadcrumb+FAQPage+HowTo), pre-publish 4-agent ratas: frontend 16/20 + SEO 15/20 + QA 18/20 + marketing 15/20 → 12 P0/P1 fix'ai pritaikyti; post-deploy 4-agent verifikacija: PRODUCTION_VERIFIED + INDEXABLE (su KI-013) + CONVERSION_READY + PRODUCTION_READY. **Carry-over**: KW tankis 2.69×/1000 (kiek žemiau target 3-5), VDAI tankis 35×/2979 (over-optimization risk), hero SVG placeholder (KI-012). 3 CTA chain, pricing transparency 6-18k vs 35-60k €/m, testimonial Rasa J. |
+| `blog/bdar-6-straipsnis-teiseto-tvarkymo-pagrindai.html` | 🟢 PUBLISHED (2026-05-12 bdar-6-pillar-publish, `9bb9a89`) | Pillar 3060ž., primary KW `bdar 6 straipsnis` (info+law intent, 4.7×/1000), author Marina, 8 H2 + 12 FAQ + HowTo 5 steps, 4 schemas (BlogPosting+Breadcrumb+FAQPage+HowTo), 16 raktažodžių iš keyword bank natūraliai integruoti, pre-publish 4-agent ratas: frontend 15/20 + SEO 18/20 INDEXABLE + QA 16/20 + marketing 14/20 → 12 P0/P1 fix'ai pritaikyti (gramatika 4×, NIS2 datos prieštaravimas, ADTAĮ data, mid+final CTA copy, testimonial reposition, aria-hidden 12×, BDAR principai exact frazė pridėta). 2 CTA (mid + final), pricing transparency netaikoma (BDAR auditas), testimonial Tomas K. **Carry-over**: hero SVG placeholder (KI-012 — 2-oji sesija), post-deploy 4-agent verifikacija praleista, KW tankis `bdar duomenų tvarkymas` 1× (target 2-3), Google rich-results test neatliktas. |
+| `blog/registru-centro-duomenu-nutekejimas-2026.html` | 🟢 PUBLISHED HOT NEWS (2026-05-27 rc-nutekejimo-blog-post, `966d666`) | News pillar ~2400ž., primary KW "Registrų centro duomenų nutekėjimas" (hot news, peak 1-2 sav.), 2× Person authors (Marina + Justinas), 6 H2 + 12 FAQ + custom timeline komponentas, 2 schemas (NewsArticle+Breadcrumb+FAQPage), 7 inline citations + 7 šaltinių sąrašas (LRT, 15min, VDAI). Pre-publish 2-agent ratas: frontend (NEEDS WORK → FIXED 4 P1: inline CSS → `.status-stolen` klasė, `.table-wrap` overflow, `.callout-red` kontrasto WCAG AA, `<section rel>` aria-label, 12× rel="noopener noreferrer") + SEO (FIX FIRST → 2/3 FIXED: ISO 8601 datePublished, FAQ schema↔HTML sync, Person authors, definition 74→58 ž.). Hero SVG dedicated 1200×630 (`rc-nutekejimo-hero.svg`, page-builder agent). Custom `.bc-hot-badge` raudonas "Aktualu" badge blog index'e PIRMOJE vietoje. **Carry-over**: og:image SVG (sisteminis Veriva pattern, ne RC straipsnio specifika), straipsnis nr. 4 verslo atsakomybės cikle planuojamas, internal link į DPO pillarą verslo CTA neprid. |
 | `paslaugos.html` | ⬜ Nesukurtas | |
 | `apie.html` | ⬜ Nesukurtas | |
 | `kainos.html` | ⬜ Nesukurtas | |
@@ -29,6 +32,41 @@
 | `privatumas.html` | 🟢 LIVE | 10 skyrių BDAR Privacy Policy (454 lines): duomenų valdytojas, renkami duomenys (kontakto forma, brief.html, susirašinėjimas, techniniai), tikslai+pagrindas (lentelė), saugojimo terminai, sub-processors lentelė (Vercel/Resend/Cookiebot/Hostinger/Zoho), perdavimas už ES (SCC), 8 BDAR teisės, slapukų sutikimo CTA, VDAI skundai (2026-05-10) |
 | `slapukai.html` | 🟢 LIVE | 9-skyrių BDAR-compliant politika + Cookiebot CookieDeclaration script + `Cookiebot.renew()` mygtukas (2026-05-10) |
 | `404.html` | ⬜ Nesukurtas | |
+
+## SEO ENGINE — AUTO-GENERATED `seo/*` PUSLAPIAI
+
+**Šaltinis**: `riko8825/SEO-Claude-code` repo (atskiras, NE Veriva-geras). Cron `Weekly SEO Generation` 06/12/18 UTC daily, 1 page/run. Auto-deploy commits į Veriva-geras `seo/` per `Empirra SEO Bot`. Detalės: `memory/reference_seo_engine.md`.
+
+| Puslapis | Statusas | Šaltinis |
+|---|---|---|
+| `seo/bdar-6-straipsnis/` | 🟢 LIVE | s20 prior (ankstesni SEO Bot runs) |
+| `seo/bdar-baudos/` | 🟢 LIVE | s20 prior |
+| `seo/bdar-auditas-lietuvoje/` | 🟢 LIVE | s20 prior |
+| `seo/bdar-baudu-dydziai/` | 🟢 LIVE | s20 prior |
+| `seo/bdar-buhalterijoms/` | 🟢 LIVE | s20 prior |
+| `seo/bdar-e-parduotuvei/` | 🟢 LIVE | s20 prior |
+| `seo/bdar-klinikoms-lietuvoje/` | 🟢 LIVE | s20 prior |
+| `seo/bdar-konsultacija-vilniuje/` | 🟢 LIVE | s20 prior |
+| `seo/dpo-paslaugos/` | 🟢 LIVE | s20 prior |
+| `seo/nacionalinio-kibernetinio-saugumo-centro-mokymai/` | 🟢 LIVE | s20 prior |
+| `seo/nis2-kam-taikoma/` | 🟢 LIVE | s20 prior |
+| `seo/privatumo-politika-svetainei/` | 🟢 LIVE | s20 prior |
+| `seo/duomenu-apsaugos-pareigunas/` | 🟢 LIVE NEW (2026-05-23, iter 3) | s20 |
+| `seo/duomenu-apsaugos-pareiguno-paslaugos-bvpz/` | 🟢 LIVE NEW (2026-05-23, iter 4) | s20 |
+| `seo/nis2-atitiktis/` | 🟢 LIVE NEW (2026-05-23, iter 5) | s20 |
+| `seo/nis2-direktyva-kam-taikoma/` | 🟢 LIVE NEW (2026-05-23, iter 6) | s20 |
+| `seo/nis2-reikalavimai/` | 🟢 LIVE NEW (2026-05-23, iter 7) | s20 |
+| `seo/kibernetinio-saugumo-mokymai/` | 🟢 LIVE (post-s20 SEO Bot) | s21 rebase merge |
+| `seo/tis2-istatymas/` | 🟢 LIVE (post-s20 SEO Bot) | s21 rebase merge |
+| `seo/valdymo-sistemos-kibernetinio-saugumo-auditas/` | 🟢 LIVE (post-s20 SEO Bot) | s21 rebase merge |
+| `seo/duomenu-tvarkymo-sutartis/` | 🟢 LIVE (2026-05-26 SEO Bot) | s22 rebase merge |
+| `seo/informacijos-saugumo-politika/` | 🟢 LIVE (2026-05-26 SEO Bot) | s22 rebase merge |
+| `seo/sutikimas-tvarkyti-asmens-duomenis/` | 🟢 LIVE (2026-05-27 SEO Bot) | s22 rebase merge |
+
+**SEO engine fixes 2026-05-23 (s20, riko8825/SEO-Claude-code main)**:
+1. `a7b09b4` — `src/validator/checks_content.py`: `_check_faq` skaičiavo TIK `<details>`, veriva chrome naudoja `.faq-item` → 100% LT runs HARD_BLOCK. Fix: `max(details_count, faq_item_count)`
+2. `e7f7489` — `templates/_chrome_veriva.html:159`: CSS komentaras "empirra chrome animates" → multi-client leakage scan exit 3. Fix: `empirra` → `default`
+3. `673401e` — `scripts/deploy_veriva.py`: empty batch (validator rejected ARBA cannibalization loser) → exit 1 → false workflow failure. Fix: distinguish empty DB vs no-op
 
 ## BACKEND STATUSAS
 

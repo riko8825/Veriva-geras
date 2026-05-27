@@ -20,6 +20,52 @@ Production incidentų istorija. Atnaujinti po kiekvieno rollback'o, downtime'o, 
 
 ---
 
+## INC-003 — SEO engine workflow fail loop'as (FAQ markup + empirra leak + empty batch)
+
+**Kada:** 2026-05-23 ~07:16 — 08:35 UTC (~10:16 — 11:35 LT), ~1h 19min iki pirmo fix'o effective; reali sistema affected'inta nuo s10 (2026-05-10 SEO engine veriva onboarding) — visi LT runs fail'indavo silent'iškai iki cron'as paleisdavo manual'iai
+
+**Repo:** `riko8825/SEO-Claude-code` (NE Veriva-geras — auto-deploy source). Veriva-geras live veriva.lt nebuvo paveikta (prior published `seo/*` puslapiai gyveno toliau)
+
+**Sukėlęs commit/deploy:** Multiple — pillar issues:
+- `templates/_chrome_veriva.html` blog-parity FAQ rewrite (~s10) NEsuderintas su `src/validator/checks_content.py:_check_faq`
+- `templates/_chrome_veriva.html:159` CSS komentaras paliktas su "empirra" substring'u
+- `scripts/deploy_veriva.py` exit code'as nepalankesnis pre-deploy gate signal'ams
+
+**Simptomas:** `Weekly SEO Generation` workflow 4 paeiliui failure runs (`26326713815`, `26327072641`, `26327170842`, `26327902666`). Email'ai vartotojui. Visi runs validate'indavo page'us su HARD_BLOCK `faq count 0 < 4` (validator counted 0 nors HTML turėjo 10 `.faq-item` div'us). Po faq fix'o — sekantis runs gavo multi-client leakage scan exit 3 dėl CSS komentaro. Po to — cannibalization-demoted page'as fail'ino deploy step su "no validated pages".
+
+**Detection:** Vartotojas pranešė ("man laiškus pastoviai siunčia"), pridėdamas 2 screenshot'us workflow failure UI + Annotations panel'io
+
+**Impact:**
+- 0 user'ių (internal automation workflow)
+- 0 leads / duomenų prarasta
+- Veriva.lt live'as nepaveiktas — prior published `seo/*` puslapiai (`bdar-baudos`, `bdar-6-straipsnis`, etc.) gyveno toliau
+- Pažaboto SEO content growth — nuo s10 iki s20 (12 dienų) NIEKADA nedeploy'inta LT `seo/*` puslapio (visi crash'indavo ant FAQ validator gate'o)
+
+**Resolution:**
+1. Pirmas false attempt: `FREEZE_VERIVA_UNTIL='2026-12-31'` `weekly_generate.yml` (commit `04dca01`) — sustabdo runs bet vis tiek exit 1 → email'ai. Vartotojas perorientavo: "ne emailus reikia sustabdyti o klaida istaisyti"
+- Antras false attempt: `gh workflow disable 268202578` — pilnai išjungta, email'ai sustojo, bet tai NE fix'as. Re-enable'inta po vartotojo direktyvos
+- Tikra fix sequence:
+  - `a7b09b4` — `src/validator/checks_content.py` `_check_faq`: `max(details_count, faq_item_count)` + `faq-sec` exempt
+  - `e7f7489` — `templates/_chrome_veriva.html:159`: "empirra" → "default" CSS komentare
+  - `673401e` — `scripts/deploy_veriva.py`: empty batch + `client_live > 0` → exit 0 no-op (nebenotifina operatoriaus)
+- Verifikacija: 7 workflow_dispatch loop'as, 6 ✓ runs paeiliui, 5 nauji LIVE `seo/*` puslapiai deployed
+
+**Root cause:**
+1. **Template/validator drift** — `templates/base.html:424-451` conditional rendering pagal `client_chrome` flag'ą buvo įvestas s10, bet `_check_faq` validator'iuje liko hardcoded `<details>` skaičiavimas. Code review'as neapėmė validator side'o
+2. **CSS comment substring sensitivity** — `client_leakage_scanner` substring'iniu būdu žiūri kiekvieną byte'ą HTML output'e. CSS komentarai paliekami HTML'e (ne strip'inami). Nei vienas commit message neminėjo "empirra" žodžio kaip leak source'o, todėl `git log -S empirra` paieška būtų missed
+3. **Exit code semantics confusion** — deploy script'as treat'ina visus "no slugs to deploy" atvejus kaip failure, nors pre-deploy gate'as (validator/quality_os) BY DESIGN gali sustabdyti visus naujo batch'o puslapius
+
+**Prevention:**
+1. **Memory dokumentacija**: `memory/reference_seo_engine.md` NEW — pilnas workflow flow su file:line citations, "Ko NEdaryti" taisyklės (#1: nederinti template ir validator atskirai; #2: nepalikti `empirra`/`Empirra` substring'o veriva chrome'e net komentaruose; #3: empty batch ≠ error)
+2. **DECISION_LOG entries (2)**: empty batch contract change + veriva FAQ markup design intent — abu objektyvūs reminder'iai future'iui
+3. **CLAUDE.md scope clarity** — Veriva-geras CLAUDE.md eksplicitiškai mini SEO-Claude-code kaip atskirą repo (atnaujinta per reference_seo_engine.md pointer'ius)
+4. **Pre-deploy gate signal interpretation** — vystytojas (Claude / žmogus) reading workflow failure turi visada patikrinti `Deploy validated pages to Veriva` step log'ą: ar tai `client-leakage-scan: FAIL` (TRUE leak — fix template), ar `ERROR: no validated pages` (validator/quality_os rejection — quality issue, ne deploy issue)
+5. **Technical debt** — `deploy_veriva.py` no-op path'as NETESTUOTAS pytest'u (verified tik 6 LIVE workflow runs). Reikia pridėti `tests/test_scripts.py::test_deploy_veriva_no_op_empty_batch` ateityje
+
+**Detection delay:** ~12 dienų (s10 → s20). Cron paleidžiamas 3×/dieną, bet kiekvienas failure run sukėlė email'ą — vartotojas matyt filtravo / ignoravo iki šio piko (4 manual workflow_dispatch'ai per <1h, kurie generuoja koncentruotą email volume'ą). Ateityje: GitHub Actions failure notifications turėtų eiti į atskirą Slack/Telegram kanalą (ne email), kad signal'as būtų akivaizdesnis.
+
+---
+
 ## INC-002 — Vercel build fail po pirmo bundle push'o (CRON_SECRET trailing whitespace)
 
 **Kada:** 2026-05-12 ~09:25 UTC (~16:25 LT)

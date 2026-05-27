@@ -345,6 +345,16 @@ nav{
   padding:6px 10px;border-radius:100px;
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
 }
+.bc-hot-badge{
+  position:absolute;top:14px;right:14px;z-index:2;
+  font-family:var(--ffm);
+  font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:#fff;
+  background:#dc2626;
+  border:1px solid rgba(255,255,255,.15);
+  padding:6px 10px;border-radius:100px;
+  box-shadow:0 4px 14px rgba(220,38,38,.35);
+}
 @media (hover:hover) and (pointer:fine){
   .bp-grid:has(.bc:hover) .bc--soon:not(:hover){opacity:.35}
   .bc--soon:hover{transform:none;border-color:rgba(255,255,255,.07);box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 30px 60px -50px rgba(0,0,0,.7)}
@@ -527,7 +537,18 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
   <div class="bp-w">
     <div class="bp-grid" id="bp-grid">
 
-      <a href="/blog/bdar-6-straipsnis-teiseto-tvarkymo-pagrindai.html" class="bc" data-cat="bdar">
+      <a href="/blog/registru-centro-duomenu-nutekejimas-2026" class="bc" data-cat="sauga" style="position:relative">
+        <span class="bc-hot-badge">Aktualu</span>
+        <div class="bc-img"><span class="bc-img-icon">RC 2026</span></div>
+        <div class="bc-body">
+          <div class="bc-meta"><span class="bc-cat">Duomenų sauga</span><span class="bc-dot"></span><span class="bc-time">11 min</span></div>
+          <h3 class="bc-title">Registrų centro duomenų nutekėjimas 2026: kas nutiko ir ką daryti</h3>
+          <p class="bc-excerpt">Per 600 tūkst. NT registro įrašų pavogta per Migracijos departamento paskyras. Chronologija, RC savitarna, scam'ai, VDAI tyrimas.</p>
+          <span class="bc-read">Skaityti straipsnį <svg class="bc-read-arrow" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4-4 4M21 12H3"/></svg></span>
+        </div>
+      </a>
+
+      <a href="/blog/bdar-6-straipsnis-teiseto-tvarkymo-pagrindai" class="bc" data-cat="bdar">
         <div class="bc-img"><span class="bc-img-icon">6 STR</span></div>
         <div class="bc-body">
           <div class="bc-meta"><span class="bc-cat">BDAR</span><span class="bc-dot"></span><span class="bc-time">13 min</span></div>
@@ -537,7 +558,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
         </div>
       </a>
 
-      <a href="/blog/bdar-baudos-lietuvoje.html" class="bc" data-cat="bdar">
+      <a href="/blog/bdar-baudos-lietuvoje" class="bc" data-cat="bdar">
         <div class="bc-img"><span class="bc-img-icon">BDAR</span></div>
         <div class="bc-body">
           <div class="bc-meta"><span class="bc-cat">BDAR</span><span class="bc-dot"></span><span class="bc-time">15 min</span></div>
@@ -547,7 +568,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
         </div>
       </a>
 
-      <a href="/blog/nis2-direktyva-lietuvoje.html" class="bc" data-cat="nis2">
+      <a href="/blog/nis2-direktyva-lietuvoje" class="bc" data-cat="nis2">
         <div class="bc-img"><span class="bc-img-icon">NIS2</span></div>
         <div class="bc-body">
           <div class="bc-meta"><span class="bc-cat">NIS2</span><span class="bc-dot"></span><span class="bc-time">12 min</span></div>
@@ -557,7 +578,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
         </div>
       </a>
 
-      <a href="/blog/phishing-mokymai-darbuotojams.html" class="bc" data-cat="sauga">
+      <a href="/blog/phishing-mokymai-darbuotojams" class="bc" data-cat="sauga">
         <div class="bc-img"><span class="bc-img-icon">SAUGA</span></div>
         <div class="bc-body">
           <div class="bc-meta"><span class="bc-cat">Kibernetinis saugumas</span><span class="bc-dot"></span><span class="bc-time">11 min</span></div>
@@ -567,7 +588,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;
         </div>
       </a>
 
-      <a href="/blog/dpo-funkcija-vadovas.html" class="bc" data-cat="dpo">
+      <a href="/blog/dpo-funkcija-vadovas" class="bc" data-cat="dpo">
         <div class="bc-img"><span class="bc-img-icon">DPO</span></div>
         <div class="bc-body">
           <div class="bc-meta"><span class="bc-cat">DPO</span><span class="bc-dot"></span><span class="bc-time">12 min</span></div>

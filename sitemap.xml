@@ -16,12 +16,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/blog/registru-centro-duomenu-nutekejimas-2026</loc>
-    <lastmod>2026-05-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
     <loc>https://veriva.lt/blog/bdar-baudos-lietuvoje</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -42,12 +36,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/privatumas</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://veriva.lt/blog/registru-centro-duomenu-nutekejimas-2026</loc>
+    <lastmod>2026-05-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/slapukai</loc>
+    <loc>https://veriva.lt/privatumas</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
@@ -112,6 +107,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/duomenu-apsaugos-poveikio-vertinimas</loc>
+    <lastmod>2026-05-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/duomenu-tvarkymo-sutartis</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
@@ -168,14 +169,14 @@
   <url>
     <loc>https://veriva.lt/seo/registru-centro-duomenu-nutekejimas-ka-daryti</loc>
     <lastmod>2026-05-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/sutikimas-tvarkyti-asmens-duomenis</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/tis2-istatymas</loc>
@@ -188,5 +189,10 @@
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/slapukai</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>

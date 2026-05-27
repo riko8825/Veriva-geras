@@ -22,7 +22,10 @@
   "rewrites": [
     { "source": "/api/automations/blog-gen",         "destination": "/api/automations/blog-gen/route.ts" },
     { "source": "/api/automations/blog-approve",     "destination": "/api/automations/blog-approve/route.ts" },
-    { "source": "/api/automations/telegram-webhook", "destination": "/api/automations/telegram-webhook/route.ts" }
+    { "source": "/api/automations/telegram-webhook", "destination": "/api/automations/telegram-webhook/route.ts" },
+    { "source": "/api/internal/health",              "destination": "/api/internal/health.ts" },
+    { "source": "/api/forms/contact",                "destination": "/api/forms/contact.ts" },
+    { "source": "/api/forms/audit-request",          "destination": "/api/forms/audit-request.ts" }
   ],
   "crons": [
     { "path": "/api/automations/blog-gen", "schedule": "0 8 * * 2,4" }

@@ -119,6 +119,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/duomenu-perdavimo-tinklo-prieziura</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/duomenu-privatumo-politika</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -188,7 +194,7 @@
     <loc>https://veriva.lt/seo/public-it-technologiju-proverzis-ir-saugumas</loc>
     <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/registru-centro-duomenu-nutekejimas-ka-daryti</loc>

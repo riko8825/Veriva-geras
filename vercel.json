@@ -83,6 +83,9 @@
     { "source": "/mokymai", "destination": "/", "permanent": true },
     { "source": "/mokymai/", "destination": "/", "permanent": true },
     { "source": "/bdar-atitiktis", "destination": "/seo/bdar-auditas-lietuvoje", "permanent": true },
-    { "source": "/bdar-atitiktis/", "destination": "/seo/bdar-auditas-lietuvoje", "permanent": true }
+    { "source": "/bdar-atitiktis/", "destination": "/seo/bdar-auditas-lietuvoje", "permanent": true },
+    { "source": "/apie-imone", "destination": "/#apie", "permanent": true },
+    { "source": "/apie-imone/", "destination": "/#apie", "permanent": true },
+    { "source": "/apie", "destination": "/#apie", "permanent": true }
   ]
 }

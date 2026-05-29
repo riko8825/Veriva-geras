@@ -1,11 +1,61 @@
 # SESSION_STATUS
 
-**Data**: 2026-05-27
-**Sesijos tikslas**: RC duomenų nutekėjimo 2026 hot news blog post — sukurti kokybišką straipsnį apie šviežią incidentą (Registrų centras prarado >600 tūkst. NT registro įrašų per Migracijos departamento paskyras), kol search volume didžiausias per ateinančias 2 savaites. Mišri B2C+B2B orientacija, su frontend + SEO audit'u prieš deploy.
+**Data**: 2026-05-29
+**Sesijos tikslas**: Production health triage — sutaisyti GMB/GSC 404 klaidas (Google indeksavo neegzistuojančius URL'us), Health Check workflow fail loop'ą ir atnaujinti pasibaigusį Supabase service_role raktą.
 
 ---
 
-## Paskutinė sesija: 2026-05-27 — rc-nutekejimo-blog-post
+## Paskutinė sesija: 2026-05-29 — prod-health-404-env-fix
+
+### Ką padarėme
+
+**Kontekstas**: Vartotojas pateikė 4 atskiras production problemas screenshot'ais: (1) Google sitelink'ai `/kontaktai` + `/bdar-atitiktis` → 404, (2) Health Check GitHub Actions workflow #17 fail loop'as (17+ fail'inusių run'ų), (3) `supabase_key:false` health'e — pasibaigęs raktas, (4) GMB Maps nuoroda `/apie-imone` → 404.
+
+**1. GMB/GSC 404 redirect'ai (commit `d4f6153` + `5514b29`, `vercel.json`)**:
+- Diagnozė: Google/GMB indeksavo URL'us, kurių failai neegzistuoja. `cleanUrls:true` darė 308 `.html`→clean, bet originalų `.html` nėra → 404.
+- `/kontaktai` + `/kontaktai/` → `/#kontaktai` (index.html:1883 anchor, kontaktinė sekcija)
+- `/bdar-atitiktis` + `/bdar-atitiktis/` → `/seo/bdar-auditas-lietuvoje` (200 OK, semantiškai artimiausias)
+- `/apie-imone` + `/apie-imone/` + `/apie` → `/#apie` (index.html:1090 about sekcija)
+
+**2. Health Check workflow fix (commit `6e591f9`, `vercel.json`)**:
+- Šaknis: `/api/internal/health` → 404, bet `/api/internal/health.ts` → 200. Vercel `@vercel/node` builder neatlieka automatinio `.ts` suffix strip'o — reikia explicit rewrite. Kiti API endpoint'ai (blog-gen/blog-approve/telegram-webhook) jau turėjo rewrite, health.ts + forms/* buvo užmiršti.
+- Pridėti 3 rewrites: `/api/internal/health`, `/api/forms/contact`, `/api/forms/audit-request` → `*.ts`
+- Verifikacija: workflow_dispatch run [#26511932270](https://github.com/riko8825/Veriva-geras/actions/runs/26511932270) → ✅ success 9s (anksčiau loop fail)
+
+**3. Supabase raktas atnaujintas (commit `f8753d7` redeploy trigger)**:
+- `SUPABASE_SERVICE_ROLE_KEY` Vercel'yje (Added May 5) turėjo seną/pasibaigusį raktą → `supabase_key:false`
+- User atnaujino nauju Supabase `sb_secret_D2fyy...` formato raktu (naujasis Supabase API key formatas, pakeitė seną JWT `eyJ...`) — abiejuose projektuose
+- `lib/supabase.ts` `createClient` suderinamas su nauju formatu be pakeitimų
+- Empty commit redeploy → health: `supabase_key:true` ✅
+
+### Kas liko / nepatvirtinta
+
+- **`RESEND_FROM_EMAIL` vis dar `false`** — niekada nebuvo įdėtas į Vercel (NE pasibaigęs, paprastas string). Reikia įdėti `hello@veriva.lt`, BET pirma patvirtinti veriva.lt domeną [Resend → Domains](https://resend.com/domains)
+- **`/apie` veda į anchor, ne realų puslapį** — GMB tikisi pilno "apie įmonę" puslapio. Laikinas sprendimas kol `apie.html` nesukurtas
+- **2-hop redirect'ai** acceptable Google'ui: `/apie.html`→`/apie`→`/#apie`, `/kontaktai/`→`/kontaktai`→`/#kontaktai`
+- **GMB profilio nuorodų peržiūra nepadaryta** — šablonas kartojasi (3 GMB/GSC 404 šią sesiją). Verta peržiūrėti GSC „Pages → Not indexed" + GMB nuorodas vienu kartu
+
+### Kitas žingsnis
+
+1. **`RESEND_FROM_EMAIL` setup** (TU) — patvirtinti veriva.lt [Resend Domains](https://resend.com/domains), tada Vercel env var `hello@veriva.lt` → redeploy → `resend_from:true`
+2. **GSC + GMB 404 audit** (~30 min) — peržiūrėti [GSC](https://search.google.com/search-console) „Not indexed" visus 404 + GMB profilio nuorodas, sutaisyti likusius vienu batch'u
+3. **Multi-page skeletons** (paslaugos/apie/kainos/kontaktai/404) — pakeisti laikinus anchor redirect'us realiais puslapiais
+
+### Production verifikacija (live)
+
+| Test | Statusas |
+|---|---|
+| `/kontaktai` → 308 → `/#kontaktai` | ✅ |
+| `/bdar-atitiktis` → 308 → `/seo/bdar-auditas-lietuvoje` (200) | ✅ |
+| `/apie-imone` + `/apie` → 308 → `/#apie` | ✅ |
+| `/api/internal/health` → 200 OK | ✅ |
+| Health Check workflow #26511932270 → success | ✅ |
+| health `supabase_key:true` | ✅ |
+| health `resend_from:false` | ⬜ (user action) |
+
+---
+
+## Sesija #22: 2026-05-27 — rc-nutekejimo-blog-post
 
 ### Ką padarėme
 

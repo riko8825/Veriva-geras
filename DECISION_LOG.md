@@ -4,6 +4,31 @@ Architektūriniai sprendimai. Kiekvienas su data, kontekstu, alternatyvomis, spr
 
 ---
 
+## 2026-05-29 — GMB/GSC 404 URL'ai → redirect į anchor (NE naujas puslapis)
+
+**Kontekstas** (s23): Google sitelink'ai + GMB Maps indeksavo URL'us, kurių failai neegzistuoja: `/kontaktai`, `/bdar-atitiktis`, `/apie-imone`, `/apie`. Visi → 404. Realūs puslapiai (`kontaktai.html`, `apie.html`) dar nesukurti (Planned).
+
+**Alternatyvos**:
+- A) **308 redirect į esamą anchor/seo puslapį** (Recommended) — greitas fix, panaikina 404 nedelsiant, Google re-crawl per 3-14d
+- B) Sukurti pilnus `kontaktai.html` + `apie.html` puslapius — teisingas ilgalaikis, bet ~2-3h darbo, blokuoja 404 fix'ą
+- C) Palikti 404 + 404.html custom puslapis — Google toliau matytų soft-404, kenkia indeksacijai
+
+**Sprendimas**: **A** — laikinas redirect kol puslapiai nesukurti. `/kontaktai`→`/#kontaktai`, `/apie-imone`+`/apie`→`/#apie` (index anchor sekcijos), `/bdar-atitiktis`→`/seo/bdar-auditas-lietuvoje` (semantiškai artimiausias 200 puslapis).
+
+**Priežastys**: 404 momentinė žala SEO/UX > anchor redirect kompromisas. Multi-page skeletons (B) lieka Planned — kai `apie.html` sukurtas, redirect target keičiamas į pilną puslapį.
+
+---
+
+## 2026-05-29 — Vercel `@vercel/node` API endpoint'ai reikalauja explicit `rewrites`
+
+**Kontekstas** (s23): `/api/internal/health` → 404, bet `/api/internal/health.ts` → 200. Health Check workflow 17+ run fail loop'as. `cleanUrls:true` veikia static HTML, bet NE serverless funkcijoms su `.ts` suffix.
+
+**Sprendimas**: kiekvienas API endpoint privalo turėti `vercel.json` `rewrites` įrašą `/path` → `/path.ts`. Pridėti health + forms/contact + forms/audit-request (blog automation endpoint'ai jau turėjo).
+
+**Priežastys**: Vercel `@vercel/node` builder neatlieka automatinio `.ts` strip'o. Be rewrite, clean URL'as nepasiekia funkcijos. **Taikyti visiems naujiems API endpoint'ams** — ši taisyklė turi būti tikrinama PRIEŠ kiekvieną naują endpoint deploy.
+
+---
+
 ## 2026-05-27 — `NewsArticle` schema hot news straipsniams (NE `BlogPosting`)
 
 **Kontekstas**: Kuriant RC duomenų nutekėjimo straipsnį (s22), reikėjo pasirinkti schema.org tipą. Visi 5 esami Veriva pillarai naudoja `BlogPosting`. Bet RC straipsnis yra hot news su laiko jautrumu (peak 1-2 sav.), ne evergreen pillar.

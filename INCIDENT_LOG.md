@@ -20,6 +20,41 @@ Production incidentų istorija. Atnaujinti po kiekvieno rollback'o, downtime'o, 
 
 ---
 
+## INC-004 — Health Check workflow fail loop + pasibaigęs Supabase raktas
+
+**Kada:** Aptikta 2026-05-29 (s23). Health Check workflow fail'ino nuo aktyvavimo (17+ run'ų). Supabase raktas pasibaigė ~prieš s23 (tiksli data nežinoma).
+
+**Repo:** `riko8825/Veriva-geras`. Production veriva.lt content nepaveiktas — tik backend health endpoint + Supabase prieiga.
+
+**Sukėlę:**
+1. **Workflow fail**: `vercel.json` trūko `rewrites` įrašo `/api/internal/health`→`/api/internal/health.ts`. Vercel `@vercel/node` builder be explicit rewrite negrąžina funkcijos per clean URL → 404.
+2. **Supabase key**: `SUPABASE_SERVICE_ROLE_KEY` (Vercel, Added May 5) turėjo seną/pasibaigusį raktą → health `supabase_key:false`. Supabase migravo į naują `sb_secret_` API key formatą (senas JWT `eyJ...` nustojo veikti).
+
+**Simptomas:** GitHub Actions Health Check #17 → `Status: 404`, `Body: The page could not be found`, exit code 1. Daily cron (`0 7 * * *`) generavo failure email'us. Health endpoint (per `.ts`) rodė `supabase_key:false`.
+
+**Detection:** Vartotojas pranešė 2 screenshot'ais (GitHub Actions failure UI). Atskirai pastebėjo `supabase_key:false` health output'e.
+
+**Impact:**
+- 0 user'ių, 0 duomenų prarasta
+- Veriva.lt frontend + blog/seo content nepaveikti
+- Health monitoring nefunkcionavo (false negatyvas — workflow visada fail nepriklausomai nuo realios sveikatos)
+- Supabase-priklausomi backend flow'ai (blog automation) būtų crash'inę dėl negaliojančio rakto (bet jie ir taip RUNTIME BLOCKED kitomis priežastimis)
+
+**Resolution:**
+1. `6e591f9` — pridėti `rewrites` health + forms/contact + forms/audit-request → `.ts`. Workflow_dispatch run [#26511932270](https://github.com/riko8825/Veriva-geras/actions/runs/26511932270) → success 9s.
+2. User atnaujino `SUPABASE_SERVICE_ROLE_KEY` nauju `sb_secret_` formato raktu abiejuose projektuose (Empirra + Veriva). Redeploy `f8753d7` → health `supabase_key:true`.
+
+**Root cause:**
+1. API endpoint'ai sukurti su `.ts` failais bet be `vercel.json` rewrite — clean URL nepasiekia funkcijos. Health endpoint sukurtas anksčiau nei blog automation endpoint'ai (kurie rewrite turėjo) → atsiliko.
+2. Supabase platform key formato migracija (JWT → `sb_secret_`) invalidino seną raktą be Veriva-side pakeitimo.
+
+**Prevention:**
+- **Decision log 2026-05-29**: kiekvienas naujas API endpoint privalo turėti `vercel.json` rewrite — tikrinti PRIEŠ deploy
+- Health endpoint grąžina env flags — ateityje `supabase_key:false` matomas health output'e prieš pilną gedimą
+- Raktų rotation: shared raktai (Supabase su Empirra) — atnaujinti ABU projektus vienu metu
+
+---
+
 ## INC-003 — SEO engine workflow fail loop'as (FAQ markup + empirra leak + empty batch)
 
 **Kada:** 2026-05-23 ~07:16 — 08:35 UTC (~10:16 — 11:35 LT), ~1h 19min iki pirmo fix'o effective; reali sistema affected'inta nuo s10 (2026-05-10 SEO engine veriva onboarding) — visi LT runs fail'indavo silent'iškai iki cron'as paleisdavo manual'iai

@@ -75,7 +75,7 @@
 | `POST /api/forms/contact` | 🟡 Sukurtas, neištestuotas | Kontakto formos lead capture |
 | `POST /api/forms/audit-request` | ⬜ Nesukurtas | BDAR audito užklausa |
 | `POST /api/forms/newsletter` | ⬜ Nesukurtas | Newsletter prenumerata (blog.html naudoja) |
-| `GET /api/internal/health` | 🟡 Sukurtas, neištestuotas | Health check |
+| `GET /api/internal/health` | 🟢 LIVE 200 OK | Health check. s23 (`6e591f9`): pridėtas rewrite `/api/internal/health`→`.ts` (Vercel @vercel/node reikalauja explicit rewrite). GitHub Actions Health Check workflow → success. Env flags: supabase_url/key ✅, resend_key ✅, resend_from ⬜ |
 | `POST /api/automations/blog-gen` | 🟡 DEPLOYED (553 lines), RUNTIME BLOCKED | Cron blog post generation: topics.json → AI (OpenAI gpt-4.1) → 10 validators → template injection → GitHub draft branch → Telegram notification (Publikuoti/Taisyti/Praleisti). DEPLOYED su `f2f2cdb`, bet runtime laukia 5 Sensitive env vars + Telegram bot + Supabase migration. Cron'as 2026-05-12 10:00 LT crash'ins. |
 | `POST /api/automations/telegram-webhook` | 🟡 DEPLOYED (319 lines), RUNTIME BLOCKED | Telegram callback handler: P → blog-approve, R → save Supabase state + ask text reply, S → delete branch + topics.status=skipped. DEPLOYED, bet Supabase `veriva_telegram_revise_state` lentelė neegzistuoja. |
 | `POST /api/automations/blog-approve` | 🟡 DEPLOYED (406 lines), RUNTIME BLOCKED | Publish flow: addBlogCardToGrid (.bp-grid) + linkInternal forward+reverse + updateSitemap + topics.status=published + mergeBranchToMain + deleteBranch + Telegram confirmation. DEPLOYED, bet `GITHUB_TOKEN` env var laukia. |
@@ -87,7 +87,7 @@
 | Vercel | 🟢 Production LIVE | Hosting active, build #2 (`6974806`) READY 27s, 10 URL 200 OK, domain'ai (veriva.lt + www.veriva.lt) attached, apex SSL pending |
 | Hostinger DNS | 🟢 Migrated | A `@` → 76.76.21.21, CNAME `www` → cname.vercel-dns.com; Zoho email DNS (DKIM/SPF/MX×3) išsaugoti |
 | Zoho Mail | 🟢 Aktyvus (nepaliesta) | info@veriva.lt — MX/SPF/DKIM/verification record'ai DNS Zone'oje veikia toliau |
-| Supabase | 🟡 Shared Empirra project (URL pushed to Veriva env), migration 002_blog_automation.sql code-done bet NEPALEISTA | Veriva lenteles atskiria `veriva_*` prefix (veriva_telegram_revise_state, veriva_blog_runs). SERVICE_ROLE_KEY laukia rankinio pateikimo iš Empirra Vercel UI (Sensitive flag) |
+| Supabase | 🟡 Shared Empirra project, SERVICE_ROLE_KEY ✅ s23 atnaujintas (naujas `sb_secret_` formatas), migration 002_blog_automation.sql code-done bet NEPALEISTA | Veriva lenteles atskiria `veriva_*` prefix (veriva_telegram_revise_state, veriva_blog_runs). s23: health `supabase_key:true` patvirtinta. Liko paleisti migration. |
 | Resend | 🟡 API key pushed į Veriva Vercel | Email notifications (contact form + audit-request) — endpoint'ai dar neištestuoti |
 | OpenAI | 🟡 API key pushed (shared with Empirra) | gpt-4.1 blog generavimui, $0.05-0.08/post estimate |
 | Pexels | 🔴 API key NEPUSH'INTAS (Sensitive flag — laukia rankinio pateikimo) | Hero images blog post'ams (LT→EN query translation map sukurtas lib/pexels.ts) |

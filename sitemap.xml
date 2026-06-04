@@ -122,7 +122,7 @@
     <loc>https://veriva.lt/seo/duomenu-perdavimo-tinklo-prieziura</loc>
     <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/duomenu-privatumo-politika</loc>
@@ -147,6 +147,12 @@
     <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/kibernetinio-saugumo-istatymas-e-tar</loc>
+    <lastmod>2026-06-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/kibernetinio-saugumo-mokymai</loc>

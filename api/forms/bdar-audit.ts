@@ -10,23 +10,26 @@
 //   5. Resend → klientui (išvada) + Veriva (lead notifikacija)
 //   6. return 200
 //
-// Runtime: Node (reikia supabase-js + ilgesnio AI call).
-// maxDuration konfigūruojamas per vercel.json builds (60s), NE in-file config
-// (atitinka blog-gen patternq — in-file config Node funkcijoms gali konfliktuoti su @vercel/node).
+// Runtime: EDGE — projekto tsconfig naudoja "module":"ESNext", todėl @vercel/node
+// (CJS) funkcijos lūžta "Failed to load the ES module". Edge runtime palaiko ESM.
+// Viskas, ką naudojam, Edge-suderinama: fetch (claude/resend), supabase-js (fetch),
+// crypto.subtle (IP hash). contact.ts/health.ts irgi Edge — patikrintas pattern.
 
-import type { IncomingMessage, ServerResponse } from 'http'
 import { runPrompt } from '../../lib/claude'
 import { sendEmail } from '../../lib/resend'
 import { scoreAnswers, RISK_LEVEL_LT, type Answers, type ScoringResult } from '../../lib/bdar-scoring'
 import { BDAR_AUDIT_SYSTEM, buildBdarAuditUserPrompt } from '../../lib/bdar-audit-prompt'
 import { QUESTIONS } from '../../lib/bdar-questions'
-import { checkRateLimit, getClientIp } from '../../lib/ratelimit'
+import { checkRateLimit } from '../../lib/ratelimit'
 import { log } from '../../lib/logger'
 
+export const config = { runtime: 'edge' }
+
 const EMAIL_RE = /[^\s@]+@[^\s@]+\.[^\s@]+/
-const MAX_BODY = 60_000 // ~60KB — pakanka 42 atsakymams
 const MAX_COMMENT_LEN = 1000 // P2-2: stored data poisoning apsauga
 const CONSENT_VERSION = '2026-06-07' // P2-1: consent įrodymo versija
+
+const JSON_HEADERS = { 'Content-Type': 'application/json; charset=utf-8' }
 
 interface Payload {
   answers?: Answers
@@ -36,33 +39,23 @@ interface Payload {
   website?: string // honeypot
 }
 
-// ─── Node helpers ───
-function sendJson(res: ServerResponse, status: number, data: unknown): void {
-  if (res.headersSent) return
-  res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8' })
-  res.end(JSON.stringify(data))
+// ─── Edge helpers ───
+function jsonResponse(status: number, data: unknown, extraHeaders?: Record<string, string>): Response {
+  return new Response(JSON.stringify(data), { status, headers: { ...JSON_HEADERS, ...extraHeaders } })
 }
 
-function readBody(req: IncomingMessage): Promise<string> {
-  return new Promise((resolve, reject) => {
-    let data = ''
-    let size = 0
-    req.on('data', (chunk) => {
-      size += chunk.length
-      if (size > MAX_BODY) { reject(new Error('payload_too_large')); req.destroy() }
-      else data += chunk
-    })
-    req.on('end', () => resolve(data))
-    req.on('error', reject)
-  })
+function clientIpFrom(req: Request): string {
+  const fwd = req.headers.get('x-forwarded-for') ?? ''
+  return fwd.split(',')[0]?.trim() || 'unknown'
 }
 
 async function hashIp(ip: string): Promise<string> {
   // P1-4: jokio hardcoded fallback — known salt = IP de-anonimizacija (BDAR).
   const salt = process.env.IP_HASH_SALT
   if (!salt) throw new Error('IP_HASH_SALT_MISSING')
-  const { createHash } = await import('crypto')
-  return createHash('sha256').update(ip + salt).digest('hex')
+  const data = new TextEncoder().encode(ip + salt)
+  const buf = await crypto.subtle.digest('SHA-256', data)
+  return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, '0')).join('')
 }
 
 // ─── Validacija ───
@@ -158,52 +151,49 @@ function esc(s: string): string {
   return String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string))
 }
 
-// ─── Handler (top-level guard — kad crash grąžintų JSON, ne FUNCTION_INVOCATION_FAILED) ───
-export default async function handler(req: IncomingMessage, res: ServerResponse): Promise<void> {
+// ─── Handler (Edge — top-level guard grąžina JSON vietoj 500 crash) ───
+export default async function handler(req: Request): Promise<Response> {
   try {
-    await handleRequest(req, res)
+    return await handleRequest(req)
   } catch (e) {
     console.error('[bdar-audit] FATAL', e instanceof Error ? e.stack : e)
-    if (!res.headersSent) {
-      sendJson(res, 500, { error: 'Vidinė klaida', detail: e instanceof Error ? e.message : String(e) })
-    }
+    return jsonResponse(500, { error: 'Vidinė klaida', detail: e instanceof Error ? e.message : String(e) })
   }
 }
 
-async function handleRequest(req: IncomingMessage, res: ServerResponse): Promise<void> {
+async function handleRequest(req: Request): Promise<Response> {
   const requestId = randomId()
-  if (req.method !== 'POST') { sendJson(res, 405, { error: 'Method not allowed' }); return }
+  if (req.method !== 'POST') return jsonResponse(405, { error: 'Method not allowed' })
 
   // Origin check (best-effort CSRF apsauga viešai formai)
-  const origin = (req.headers['origin'] as string) ?? ''
+  const origin = req.headers.get('origin') ?? ''
   const allowed = ['https://veriva.lt', 'https://www.veriva.lt']
   if (origin && !allowed.some((a) => origin.startsWith(a)) && process.env.NODE_ENV === 'production') {
-    sendJson(res, 403, { error: 'Forbidden origin' }); return
+    return jsonResponse(403, { error: 'Forbidden origin' })
   }
 
   // P0-1: rate limit — viešas AI+email endpointas (kaštų DoS apsauga).
   // 3/min per IP (AI brangus). In-memory: stabdo trivialų loop'ą, ne distributed DDoS.
-  const clientIp = getClientIp(req)
+  const clientIp = clientIpFrom(req)
   const rl = checkRateLimit(`bdar-audit:${clientIp}`, 3)
   if (!rl.allowed) {
-    res.setHeader('Retry-After', String(rl.retryAfterSeconds))
-    sendJson(res, 429, { error: 'Per daug užklausų. Bandykite po minutės.' }); return
+    return jsonResponse(429, { error: 'Per daug užklausų. Bandykite po minutės.' }, { 'Retry-After': String(rl.retryAfterSeconds) })
   }
 
   let payload: Payload
   try {
-    const raw = await readBody(req)
+    const raw = await req.text()
+    if (raw.length > 60_000) return jsonResponse(400, { error: 'Per didelė užklausa' }) // ~60KB
     payload = JSON.parse(raw)
-  } catch (e) {
-    const msg = e instanceof Error && e.message === 'payload_too_large' ? 'Per didelė užklausa' : 'Neteisingas JSON'
-    sendJson(res, 400, { error: msg }); return
+  } catch {
+    return jsonResponse(400, { error: 'Neteisingas JSON' })
   }
 
   const v = validate(payload)
   if (!v.ok) {
     // Honeypot — grąžinam 200 botui (neatskleidžiam, kad atpažinom)
-    if (v.error === 'spam') { sendJson(res, 200, { ok: true }); return }
-    sendJson(res, 400, { error: v.error }); return
+    if (v.error === 'spam') return jsonResponse(200, { ok: true })
+    return jsonResponse(400, { error: v.error })
   }
 
   const answers = payload.answers as Answers
@@ -216,7 +206,7 @@ async function handleRequest(req: IncomingMessage, res: ServerResponse): Promise
   } catch (e) {
     console.error('[bdar-audit] scoring error', e)
     void log({ workflow: 'bdar-audit', status: 'error', request_id: requestId, step: 'scoring', error: errMsg(e) })
-    sendJson(res, 500, { error: 'Vertinimo klaida' }); return
+    return jsonResponse(500, { error: 'Vertinimo klaida' })
   }
 
   // 3. AI išvada
@@ -237,9 +227,8 @@ async function handleRequest(req: IncomingMessage, res: ServerResponse): Promise
   }
 
   // 4. Supabase insert (best-effort — neblokuoja email klientui)
-  const ip = ((req.headers['x-forwarded-for'] as string) ?? '').split(',')[0].trim() || 'unknown'
   let ipHash: string | null = null
-  try { ipHash = await hashIp(ip) } catch { ipHash = null } // IP_HASH_SALT trūksta → nesaugom IP (data minimization)
+  try { ipHash = await hashIp(clientIp) } catch { ipHash = null } // IP_HASH_SALT trūksta → nesaugom IP (data minimization)
   try {
     const { supabase } = await import('../../lib/supabase')
     const { error } = await supabase.from('bdar_audit_responses').insert({
@@ -261,7 +250,7 @@ async function handleRequest(req: IncomingMessage, res: ServerResponse): Promise
       ai_model: aiModel,
       duration_ms: payload.meta?.durationMs ?? null,
       ip_hash: ipHash,
-      user_agent: payload.meta?.ua ?? (req.headers['user-agent'] as string) ?? null,
+      user_agent: payload.meta?.ua ?? req.headers.get('user-agent') ?? null,
       source: payload.meta?.source ?? 'bdar-auditas',
     })
     if (error) console.error('[bdar-audit] supabase insert error', error.message)
@@ -309,11 +298,10 @@ async function handleRequest(req: IncomingMessage, res: ServerResponse): Promise
 
   if (!clientEmailSent) {
     // Lead išsaugotas, bet email nepavyko — pranešam, kad susisieksim
-    sendJson(res, 200, { ok: true, emailSent: false, message: 'Atsakymai gauti. Susisieksime per 24 val.' })
-    return
+    return jsonResponse(200, { ok: true, emailSent: false, message: 'Atsakymai gauti. Susisieksime per 24 val.' })
   }
 
-  sendJson(res, 200, { ok: true, emailSent: true })
+  return jsonResponse(200, { ok: true, emailSent: true })
 }
 
 function randomId(): string {

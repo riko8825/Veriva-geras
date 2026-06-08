@@ -10,7 +10,9 @@
 //   5. Resend → klientui (išvada) + Veriva (lead notifikacija)
 //   6. return 200
 //
-// Runtime: Node (reikia supabase-js + ilgesnio AI call). maxDuration 60s.
+// Runtime: Node (reikia supabase-js + ilgesnio AI call).
+// maxDuration konfigūruojamas per vercel.json builds (60s), NE in-file config
+// (atitinka blog-gen patternq — in-file config Node funkcijoms gali konfliktuoti su @vercel/node).
 
 import type { IncomingMessage, ServerResponse } from 'http'
 import { runPrompt } from '../../lib/claude'
@@ -20,8 +22,6 @@ import { BDAR_AUDIT_SYSTEM, buildBdarAuditUserPrompt } from '../../lib/bdar-audi
 import { QUESTIONS } from '../../lib/bdar-questions'
 import { checkRateLimit, getClientIp } from '../../lib/ratelimit'
 import { log } from '../../lib/logger'
-
-export const config = { maxDuration: 60 }
 
 const EMAIL_RE = /[^\s@]+@[^\s@]+\.[^\s@]+/
 const MAX_BODY = 60_000 // ~60KB — pakanka 42 atsakymams
@@ -158,8 +158,19 @@ function esc(s: string): string {
   return String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string))
 }
 
-// ─── Handler ───
+// ─── Handler (top-level guard — kad crash grąžintų JSON, ne FUNCTION_INVOCATION_FAILED) ───
 export default async function handler(req: IncomingMessage, res: ServerResponse): Promise<void> {
+  try {
+    await handleRequest(req, res)
+  } catch (e) {
+    console.error('[bdar-audit] FATAL', e instanceof Error ? e.stack : e)
+    if (!res.headersSent) {
+      sendJson(res, 500, { error: 'Vidinė klaida', detail: e instanceof Error ? e.message : String(e) })
+    }
+  }
+}
+
+async function handleRequest(req: IncomingMessage, res: ServerResponse): Promise<void> {
   const requestId = randomId()
   if (req.method !== 'POST') { sendJson(res, 405, { error: 'Method not allowed' }); return }
 

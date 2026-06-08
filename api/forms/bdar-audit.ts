@@ -312,7 +312,7 @@ async function handleRequest(req: Request): Promise<Response> {
     return jsonResponse(200, { ok: true, emailSent: false, message: 'Atsakymai gauti. Susisieksime per 24 val.' })
   }
 
-  return jsonResponse(200, { ok: true, emailSent: true, _debug: { pct: score.compliancePct, earned: score.earnedPoints, max: score.maxPoints, gaps: score.gaps.length, answersReceived: Object.keys(answers).length } })
+  return jsonResponse(200, { ok: true, emailSent: true })
 }
 
 function randomId(): string {

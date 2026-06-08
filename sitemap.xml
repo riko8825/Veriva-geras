@@ -85,7 +85,7 @@
     <loc>https://veriva.lt/seo/bdar-dokumentai-monei</loc>
     <lastmod>2026-06-08</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-e-parduotuvei</loc>
@@ -170,6 +170,12 @@
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/internal-gdpr-documentation</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/ivairoves-ir-itraukties-politika</loc>

@@ -4,6 +4,31 @@ Architektūriniai sprendimai. Kiekvienas su data, kontekstu, alternatyvomis, spr
 
 ---
 
+## 2026-06-08 — BDAR audito endpoint: EDGE runtime (NE Node)
+
+**Kontekstas** (s24): `api/forms/bdar-audit.ts` sukurtas Node runtime (`IncomingMessage/ServerResponse`, kaip blog-gen). Production crash'ino `FUNCTION_INVOCATION_FAILED` / `Failed to load the ES module: /var/task/...`. Diagnozė: projekto `tsconfig.json` `"module":"ESNext"` verčia `@vercel/node` (CJS) funkcijas kraut kaip ESM → mismatch. Edge funkcijos (`contact.ts`, `health.ts` su `runtime:'edge'`) veikia, Node — ne. Node endpointai NIEKADA tinkamai neveikė (niekas netestavo realiai).
+
+**Alternatyvos**:
+- A) **Konvertuoti į Edge runtime** (Recommended) — Edge palaiko ESM; viskas Edge-suderinama (fetch claude/resend, supabase-js fetch, crypto.subtle); contact.ts/health.ts patikrintas pattern
+- B) Pakeisti tsconfig `module:CommonJS` — sulaužytų lib/* import patterns + Edge funkcijas
+- C) `package.json` `"type":"module"` + `.mjs` — sudėtinga, rizikinga
+
+**Sprendimas: A.** Edge runtime. Request/Response, crypto.subtle (vietoj node:crypto), req.text() (vietoj stream). **Pasekmė**: visi būsimi Veriva endpointai turi būti Edge. Esami Node endpointai (audit-request, blog-gen/approve, telegram-webhook) greičiausiai irgi crash'ina ESM — carry-over.
+
+## 2026-06-08 — BDAR scoring: hibridas (deterministiniai balai + AI tekstas)
+
+**Kontekstas** (s24): klausimynas neturi balų. Vertinimas turi būti nuspėjamas + personalizuotas.
+
+**Alternatyvos**: A) Balai serveryje → % deterministiškai, AI tik rašo išvadą · B) AI vertina laisvai · C) MasterLegal įrašo balus į Excel.
+
+**Sprendimas: A (hibridas).** `lib/bdar-scoring.ts` skaičiuoja % (21 vertinamas kl., 9 kritiniai ×2). AI gauna balus + spragas, rašo orientacinę išvadą, NEKEIČIA %. Balai DRAFT — MasterLegal review laukia (`docs/bdar-scoring-matrica.md`). Rizikos žymekliai (Q20/23/33/36/37/38) atskirai, NEmažina %.
+
+## 2026-06-08 — BDAR auditas: atskiras puslapis (NE modal)
+
+**Kontekstas** (s24): user paliko UI sprendimą man. 42 klausimai.
+
+**Sprendimas**: atskiras `/bdar-auditas` puslapis (ne modal) — 42 kl. modal'e blogas mobile UX + lengva uždaryti per klaidą (prarasti lead). Puslapis = SEO vertė + shareable URL + GMB nuoroda. Step-by-step 8 sekcijos + progress bar.
+
 ## 2026-05-29 — GMB/GSC 404 URL'ai → redirect į anchor (NE naujas puslapis)
 
 **Kontekstas** (s23): Google sitelink'ai + GMB Maps indeksavo URL'us, kurių failai neegzistuoja: `/kontaktai`, `/bdar-atitiktis`, `/apie-imone`, `/apie`. Visi → 404. Realūs puslapiai (`kontaktai.html`, `apie.html`) dar nesukurti (Planned).

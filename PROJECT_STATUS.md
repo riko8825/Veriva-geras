@@ -1,10 +1,10 @@
 # PROJECT_STATUS — Veriva
 
 **Pradžia**: 2026-05-09
-**Paskutinis update**: 2026-05-27 (rc-nutekejimo-blog-post, s22)
-**Statusas**: 🟢 **6 LIVE blog pillarai** (+1 RC hot news, s22) + **23 LIVE seo/* puslapiai** (+3 SEO Bot per s22 rebase) · 🟢 SEO architecture stable (apex canonical + clean URLs po s21) · 🟢 SEO engine workflow VEIKIA · 🟢 frontend stable · 🟡 blog automation RUNTIME blocked (5 Sensitive env vars) · 🟡 KI-012 hero SVG carry-over apima 2 straipsnius (NE RC straipsnio — turi dedicated SVG) · ✅ KI-013 redirect architecture UŽDARYTAS (s21)
+**Paskutinis update**: 2026-06-08 (bdar-auditas-klausimynas, s24)
+**Statusas**: 🟢 **BDAR audito klausimynas LIVE** (s24 — 42 kl. wizard + AI vertinimas + Supabase + Resend email, pilnas E2E flow production) · 🟢 6 LIVE blog pillarai + ~26 LIVE seo/* puslapiai · 🟢 SEO architecture stable · 🟢 Supabase+Resend+OpenAI Production LIVE · 🟡 blog automation RUNTIME blocked (5 Sensitive env vars) + greičiausiai ESM crash (Node endpointai) · 🟡 scoring matrica laukia MasterLegal teisinio review · 🟡 KI-012 hero SVG carry-over
 **Production URL**: https://veriva.lt (LIVE apex primary, www → 308 → apex) | SSL ✅
-**Paskutinis commit Veriva-geras**: `966d666` (s22 rc-nutekejimo-blog-post, 4 files, +1108/-5)
+**Paskutinis commit Veriva-geras**: `5f004d0` (s24 email logotipas). Sesijos commit'ai: `e0b5911`→`5f004d0` (10 commit'ų)
 **Vercel Domain config**: `veriva.lt` Production primary, `www.veriva.lt` 308 Permanent Redirect → apex
 
 ---
@@ -32,6 +32,7 @@
 | `privatumas.html` | 🟢 LIVE | 10 skyrių BDAR Privacy Policy (454 lines): duomenų valdytojas, renkami duomenys (kontakto forma, brief.html, susirašinėjimas, techniniai), tikslai+pagrindas (lentelė), saugojimo terminai, sub-processors lentelė (Vercel/Resend/Cookiebot/Hostinger/Zoho), perdavimas už ES (SCC), 8 BDAR teisės, slapukų sutikimo CTA, VDAI skundai (2026-05-10) |
 | `slapukai.html` | 🟢 LIVE | 9-skyrių BDAR-compliant politika + Cookiebot CookieDeclaration script + `Cookiebot.renew()` mygtukas (2026-05-10) |
 | `404.html` | ⬜ Nesukurtas | |
+| `bdar-auditas.html` | 🟢 LIVE (2026-06-08 s24, `5f004d0`) | **BDAR audito wizard** — 42 klausimai / 8 sekcijos, single/multi/open, step-by-step + progress bar, Veriva dark tier brand, mobile-first, a11y (role=alert, focus-visible, fieldset/group, progressbar ARIA). 3 consent checkbox (privatumo* + naujienlaiškiai + rinkodara). Hero mygtukas index.html → /bdar-auditas (balta rėmelis). Duomenys: `assets/js/bdar-questions-data.js` (frontui, be balų) sync su `lib/bdar-questions.ts` (serveriui, su balais). CSS `assets/css/pages/bdar-auditas.css`. Cache-buster v=20260608a. |
 
 ## SEO ENGINE — AUTO-GENERATED `seo/*` PUSLAPIAI
 
@@ -72,9 +73,10 @@
 
 | Endpoint | Statusas | Funkcija |
 |---|---|---|
-| `POST /api/forms/contact` | 🟡 Sukurtas, neištestuotas | Kontakto formos lead capture |
-| `POST /api/forms/audit-request` | ⬜ Nesukurtas | BDAR audito užklausa |
-| `POST /api/forms/newsletter` | ⬜ Nesukurtas | Newsletter prenumerata (blog.html naudoja) |
+| `POST /api/forms/contact` | 🟡 Sukurtas, neištestuotas (Edge, bet TODO insert/email) | Kontakto formos lead capture |
+| `POST /api/forms/audit-request` | ⬜ Nesukurtas (failas yra, bet 404 + greičiausiai ESM crash kaip kiti Node) | BDAR audito užklausa |
+| `POST /api/forms/bdar-audit` | 🟢 **LIVE Production** (2026-06-08 s24, Edge) | **BDAR audito klausimynas** — validate(honeypot+origin+rate-limit+consent) → scoreAnswers() → runPrompt() AI išvada (gpt-4.1) → Supabase `bdar_audit_responses` insert + newsletter upsert → Resend email klientui + Veriva. E2E patikrinta production. Rate limit 3/min per IP (KI-014: per-isolate). |
+| `POST /api/forms/newsletter` | 🟡 Dalinai (per bdar-audit consent → newsletter_subscribers upsert) | Newsletter prenumerata (blog.html naudoja — atskiras endpoint dar nesukurtas) |
 | `GET /api/internal/health` | 🟢 LIVE 200 OK | Health check. s23 (`6e591f9`): pridėtas rewrite `/api/internal/health`→`.ts` (Vercel @vercel/node reikalauja explicit rewrite). GitHub Actions Health Check workflow → success. Env flags: supabase_url/key ✅, resend_key ✅, resend_from ⬜ |
 | `POST /api/automations/blog-gen` | 🟡 DEPLOYED (553 lines), RUNTIME BLOCKED | Cron blog post generation: topics.json → AI (OpenAI gpt-4.1) → 10 validators → template injection → GitHub draft branch → Telegram notification (Publikuoti/Taisyti/Praleisti). DEPLOYED su `f2f2cdb`, bet runtime laukia 5 Sensitive env vars + Telegram bot + Supabase migration. Cron'as 2026-05-12 10:00 LT crash'ins. |
 | `POST /api/automations/telegram-webhook` | 🟡 DEPLOYED (319 lines), RUNTIME BLOCKED | Telegram callback handler: P → blog-approve, R → save Supabase state + ask text reply, S → delete branch + topics.status=skipped. DEPLOYED, bet Supabase `veriva_telegram_revise_state` lentelė neegzistuoja. |
@@ -87,9 +89,9 @@
 | Vercel | 🟢 Production LIVE | Hosting active, build #2 (`6974806`) READY 27s, 10 URL 200 OK, domain'ai (veriva.lt + www.veriva.lt) attached, apex SSL pending |
 | Hostinger DNS | 🟢 Migrated | A `@` → 76.76.21.21, CNAME `www` → cname.vercel-dns.com; Zoho email DNS (DKIM/SPF/MX×3) išsaugoti |
 | Zoho Mail | 🟢 Aktyvus (nepaliesta) | info@veriva.lt — MX/SPF/DKIM/verification record'ai DNS Zone'oje veikia toliau |
-| Supabase | 🟡 Shared Empirra project, SERVICE_ROLE_KEY ✅ s23 atnaujintas (naujas `sb_secret_` formatas), migration 002_blog_automation.sql code-done bet NEPALEISTA | Veriva lenteles atskiria `veriva_*` prefix (veriva_telegram_revise_state, veriva_blog_runs). s23: health `supabase_key:true` patvirtinta. Liko paleisti migration. |
-| Resend | 🟡 API key pushed į Veriva Vercel | Email notifications (contact form + audit-request) — endpoint'ai dar neištestuoti |
-| OpenAI | 🟡 API key pushed (shared with Empirra) | gpt-4.1 blog generavimui, $0.05-0.08/post estimate |
+| Supabase | 🟢 Production naudojamas (BDAR auditas LIVE) | **Projektas `aqppyvamzdjydnfpgccu` ("Empirra", riko8825's Org) — shared su Veriva** (NE `vaqzleubdim`/riko8825's Project). s24: paleistos `001_init.sql` + `003_bdar_audit.sql` (leads, audit_requests, newsletter_subscribers, bdar_audit_responses). `002_blog_automation.sql` vis dar NEPALEISTA. ⚠️ Vercel SUPABASE_URL=`aqppyvamzdjydr...` |
+| Resend | 🟢 Production LIVE | **veriva.lt domenas VERIFIED** (s24, DKIM+SPF+MX Hostinger). RESEND_FROM_EMAIL=RESEND_NOTIFY_EMAIL=`info@veriva.lt`. Email klientui + Veriva notif veikia (BDAR auditas). Raktas atnaujintas (buvo iš kitos paskyros). |
+| OpenAI | 🟢 Production LIVE (BDAR auditas naudoja) | gpt-4.1 — BDAR išvada (~11s, $0.01-0.02/audit) + blog generavimui. OPENAI_API_KEY Vercel'yje veikia. |
 | Pexels | 🔴 API key NEPUSH'INTAS (Sensitive flag — laukia rankinio pateikimo) | Hero images blog post'ams (LT→EN query translation map sukurtas lib/pexels.ts) |
 | GitHub API | 🔴 GITHUB_TOKEN NEPUSH'INTAS (Sensitive flag — laukia rankinio pateikimo) | Branch create/commit/merge per blog automation pipeline, repo `riko8825/Veriva-geras` |
 | Telegram bot | 🔴 NESUKURTAS — vartotojas turi sukurti `@VerivaBlogBot` per @BotFather (atskiras nuo Empirra) | Blog draft approve flow su 3 inline buttons (Publikuoti/Taisyti/Praleisti) |

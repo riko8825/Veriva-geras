@@ -1,11 +1,71 @@
 # SESSION_STATUS
 
-**Data**: 2026-05-29
-**Sesijos tikslas**: Production health triage — sutaisyti GMB/GSC 404 klaidas (Google indeksavo neegzistuojančius URL'us), Health Check workflow fail loop'ą ir atnaujinti pasibaigusį Supabase service_role raktą.
+**Data**: 2026-06-08
+**Sesijos tikslas**: BDAR audito klausimyno automatizacija nuo nulio iki production — 42 klausimų wizard + AI vertinimas + Supabase lead + Resend email klientui ir Veriva.
 
 ---
 
-## Paskutinė sesija: 2026-05-29 — prod-health-404-env-fix
+## Paskutinė sesija: 2026-06-08 — bdar-auditas-klausimynas
+
+### Ką padarėme
+
+**Kontekstas**: Vartotojas pateikė MasterLegal 42 klausimų BDAR atitikties klausimyną (Excel). Reikalavimas: mygtukas svetainėje → klausimynas atskirame lange → klientas pildo → AI vertina → išvada į el. paštą + lead į sistemą + newsletter.
+
+**Sprendimai (AskUserQuestion)**: Hibridas scoring (balai → %, AI rašo išvadą) · lead → Supabase · išvada → kliento email · UI → atskiras puslapis `/bdar-auditas` (ne modal, dėl 42 kl. mobile UX + SEO).
+
+**Sukurta (10 naujų failų)**:
+- `lib/bdar-questions.ts` — 42 klausimai, 8 sekcijos, tipai single/multi/open (single source). Excel tvarka atstatyta (numeracija buvo sulaužyta).
+- `lib/bdar-scoring.ts` — deterministinis % (21 vertinamas kl., 9 kritiniai ×2, max 290). Rizikos žymekliai (Q20/23/33/36/37/38) NEmažina %. „netaikoma"→išmetama.
+- `lib/bdar-audit-prompt.ts` — AI orientacinės išvados promptas (gpt-4.1 via lib/claude.ts, kuris faktiškai OpenAI).
+- `api/forms/bdar-audit.ts` — **EDGE** endpoint: validate→score→AI→Supabase→Resend. Viešas (be x-api-key): honeypot+origin+rate-limit+consent.
+- `bdar-auditas.html` + CSS + 2× JS — wizard, Veriva brand, mobile-first, a11y.
+- `migrations/003_bdar_audit.sql` — `bdar_audit_responses` (RLS service-role-only).
+- `docs/bdar-scoring-matrica.md` — teisinis review MasterLegal.
+- `assets/img/logo-email.png` — email logotipas (SVG→PNG, nes Gmail nerodo inline SVG).
+
+**Pakeisti**: `index.html` (hero mygtukas "Pilnas BDAR auditas" → /bdar-auditas, balta rėmelis), `sitemap.xml`, `vercel.json` (build+rewrite), `.env.example` (IP_HASH_SALT), `KNOWN_ISSUES.md` (KI-014).
+
+**QA (2 agentai + E2E)**: TS 0 klaidų. Scoring lokalus 0/100/46%. XSS sanitize 10/10. E2E production naršyklėje: 8 sekcijos→consent→submit→success, 0 console klaidų. Ištaisyta: 3 P0 + 5 P1 (rate limit, allowlist HTML sanitize, IP hash crypto.subtle, consent, a11y role=alert/focus-visible, await log Edge, 500 detail leak).
+
+**Išspręstos krizės eigoje**:
+1. **Node ESM crash** (`Failed to load the ES module`) — tsconfig `module:ESNext` lūžino @vercel/node CJS → konvertuota į Edge runtime (kaip contact.ts/health.ts).
+2. **2 Supabase projektai** — migracija ėjo į `vaqzleubdim` (riko8825's Project), Vercel rodo į `aqppyvamzdjydnfpgccu` (projektas "Empirra", shared su Veriva). Paleista teisingame.
+3. **Resend "domain not verified"** — Vercel raktas iš kitos paskyros; atnaujintas + redeploy (env reikalauja redeploy).
+4. **Bug "SEKCIJA 9 IŠ 8 / 113%"** — goToStep clamp [0, len-1].
+5. **1→3 consent checkbox** (privatumo* + naujienlaiškiai + rinkodara, kaip user pageidavo).
+6. **Email logotipas + brand spalvos** (cyan akcento linija).
+
+**User-pataisymai**: hero spalva (cyan→balta), dviguba rodyklė, consent 3 checkbox, email logotipas.
+
+### Kas liko / nepatvirtinta
+
+- **🟡 Scoring matrica NEpatvirtinta teisiškai** — balai DRAFT, [docs/bdar-scoring-matrica.md](docs/bdar-scoring-matrica.md) laukia MasterLegal review (kritiniai kl., „sena/formali"=4 balas, slenksčiai 80/60/40).
+- **🟡 Email logotipas vizualiai nepatikrintas** — Playwright peržiūra nepavyko, test email išsiųstas (user turi patvirtinti Gmail).
+- **🟡 Q41 multi-select** — user pradėjo klausti ar Q41 (dokumentai įvertinimui) turi būti multi-select, liko neišspręsta (pertrauktas).
+- **🟡 UX rizika** — pirmas variantas visada „taip" → per lengva netyčia 100% (palikta sąmoningai, be įspėjimo).
+- **🟡 KI-014** — rate limit per-isolate Edge (cost-DoS limitacija, dokumentuota).
+
+### Kitas žingsnis
+
+1. **User patvirtina email logotipą** Gmail'e (LOGO TEST UAB laiškas) — ar dydis/spalvos OK.
+2. **Scoring teisinis review** — MasterLegal peržiūri docs/bdar-scoring-matrica.md, balai koreguojami lib/bdar-questions.ts.
+3. **Q41 multi-select sprendimas** — jei reikia, dokumentai-ivertinimui → multi (lib/bdar-questions.ts + bdar-questions-data.js + scoring NON_SCORED).
+
+### Production verifikacija (live)
+
+| Test | Statusas |
+|---|---|
+| `/bdar-auditas` → 200, 42 kl./8 sekcijos | ✅ |
+| Endpoint POST (taip→100%, ne→0%, mišrus→tarpinis) | ✅ |
+| E2E naršyklėje: wizard→consent(3 checkbox)→submit→success | ✅ |
+| Supabase insert `bdar_audit_responses` (`aqppyvamzdjydnfpgccu`) | ✅ |
+| Email klientui + Veriva notif (Resend, veriva.lt verified) | ✅ |
+| Email logotipas `logo-email.png` → 200 | ✅ (vizualiai user tvirtina) |
+| Newsletter consent → `newsletter_subscribers` upsert | ✅ |
+
+---
+
+## Sesija #23: 2026-05-29 — prod-health-404-env-fix
 
 ### Ką padarėme
 

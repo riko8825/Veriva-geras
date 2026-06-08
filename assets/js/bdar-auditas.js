@@ -129,6 +129,8 @@
 
     var err = document.createElement('p');
     err.className = 'ba-q-error';
+    err.id = 'qerr-' + q.id;
+    err.setAttribute('role', 'alert'); // screen reader praneša kai tekstas pasirodo
     err.textContent = 'Pasirinkite atsakymą';
     box.appendChild(err);
 

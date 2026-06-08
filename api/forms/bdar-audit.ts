@@ -156,8 +156,9 @@ export default async function handler(req: Request): Promise<Response> {
   try {
     return await handleRequest(req)
   } catch (e) {
+    // P2: NEatskleidžiam vidinės klaidos (env var pavadinimų) viešam atsakymui
     console.error('[bdar-audit] FATAL', e instanceof Error ? e.stack : e)
-    return jsonResponse(500, { error: 'Vidinė klaida', detail: e instanceof Error ? e.message : String(e) })
+    return jsonResponse(500, { error: 'Vidinė klaida' })
   }
 }
 
@@ -290,7 +291,8 @@ async function handleRequest(req: Request): Promise<Response> {
     console.error('[bdar-audit] notify email failed', e instanceof Error ? e.message : e)
   }
 
-  void log({
+  // P1: AWAIT (ne void) — Edge runtime po return užšaldo isolate, fire-and-forget log dingsta
+  await log({
     workflow: 'bdar-audit', status: 'success', request_id: requestId, step: 'complete',
     output: { compliancePct: score.compliancePct, riskLevel: score.riskLevel, gaps: score.gaps.length, emailSent: clientEmailSent, aiModel },
     duration_ms: payload.meta?.durationMs,

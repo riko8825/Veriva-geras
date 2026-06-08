@@ -13,6 +13,14 @@ Uždarytus issues perkelti į `## Išspręsta` skyrių (ne trinti).
 
 ## Aktyvūs issues
 
+### KI-014 — BDAR audito endpoint rate limit per-isolate (Edge)
+- **SLA:** 🟡 Medium
+- **Paveiktas blokas:** `api/forms/bdar-audit.ts` + `lib/ratelimit.ts`
+- **Statusas:** Žinoma limitacija (ne defektas)
+- **Aprašas:** Rate limit (3/min per IP) naudoja in-memory `Map`, kuris Edge runtime gyvuoja per isolate. Vercel sukuria daug isolate'ų lygiagrečiai → faktiškai „3/min per isolate". Atakuotojas su lygiagrečiomis užklausomis gali apeiti ir pumpuoti OpenAI + Resend kaštus.
+- **Mitigacija dabar:** stabdo trivialų loop'ą iš vieno kliento. Honeypot + origin check papildo.
+- **Tikras fix (ateičiai):** persistent rate-limit per Supabase (atomic upsert su langu) arba Upstash/Vercel KV.
+
 ### KI-001 — Blog placeholder linkai veda į 404 (4/6 pataisyta)
 - **SLA:** 🟠 High
 - **Paveiktas blokas:** `index.html` blog teaser + `blog.html` listing

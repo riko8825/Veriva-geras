@@ -229,6 +229,7 @@ async function handleRequest(req: Request): Promise<Response> {
   // 4. Supabase insert (best-effort — neblokuoja email klientui)
   let ipHash: string | null = null
   try { ipHash = await hashIp(clientIp) } catch { ipHash = null } // IP_HASH_SALT trūksta → nesaugom IP (data minimization)
+  let dbStatus = 'ok' // DIAGNOSTIKA — laikina (pašalinti po DB patvirtinimo)
   try {
     const { supabase } = await import('../../lib/supabase')
     const { error } = await supabase.from('bdar_audit_responses').insert({
@@ -253,8 +254,9 @@ async function handleRequest(req: Request): Promise<Response> {
       user_agent: payload.meta?.ua ?? req.headers.get('user-agent') ?? null,
       source: payload.meta?.source ?? 'bdar-auditas',
     })
-    if (error) console.error('[bdar-audit] supabase insert error', error.message)
+    if (error) { dbStatus = 'err:' + error.message; console.error('[bdar-audit] supabase insert error', error.message) }
   } catch (e) {
+    dbStatus = 'fatal:' + (e instanceof Error ? e.message : String(e))
     console.error('[bdar-audit] supabase unavailable', e instanceof Error ? e.message : e)
   }
 
@@ -301,7 +303,7 @@ async function handleRequest(req: Request): Promise<Response> {
     return jsonResponse(200, { ok: true, emailSent: false, message: 'Atsakymai gauti. Susisieksime per 24 val.' })
   }
 
-  return jsonResponse(200, { ok: true, emailSent: true })
+  return jsonResponse(200, { ok: true, emailSent: true, dbStatus })
 }
 
 function randomId(): string {

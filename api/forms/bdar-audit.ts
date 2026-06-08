@@ -93,13 +93,14 @@ const BRAND_WRAP = (inner: string): string => `<!DOCTYPE html><html lang="lt"><h
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f8f7f4;padding:24px 0">
 <tr><td align="center">
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#fff;border-radius:14px;overflow:hidden;border:1px solid rgba(7,17,31,.08)">
-<tr><td style="background:#07111f;padding:24px 32px">
-<span style="font-family:'Syne',Arial,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.04em">VERIVA</span>
+<tr><td style="background:#07111f;padding:26px 32px;border-bottom:2px solid #00b4d8">
+<img src="https://veriva.lt/assets/img/logo-email.png" alt="Veriva" height="30" style="display:block;height:30px;width:auto;border:0">
 </td></tr>
 <tr><td style="padding:32px">${inner}</td></tr>
-<tr><td style="padding:20px 32px;background:#f3f2ee;font-size:12px;color:#837e72;line-height:1.6">
-Veriva UAB · <a href="https://veriva.lt" style="color:#1a47cc;text-decoration:none">veriva.lt</a> · BDAR atitiktis ir kibernetinis saugumas<br>
-Tai automatinis pirminis orientacinis įvertinimas, ne teisinė išvada ar auditas.
+<tr><td style="padding:20px 32px;background:#f3f2ee;font-size:12px;color:#837e72;line-height:1.6;border-top:1px solid rgba(7,17,31,.06)">
+<strong style="color:#07111f">Veriva UAB</strong> · <a href="https://veriva.lt" style="color:#1a47cc;text-decoration:none">veriva.lt</a><br>
+Duomenų apsauga (BDAR) ir kibernetinis saugumas · Teisė + IT vienoje komandoje<br>
+<span style="color:#a8a399">Tai automatinis pirminis orientacinis įvertinimas, ne teisinė išvada ar auditas.</span>
 </td></tr>
 </table></td></tr></table></body></html>`
 

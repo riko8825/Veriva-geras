@@ -34,7 +34,9 @@ const JSON_HEADERS = { 'Content-Type': 'application/json; charset=utf-8' }
 interface Payload {
   answers?: Answers
   comments?: Record<string, string>
-  consent?: boolean // P2-1: realus sutikimo įrodymas
+  consent?: boolean // P2-1: realus sutikimo įrodymas (privalomas)
+  consentNewsletter?: boolean // naujienlaiškiai (neprivalomas)
+  consentMarketing?: boolean // tiesioginė rinkodara (neprivalomas)
   meta?: { durationMs?: number; ua?: string; source?: string }
   website?: string // honeypot
 }
@@ -255,6 +257,13 @@ async function handleRequest(req: Request): Promise<Response> {
       source: payload.meta?.source ?? 'bdar-auditas',
     })
     if (error) console.error('[bdar-audit] supabase insert error', error.message)
+
+    // Newsletter — jei klientas sutiko (atskiras consent)
+    if (payload.consentNewsletter === true) {
+      const { error: nlErr } = await supabase.from('newsletter_subscribers')
+        .upsert({ email, source: 'bdar-auditas', confirmed: true, confirmed_at: new Date().toISOString() }, { onConflict: 'email' })
+      if (nlErr) console.error('[bdar-audit] newsletter upsert error', nlErr.message)
+    }
   } catch (e) {
     console.error('[bdar-audit] supabase unavailable', e instanceof Error ? e.message : e)
   }

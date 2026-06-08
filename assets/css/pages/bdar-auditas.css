@@ -195,9 +195,11 @@ textarea.ba-input{min-height:90px;resize:vertical;line-height:1.55}
 }
 .ba-consent-inner .ba-lead{color:var(--g700);margin-bottom:28px}
 .ba-check{
-  display:flex;gap:14px;align-items:flex-start;padding:18px;border:1px solid var(--border2);
-  border-radius:12px;background:#fff;cursor:pointer;margin-bottom:28px;
+  display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border:1px solid var(--border2);
+  border-radius:12px;background:#fff;cursor:pointer;margin-bottom:12px;
 }
+.ba-check:last-of-type{margin-bottom:28px}
+.ba-req{color:var(--red);font-weight:700}
 .ba-check input{margin-top:3px;width:20px;height:20px;flex-shrink:0;accent-color:var(--blue);cursor:pointer}
 .ba-check span{font-size:.92rem;line-height:1.55;color:var(--g700)}
 .ba-check a{color:var(--blue);text-decoration:underline}

@@ -235,6 +235,8 @@
 
   // ─── Navigacija ───
   function goToStep(si) {
+    // Apsauga: niekada neperžengiam ribų [0, SECTIONS.length-1] (fix: SEKCIJA 9 IŠ 8 / 113%)
+    si = Math.max(0, Math.min(si, SECTIONS.length - 1));
     document.querySelectorAll('.ba-step').forEach(function (s) { s.classList.remove('active'); });
     var step = document.querySelector('.ba-step[data-step="' + si + '"]');
     if (step) step.classList.add('active');
@@ -267,6 +269,8 @@
       answers: answers,
       comments: comments,
       consent: !!($('ba-consent-check') && $('ba-consent-check').checked),
+      consentNewsletter: !!($('ba-consent-newsletter') && $('ba-consent-newsletter').checked),
+      consentMarketing: !!($('ba-consent-marketing') && $('ba-consent-marketing').checked),
       meta: {
         durationMs: Date.now() - startedAt,
         ua: navigator.userAgent,

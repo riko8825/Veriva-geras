@@ -46,3 +46,6 @@ debug-*.png
 
 # Claude scheduled task lock
 .claude/scheduled_tasks.lock
+
+# Laikini screenshot'ai (vizualinė QA)
+_shots/

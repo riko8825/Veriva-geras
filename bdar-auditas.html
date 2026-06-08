@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Cookiebot CMP (auto-blocking) -->
+<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="bc31b2c9-a2b7-44e8-a3a2-624b027ba646" data-blockingmode="auto" data-user-country="LT" type="text/javascript"></script>
+<meta name="description" content="Nemokamas pirminis BDAR atitikties įvertinimas online. Atsakykite į klausimus ir gaukite orientacinę išvadą į el. paštą per kelias minutes. Veriva — teisė + IT vienoje komandoje.">
+<meta name="keywords" content="BDAR auditas online, nemokamas BDAR įvertinimas, asmens duomenų apsaugos klausimynas, BDAR atitikties patikra, GDPR auditas Lietuva">
+<title>Nemokamas BDAR atitikties įvertinimas | Veriva</title>
+<meta property="og:title" content="Nemokamas BDAR atitikties įvertinimas | Veriva">
+<meta property="og:description" content="Atsakykite į klausimus ir gaukite orientacinę BDAR atitikties išvadą į el. paštą. Teisė + IT vienoje komandoje.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://veriva.lt/bdar-auditas">
+<meta property="og:locale" content="lt_LT">
+<meta property="og:site_name" content="Veriva">
+<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://veriva.lt/assets/img/logo.svg">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="author" content="Veriva UAB">
+<link rel="canonical" href="https://veriva.lt/bdar-auditas">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+<link rel="apple-touch-icon" href="/assets/img/favicon.svg">
+<meta name="theme-color" content="#07111f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/pages/bdar-auditas.css?v=20260607a">
+</head>
+<body>
+
+<!-- ─── NAV (lengva, savarankiška) ─── -->
+<nav id="ba-nav">
+  <div class="ba-nav-w">
+    <a href="/" class="ba-logo" aria-label="Veriva — pradinis">
+      <svg width="30" height="30" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#ffffff" transform="translate(8,8)"/>
+        <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="rgba(255,255,255,0.5)" transform="translate(8,8)"/>
+      </svg>
+      <span>VERIVA</span>
+    </a>
+    <a href="/" class="ba-nav-back" aria-label="Atgal į pradžią"><span aria-hidden="true">←</span> Į pradžią</a>
+  </div>
+</nav>
+
+<main id="ba-main">
+
+  <!-- ─── INTRO / START ─── -->
+  <section id="ba-intro" class="ba-stage">
+    <div class="ba-intro-inner">
+      <span class="ba-eyebrow">Nemokamas įvertinimas</span>
+      <h1>BDAR atitikties įvertinimas</h1>
+      <p class="ba-lead" id="ba-intro-text"><!-- užpildoma JS --></p>
+      <ul class="ba-intro-points">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> 42 klausimai, ~7–10 minučių</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Orientacinė išvada į Jūsų el. paštą</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Teisė + IT vienoje komandoje</li>
+      </ul>
+      <button type="button" class="ba-btn ba-btn-primary ba-btn-lg" id="ba-start">Pradėti įvertinimą</button>
+      <p class="ba-disclaimer-sm">Tai orientacinis pirminis įvertinimas, ne teisinė išvada ar auditas. Galutinė atitiktis nustatoma tik atlikus išsamų patikrinimą.</p>
+    </div>
+  </section>
+
+  <!-- ─── WIZARD ─── -->
+  <section id="ba-wizard" class="ba-stage" hidden>
+    <div class="ba-wizard-head">
+      <div class="ba-progress">
+        <div class="ba-progress-bar" id="ba-progress-bar-el" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Pildymo progresas"><span id="ba-progress-fill"></span></div>
+        <div class="ba-progress-meta">
+          <span id="ba-step-label">Sekcija 1</span>
+          <span id="ba-step-count">0%</span>
+        </div>
+      </div>
+    </div>
+    <form id="ba-form" novalidate>
+      <div id="ba-steps"><!-- sekcijos renderinamos JS --></div>
+
+      <!-- Honeypot anti-spam -->
+      <div class="ba-hp" aria-hidden="true">
+        <label>Nepildykite šio laukelio<input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"></label>
+      </div>
+
+      <div class="ba-nav-btns">
+        <button type="button" class="ba-btn ba-btn-ghost" id="ba-prev" hidden><span aria-hidden="true">←</span> Atgal</button>
+        <button type="button" class="ba-btn ba-btn-primary" id="ba-next">Toliau <span aria-hidden="true">→</span></button>
+        <button type="submit" class="ba-btn ba-btn-primary" id="ba-submit" hidden>Gauti išvadą</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- ─── CONSENT + SUBMIT (paskutinis žingsnis prieš siuntimą) ─── -->
+  <section id="ba-consent" class="ba-stage" hidden>
+    <div class="ba-consent-inner">
+      <h2>Beveik baigta</h2>
+      <p class="ba-lead">Įvertinsime Jūsų atsakymus ir atsiųsime orientacinę BDAR atitikties išvadą į el. paštą.</p>
+      <label class="ba-check">
+        <input type="checkbox" id="ba-consent-check" required>
+        <span>Sutinku, kad Veriva tvarkytų mano pateiktus duomenis šios užklausos administravimui ir su manimi susisiektų. Susipažinau su <a href="/privatumas" target="_blank" rel="noopener">privatumo politika</a>.</span>
+      </label>
+      <div class="ba-consent-btns">
+        <button type="button" class="ba-btn ba-btn-ghost" id="ba-consent-back">← Atgal</button>
+        <button type="button" class="ba-btn ba-btn-primary ba-btn-lg" id="ba-consent-submit" disabled>Gauti išvadą →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── LOADING ─── -->
+  <section id="ba-loading" class="ba-stage" aria-live="assertive" aria-atomic="true" hidden>
+    <div class="ba-loading-inner">
+      <div class="ba-spinner" aria-hidden="true"></div>
+      <h2>Vertiname Jūsų atsakymus…</h2>
+      <p class="ba-lead">Tai užtruks kelias akimirkas. Neuždarykite lango.</p>
+    </div>
+  </section>
+
+  <!-- ─── SUCCESS ─── -->
+  <section id="ba-success" class="ba-stage" hidden>
+    <div class="ba-success-inner">
+      <div class="ba-success-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h2>Išvada išsiųsta</h2>
+      <p class="ba-lead" id="ba-success-text">Orientacinę BDAR atitikties išvadą išsiuntėme į Jūsų nurodytą el. paštą. Patikrinkite ir „šlamšto" aplanką.</p>
+      <a href="/" class="ba-btn ba-btn-primary">Grįžti į pradžią</a>
+    </div>
+  </section>
+
+  <!-- ─── ERROR ─── -->
+  <section id="ba-error" class="ba-stage" hidden>
+    <div class="ba-error-inner">
+      <h2>Įvyko klaida</h2>
+      <p class="ba-lead" id="ba-error-text">Nepavyko apdoroti užklausos. Bandykite dar kartą arba susisiekite tiesiogiai.</p>
+      <button type="button" class="ba-btn ba-btn-primary" id="ba-retry">Bandyti dar kartą</button>
+      <a href="/#kontaktai" class="ba-btn ba-btn-ghost">Susisiekti tiesiogiai</a>
+    </div>
+  </section>
+
+</main>
+
+<footer id="ba-footer">
+  <p>© <span id="ba-year"></span> Veriva UAB · <a href="/privatumas">Privatumo politika</a> · <a href="/slapukai">Slapukai</a></p>
+</footer>
+
+<script src="/assets/js/bdar-questions-data.js?v=20260607a"></script>
+<script src="/assets/js/bdar-auditas.js?v=20260607a"></script>
+</body>
+</html>

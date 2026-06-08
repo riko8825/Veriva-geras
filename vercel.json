@@ -6,6 +6,7 @@
   "builds": [
     { "src": "api/forms/contact.ts",                       "use": "@vercel/node", "config": { "maxDuration": 30 } },
     { "src": "api/forms/audit-request.ts",                 "use": "@vercel/node", "config": { "maxDuration": 30 } },
+    { "src": "api/forms/bdar-audit.ts",                     "use": "@vercel/node", "config": { "maxDuration": 60 } },
     { "src": "api/internal/health.ts",                     "use": "@vercel/node", "config": { "maxDuration": 10 } },
     { "src": "api/automations/blog-gen/route.ts",          "use": "@vercel/node", "config": { "maxDuration": 90 } },
     { "src": "api/automations/blog-approve/route.ts",      "use": "@vercel/node", "config": { "maxDuration": 60 } },
@@ -25,7 +26,8 @@
     { "source": "/api/automations/telegram-webhook", "destination": "/api/automations/telegram-webhook/route.ts" },
     { "source": "/api/internal/health",              "destination": "/api/internal/health.ts" },
     { "source": "/api/forms/contact",                "destination": "/api/forms/contact.ts" },
-    { "source": "/api/forms/audit-request",          "destination": "/api/forms/audit-request.ts" }
+    { "source": "/api/forms/audit-request",          "destination": "/api/forms/audit-request.ts" },
+    { "source": "/api/forms/bdar-audit",              "destination": "/api/forms/bdar-audit.ts" }
   ],
   "crons": [
     { "path": "/api/automations/blog-gen", "schedule": "0 8 * * 2,4" }

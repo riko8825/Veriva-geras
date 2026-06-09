@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 480" role="img" aria-labelledby="diagram-title diagram-desc">
+  <title id="diagram-title">Duomenų pažeidimo reagavimo 6 etapų schema pagal BDAR</title>
+  <desc id="diagram-desc">Schema vaizduoja šešis asmens duomenų pažeidimo reagavimo etapus: aptikimas ir fiksavimas, izoliavimas ir žalos stabdymas, rizikos vertinimas, pranešimas VDAI per 72 valandas, duomenų subjektų informavimas ir dokumentavimas pažeidimų registre.</desc>
+
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#07111f"/>
+      <stop offset="100%" stop-color="#0c1a2e"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1100" height="480" rx="12" fill="url(#bg2)"/>
+
+  <!-- Header -->
+  <text x="48" y="56" fill="#e8b84b" font-family="system-ui, sans-serif" font-size="13" font-weight="800" letter-spacing="3">REAGAVIMO PROTOKOLAS</text>
+  <text x="48" y="92" fill="#fff" font-family="Syne, system-ui, sans-serif" font-size="30" font-weight="800" letter-spacing="-1">6 etapai nuo pažeidimo iki dokumentavimo</text>
+
+  <!-- Timeline line -->
+  <line x1="100" y1="240" x2="1000" y2="240" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+  <!-- 72h marker band over steps 1-4 -->
+  <rect x="78" y="150" width="540" height="180" rx="8" fill="rgba(220,38,38,0.06)" stroke="rgba(220,38,38,0.25)" stroke-width="1" stroke-dasharray="6 5"/>
+  <text x="100" y="172" fill="#fca5a5" font-family="system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="2">72 VALANDŲ LAIKOTARPIS</text>
+
+  <!-- Steps -->
+  <!-- helper geometry: 6 nodes -->
+  <g font-family="system-ui, sans-serif">
+    <!-- Step 1 -->
+    <g transform="translate(100,240)">
+      <circle cx="0" cy="0" r="26" fill="#1a47cc" stroke="#fff" stroke-width="2"/>
+      <text x="0" y="7" text-anchor="middle" fill="#fff" font-family="Syne, system-ui, sans-serif" font-size="20" font-weight="800">1</text>
+      <text x="0" y="-44" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Aptikimas</text>
+      <text x="0" y="58" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12">įrodymų</text>
+      <text x="0" y="74" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12">fiksavimas</text>
+    </g>
+    <!-- Step 2 -->
+    <g transform="translate(280,240)">
+      <circle cx="0" cy="0" r="26" fill="#1a47cc" stroke="#fff" stroke-width="2"/>
+      <text x="0" y="7" text-anchor="middle" fill="#fff" font-family="Syne, system-ui, sans-serif" font-size="20" font-weight="800">2</text>
+      <text x="0" y="-44" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Izoliavimas</text>
+      <text x="0" y="58" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12">žalos</text>
+      <text x="0" y="74" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12">stabdymas</text>
+    </g>
+    <!-- Step 3 -->
+    <g transform="translate(460,240)">
+      <circle cx="0" cy="0" r="26" fill="#1a47cc" stroke="#fff" stroke-width="2"/>
+      <text x="0" y="7" text-anchor="middle" fill="#fff" font-family="Syne, system-ui, sans-serif" font-size="20" font-weight="800">3</text>
+      <text x="0" y="-44" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Rizikos</text>
+      <text x="0" y="-28" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">vertinimas</text>
+      <text x="0" y="58" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12">ar kelia</text>
+      <text x="0" y="74" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12">riziką</text>
+    </g>
+    <!-- Step 4 (highlight red) -->
+    <g transform="translate(595,240)">
+      <circle cx="0" cy="0" r="30" fill="#dc2626" stroke="#fff" stroke-width="2.5"/>
+      <text x="0" y="8" text-anchor="middle" fill="#fff" font-family="Syne, system-ui, sans-serif" font-size="22" font-weight="800">4</text>
+      <text x="0" y="-48" text-anchor="middle" fill="#fca5a5" font-size="14" font-weight="800">Pranešimas VDAI</text>
+      <text x="0" y="62" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="12">per 72 val.</text>
+    </g>
+    <!-- Step 5 -->
+    <g transform="translate(780,240)">
+      <circle cx="0" cy="0" r="26" fill="#c8962a" stroke="#fff" stroke-width="2"/>
+      <text x="0" y="7" text-anchor="middle" fill="#fff" font-family="Syne, system-ui, sans-serif" font-size="20" font-weight="800">5</text>
+      <text x="0" y="-44" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Subjektų</text>
+      <text x="0" y="-28" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">informavimas</text>
+      <text x="0" y="58" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12">jei didelė</text>
+      <text x="0" y="74" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12">rizika (34 str.)</text>
+    </g>
+    <!-- Step 6 -->
+    <g transform="translate(1000,240)">
+      <circle cx="0" cy="0" r="26" fill="#0c1a2e" stroke="#e8b84b" stroke-width="2"/>
+      <text x="0" y="7" text-anchor="middle" fill="#e8b84b" font-family="Syne, system-ui, sans-serif" font-size="20" font-weight="800">6</text>
+      <text x="0" y="-44" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Dokumentavimas</text>
+      <text x="0" y="58" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12">pažeidimų</text>
+      <text x="0" y="74" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="12">registras</text>
+    </g>
+  </g>
+
+  <!-- VERIVA wordmark -->
+  <text x="48" y="448" fill="rgba(255,255,255,0.38)" font-family="system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="3">VERIVA · BDAR 33–34 STR. · INCIDENTŲ VALDYMAS</text>
+</svg>

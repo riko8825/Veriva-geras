@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="hero-title hero-desc">
+  <title id="hero-title">Duomenų pažeidimo valdymas — 72 valandos pranešti VDAI pagal BDAR 33 straipsnį</title>
+  <desc id="hero-desc">Iliustracija vaizduoja 72 valandų laikrodį nuo asmens duomenų saugumo pažeidimo sužinojimo iki pranešimo Valstybinei duomenų apsaugos inspekcijai bei šešis reagavimo etapus pagal BDAR 33 ir 34 straipsnius.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#07111f"/>
+      <stop offset="100%" stop-color="#0c1a2e"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0.22" cy="0.3" r="0.6">
+      <stop offset="0%" stop-color="#dc2626" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#dc2626" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0.82" cy="0.72" r="0.55">
+      <stop offset="0%" stop-color="#2255e0" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#2255e0" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="clockGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a47cc"/>
+      <stop offset="100%" stop-color="#0c1a2e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow1)"/>
+  <rect width="1200" height="630" fill="url(#glow2)"/>
+
+  <!-- Grid pattern (subtle) -->
+  <g stroke="rgba(255,255,255,0.04)" stroke-width="1" fill="none">
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="200" x2="1200" y2="200"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="0" y1="400" x2="1200" y2="400"/>
+    <line x1="0" y1="500" x2="1200" y2="500"/>
+    <line x1="200" y1="0" x2="200" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="800" y1="0" x2="800" y2="630"/>
+    <line x1="1000" y1="0" x2="1000" y2="630"/>
+  </g>
+
+  <!-- 72h clock dial left -->
+  <g transform="translate(290,315)">
+    <circle cx="0" cy="0" r="170" fill="url(#clockGrad)" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+    <circle cx="0" cy="0" r="170" fill="none" stroke="rgba(220,38,38,0.45)" stroke-width="6" stroke-dasharray="800 1068" stroke-dashoffset="-267" transform="rotate(-90)"/>
+    <!-- Ticks -->
+    <g stroke="rgba(255,255,255,0.25)" stroke-width="2">
+      <line x1="0" y1="-150" x2="0" y2="-134"/>
+      <line x1="150" y1="0" x2="134" y2="0"/>
+      <line x1="0" y1="150" x2="0" y2="134"/>
+      <line x1="-150" y1="0" x2="-134" y2="0"/>
+    </g>
+    <!-- Hands -->
+    <line x1="0" y1="0" x2="0" y2="-104" stroke="#e8b84b" stroke-width="6" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="86" y2="44" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="0" cy="0" r="9" fill="#e8b84b"/>
+    <!-- Center label -->
+    <text x="0" y="78" text-anchor="middle" fill="#fff" font-family="Syne, system-ui, sans-serif" font-size="58" font-weight="800" letter-spacing="-2">72</text>
+    <text x="0" y="108" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-family="system-ui, sans-serif" font-size="15" font-weight="700" letter-spacing="3">VALANDOS</text>
+  </g>
+
+  <!-- Right side: title + tiers -->
+  <g transform="translate(560,108)">
+    <text x="0" y="0" fill="#e8b84b" font-family="system-ui, sans-serif" font-size="13" font-weight="800" letter-spacing="3">BDAR 33 STRAIPSNIS · INCIDENTŲ VALDYMAS</text>
+    <text x="0" y="52" fill="#fff" font-family="Syne, system-ui, sans-serif" font-size="44" font-weight="800" letter-spacing="-1">Duomenų pažeidimas</text>
+    <text x="0" y="86" fill="rgba(255,255,255,0.55)" font-family="system-ui, sans-serif" font-size="16">Nuo sužinojimo — laikrodis pradeda tikti</text>
+
+    <!-- Tier 1 -->
+    <g transform="translate(0,128)">
+      <rect x="0" y="0" width="500" height="62" rx="8" fill="rgba(34,85,224,0.1)" stroke="rgba(34,85,224,0.4)" stroke-width="1.5"/>
+      <circle cx="34" cy="31" r="15" fill="rgba(34,85,224,0.25)" stroke="#93c5fd" stroke-width="1.5"/>
+      <text x="34" y="37" text-anchor="middle" fill="#fff" font-family="Syne, system-ui, sans-serif" font-size="15" font-weight="800">1</text>
+      <text x="64" y="38" fill="#fff" font-family="system-ui, sans-serif" font-size="17" font-weight="700">Aptikimas · izoliavimas · vertinimas</text>
+    </g>
+    <!-- Tier 2 -->
+    <g transform="translate(0,202)">
+      <rect x="0" y="0" width="500" height="62" rx="8" fill="rgba(220,38,38,0.1)" stroke="rgba(220,38,38,0.45)" stroke-width="1.5"/>
+      <circle cx="34" cy="31" r="15" fill="rgba(220,38,38,0.25)" stroke="#fca5a5" stroke-width="1.5"/>
+      <text x="34" y="37" text-anchor="middle" fill="#fff" font-family="Syne, system-ui, sans-serif" font-size="15" font-weight="800">2</text>
+      <text x="64" y="38" fill="#fff" font-family="system-ui, sans-serif" font-size="17" font-weight="700">Pranešimas VDAI per 72 val.</text>
+    </g>
+    <!-- Tier 3 -->
+    <g transform="translate(0,276)">
+      <rect x="0" y="0" width="500" height="62" rx="8" fill="rgba(200,150,42,0.1)" stroke="rgba(200,150,42,0.4)" stroke-width="1.5"/>
+      <circle cx="34" cy="31" r="15" fill="rgba(200,150,42,0.25)" stroke="#e8b84b" stroke-width="1.5"/>
+      <text x="34" y="37" text-anchor="middle" fill="#fff" font-family="Syne, system-ui, sans-serif" font-size="15" font-weight="800">3</text>
+      <text x="64" y="38" fill="#fff" font-family="system-ui, sans-serif" font-size="17" font-weight="700">Subjektų informavimas · dokumentavimas</text>
+    </g>
+  </g>
+
+  <!-- VERIVA wordmark bottom -->
+  <g transform="translate(560,500)">
+    <text x="0" y="0" fill="rgba(255,255,255,0.4)" font-family="system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="3">VERIVA · BDAR ATITIKTIS · KIBERNETINIS SAUGUMAS</text>
+  </g>
+</svg>

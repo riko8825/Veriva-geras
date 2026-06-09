@@ -274,6 +274,7 @@ async function handleRequest(req: Request): Promise<Response> {
   const notifyTo = process.env.RESEND_NOTIFY_EMAIL ?? 'info@veriva.lt'
 
   let clientEmailSent = false
+  let emailErrDebug = ''
   try {
     await sendEmail({
       to: email,
@@ -284,9 +285,12 @@ async function handleRequest(req: Request): Promise<Response> {
     })
     clientEmailSent = true
   } catch (e) {
+    emailErrDebug = errMsg(e)
     console.error('[bdar-audit] client email failed', errMsg(e))
     void log({ workflow: 'bdar-audit', status: 'error', request_id: requestId, step: 'email-client', error_code: 'EMAIL_FAIL', error: errMsg(e) })
   }
+  // LAIKINAS DEBUG — pašalinti po diagnozės
+  const debugMode = new URL(req.url).searchParams.get('debug') === 'veriva2026'
 
   // Veriva notifikacija (best-effort)
   try {
@@ -310,10 +314,10 @@ async function handleRequest(req: Request): Promise<Response> {
 
   if (!clientEmailSent) {
     // Lead išsaugotas, bet email nepavyko — pranešam, kad susisieksim
-    return jsonResponse(200, { ok: true, emailSent: false, message: 'Atsakymai gauti. Susisieksime per 24 val.' })
+    return jsonResponse(200, { ok: true, emailSent: false, message: 'Atsakymai gauti. Susisieksime per 24 val.', ...(debugMode ? { _debug: { emailErr: emailErrDebug, from, notifyTo } } : {}) })
   }
 
-  return jsonResponse(200, { ok: true, emailSent: true })
+  return jsonResponse(200, { ok: true, emailSent: true, ...(debugMode ? { _debug: { from, notifyTo } } : {}) })
 }
 
 function randomId(): string {

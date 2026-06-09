@@ -52,12 +52,6 @@
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/seo/apple-irenginiu-valdymo-mokymai</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://veriva.lt/seo/bdar-6-straipsnis</loc>
     <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
@@ -78,12 +72,6 @@
   <url>
     <loc>https://veriva.lt/seo/bdar-buhalterijoms</loc>
     <lastmod>2026-05-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://veriva.lt/seo/bdar-dokumentai-monei</loc>
-    <lastmod>2026-06-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -112,18 +100,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/seo/bdar-paslaugos-mon-ms</loc>
-    <lastmod>2026-06-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://veriva.lt/seo/bdar-paslaugos-verslui</loc>
-    <lastmod>2026-06-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://veriva.lt/seo/dpo-paslaugos</loc>
     <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
@@ -136,25 +112,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/seo/duomenu-apsaugos-pareiguno-paslaugos-bvpz</loc>
-    <lastmod>2026-05-23</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://veriva.lt/seo/duomenu-apsaugos-poveikio-vertinimas</loc>
-    <lastmod>2026-05-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://veriva.lt/seo/duomenu-perdavimo-tinklo-prieziura</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://veriva.lt/seo/duomenu-privatumo-politika</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -166,43 +124,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/seo/informacijos-saugumo-politika</loc>
-    <lastmod>2026-05-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://veriva.lt/seo/internal-gdpr-documentation</loc>
-    <lastmod>2026-06-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://veriva.lt/seo/ivairoves-ir-itraukties-politika</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://veriva.lt/seo/kas-yra-dpo</loc>
-    <lastmod>2026-06-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://veriva.lt/seo/kibernetines-higienos-mokymai</loc>
-    <lastmod>2026-06-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://veriva.lt/seo/kibernetinio-saugumo-istatymas-aktuali-redakcija</loc>
-    <lastmod>2026-06-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://veriva.lt/seo/kibernetinio-saugumo-istatymas-e-tar</loc>
     <lastmod>2026-06-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -210,18 +132,6 @@
   <url>
     <loc>https://veriva.lt/seo/kibernetinio-saugumo-mokymai</loc>
     <lastmod>2026-05-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://veriva.lt/seo/nacionalinio-kibernetinio-saugumo-centro-mokymai</loc>
-    <lastmod>2026-05-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://veriva.lt/seo/nis2-atitiktis</loc>
-    <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -250,12 +160,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/seo/public-it-technologiju-proverzis-ir-saugumas</loc>
-    <lastmod>2026-05-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://veriva.lt/seo/registru-centro-duomenu-nutekejimas-ka-daryti</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -270,12 +174,6 @@
   <url>
     <loc>https://veriva.lt/seo/tis2-istatymas</loc>
     <lastmod>2026-05-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://veriva.lt/seo/valdymo-sistemos-kibernetinio-saugumo-auditas</loc>
-    <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -15,7 +15,7 @@ window.BDAR_SECTIONS = [
     title: 'Bendrieji duomenys apie organizaciją',
     questions: [
       { n: 1, id: 'org-pavadinimas', type: 'open', required: true, text: 'Organizacijos pavadinimas.' },
-      { n: 2, id: 'kontaktinis-asmuo', type: 'open', required: true, text: 'Kontaktinis asmuo, pareigos, el. paštas ir telefono numeris.', help: 'Šiuo el. paštu atsiųsime Jūsų išvadą.' },
+      { n: 2, id: 'kontaktinis-asmuo', type: 'open', required: true, text: 'Kontaktinis asmuo, pareigos, el. paštas ir telefono numeris.', help: 'Nurodytu el. paštu atsiųsime Jūsų išvadą. Pateiktus kontaktinius duomenis tvarkome vadovaudamiesi mūsų privatumo politika ir Jūsų sutikimu, išreikštu pateikiant atsakymus į šį klausimyną.' },
       { n: 3, id: 'veikla', type: 'single', text: 'Kokią veiklą vykdo Jūsų organizacija?', options: [
         ['paslaugos','Paslaugos'],['prekyba','Prekyba'],['el-prekyba','Elektroninė prekyba'],['gamyba','Gamyba'],
         ['svietimas','Švietimas / mokymai'],['it','IT / technologijos'],['personalas','Personalo atranka'],
@@ -108,15 +108,18 @@ window.BDAR_SECTIONS = [
     id: 'saugumas',
     title: 'Informacinis saugumas ir organizacinės priemonės',
     questions: [
-      { n: 25, id: 'duomenu-saugojimo-vieta', type: 'single', text: 'Kur daugiausia saugomi organizacijos tvarkomi asmens duomenys?', options: [
+      { n: 25, id: 'duomenu-saugojimo-vieta', type: 'multi', text: 'Kur saugomi organizacijos tvarkomi asmens duomenys?', options: [
         ['kompiuteriai','Darbuotojų kompiuteriuose'],['serveris','Vietiniame serveryje'],['debesija','Debesijos paslaugose'],
         ['tiekejai','Tiekėjų sistemose'],['el-pastas','El. pašto dėžutėse'],['popierines','Popierinėse bylose'],['misriai','Mišriai'],['nezinau','Nežinau'] ] },
       { n: 26, id: 'prieigos-kontrole', type: 'single', text: 'Ar prieigos prie sistemų ir dokumentų suteikiamos pagal darbuotojų funkcijas, t. y. tik tiems asmenims, kuriems duomenys reikalingi darbui?', options: [
         ['taip-dokumentuota','Taip, dokumentuota ir taikoma'],['taip-neformaliai','Taip, bet neformaliai'],['ne','Ne'],['nezinau','Nežinau'] ] },
       { n: 27, id: 'individualios-paskyros', type: 'single', text: 'Ar darbuotojai naudoja individualias paskyras ir slaptažodžius, o bendros paskyros nėra naudojamos arba yra ribojamos?', options: [
         ['taip','Taip'],['is-dalies','Iš dalies'],['ne','Ne'],['nezinau','Nežinau'] ] },
-      { n: 28, id: 'it-saugumo-priemones', type: 'single', text: 'Ar taikomos bazinės IT saugumo priemonės: slaptažodžių taisyklės, MFA / dviejų veiksnių autentifikavimas, automatinis ekrano užrakinimas, antivirusinė apsauga, reguliarūs atnaujinimai?', options: [
-        ['taip-dauguma','Taip, dauguma priemonių taikomos'],['dalis','Taikoma tik dalis'],['ne','Ne'],['nezinau','Nežinau'] ] },
+      { n: 28, id: 'it-saugumo-priemones', type: 'multi', text: 'Kurios bazinės IT saugumo priemonės taikomos organizacijoje?', options: [
+        ['slaptazodziai','Slaptažodžių taisyklės'],['mfa','MFA / dviejų veiksnių autentifikavimas'],
+        ['ekrano-uzrakinimas','Automatinis ekrano užrakinimas'],['antivirusine','Antivirusinė apsauga'],
+        ['atnaujinimai','Reguliarūs atnaujinimai'],['ne','Netaikomos'],['nezinau','Nežinau'] ],
+        comment: 'Kita — nurodykite kitas taikomas priemones (jei yra).' },
       { n: 29, id: 'atsargines-kopijos', type: 'single', text: 'Ar daromos atsarginės duomenų kopijos ir ar organizacija žino, kaip prireikus atkurti duomenis?', options: [
         ['taip-testuota','Taip, kopijos daromos ir atkūrimas testuotas'],['taip-netestuota','Kopijos daromos, bet atkūrimas netestuotas'],['ne','Ne'],['nezinau','Nežinau'] ] },
       { n: 30, id: 'incidentu-tvarka', type: 'single', text: 'Ar organizacija turi incidentų / asmens duomenų saugumo pažeidimų registravimo ir reagavimo tvarką?', options: [
@@ -150,7 +153,7 @@ window.BDAR_SECTIONS = [
     title: 'Paslaugų poreikis',
     questions: [
       { n: 39, id: 'turimi-dokumentai', type: 'multi', text: 'Kokius BDAR / duomenų apsaugos dokumentus organizacija jau turi?', options: [
-        ['privatumo-politika','Privatumo politika'],['darbuotoju-pranesimas','Darbuotojų privatumo pranešimas'],
+        ['tvarkymo-aprasas','Asmens duomenų tvarkymo aprašas / politika (vidaus)'],['privatumo-politika','Privatumo politika (viešai svetainėje)'],['darbuotoju-pranesimas','Darbuotojų privatumo pranešimas'],
         ['kandidatu-pranesimas','Kandidatų privatumo pranešimas'],['slapuku-politika','Slapukų politika'],
         ['sutikimu-formos','Sutikimų formos'],['veiklos-irasai','Duomenų tvarkymo veiklos įrašai'],
         ['saugojimo-terminai','Duomenų saugojimo terminų sąrašas'],['dpa-sutartys','Duomenų tvarkymo sutartys su tiekėjais'],

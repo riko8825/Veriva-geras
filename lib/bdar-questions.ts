@@ -479,18 +479,19 @@ export const SECTIONS: Section[] = [
         n: 25,
         id: 'duomenu-saugojimo-vieta',
         section: 'saugumas',
-        type: 'single',
-        text: 'Kur daugiausia saugomi organizacijos tvarkomi asmens duomenys?',
-        // Vieta pati savaime nėra gerai/blogai — informacinis klausimas.
+        type: 'multi',
+        text: 'Kur saugomi organizacijos tvarkomi asmens duomenys?',
+        // Vieta pati savaime nėra gerai/blogai — informacinis klausimas (NON_SCORED).
+        // Multi: organizacija realiai naudoja kelias duomenų saugojimo vietas / sistemas.
         options: [
-          { value: 'kompiuteriai', label: 'Darbuotojų kompiuteriuose', score: 5 },
-          { value: 'serveris', label: 'Vietiniame serveryje', score: 5 },
-          { value: 'debesija', label: 'Debesijos paslaugose', score: 5 },
-          { value: 'tiekejai', label: 'Tiekėjų sistemose', score: 5 },
-          { value: 'el-pastas', label: 'El. pašto dėžutėse', score: 5 },
-          { value: 'popierines', label: 'Popierinėse bylose', score: 5 },
-          { value: 'misriai', label: 'Mišriai', score: 5 },
-          { value: 'nezinau', label: 'Nežinau', score: 0 },
+          { value: 'kompiuteriai', label: 'Darbuotojų kompiuteriuose' },
+          { value: 'serveris', label: 'Vietiniame serveryje' },
+          { value: 'debesija', label: 'Debesijos paslaugose' },
+          { value: 'tiekejai', label: 'Tiekėjų sistemose' },
+          { value: 'el-pastas', label: 'El. pašto dėžutėse' },
+          { value: 'popierines', label: 'Popierinėse bylose' },
+          { value: 'misriai', label: 'Mišriai' },
+          { value: 'nezinau', label: 'Nežinau' },
         ],
       },
       {
@@ -522,17 +523,22 @@ export const SECTIONS: Section[] = [
         n: 28,
         id: 'it-saugumo-priemones',
         section: 'saugumas',
-        type: 'single',
+        type: 'multi',
         weight: 2,
-        text:
-          'Ar taikomos bazinės IT saugumo priemonės: slaptažodžių taisyklės, MFA / dviejų veiksnių ' +
-          'autentifikavimas, automatinis ekrano užrakinimas, antivirusinė apsauga, reguliarūs atnaujinimai?',
+        // Multi: klientas žymi konkrečias taikomas priemones. Scoring — proporcingai
+        // pažymėtų bazinių priemonių skaičiui (žr. MULTI_SCORED_QUESTIONS lib/bdar-scoring.ts).
+        text: 'Kurios bazinės IT saugumo priemonės taikomos organizacijoje?',
         options: [
-          { value: 'taip-dauguma', label: 'Taip, dauguma priemonių taikomos', score: 10 },
-          { value: 'dalis', label: 'Taikoma tik dalis', score: 5 },
-          { value: 'ne', label: 'Ne', score: 0 },
-          { value: 'nezinau', label: 'Nežinau', score: 0 },
+          { value: 'slaptazodziai', label: 'Slaptažodžių taisyklės' },
+          { value: 'mfa', label: 'MFA / dviejų veiksnių autentifikavimas' },
+          { value: 'ekrano-uzrakinimas', label: 'Automatinis ekrano užrakinimas' },
+          { value: 'antivirusine', label: 'Antivirusinė apsauga' },
+          { value: 'atnaujinimai', label: 'Reguliarūs atnaujinimai' },
+          { value: 'ne', label: 'Netaikomos' },
+          { value: 'nezinau', label: 'Nežinau' },
         ],
+        comment: true,
+        commentLabel: 'Kita — nurodykite kitas taikomas priemones (jei yra).',
       },
       {
         n: 29,
@@ -690,7 +696,8 @@ export const SECTIONS: Section[] = [
         type: 'multi',
         text: 'Kokius BDAR / duomenų apsaugos dokumentus organizacija jau turi?',
         options: [
-          { value: 'privatumo-politika', label: 'Privatumo politika' },
+          { value: 'tvarkymo-aprasas', label: 'Asmens duomenų tvarkymo aprašas / politika (vidaus)' },
+          { value: 'privatumo-politika', label: 'Privatumo politika (viešai svetainėje)' },
           { value: 'darbuotoju-pranesimas', label: 'Darbuotojų privatumo pranešimas' },
           { value: 'kandidatu-pranesimas', label: 'Kandidatų privatumo pranešimas' },
           { value: 'slapuku-politika', label: 'Slapukų politika' },

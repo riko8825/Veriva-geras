@@ -47,13 +47,13 @@ Balai: **10** = pilnai atitinka · **5–6** = iš dalies · **4** = formaliai/p
 | 24 | Praktinis duomenų suradimas | 1 | Taip 10 / Iš dalies 5 / Ne 0 / Nežinau 0 |
 | 26 | Prieigų kontrolė pagal funkcijas | 1 | Dokumentuota 10 / Neformaliai 5 / Ne 0 / Nežinau 0 |
 | 27 | Individualios paskyros | 1 | Taip 10 / Iš dalies 5 / Ne 0 / Nežinau 0 |
-| 28 🔴 | Bazinės IT saugumo priemonės (MFA ir kt.) | **×2** | Dauguma 10 / Dalis 5 / Ne 0 / Nežinau 0 |
+| 28 🔴 | Bazinės IT saugumo priemonės (MFA ir kt.) | **×2** | **MULTI** — balas proporcingas pažymėtoms iš 5 priemonių: (pažymėta / 5) × 10. Pvz. 5/5=10, 3/5=6, 2/5=4. „Netaikomos" / „Nežinau" = 0 |
 | 29 🔴 | Atsarginės kopijos + atkūrimas | **×2** | Testuota 10 / Netestuota 6 / Ne 0 / Nežinau 0 |
 | 30 🔴 | Incidentų reagavimo tvarka | **×2** | Dokumentuota 10 / Neaišku 5 / Ne 0 / Nežinau 0 |
 | 31 | Konfidencialumo įsipareigojimai | 1 | Taip 10 / Iš dalies 5 / Ne 0 / Nežinau 0 |
 | 32 | Darbuotojų mokymai | 1 | Periodiškai 10 / Tik priėmime 5 / Ne 0 / Nežinau 0 |
 
-**Maksimalus balas:** 21 klausimas, iš jų 9 kritiniai (×2). Max = 12×10 + 9×20 = **300 balų** (jei nė vienas „netaikoma").
+**Maksimalus balas:** 20 vertinamų klausimų, iš jų 9 kritiniai (×2), 11 paprastų (×1). Max = 11×10 + 9×20 = **290 balų** (jei nė vienas „netaikoma"). Q28 — multi tipo, balas proporcingas pažymėtoms priemonėms (×2).
 
 ---
 

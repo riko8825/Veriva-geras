@@ -85,6 +85,17 @@ const RISK_FLAG_QUESTIONS: Record<string, { triggerValue: string; label: string 
   },
 }
 
+// MULTI tipo klausimai kurie VERTINAMI atitikties balais proporcingai pažymėtoms
+// "geroms" priemonėms. Balas = (pažymėta gerų / iš viso gerų) × 10 × weight.
+// "ne" / "nezinau" pažymėjimas geru nelaikomas (proporcija nedidėja).
+const MULTI_SCORED_QUESTIONS: Record<string, { goodValues: string[]; label: string }> = {
+  'it-saugumo-priemones': {
+    // 5 bazinės IT saugumo priemonės (BDAR 32 str. — tinkamos techninės priemonės)
+    goodValues: ['slaptazodziai', 'mfa', 'ekrano-uzrakinimas', 'antivirusine', 'atnaujinimai'],
+    label: 'Bazinės IT saugumo priemonės',
+  },
+}
+
 // Klausimai kurie NEvertinami atitikties balais (informaciniai / poreikio / vietos).
 // Šie eina į AI kontekstą bet ne į %.
 const NON_SCORED_QUESTIONS = new Set<string>([
@@ -139,6 +150,38 @@ export function scoreAnswers(answers: Answers): ScoringResult {
     if (flag) {
       if (answers[q.id] === flag.triggerValue) {
         riskFlags.push({ n: q.n, id: q.id, label: flag.label })
+      }
+      continue
+    }
+
+    // Multi tipo vertinami klausimai (proporcingai pažymėtoms priemonėms)
+    const multi = MULTI_SCORED_QUESTIONS[q.id]
+    if (multi) {
+      const selected = answers[q.id]
+      const picked = Array.isArray(selected) ? selected : selected ? [selected] : []
+      const goodCount = multi.goodValues.filter((v) => picked.includes(v)).length
+      const score = multi.goodValues.length > 0 ? (goodCount / multi.goodValues.length) * 10 : 0
+      const weight = q.weight ?? 1
+      const weighted = score * weight
+      const weightedMax = 10 * weight
+
+      earned += weighted
+      max += weightedMax
+
+      const agg = (sectionAgg[q.section] ??= { earned: 0, max: 0, title: sectionTitle(q.section) })
+      agg.earned += weighted
+      agg.max += weightedMax
+
+      if (score < 5) {
+        gaps.push({
+          n: q.n,
+          id: q.id,
+          section: q.section,
+          question: q.text,
+          answerLabel: goodCount > 0 ? `Taikoma ${goodCount} iš ${multi.goodValues.length} priemonių` : 'Nepažymėta priemonių',
+          weight,
+          score: Math.round(score),
+        })
       }
       continue
     }

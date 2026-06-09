@@ -17,7 +17,7 @@
 
   // El. į/išvestis
   var $ = function (id) { return document.getElementById(id); };
-  var EMAIL_RE = /[^\s@]+@[^\s@]+\.[^\s@]+/;
+  var EMAIL_RE = /[^\s@,;]+@[^\s@,;]+\.[a-zA-Z]{2,}/;
 
   // ─── Stage perjungimas ───
   var STAGES = ['ba-intro', 'ba-wizard', 'ba-consent', 'ba-loading', 'ba-success', 'ba-error'];

@@ -2,7 +2,7 @@
 
 **Pradžia**: 2026-05-09
 **Paskutinis update**: 2026-06-08 (bdar-auditas-klausimynas, s24)
-**Statusas**: 🟢 **BDAR audito klausimynas LIVE** (s24 — 42 kl. wizard + AI vertinimas + Supabase + Resend email, pilnas E2E flow production) · 🟢 6 LIVE blog pillarai + ~26 LIVE seo/* puslapiai · 🟢 SEO architecture stable · 🟢 Supabase+Resend+OpenAI Production LIVE · 🟡 blog automation RUNTIME blocked (5 Sensitive env vars) + greičiausiai ESM crash (Node endpointai) · 🟡 scoring matrica laukia MasterLegal teisinio review · 🟡 KI-012 hero SVG carry-over
+**Statusas**: 🟢 **BDAR audito klausimynas LIVE** (s24 — 42 kl. wizard + AI vertinimas + Supabase + Resend email, pilnas E2E flow production) · 🟢 8 LIVE blog straipsniai (s26) + 21 indeksuojami seo/* (s25: 17 noindex thin) · 🟢 SEO architecture stable · 🟢 Supabase+Resend+OpenAI Production LIVE · 🟡 blog automation RUNTIME blocked (5 Sensitive env vars) + greičiausiai ESM crash (Node endpointai) · 🟡 scoring matrica laukia MasterLegal teisinio review · 🟡 KI-012 hero SVG carry-over
 **Production URL**: https://veriva.lt (LIVE apex primary, www → 308 → apex) | SSL ✅
 **Paskutinis commit Veriva-geras**: `5f004d0` (s24 email logotipas). Sesijos commit'ai: `e0b5911`→`5f004d0` (10 commit'ų)
 **Vercel Domain config**: `veriva.lt` Production primary, `www.veriva.lt` 308 Permanent Redirect → apex
@@ -63,6 +63,14 @@
 | `seo/duomenu-tvarkymo-sutartis/` | 🟢 LIVE (2026-05-26 SEO Bot) | s22 rebase merge |
 | `seo/informacijos-saugumo-politika/` | 🟢 LIVE (2026-05-26 SEO Bot) | s22 rebase merge |
 | `seo/sutikimas-tvarkyti-asmens-duomenis/` | 🟢 LIVE (2026-05-27 SEO Bot) | s22 rebase merge |
+
+**Indeksavimo strategija (s25, 2026-06-09 gsc-indexing-fix)**:
+- **38 seo puslapiai „crawled, currently not indexed"** GSC'e → priežastis: naujas domenas + 38 panašūs puslapiai per 3 sav. → crawl budget taupymas (NE techninė klaida; tag'ai teisingi).
+- **noindex 17 thin/dublikatų** (`91b6323`): ~1550-1820ž. puslapiai → `noindex,follow` + išimti iš sitemap (49→32 URL). Strategija kokybė>kiekis: koncentruoti crawl trust 21 stipriam (3000ž.). Link equity teka per follow.
+- **noindex'inti**: valdymo-sistemos-kibernetinio-saugumo-auditas, internal-gdpr-documentation, kibernetinio-saugumo-istatymas-aktuali-redakcija/e-tar, duomenu-perdavimo-tinklo-prieziura, apple-irenginiu-valdymo-mokymai, nacionalinio-kibernetinio-saugumo-centro-mokymai, ivairoves-ir-itraukties-politika, informacijos-saugumo-politika, public-it-technologiju-proverzis-ir-saugumas, kibernetines-higienos-mokymai, bdar-paslaugos-mon-ms, duomenu-privatumo-politika, bdar-dokumentai-monei, bdar-paslaugos-verslui, duomenu-apsaugos-pareiguno-paslaugos-bvpz, nis2-atitiktis.
+- **UTF-8 mojibake fix** (`4aa217f`): bdar-dokumentai-monei + bdar-paslaugos-mon-ms H1/breadcrumb „ä¯monei"→„įmonei" (double-encoded `į`, generator pipeline bug).
+- **Generator carry-over (SEO-Claude-code)**: (a) encoding validacija prieš deploy, (b) uždrausti šabloną „Sužinokite, kaip…" meta desc (33/38), (c) nepublikuoti masiškai (5-8/sav. max).
+- **noindex grąžinimas**: po 4-8 sav., jei 21 stiprus indeksuojasi — nuimti palaipsniui.
 
 **SEO engine fixes 2026-05-23 (s20, riko8825/SEO-Claude-code main)**:
 1. `a7b09b4` — `src/validator/checks_content.py`: `_check_faq` skaičiavo TIK `<details>`, veriva chrome naudoja `.faq-item` → 100% LT runs HARD_BLOCK. Fix: `max(details_count, faq_item_count)`

@@ -4,6 +4,25 @@ Architektūriniai sprendimai. Kiekvienas su data, kontekstu, alternatyvomis, spr
 
 ---
 
+## 2026-06-09 — SEO indeksavimas: noindex 17 thin puslapių (kokybė>kiekis)
+
+**Kontekstas** (s25): 38 auto-generated `seo/*` puslapiai GSC'e „crawled, currently not indexed". Diagnozė (curl + content audit): tag'ai teisingi (self-canonical, index/follow, sitemap, robots leidžia) → NE techninė klaida. Priežastis: naujas domenas + 38 panašūs puslapiai per 3 sav. → Google taupo crawl budget mass-produced low-authority turiniui. + AI-šablono pėdsakas (33/38 meta desc „Sužinokite, kaip…").
+
+**Alternatyvos** (AskUserQuestion):
+- A) **noindex 17 silpniausių** (Recommended, user pasirinko) — thin (~1600ž.) + kanibalizuojantys → `noindex,follow` + iš sitemap. Koncentruoti crawl trust 21 stipriam (3000ž.).
+- B) Perrašyti visus 38 tekstus — daug token, vis tiek per daug puslapių naujam domenui.
+- C) Tik techninė optimizacija be teksto — mažesnis efektas.
+
+**Sprendimas: A.** 17 → `noindex,follow` (link equity teka), išimti iš sitemap (49→32 URL). Riba: ~1820ž. + temų kanibalizacija. **Pasekmė**: noindex grąžinamas palaipsniui po 4-8 sav., jei stiprieji indeksuojasi. Tikras fix ilgalaikis — domeno autoritetas + ne-šabloniškas generavimas (SEO-Claude-code carry-over).
+
+## 2026-06-09 — Legacy URL redirect: vercel.json (NE Edge middleware)
+
+**Kontekstas** (s25): legacy WP URL'ai (`/wp-json/`, double-slash `//`) GSC „Patvirtinimas nepavyko". Curl rodė 2-3 redirect hops. Bandyta Edge middleware 1-hop fix.
+
+**Atradimas**: Vercel apdorojimo eiliškumas yra **trailingSlash:false → middleware → redirects**. `trailingSlash:false` nukerpa slash PIRMA (papildomas hop), todėl middleware NEGALI pagauti pirmojo hop legacy URL su slash. Middleware veikė tik be-slash atvejais — tą patį daro ir vercel.json.
+
+**Sprendimas**: Edge middleware **atmestas** (`bf03f11`→`c2fd632` revert). Likti su `vercel.json` redirects (`8ad2d4e`). 2-hop 308 legacy URL'ams Google'ui priimtinas (iki 5 hops OK). trailingSlash:false NEšalinamas — jis canonical normalizuoja visą site. **Pamoka**: PRIEŠ kuriant middleware patikrinti Vercel route-processing order.
+
 ## 2026-06-08 — BDAR audito endpoint: EDGE runtime (NE Node)
 
 **Kontekstas** (s24): `api/forms/bdar-audit.ts` sukurtas Node runtime (`IncomingMessage/ServerResponse`, kaip blog-gen). Production crash'ino `FUNCTION_INVOCATION_FAILED` / `Failed to load the ES module: /var/task/...`. Diagnozė: projekto `tsconfig.json` `"module":"ESNext"` verčia `@vercel/node` (CJS) funkcijas kraut kaip ESM → mismatch. Edge funkcijos (`contact.ts`, `health.ts` su `runtime:'edge'`) veikia, Node — ne. Node endpointai NIEKADA tinkamai neveikė (niekas netestavo realiai).

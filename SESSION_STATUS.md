@@ -1,11 +1,92 @@
 # SESSION_STATUS
 
-**Data**: 2026-06-08
-**Sesijos tikslas**: BDAR audito klausimyno automatizacija nuo nulio iki production — 42 klausimų wizard + AI vertinimas + Supabase lead + Resend email klientui ir Veriva.
+**Data**: 2026-06-09
+**Sesijos tikslas**: GSC indeksavimo problemų sprendimas — legacy WP URL redirect'ai (1-hop), `/seo/*` „crawled-not-indexed" diagnozė ir fix (UTF-8 mojibake + noindex strategija kokybė>kiekis).
 
 ---
 
-## Paskutinė sesija: 2026-06-08 — bdar-auditas-klausimynas
+## Paskutinė sesija: 2026-06-09 — gsc-indexing-fix
+
+### Ką padarėme
+
+**Kontekstas**: User pateikė 2 GSC screenshot'us — (1) legacy WP URL'ai „Patvirtinimas nepavyko" (2026-05-30), (2) `/seo/*` puslapiai „Crawled, currently not indexed". Klausimas: kodėl neindeksuojami + kaip ateityje išvengti. „tikrink ir taisyk ir testuok".
+
+**Diagnozė (gyvi curl testai + content audit):**
+1. **Legacy URL redirect hops** — Vercel `trailingSlash:false` normalizuoja PRIEŠ redirects/middleware → 2-3 hops double-slash (`//`) WP artefaktams. 2-hop Google'ui priimtinas (iki 5 OK).
+2. **`/seo/*` neindeksavimas NE techninė klaida** — self-canonical✅, index,follow✅, sitemap✅, robots.txt leidžia✅. Tai „crawled-not-indexed": naujas domenas + 38 panašūs puslapiai per 3 sav. → crawl budget taupymas (#1 priežastis). + AI-šablono pėdsakas (33/38 meta desc „Sužinokite, kaip…").
+3. **UTF-8 mojibake** — `bdar-dokumentai-monei` H1 „ä¯monei", `bdar-paslaugos-mon-ms` „ä¯monäms" (double-encoded `į`). 2 failai, po 4 vietas (H1, breadcrumb schema, img alt, figcaption).
+
+**Fix'ai (4 commit'ai į main, visi LIVE):**
+1. **`8ad2d4e` vercel.json** — WP redirect patterns praplėsti (`/wp-json` be slash, `/xmlrpc.php`, `/feed`, `/author`, `/category`, `/tag`), `:slash*` wildcard.
+2. **`bf03f11`→`c2fd632`** — Edge middleware bandymas legacy 1-hop; PATVIRTINTA kad neapeina trailingSlash (Vercel order: trailingSlash→middleware→redirects), **revert'inta**. middleware.ts NEEGZISTUOJA.
+3. **`4aa217f`** — UTF-8 mojibake fix (2 seo failai, „Bdar"→„BDAR").
+4. **`91b6323`** — noindex 17 thin/dublikatų seo (~1550-1820ž.) → `noindex,follow` + išimti iš sitemap (49→32 URL). Strategija **kokybė>kiekis** (user pasirinko AskUserQuestion): koncentruoti crawl trust 21 stipriam (3000ž.). Link equity teka per follow.
+
+**noindex'inti 17**: valdymo-sistemos-kibernetinio-saugumo-auditas, internal-gdpr-documentation, kibernetinio-saugumo-istatymas-aktuali-redakcija/e-tar, duomenu-perdavimo-tinklo-prieziura, apple-irenginiu-valdymo-mokymai, nacionalinio-kibernetinio-saugumo-centro-mokymai, ivairoves-ir-itraukties-politika, informacijos-saugumo-politika, public-it-technologiju-proverzis-ir-saugumas, kibernetines-higienos-mokymai, bdar-paslaugos-mon-ms, duomenu-privatumo-politika, bdar-dokumentai-monei, bdar-paslaugos-verslui, duomenu-apsaugos-pareiguno-paslaugos-bvpz, nis2-atitiktis.
+
+### Kas liko / nepatvirtinta
+
+- **🟡 Šabloninės meta description** — 33/38 prasideda „Sužinokite, kaip…" (mass-generated signalas). Identifikuota, NE fix'inta. Reikia generator prompt fix SEO-Claude-code repo.
+- **🟡 Encoding bug šaltinis nepatikrintas** — sutaisyti 2 paveikti failai, bet KODĖL generatorius sukūrė `į`→`ä¯` lieka neištirta → gali pasikartoti.
+- **🟡 GSC user action** — submit sitemap (32 URL), URL Inspection + Request Indexing 21 stipriam, re-validate legacy URL fix. Rezultatas per kelias dienas–2 sav.
+- **🟡 noindex grąžinimas** — augant autoritetui nuimti palaipsniui (po 4-8 sav., jei stiprieji indeksuojasi).
+
+### Kitas žingsnis
+
+1. **GSC user action** — submit sitemap.xml + Request Indexing 21 likusiam stipriam seo + re-validate legacy URL „Patvirtinimas".
+2. **SEO-Claude-code generator fix** (atskira sesija) — (a) encoding validacija prieš deploy, (b) uždrausti šabloną „Sužinokite, kaip…" meta desc.
+3. **Stebėti 4-8 sav.** — ar 21 stiprus seo pradeda indeksuotis; jei taip — nuimti noindex palaipsniui.
+
+### Production verifikacija (live, curl)
+
+| Test | Statusas |
+|---|---|
+| Encoding fix LIVE: H1 „BDAR dokumentai įmonei" / „BDAR paslaugos įmonėms" | ✅ |
+| noindex LIVE: 17 silpnų → `noindex, follow` | ✅ |
+| Stiprūs lieka `index, follow` | ✅ |
+| sitemap.xml → 32 `<loc>`, 0 noindex'intų | ✅ |
+| Legacy URL'ai → 308→200, canonical=root | ✅ |
+| Mojibake nerasta niekur (visi seo+blog) | ✅ |
+
+---
+
+## Sesija #25: 2026-06-09 — blog-2-straipsniai-incidentai-mokymai
+
+### Ką padarėme
+
+**Kontekstas**: blog.html turėjo 2 „Netrukus" placeholder korteles. User paprašė parašyti abu straipsnius su SEO/GEO taisyklėmis, raktažodžiais, anti-AI tekstu.
+
+**Sukurta (5 nauji failai)**:
+- `blog/incidentu-valdymas-72-valandos-bdar.html` (~2850ž, Kibernetinis saugumas) — BDAR 33/34 str. protokolas: 6 reagavimo etapai, „sužinojimo" momentas, rizikos vertinimas, pranešimas VDAI, subjektų informavimas, pažeidimų registras, tvarkytojo vaidmuo, 5 dažniausios klaidos. Autorius Justinas.
+- `blog/darbuotoju-bdar-mokymai.html` (~2400ž, Mokymai) — BDAR 39 str. + atskaitomybės principas (5 str. 2 d.): 6 principai, subjektų teisės 15-22 str., role-based mokymai, dokumentavimas. Dublio su phishing-mokymai vengta (teisinė pusė, ne IT). Autorė Marina.
+- 3 brand SVG: `incidentu-valdymas-hero.svg` (72h laikrodis), `incidentu-valdymas-etapai.svg` (6 nodes diagrama), `darbuotoju-bdar-mokymai-hero.svg` (checklist board).
+
+**Pakeisti**: `blog.html` (2 placeholder div → live `<a class="bc">` kortelės, filtrai sauga/mokymai), `sitemap.xml` (+2 URL, lastmod 2026-06-09, priority 0.8).
+
+**SEO/GEO**: pilnas schema @graph kiekvienam (BlogPosting+BreadcrumbList+FAQPage 12 Q/A+HowTo 6 žingsnių+Review). `.definition` GEO snippet pirma pastraipa. Title ≤54, meta desc ≤149, canonical==og:url clean URL. Internal links į 4 esamus pillarus (clean URL). Konkretūs straipsnių numeriai (33/34/39/5/32 str., EDPB 9/2022).
+
+**Anti-AI**: varijuojami sakinių ilgiai, konkretūs LT scenarijai (penktadienio incidentas, HR „teisės būti pamirštam" užklausa), AI klišių vengta, bullet+tankūs paragrafai.
+
+**Metodas**: 2 page-builder agentai nutrūko (network socket, 9 min) prieš Write → straipsnius parašiau pats sekvenciškai (CSS chrome kopijuotas 1:1 iš phishing-mokymai). 2 audito agentai (seo-specialistas + frontend-revizorius) post-hoc.
+
+**Ištaisyta eigoje**: FAQPage JSON klaida (ASCII closing `"` po `„kažkada prieš metus"` → lietuviška `"`), meta desc 166→149 simb., og:title 62→51 simb.
+
+### Kas liko / nepatvirtinta
+
+- **🟡 Production NEPATIKRINTA po deploy** — curl 200 / hero SVG 200 / blog kortelių filtras naršyklėje neverifikuoti (push'inta be live verifikacijos).
+- **🟡 Hero SVG vizualiai neperžiūrėti** — ypač `incidentu-valdymas-etapai.svg` (6 nodes ankštai, galimas teksto overflow).
+- **🟡 og:image lieka SVG** — LinkedIn/Twitter share preview ribotas (sisteminis Veriva pattern, s22 DECISION_LOG; batch WebP — atskira sesija).
+- **🟡 Frontend agentas false-positive** — pranešė „etapai.svg img be alt" (faktiškai alt yra, eil. 664). Tikro defekto nebuvo.
+
+### Kitas žingsnis
+
+1. **Production verifikacija** — curl `/blog/incidentu-valdymas-72-valandos-bdar` + `/blog/darbuotoju-bdar-mokymai` → 200; hero SVG → 200; blog.html kortelių filtras naršyklėje.
+2. **GSC** — pateikti 2 naujus URL indeksavimui; submit sitemap update.
+3. **Hero SVG vizuali peržiūra** — ypač etapai.svg 6 nodes išdėstymas mobile/desktop.
+
+---
+
+## Sesija #24: 2026-06-08 — bdar-auditas-klausimynas
 
 ### Ką padarėme
 

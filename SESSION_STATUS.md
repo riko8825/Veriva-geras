@@ -1,11 +1,58 @@
 # SESSION_STATUS
 
 **Data**: 2026-06-09
-**Sesijos tikslas**: GSC indeksavimo problemų sprendimas — legacy WP URL redirect'ai (1-hop), `/seo/*` „crawled-not-indexed" diagnozė ir fix (UTF-8 mojibake + noindex strategija kokybė>kiekis).
+**Sesijos tikslas**: Šriftų pakeitimas visoje svetainėje — Syne+Plus Jakarta+JetBrains Mono → Hanken Grotesk (vieno-šrifto sistema). MasterLegal nepatiko Syne; referencas questumtraining.com („Rules" grotesk). + footer kontrasto fix (WCAG AA).
 
 ---
 
-## Paskutinė sesija: 2026-06-09 — gsc-indexing-fix
+## Paskutinė sesija: 2026-06-09 — fonts-hanken-grotesk-visur
+
+### Ką padarėme
+
+**Kontekstas**: MasterLegal'ui nepatiko dabartiniai Veriva šriftai. User pateikė referencą questumtraining.com. Užduotis: išanalizuoti referenco šriftus, palyginti, pakeisti visur. Per sesiją papildomai: footer tekstas per tamsus (pasimeta).
+
+**Analizė (curl + theme CSS)**:
+- questumtraining.com = WordPress + custom „questum" tema. Visa tipografija = **vienas custom šriftas „Rules"** (self-hosted .woff2/.woff/.otf, komercinis — NE Google Fonts). Geometrinis grotesk, neutralus, korporatyvus. Antraštės+tekstas tas pats šriftas, kontrastas per dydį/storį.
+- Veriva turėjo 3 šriftus: Syne (display, ekspresyvus „dizaineriškas") + Plus Jakarta Sans (body) + JetBrains Mono. Diagnozė: **Syne** duoda agentūros, ne teisės/saugumo toną → tikriausiai būtent jis netiko.
+
+**Sprendimas (AskUserQuestion → user pasirinko)**: **Hanken Grotesk** (nemokamas OFL, artimiausias „Rules" grotesk). Vieno-šrifto sistema (`--ff`=`--ffd`=`--ffm` visi Hanken).
+
+**Pakeista (55 failai, commit `4a8866b`, push LIVE)**:
+- **52 HTML** (index, blog ×9 + template, brief, privatumas, slapukai, bdar-auditas, 38 seo/) + **2 CSS** (index.css, bdar-auditas.css).
+- Google Fonts link: Syne+Jakarta+JetBrains → tik Hanken Grotesk (mažiau užklausų).
+- `--ff`/`--ffd`/`--ffm` → Hanken; inline logotipo `font-family:Syne` → Hanken.
+- **letter-spacing sušvelnintas** (Hanken tankesnis nei Syne): neigiami `-.025/-.028/-.03em`→`-.016/-.018em`; mono uppercase `.14/.16/.18em`→`.06/.07/.08em` (per frontend-revizorius auditą index.css'e, tada batch visur).
+- **1 outlier seo failas** (`nacionalinio-kibernetinio-saugumo-centro-mokymai`) naudojo **Inter** (kitos kartos SEO engine) → Hanken.
+- **Footer kontrastas index.html → WCAG AA**: buvo alpha .16–.38 (1.53–3.51:1, FAIL), dabar .48–.62 (4.97–7.71:1, AA✓). 8 selektoriai.
+- Cache-buster bump: index.css + bdar-auditas.css `?v=20260609b`.
+
+### Kas liko / nepatvirtinta
+
+- **🟡 Vizualiai naršyklėje NEPERŽIŪRĖTA** — verifikacija buvo TIK curl (font link, HTTP 200, CSS turinys). Realus rendering (hero antraštės, mobile, Hanken proporcijos) nepatikrintas.
+- **🟡 Footer kontrastas tik index.html** — bdar-auditas.html ir kiti puslapiai turi SAVO footer markup'ą; WCAG AA fix jiems NEtaikytas (ar jie turi tą pačią problemą — nepatikrinta).
+- **🟡 Letter-spacing globalus euristinis** — visi `-.028em`→`-.018em` vienodai, ne per-komponentinis. Kai kur galėjo tikti tikslesnė reikšmė.
+- **🟡 Chat botas** — user diegia chat botą; aptarta kad nesikirs (iframe/Shadow DOM izoliacija), bet botas dar neįdiegtas, z-index/overflow konfliktas nepatikrintas.
+
+### Kitas žingsnis
+
+1. **Vizuali peržiūra naršyklėje** — index, 1 blog, 1 seo, bdar-auditas (desktop + mobile). Patvirtinti Hanken rendering OK; jei reikia — koreguoti tracking/dydžius.
+2. **Footer kontrasto auditas kituose puslapiuose** — patikrinti bdar-auditas/blog/seo footer WCAG, taikyti tą patį AA fix jei reikia.
+3. **Chat boto integracija** — kai user įdiegs, patikrinti z-index/overflow konfliktą su Veriva + parinkti Hanken Grotesk boto admin panelėje (vizualus suderinamumas).
+
+### Production verifikacija (live, curl — NE vizuali)
+
+| Test | Statusas |
+|---|---|
+| veriva.lt font link = Hanken Grotesk | ✅ |
+| index.css `?v=20260609b` LIVE, 0 Syne/Jakarta | ✅ |
+| /, /blog, /bdar-auditas, 2 seo, 1 blog post → 200 | ✅ |
+| outlier seo (Inter→Hanken) LIVE | ✅ |
+| 0 senų šriftų likučių bet kur | ✅ |
+| Vizualus rendering naršyklėje | ⬜ NEPATIKRINTA |
+
+---
+
+## Sesija #26: 2026-06-09 — gsc-indexing-fix
 
 ### Ką padarėme
 

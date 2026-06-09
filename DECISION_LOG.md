@@ -4,6 +4,24 @@ Architektūriniai sprendimai. Kiekvienas su data, kontekstu, alternatyvomis, spr
 
 ---
 
+## 2026-06-09 — Tipografija: vieno-šrifto sistema, Hanken Grotesk (s27)
+
+**Kontekstas** (s27): MasterLegal nepatiko Veriva šriftai (3 šriftai: Syne display + Plus Jakarta body + JetBrains Mono). Referencas — questumtraining.com. Analizė: referencas naudoja **vieną custom grotesk šriftą „Rules"** (komercinis, self-hosted, NE Google Fonts) ir antraštėms, ir tekstui. Diagnozė: Veriva **Syne** = problema (ekspresyvus „dizaineriškas" — agentūros, ne teisės/saugumo tonas).
+
+**Alternatyvos** (AskUserQuestion):
+- A) **Hanken Grotesk** (Recommended, user pasirinko) — geometrinis grotesk, neutralus, nemokamas (OFL), artimiausias „Rules". Vieno-šrifto sistema.
+- B) General Sans (Fontshare) — šiltesnis, taip pat artimas.
+- C) Inter/Geist — ultra-neutralus „SaaS standartas", bet per generiškas teisės brandui.
+- „Rules" tiesiogiai — atmesta (komercinė licencija, nėra nemokamo šaltinio).
+
+**Sprendimas: A — Hanken Grotesk, vieno-šrifto sistema** (`--ff`=`--ffd`=`--ffm`). Atkartoja questum „Rules" efektą: kontrastas per dydį/storį, ne per skirtingus šriftus. **Pasekmė**: perėjus iš Syne (plataus) į Hanken (tankesnio) PRIVALOMA švelninti neigiamus letter-spacing (`-.028em`→`-.018em`), kitaip antraščių raidės kibsta. Apimtis: 55 failai (52 HTML self-contained + 2 CSS), commit `4a8866b`. JetBrains Mono visiškai pašalintas.
+
+## 2026-06-09 — Footer kontrastas: WCAG AA (s27)
+
+**Kontekstas** (s27): footer tekstas index.html per tamsus, pasimeta (`#030b17` fonas + white alpha .16–.38 → 1.53–3.51:1, FAIL AA). User pasirinko (AskUserQuestion) WCAG AA.
+
+**Sprendimas**: 8 footer selektorių alpha pakelta į .48–.62 (4.97–7.71:1, AA✓). Background/border/hover alpha NEpaliesti. **Apribojimas**: taikyta TIK index.html — kiti puslapiai turi savo footer markup'ą (carry-over).
+
 ## 2026-06-09 — SEO indeksavimas: noindex 17 thin puslapių (kokybė>kiekis)
 
 **Kontekstas** (s25): 38 auto-generated `seo/*` puslapiai GSC'e „crawled, currently not indexed". Diagnozė (curl + content audit): tag'ai teisingi (self-canonical, index/follow, sitemap, robots leidžia) → NE techninė klaida. Priežastis: naujas domenas + 38 panašūs puslapiai per 3 sav. → Google taupo crawl budget mass-produced low-authority turiniui. + AI-šablono pėdsakas (33/38 meta desc „Sužinokite, kaip…").

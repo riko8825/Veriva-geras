@@ -11,9 +11,9 @@
   --border:rgba(7,17,31,.09); --border2:rgba(7,17,31,.15);
   --ease:cubic-bezier(.4,0,.2,1); --ease-out:cubic-bezier(.23,1,.32,1);
   --t:.2s var(--ease); --max:760px;
-  --ff:'Plus Jakarta Sans',system-ui,sans-serif;
-  --ffd:'Syne',system-ui,sans-serif;
-  --ffm:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ff:'Hanken Grotesk',system-ui,sans-serif;
+  --ffd:'Hanken Grotesk',system-ui,sans-serif;
+  --ffm:'Hanken Grotesk',system-ui,sans-serif;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -64,7 +64,7 @@ body{
 .ba-intro-inner{position:relative;z-index:1;max-width:640px;margin:0 auto}
 .ba-eyebrow{
   display:inline-block;font-family:var(--ffm);font-size:11.5px;font-weight:500;
-  letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);
+  letter-spacing:.08em;text-transform:uppercase;color:var(--cyan);
   padding:6px 14px;border:1px solid rgba(0,180,216,.3);border-radius:100px;margin-bottom:24px;
 }
 #ba-intro h1{

@@ -341,9 +341,10 @@ function validatePost(data: Partial<BlogPostData>, postType: string): { ok: true
   const stylesErr = validateInlineStyles(data);
   if (stylesErr) reasons.push(stylesErr);
 
-  // H2 count check
+  // H2 count check (pillar min 6 — 7 H2 yra kokybiškas pillar; 8 buvo per griežta,
+  // sukeldavo nereikalingus AI retry'us, s28)
   const h2Count = (data.post_body_html ?? '').match(/<h2\s/gi)?.length ?? 0;
-  const minH2 = postType === 'pillar' ? 8 : 5;
+  const minH2 = postType === 'pillar' ? 6 : 5;
   const maxH2 = postType === 'pillar' ? 12 : 8;
   if (h2Count < minH2 || h2Count > maxH2) {
     reasons.push(`H2 count ${h2Count} not in range ${minH2}-${maxH2} (${postType} type)`);

@@ -2,7 +2,6 @@
   "name": "veriva-website",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "description": "Veriva — Duomenų apsauga ir kibernetinis saugumas Lietuvoje",
   "scripts": {
     "dev": "vercel dev",

@@ -5,28 +5,18 @@
 // Auth: X-Telegram-Bot-Api-Secret-Token header must match TELEGRAM_WEBHOOK_SECRET
 // State: revise multi-turn state stored in Supabase (veriva_telegram_revise_state)
 
-import type { IncomingMessage, ServerResponse } from 'http';
 import { deleteBranch, commitFileToBranch, listBranches } from '../../../lib/github';
 import { sendTelegramMessage, answerCallbackQuery, slugHash } from '../../../lib/telegram';
-import { verifyTelegramWebhookAuth } from '../../../lib/auth-node';
+import { verifyTelegramWebhookAuth } from '../../../lib/auth';
+
+export const config = { runtime: 'edge' };
 
 const GITHUB_API = 'https://api.github.com/repos/riko8825/Veriva-geras';
 const VERIVA_TABLE = 'veriva_telegram_revise_state';
 
-function ok200(res: ServerResponse): void {
-  if (!res.headersSent) {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end('{"ok":true}');
-  }
-}
-
-async function readBody(req: IncomingMessage): Promise<string> {
-  return new Promise((resolve, reject) => {
-    let data = '';
-    req.on('data', chunk => { data += chunk; });
-    req.on('end', () => resolve(data));
-    req.on('error', reject);
-  });
+// Telegram visada turi gauti 200, kad nekartotų webhook (retry storm prevencija)
+function ok200(): Response {
+  return new Response('{"ok":true}', { status: 200, headers: { 'Content-Type': 'application/json' } });
 }
 
 interface TopicEntry {
@@ -53,7 +43,13 @@ async function fetchTopics(): Promise<{ topics: TopicEntry[]; [k: string]: unkno
   const text = await res.text();
   if (!res.ok) throw new Error(`[tg] fetchTopics GitHub API ${res.status}: ${text.slice(0, 200)}`);
   const file = JSON.parse(text) as { content: string };
-  return JSON.parse(Buffer.from(file.content, 'base64').toString('utf-8'));
+  return JSON.parse(b64decodeUtf8(file.content));
+}
+
+// Edge-safe base64 → UTF-8 (Buffer neprieinamas)
+function b64decodeUtf8(b64: string): string {
+  const bin = atob(b64.replace(/\s/g, ''));
+  return new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0)));
 }
 
 // ───────────────────────────────────────────────────────────
@@ -101,13 +97,12 @@ async function clearReviseState(chatId: string): Promise<void> {
 // ───────────────────────────────────────────────────────────
 // Handler
 // ───────────────────────────────────────────────────────────
-export default async function handler(req: IncomingMessage, res: ServerResponse): Promise<void> {
-  if (req.method !== 'POST') { ok200(res); return; }
+export default async function handler(req: Request): Promise<Response> {
+  if (req.method !== 'POST') { return ok200(); }
 
   if (!verifyTelegramWebhookAuth(req)) {
     console.warn('[tg] Unauthorized webhook call — invalid X-Telegram-Bot-Api-Secret-Token');
-    ok200(res);  // return 200 to avoid Telegram retry storms
-    return;
+    return ok200();  // return 200 to avoid Telegram retry storms
   }
 
   let update: {
@@ -125,11 +120,11 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   };
 
   try {
-    const body = await readBody(req);
+    const body = await req.text();
     update = JSON.parse(body);
   } catch {
     console.error('[tg] body parse failed');
-    ok200(res); return;
+    return ok200();
   }
 
   try {
@@ -141,10 +136,10 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       const text = update.message.text.trim();
 
       // Slash commands not implemented (Empirra had /intake — Veriva-specific commands TBD)
-      if (text.startsWith('/')) { ok200(res); return; }
+      if (text.startsWith('/')) { return ok200(); }
 
       const state = await getReviseState(chatId);
-      if (!state) { ok200(res); return; }  // not in revise mode
+      if (!state) { return ok200(); }  // not in revise mode
 
       const { branch, keyword } = state;
       await clearReviseState(chatId);
@@ -175,17 +170,17 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
         await sendTelegramMessage(`❌ Revize klaida:\n<code>${msg.slice(0, 300)}</code>`).catch(() => {/* ignore */});
       }
 
-      ok200(res); return;
+      return ok200();
     }
 
     // ───────────────────────────────────────────────
     // Callback (inline button)
     // ───────────────────────────────────────────────
     const cq = update.callback_query;
-    if (!cq?.data) { ok200(res); return; }
+    if (!cq?.data) { return ok200(); }
 
     const parts = cq.data.split('|');
-    if (parts.length < 2) { ok200(res); return; }
+    if (parts.length < 2) { return ok200(); }
 
     const [rawAction, hashOrSlug] = parts;
     const actionMap: Record<string, string> = { P: 'POST', R: 'REVISE', S: 'SKIP' };
@@ -204,7 +199,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
         if (!match) {
           console.error(`[tg] hash unresolved: ${hashOrSlug} — branches: ${draftBranches.length}`);
           await sendTelegramMessage(`❌ Draft branch nerastas pagal hash: <code>${hashOrSlug}</code>`).catch(() => {/* ignore */});
-          ok200(res); return;
+          return ok200();
         }
         branch = match;
         slug = match.replace(/^draft-blog-/, '');
@@ -212,7 +207,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
         const msg = err instanceof Error ? err.message : String(err);
         console.error(`[tg] listBranches failed: ${msg}`);
         await sendTelegramMessage(`❌ Branch lookup nepavyko:\n<code>${msg.slice(0, 200)}</code>`).catch(() => {/* ignore */});
-        ok200(res); return;
+        return ok200();
       }
     } else {
       slug = hashOrSlug.startsWith('draft-blog-') ? hashOrSlug.replace(/^draft-blog-/, '') : hashOrSlug;
@@ -223,7 +218,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
 
     if (!branch) {
       await sendTelegramMessage(`❌ branch tuščias — callback_data: ${cq.data}`).catch(() => {/* ignore */});
-      ok200(res); return;
+      return ok200();
     }
 
     // ─── POST (Publikuoti) ───────────────────────────────
@@ -311,7 +306,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     await sendTelegramMessage(`❌ Webhook crash:\n<code>${escapeHtml(msg.slice(0, 300))}</code>`).catch(() => {/* ignore */});
   }
 
-  ok200(res);
+  return ok200();
 }
 
 function escapeHtml(s: string): string {

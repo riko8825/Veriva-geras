@@ -1,4 +1,3 @@
-import { createHash } from 'node:crypto';
 import { getImage } from './pexels';
 
 const TELEGRAM_TIMEOUT_MS = 10000;
@@ -8,8 +7,17 @@ const TELEGRAM_RETRY_DELAY_MS = 800;
 const REPO_OWNER = 'riko8825';
 const REPO_NAME = 'Veriva-geras';
 
+// 6-hex deterministinis hash branch identifikatoriui callback_data'oje (NE kriptografinis).
+// Edge runtime nepalaiko sinchroninio node:crypto createHash — FNV-1a sinchroniškas ir stabilus.
+// Abi pusės (telegram.ts generuoja, telegram-webhook atstato) naudoja TĄ PAČIĄ funkciją.
 export function slugHash(slug: string): string {
-  return createHash('sha1').update(slug).digest('hex').slice(0, 6);
+  let h = 0x811c9dc5; // FNV-1a 32-bit offset basis
+  for (let i = 0; i < slug.length; i++) {
+    h ^= slug.charCodeAt(i);
+    h = Math.imul(h, 0x01000193); // FNV prime
+  }
+  // 32-bit → 8 hex, paimam 6 (pakanka unikalumui tarp ~kelių draft branch'ų)
+  return (h >>> 0).toString(16).padStart(8, '0').slice(0, 6);
 }
 
 function getCredentials(): { token: string; chatId: string } {

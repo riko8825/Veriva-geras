@@ -7,6 +7,19 @@ const REPO_NAME = 'Veriva-geras';
 const BASE_BRANCH = 'main';
 const GITHUB_TIMEOUT_MS = 8_000;  // Vercel maxDuration=90s, blog-gen makes ~10 calls
 
+// Edge-safe base64 (Buffer neprieinamas Edge runtime). UTF-8 saugu (lietuviški simboliai).
+function b64decode(b64: string): string {
+  const bin = atob(b64.replace(/\s/g, ''));
+  const bytes = Uint8Array.from(bin, (c) => c.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+function b64encode(str: string): string {
+  const bytes = new TextEncoder().encode(str);
+  let bin = '';
+  for (const b of bytes) bin += String.fromCharCode(b);
+  return btoa(bin);
+}
+
 async function githubRequest(path: string, method = 'GET', body?: object) {
   const token = process.env.GITHUB_TOKEN;
   if (!token) throw new Error('GITHUB_TOKEN not set');
@@ -68,7 +81,7 @@ export async function getFileFromBranch(branchName: string, filePath: string): P
   const data = await githubRequest(`/contents/${filePath}?ref=${branchName}`);
   const content = data.content as string;
   if (!content) throw new Error(`[github] getFileFromBranch — no content for ${filePath}@${branchName}`);
-  return Buffer.from(content, 'base64').toString('utf-8');
+  return b64decode(content);
 }
 
 export interface DirEntry {
@@ -104,7 +117,7 @@ export async function commitFileToBranch(
   content: string,
   commitMessage: string
 ): Promise<void> {
-  const encoded = Buffer.from(content).toString('base64');
+  const encoded = b64encode(content);
 
   let sha: string | undefined;
   try {

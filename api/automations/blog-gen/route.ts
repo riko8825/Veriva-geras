@@ -12,7 +12,6 @@
 //   7. createDraftBranch + commitFileToBranch (post + topics.json status=draft)
 //   8. sendTelegramDraftNotification — Publikuoti/Taisyti/Praleisti buttons
 
-import type { IncomingMessage, ServerResponse } from 'http';
 import { runPrompt } from '../../../lib/claude';
 import { sendTelegramDraftNotification } from '../../../lib/telegram';
 import { createDraftBranch, commitFileToBranch, deleteBranch, branchExists, getFileFromBranch } from '../../../lib/github';
@@ -33,7 +32,9 @@ import {
   UNIQUENESS_PASS_THRESHOLD,
   type UniquenessReport,
 } from '../../../lib/uniqueness';
-import { verifyBlogTriggerAuth } from '../../../lib/auth-node';
+import { verifyBlogTriggerAuth } from '../../../lib/auth';
+
+export const config = { runtime: 'edge' };
 
 const GITHUB_API = 'https://api.github.com/repos/riko8825/Veriva-geras';
 
@@ -105,7 +106,7 @@ async function fetchTopics(): Promise<TopicsData> {
   if (!res.ok) throw new Error(`[blog-gen] fetchTopics GitHub API ${res.status}: ${text.slice(0, 200)}`);
 
   const file = JSON.parse(text) as { content: string };
-  return JSON.parse(Buffer.from(file.content, 'base64').toString('utf-8')) as TopicsData;
+  return JSON.parse(b64decodeUtf8(file.content)) as TopicsData;
 }
 
 async function getNextTopic(): Promise<{ entry: TopicEntry; index: number } | null> {
@@ -457,39 +458,31 @@ async function generateWithRetry(
 // ───────────────────────────────────────────────────────────
 // Handler
 // ───────────────────────────────────────────────────────────
-function sendJson(res: ServerResponse, status: number, data: unknown): void {
-  if (res.headersSent) return;
-  const body = JSON.stringify(data);
-  res.writeHead(status, { 'Content-Type': 'application/json' });
-  res.end(body);
+function sendJson(status: number, data: unknown): Response {
+  return new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } });
 }
 
-async function readBody(req: IncomingMessage): Promise<string> {
-  return new Promise((resolve, reject) => {
-    let data = '';
-    req.on('data', chunk => { data += chunk; });
-    req.on('end', () => resolve(data));
-    req.on('error', reject);
-  });
+// Edge-safe base64 → UTF-8 (Buffer neprieinamas Edge runtime)
+function b64decodeUtf8(b64: string): string {
+  const bin = atob(b64.replace(/\s/g, ''));
+  return new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0)));
 }
 
-export default async function handler(req: IncomingMessage, res: ServerResponse): Promise<void> {
-  // Auth: constant-time comparison via lib/auth-node.ts (accepts CRON_SECRET Bearer OR BLOG_TRIGGER_SECRET x-api-key)
+export default async function handler(req: Request): Promise<Response> {
+  // Auth: constant-time comparison via lib/auth.ts (accepts CRON_SECRET Bearer OR BLOG_TRIGGER_SECRET x-api-key)
   if (!process.env.CRON_SECRET && !process.env.BLOG_TRIGGER_SECRET) {
     console.error('[blog-gen] Neither CRON_SECRET nor BLOG_TRIGGER_SECRET env is set');
-    sendJson(res, 500, { error: 'Server misconfiguration' });
-    return;
+    return sendJson(500, { error: 'Server misconfiguration' });
   }
   if (!verifyBlogTriggerAuth(req)) {
     console.warn('[blog-gen] Unauthorized — invalid Bearer or x-api-key');
-    sendJson(res, 401, { error: 'Unauthorized' });
-    return;
+    return sendJson(401, { error: 'Unauthorized' });
   }
   console.log('[blog-gen] Authorized (constant-time auth ok)');
 
   let force = false;
   if (req.method === 'POST') {
-    const text = await readBody(req);
+    const text = await req.text();
     try { const b = JSON.parse(text); force = b.force === true; } catch { /* ignore */ }
   }
 
@@ -500,16 +493,14 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       const hasPending = await pendingDraftExists();
       if (hasPending) {
         console.log('[blog-gen] pending draft branch exists — skipping');
-        sendJson(res, 200, { skipped: true, reason: 'pending_draft_exists' });
-        return;
+        return sendJson(200, { skipped: true, reason: 'pending_draft_exists' });
       }
     }
 
     const next = await getNextTopic();
     if (!next) {
       console.log('[blog-gen] no pending topics');
-      sendJson(res, 200, { skipped: true, reason: 'no_pending_topics' });
-      return;
+      return sendJson(200, { skipped: true, reason: 'no_pending_topics' });
     }
 
     const { entry: topic, index } = next;
@@ -650,7 +641,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
 
     const duration = Date.now() - startedAt;
     console.log(`[blog-gen] ✅ done — branch: ${branchName}, telegram: ${tgOk ? 'ok' : 'failed'}, duration: ${duration}ms`);
-    sendJson(res, 200, {
+    return sendJson(200, {
       success: true,
       slug,
       branch: branchName,
@@ -667,6 +658,6 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     const msg = err instanceof Error ? err.message : String(err);
     const duration = Date.now() - startedAt;
     console.error(`[blog-gen] ❌ error after ${duration}ms:`, msg);
-    sendJson(res, 500, { success: false, error: msg, duration_ms: duration });
+    return sendJson(500, { success: false, error: msg, duration_ms: duration });
   }
 }

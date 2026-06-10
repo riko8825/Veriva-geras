@@ -9,14 +9,15 @@
 // Auth: x-api-key BLOG_APPROVE_SECRET
 // Called by: api/automations/telegram-webhook (action=POST)
 
-import type { IncomingMessage, ServerResponse } from 'http';
 import { mergeBranchToMain, deleteBranch, commitFileToBranch, getFileFromBranch } from '../../../lib/github';
 import { sendTelegramMessage } from '../../../lib/telegram';
 import { extractBlogCardMeta, buildBlogCardHTML, insertCardAfterFeatured } from '../../../lib/blog-card';
 import { buildLinkMap } from '../../../lib/link-map';
 import { injectForwardLinks, pickReverseTargets, injectReverseLink, extractH1Title } from '../../../lib/internal-links';
 import { buildSitemapFromBranch } from '../../../lib/sitemap-update';
-import { verifyBlogApproveAuth } from '../../../lib/auth-node';
+import { verifyBlogApproveAuth } from '../../../lib/auth';
+
+export const config = { runtime: 'edge' };
 
 const GITHUB_API = 'https://api.github.com/repos/riko8825/Veriva-geras';
 
@@ -45,7 +46,13 @@ async function fetchTopics(): Promise<{ topics: Array<{ keyword: string; status:
   const text = await res.text();
   if (!res.ok) throw new Error(`[blog-approve] fetchTopics ${res.status}: ${text.slice(0, 200)}`);
   const file = JSON.parse(text) as { content: string };
-  return JSON.parse(Buffer.from(file.content, 'base64').toString('utf-8'));
+  return JSON.parse(b64decodeUtf8(file.content));
+}
+
+// Edge-safe base64 → UTF-8
+function b64decodeUtf8(b64: string): string {
+  const bin = atob(b64.replace(/\s/g, ''));
+  return new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0)));
 }
 
 interface CardResult { ok: boolean; reason?: string }
@@ -217,52 +224,36 @@ async function updateSitemap(branch: string, slug: string): Promise<SitemapResul
 // ───────────────────────────────────────────────────────────
 // Handler
 // ───────────────────────────────────────────────────────────
-function sendJson(res: ServerResponse, status: number, data: unknown): void {
-  if (res.headersSent) return;
-  res.writeHead(status, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify(data));
+function sendJson(status: number, data: unknown): Response {
+  return new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } });
 }
 
-async function readBody(req: IncomingMessage): Promise<string> {
-  return new Promise((resolve, reject) => {
-    let data = '';
-    req.on('data', chunk => { data += chunk; });
-    req.on('end', () => resolve(data));
-    req.on('error', reject);
-  });
-}
-
-export default async function handler(req: IncomingMessage, res: ServerResponse): Promise<void> {
+export default async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') {
-    sendJson(res, 405, { error: 'Method not allowed' });
-    return;
+    return sendJson(405, { error: 'Method not allowed' });
   }
 
   if (!verifyBlogApproveAuth(req)) {
     console.warn('[blog-approve] Unauthorized — invalid x-api-key');
-    sendJson(res, 401, { error: 'Unauthorized' });
-    return;
+    return sendJson(401, { error: 'Unauthorized' });
   }
 
-  const text = await readBody(req);
+  const text = await req.text();
   let body: { branch: string; slug: string; action: 'POST' | 'SKIP' | 'REVISE'; keyword?: string };
   try {
     body = JSON.parse(text);
   } catch {
-    sendJson(res, 400, { error: 'Invalid JSON' });
-    return;
+    return sendJson(400, { error: 'Invalid JSON' });
   }
 
   const { branch, slug, action, keyword } = body;
 
   if (!branch || !slug || !action) {
-    sendJson(res, 400, { error: 'Missing: branch, slug, action' });
-    return;
+    return sendJson(400, { error: 'Missing: branch, slug, action' });
   }
 
   if (!['POST', 'SKIP', 'REVISE'].includes(action)) {
-    sendJson(res, 400, { error: 'action must be POST | SKIP | REVISE' });
-    return;
+    return sendJson(400, { error: 'action must be POST | SKIP | REVISE' });
   }
 
   try {
@@ -352,7 +343,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       await sendTelegramMessage(liveMsg + cardWarn + linkInfo + sitemapInfo).catch(() => {/* non-critical */});
 
       console.log(`[blog-approve] published: ${slug}`);
-      sendJson(res, 200, {
+      return sendJson(200, {
         success: true,
         action: 'published',
         slug,
@@ -361,7 +352,6 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
         linksReverse: linkResult.reverseCount,
         sitemapUrls: sitemapResult.urlCount,
       });
-      return;
     }
 
     // ─── SKIP ───────────────────────────────
@@ -377,8 +367,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       await deleteBranch(branch);
       await sendTelegramMessage(`⏭ <b>Praleista:</b> ${slug}`).catch(() => {});
       console.log(`[blog-approve] skipped: ${slug}`);
-      sendJson(res, 200, { success: true, action: 'skipped', slug });
-      return;
+      return sendJson(200, { success: true, action: 'skipped', slug });
     }
 
     // ─── REVISE ───────────────────────────────
@@ -394,13 +383,15 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       }
       await sendTelegramMessage(`🔄 <b>Revizija:</b> ${slug}\nTopic reset to pending — bus regeneruotas kito cron run metu.`).catch(() => {});
       console.log(`[blog-approve] revision: ${slug}`);
-      sendJson(res, 200, { success: true, action: 'revise', slug });
-      return;
+      return sendJson(200, { success: true, action: 'revise', slug });
     }
 
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     console.error('[blog-approve] error:', msg);
-    sendJson(res, 500, { success: false, error: msg });
+    return sendJson(500, { success: false, error: msg });
   }
+
+  // action validuotas anksčiau (POST/SKIP/REVISE) — fallback TS exhaustiveness
+  return sendJson(400, { error: 'Unhandled action' });
 }

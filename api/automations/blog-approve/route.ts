@@ -237,13 +237,6 @@ async function handler(req: Request): Promise<Response> {
 
   if (!verifyBlogApproveAuth(req)) {
     console.warn('[blog-approve] Unauthorized — invalid x-api-key');
-    // LAIKINAS DEBUG — pašalinti po diagnozės
-    const dbg = new URL(req.url).searchParams.get('debug') === 'veriva2026';
-    if (dbg) {
-      const got = req.headers.get('x-api-key') ?? '';
-      const exp = process.env.BLOG_APPROVE_SECRET ?? '';
-      return sendJson(401, { error: 'Unauthorized', _debug: { gotLen: got.length, expLen: exp.length, expSet: !!process.env.BLOG_APPROVE_SECRET, gotPrefix: got.slice(0, 4), expPrefix: exp.slice(0, 4) } });
-    }
     return sendJson(401, { error: 'Unauthorized' });
   }
 

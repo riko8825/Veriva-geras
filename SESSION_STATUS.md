@@ -1,11 +1,65 @@
 # SESSION_STATUS
 
-**Data**: 2026-06-09
-**Sesijos tikslas**: Šriftų pakeitimas visoje svetainėje — Syne+Plus Jakarta+JetBrains Mono → Hanken Grotesk (vieno-šrifto sistema). MasterLegal nepatiko Syne; referencas questumtraining.com („Rules" grotesk). + footer kontrasto fix (WCAG AA).
+**Data**: 2026-06-10
+**Sesijos tikslas**: Marinos BDAR klausimyno korekcijos (Q2/Q25/Q28/Q39) → naujas blog straipsnis (duomenų subjekto teisės) → blog automation atblokavimas (ESM crash + Edge timeout fix, env vars iš Empirra).
 
 ---
 
-## Paskutinė sesija: 2026-06-09 — fonts-hanken-grotesk-visur
+## Paskutinė sesija: 2026-06-10 — blog-automation-unblock + marina-klausimynas + blog-straipsnis
+
+### Ką padarėme
+
+Trys atskiri darbai vienoje sesijoje:
+
+**1. Marinos BDAR klausimyno korekcijos** (commit `6470803`, LIVE) — Marina užpildė `/bdar-auditas` ir pateikė pastabas:
+- **Q2**: consent išnaša patikslinta (asmens duomenų tvarkymo formuluotė)
+- **Q25** saugojimo vieta: `single` → `multi` (kelios duomenų saugojimo vietos)
+- **Q28** IT saugumo priemonės: `single` → `multi` su konkrečiomis priemonėmis + „Kita" laukas. Naujas `MULTI_SCORED_QUESTIONS` proporcinis scoring: (pažymėta/5)×10×weight(2). Max balas **290 nepakitęs**.
+- **Q39** turimi dokumentai: atskirtas vidaus tvarkymo aprašas nuo viešos privatumo politikos.
+- **BUG rastas+ištaisytas** (`37c3c6b`): `EMAIL_RE` pagaudavo trailing kablelį iš „Vardas, email, tel" formato → Resend „Invalid to" → `emailSent:false`. Domeno galas → `[a-zA-Z]{2,}`, exclude `,;`. Backend+frontend.
+- **Testai**: TSC 0, FE↔BE sync 42 klausimai, scoring 9 scenarijų, validacija, wizard collection, 3 production E2E (email → pinigine1@gmail.com, 100%/71%/1% atitiktis). 5 nepriklausomi raundai, 0 likusių klaidų.
+- Dokumentacija fix: `docs/bdar-scoring-matrica.md` max 300→290 (pasenęs s24 faktas).
+
+**2. Naujas blog straipsnis** (commit `be66497`, LIVE) — „Duomenų subjekto teisės (BDAR 15-22 str.)", ~2600ž, kategorija BDAR, autorė Marina. Schema BlogPosting+FAQPage(10)+HowTo(6), dedikuotas hero SVG. 2 audit agentai (seo-specialistas 3 P0 fix, frontend-revizorius PUBLISH READY). blog.html kortelė + sitemap.
+
+**3. Blog automation atblokavimas** (PAGRINDINIS darbas) — kodas buvo deployed nuo s14, bet NIEKADA neveikė (patikrinta git: 0 `draft:` commit'ų). Du blokeriai (s24 minėti) + nauji, atrasti per realų production testavimą:
+- **`96c9178`+`a2f4147`**: 3 endpointai Node→Edge→Node runtime. ESM crash diagnozė per runtime logus.
+- **`163dd15`+`8a6e656`** ESM TIKRASIS fix: `type:module` (lūžo `ERR_MODULE_NOT_FOUND`, ESM reikalauja .js plėtinio) → tsconfig **CommonJS + moduleResolution:node** (suvienodinta su Empirra donor projektu, kur VEIKĖ).
+- **`c0b160c`**: Edge 25s timeout (`FUNCTION_INVOCATION_TIMEOUT`) → Node + Fluid Compute, maxDuration 90→180s, AI timeout 75→140s.
+- **`d0289a2`+`22ee4bb`**: validator — desc 190→prompt sustiprintas, pillar H2 8→6 riba.
+- **Edge-safe lib pakeitimai**: github.ts Buffer→atob/btoa, telegram.ts slugHash node:crypto→FNV-1a sinchroninis, auth.ts +3 Edge funkcijos.
+- **Env vars iš Empirra**: TELEGRAM_BOT_TOKEN+CHAT_ID perkelti per CLI; GITHUB_TOKEN+PEXELS_API_KEY user įkėlė į .env.local → Vercel. GitHub token write teisės (Contents+PR Read/write — user pridėjo GitHub UI).
+- **REZULTATAS**: blog-gen `success:true` — draft branch sukurtas, uniqueness 89-93 pass, Telegram išsiųstas. **Pirmas kartas kai blog automation suveikė nuo pradžios iki galo (80-167s).**
+
+### Kas liko / nepatvirtinta
+
+- **🔴 BLOCKER: Telegram webhook → empirra.com (NE veriva.lt)** — atrasta pačioje pabaigoje per `getWebhookInfo`. Bendras bot'as, webhook gali rodyti tik į vieną URL. User „Publikuoti" callback'ai eina į Empirra → „401 GitHub API". **Publish grandinė (blog-approve) NIEKADA netestuota end-to-end.** Sprendimas (laukia user): atskiras Veriva bot'as ARBA perjungti webhook (Empirra blog nustotų).
+- **🟡 blog-approve token write patikrintas izoliuotai (GitHub API 201/204/404), bet realus telegram-webhook→blog-approve→merge srautas nepatikrintas** (dėl webhook konflikto).
+- **🟡 2 debug commit'ai git istorijoje** (`f110451`, `b4948f9`) — switarinti debug, paskui pašalinti.
+- **🟡 GITHUB_TOKEN+PEXELS Veriva Vercel NE Sensitive** (Empirra juos turi Sensitive) — nenuoseklumas.
+- **🟡 Marinos klausimyno carry-over s24** (email logo, scoring MasterLegal review) — nepaliesta.
+- **🟡 1 draft branch likęs** `draft-blog-bdar-auditas-imonems-2026` — laukia publish testo.
+
+### Kitas žingsnis
+
+1. **Telegram webhook sprendimas** (user action) — atskiras Veriva bot'as (per @BotFather, naujas token+chat) ARBA perjungti esamą webhook į veriva.lt (Empirra blog nustos). Po to — `setWebhook` į veriva.lt + TELEGRAM_WEBHOOK_SECRET sutapimas.
+2. **Publish grandinės E2E testas** — kai webhook teisingas, paspausti „Publikuoti" → patikrinti blog-approve: kortelė+links+sitemap+merge→main→veriva.lt/blog (404→200).
+3. **Cron monitorinimas** — pirmas auto-run antradienį/ketvirtadienį 8:00 UTC; patikrinti ar generuoja be force.
+
+### Production verifikacija (live)
+
+| Test | Statusas |
+|---|---|
+| Marinos Q2/Q25/Q28/Q39 LIVE (`/bdar-auditas`) | ✅ |
+| bdar-audit email fix — 4 E2E → pinigine1@gmail.com | ✅ |
+| Naujas blog straipsnis `/blog/duomenu-subjekto-teises-bdar` 200 | ✅ |
+| blog-gen `success:true` (draft branch + Telegram) | ✅ |
+| Visi endpointai (health/bdar-audit/blog-gen/approve/webhook) ne-500 | ✅ |
+| **blog-approve publish E2E (telegram→merge→live)** | ⬜ BLOCKED (webhook→empirra) |
+
+---
+
+## Sesija #27: 2026-06-09 — fonts-hanken-grotesk-visur
 
 ### Ką padarėme
 

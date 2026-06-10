@@ -4,6 +4,24 @@ Architektūriniai sprendimai. Kiekvienas su data, kontekstu, alternatyvomis, spr
 
 ---
 
+## 2026-06-10 — Blog automation runtime: Node + Fluid Compute (NE Edge), tsconfig CommonJS (s28)
+
+**Kontekstas** (s28): blog automation kodas deployed nuo s14, bet niekada neveikė. s24 įtarė „ESM crash + trūksta env vars". Atblokuojant — per realų production testavimą atrasta seka klaidų (kiekviena pamatyta tik gyvame teste, ne TSC/lokaliai).
+
+**Sprendimas 1 — runtime: Edge → Node + Fluid Compute.** Iš pradžių konvertavau 3 endpointus į Edge (manydamas Node lūžta ESM). Bet Edge turi **25s hard limit** → blog-gen (AI 8000 tokenų ~80-130s + 10 GitHub commitų) → `FUNCTION_INVOCATION_TIMEOUT`. Vercel docs: Edge Functions DEPRECATED, Node + Fluid Compute leidžia iki 300s (Hobby). **Sprendimas: Node runtime** (`export const maxDuration=180`, Web-standard `export default { fetch: handler }`). Edge konversija nebuvo veltui — padarė kodą Web-standard, kuris veikia Node.
+
+**Sprendimas 2 — ESM: tsconfig CommonJS (suvienodinta su Empirra).** Tikrasis s24 ESM crash: `@vercel/node` kompiliuoja TS→`.js` su ESM `import` (tsconfig `module:ESNext`), bet be `type:module` Node traktuoja `.js` kaip CommonJS → „Cannot use import outside module". Bandžiau `type:module` → `ERR_MODULE_NOT_FOUND` (ESM reikalauja `.js` plėtinio importuose). **Empirra (donor, kur VEIKĖ) naudoja `module:CommonJS` + `moduleResolution:node`** — suvienodinta. Edge endpointai (bdar-audit/contact/health) nepaveikti (Vercel Edge compiler bundlina atskirai; s24 „ESNext privalomas Edge" — klaidinga diagnozė).
+
+**Edge-safe lib pakeitimai** (palikti, veikia ir Node): github.ts `Buffer`→`atob/btoa` (UTF-8), telegram.ts slugHash `node:crypto createHash`→FNV-1a sinchroninis (Edge nepalaiko sync crypto).
+
+**Pamoka**: `getWebhookInfo` reikėjo tikrinti PIRMIAU — Telegram webhook→empirra.com blokavo publish, atrasta tik po 6 fix'ų. Donor projekto config (Empirra) — autoritetingas šaltinis kopijuojant stack.
+
+## 2026-06-10 — BDAR klausimynas: multi-scored Q28 proporcinis balas (s28)
+
+**Kontekstas**: Marina paprašė Q28 (IT saugumo priemonės) iš single→multi su konkrečiomis priemonėmis. Q28 yra `weight:2` kritinis (vertinamas balais). Multi su atskiromis priemonėmis reikalauja naujos scoring logikos.
+
+**Sprendimas**: `MULTI_SCORED_QUESTIONS` map — balas proporcingas pažymėtoms iš 5 bazinių priemonių: `(pažymėta/5)×10×weight`. Pvz. 5/5→10, 3/5→6, 2/5→4. „Netaikomos"/„Nežinau"→0. **Max balas 290 NEPAKITĘS** (10×2 prieš ir po). Q25 (saugojimo vieta) irgi →multi, bet NON_SCORED (informacinis) — % neįtakoja. Alternatyva (binarinis taip/ne) atmesta — proporcija tiksliau atspindi realią atitiktį.
+
 ## 2026-06-09 — Tipografija: vieno-šrifto sistema, Hanken Grotesk (s27)
 
 **Kontekstas** (s27): MasterLegal nepatiko Veriva šriftai (3 šriftai: Syne display + Plus Jakarta body + JetBrains Mono). Referencas — questumtraining.com. Analizė: referencas naudoja **vieną custom grotesk šriftą „Rules"** (komercinis, self-hosted, NE Google Fonts) ir antraštėms, ir tekstui. Diagnozė: Veriva **Syne** = problema (ekspresyvus „dizaineriškas" — agentūros, ne teisės/saugumo tonas).

@@ -9,7 +9,9 @@ import { deleteBranch, commitFileToBranch, listBranches } from '../../../lib/git
 import { sendTelegramMessage, answerCallbackQuery, slugHash } from '../../../lib/telegram';
 import { verifyTelegramWebhookAuth } from '../../../lib/auth';
 
-export const config = { runtime: 'edge' };
+// Node.js runtime + Fluid Compute. telegram-webhook gali deleguoti į blog-approve
+// (POST publish) — laukia atsakymo, todėl irgi gali viršyti 25s. maxDuration apsaugo.
+export const maxDuration = 60;
 
 const GITHUB_API = 'https://api.github.com/repos/riko8825/Veriva-geras';
 const VERIVA_TABLE = 'veriva_telegram_revise_state';
@@ -97,7 +99,7 @@ async function clearReviseState(chatId: string): Promise<void> {
 // ───────────────────────────────────────────────────────────
 // Handler
 // ───────────────────────────────────────────────────────────
-export default async function handler(req: Request): Promise<Response> {
+async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') { return ok200(); }
 
   if (!verifyTelegramWebhookAuth(req)) {
@@ -312,3 +314,6 @@ export default async function handler(req: Request): Promise<Response> {
 function escapeHtml(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
+
+// Vercel Node runtime — Web-standard fetch export (palaiko Request/Response + maxDuration)
+export default { fetch: handler };

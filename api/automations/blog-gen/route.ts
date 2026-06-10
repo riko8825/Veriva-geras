@@ -34,7 +34,10 @@ import {
 } from '../../../lib/uniqueness';
 import { verifyBlogTriggerAuth } from '../../../lib/auth';
 
-export const config = { runtime: 'edge' };
+// Node.js runtime (NE Edge): blog-gen daro AI generavimą + ~10 GitHub commitų — tai
+// >25s, o Edge turi 25s hard limit (→ FUNCTION_INVOCATION_TIMEOUT). Node + Fluid Compute
+// leidžia iki maxDuration. Kodas — Web-standard Request/Response (Node runtime palaiko).
+export const maxDuration = 90;
 
 const GITHUB_API = 'https://api.github.com/repos/riko8825/Veriva-geras';
 
@@ -468,7 +471,7 @@ function b64decodeUtf8(b64: string): string {
   return new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0)));
 }
 
-export default async function handler(req: Request): Promise<Response> {
+async function handler(req: Request): Promise<Response> {
   // Auth: constant-time comparison via lib/auth.ts (accepts CRON_SECRET Bearer OR BLOG_TRIGGER_SECRET x-api-key)
   if (!process.env.CRON_SECRET && !process.env.BLOG_TRIGGER_SECRET) {
     console.error('[blog-gen] Neither CRON_SECRET nor BLOG_TRIGGER_SECRET env is set');
@@ -661,3 +664,6 @@ export default async function handler(req: Request): Promise<Response> {
     return sendJson(500, { success: false, error: msg, duration_ms: duration });
   }
 }
+
+// Vercel Node runtime — Web-standard fetch export (palaiko Request/Response + maxDuration)
+export default { fetch: handler };

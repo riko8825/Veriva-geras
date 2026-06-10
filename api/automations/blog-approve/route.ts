@@ -17,7 +17,9 @@ import { injectForwardLinks, pickReverseTargets, injectReverseLink, extractH1Tit
 import { buildSitemapFromBranch } from '../../../lib/sitemap-update';
 import { verifyBlogApproveAuth } from '../../../lib/auth';
 
-export const config = { runtime: 'edge' };
+// Node.js runtime + Fluid Compute: publish flow daro ~10+ GitHub commitų (card, links,
+// sitemap, merge) — gali viršyti 25s Edge limitą. maxDuration leidžia ilgesnį darbą.
+export const maxDuration = 60;
 
 const GITHUB_API = 'https://api.github.com/repos/riko8825/Veriva-geras';
 
@@ -228,7 +230,7 @@ function sendJson(status: number, data: unknown): Response {
   return new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } });
 }
 
-export default async function handler(req: Request): Promise<Response> {
+async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') {
     return sendJson(405, { error: 'Method not allowed' });
   }
@@ -395,3 +397,6 @@ export default async function handler(req: Request): Promise<Response> {
   // action validuotas anksčiau (POST/SKIP/REVISE) — fallback TS exhaustiveness
   return sendJson(400, { error: 'Unhandled action' });
 }
+
+// Vercel Node runtime — Web-standard fetch export (palaiko Request/Response + maxDuration)
+export default { fetch: handler };

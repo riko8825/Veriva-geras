@@ -67,9 +67,10 @@ Title (≤60 simb.):
 - Primary keyword pirmuose 30 simb.
 - Formatas: "[Tema + nauda]: [kvalifikatorius] — Veriva"
 
-Meta description (140-160 simb.):
+Meta description (PRIVALOMA 140-160 simb. — NE daugiau kaip 160, NE mažiau kaip 140):
 - Primary keyword pirmuose 60 simb.
 - Turi: 1× primary KW + skaičius/faktas + CTA
+- SUSKAIČIUOK simbolius prieš grąžindamas. 190 ar 130 — ATMESTA validatoriaus.
 
 Keyword tankis:
 - Primary: 3-5× per 1000 žodžių
@@ -172,8 +173,8 @@ export function buildBlogUserPrompt(brief: BlogBrief): string {
     `- Audience: LT B2B sprendimų priėmėjai — direktoriai, IT vadovai, juristai`,
     ``,
     brief.postType === 'pillar'
-      ? 'POST TYPE NOTES: Pillar — autoritetinis ilgesnis straipsnis (2800-3500 ž.), 8-12 H2 sekcijų, FAQ 12 klausimų 2 stulpeliuose (.faq-grid), bent 2× cta-inline.'
-      : 'POST TYPE NOTES: Cluster — fokusuotas straipsnis (1500-2500 ž.), 5-8 H2, FAQ 5-6 klausimai (.faq-list be grid), 1× cta-inline.',
+      ? 'POST TYPE NOTES: Pillar — autoritetinis ilgesnis straipsnis (2800-3500 ž.). PRIVALOMA 8-12 H2 sekcijų (<h2> žymų) — suskaičiuok, 7 ar mažiau ATMESTA. FAQ 12 klausimų 2 stulpeliuose (.faq-grid), bent 2× cta-inline.'
+      : 'POST TYPE NOTES: Cluster — fokusuotas straipsnis (1500-2500 ž.). PRIVALOMA 5-8 H2 sekcijų. FAQ 5-6 klausimai (.faq-list be grid), 1× cta-inline.',
     ``,
     `PILLAR/CATEGORY KONTEKSTAS:`,
     getPillarContext(brief.pillar ?? brief.category.toLowerCase()),

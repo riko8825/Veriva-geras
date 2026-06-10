@@ -23,27 +23,173 @@
     "technical_deep_dive": "Technical deep dive — str. analizė + edge cases"
   },
   "topics": [
-    { "keyword": "BDAR baudos Lietuvoje", "status": "published", "post_type": "pillar", "pillar": "bdar", "author_key": "marina", "content_type": "case_study" },
-    { "keyword": "NIS2 direktyva Lietuvoje", "status": "published", "post_type": "pillar", "pillar": "nis2", "author_key": "justinas", "content_type": "technical_deep_dive" },
-    { "keyword": "phishing mokymai darbuotojams", "status": "published", "post_type": "pillar", "pillar": "mokymai", "author_key": "justinas", "content_type": "roadmap" },
-
-    { "keyword": "BDAR auditas įmonėms 2026", "status": "pending", "post_type": "pillar", "pillar": "bdar", "author_key": "marina", "content_type": "roadmap" },
-    { "keyword": "VDAI patikrinimas: kaip pasiruošti", "status": "pending", "post_type": "cluster", "pillar": "bdar", "author_key": "marina", "content_type": "mistakes" },
-    { "keyword": "DPO outsourcing kainos Lietuvoje", "status": "pending", "post_type": "cluster", "pillar": "dpo", "author_key": "marina", "content_type": "roi" },
-    { "keyword": "BDAR smulkiam verslui", "status": "pending", "post_type": "cluster", "pillar": "bdar", "author_key": "marina", "content_type": "industry" },
-    { "keyword": "cookie banner sutikimas BDAR", "status": "pending", "post_type": "cluster", "pillar": "bdar", "author_key": "marina", "content_type": "workflow" },
-    { "keyword": "NIS2 kam taikoma 2026", "status": "pending", "post_type": "cluster", "pillar": "nis2", "author_key": "justinas", "content_type": "industry" },
-    { "keyword": "NIS2 incidentų pranešimas 24 valandos", "status": "pending", "post_type": "cluster", "pillar": "nis2", "author_key": "justinas", "content_type": "roadmap" },
-    { "keyword": "DORA reglamentas finansinėms įmonėms", "status": "pending", "post_type": "cluster", "pillar": "nis2", "author_key": "justinas", "content_type": "comparison" },
-    { "keyword": "kibernetinio saugumo auditas įmonei", "status": "pending", "post_type": "pillar", "pillar": "sauga", "author_key": "justinas", "content_type": "roi" },
-    { "keyword": "DPIA rizikos vertinimas pavyzdys", "status": "pending", "post_type": "cluster", "pillar": "bdar", "author_key": "marina", "content_type": "workflow" },
-    { "keyword": "duomenų pažeidimas 72 valandos", "status": "pending", "post_type": "pillar", "pillar": "bdar", "author_key": "marina", "content_type": "case_study" },
-    { "keyword": "privatumo politika pavyzdys įmonei", "status": "pending", "post_type": "cluster", "pillar": "bdar", "author_key": "marina", "content_type": "workflow" },
-    { "keyword": "darbuotojų duomenų apsauga", "status": "pending", "post_type": "cluster", "pillar": "bdar", "author_key": "marina", "content_type": "mistakes" },
-    { "keyword": "duomenų tvarkytojo sutartis DPA", "status": "pending", "post_type": "cluster", "pillar": "bdar", "author_key": "marina", "content_type": "workflow" },
-    { "keyword": "BDAR sutikimo formos reikalavimai", "status": "pending", "post_type": "cluster", "pillar": "bdar", "author_key": "marina", "content_type": "technical_deep_dive" },
-    { "keyword": "ISO 27001 sertifikavimas Lietuvoje", "status": "pending", "post_type": "cluster", "pillar": "sauga", "author_key": "justinas", "content_type": "comparison" },
-    { "keyword": "social engineering apsauga įmonėje", "status": "pending", "post_type": "cluster", "pillar": "sauga", "author_key": "justinas", "content_type": "mistakes" },
-    { "keyword": "GDPR vs BDAR: skirtumai LT", "status": "pending", "post_type": "cluster", "pillar": "bdar", "author_key": "marina", "content_type": "comparison" }
+    {
+      "keyword": "BDAR baudos Lietuvoje",
+      "status": "published",
+      "post_type": "pillar",
+      "pillar": "bdar",
+      "author_key": "marina",
+      "content_type": "case_study"
+    },
+    {
+      "keyword": "NIS2 direktyva Lietuvoje",
+      "status": "published",
+      "post_type": "pillar",
+      "pillar": "nis2",
+      "author_key": "justinas",
+      "content_type": "technical_deep_dive"
+    },
+    {
+      "keyword": "phishing mokymai darbuotojams",
+      "status": "published",
+      "post_type": "pillar",
+      "pillar": "mokymai",
+      "author_key": "justinas",
+      "content_type": "roadmap"
+    },
+    {
+      "keyword": "BDAR auditas įmonėms 2026",
+      "status": "draft",
+      "post_type": "pillar",
+      "pillar": "bdar",
+      "author_key": "marina",
+      "content_type": "roadmap"
+    },
+    {
+      "keyword": "VDAI patikrinimas: kaip pasiruošti",
+      "status": "pending",
+      "post_type": "cluster",
+      "pillar": "bdar",
+      "author_key": "marina",
+      "content_type": "mistakes"
+    },
+    {
+      "keyword": "DPO outsourcing kainos Lietuvoje",
+      "status": "pending",
+      "post_type": "cluster",
+      "pillar": "dpo",
+      "author_key": "marina",
+      "content_type": "roi"
+    },
+    {
+      "keyword": "BDAR smulkiam verslui",
+      "status": "pending",
+      "post_type": "cluster",
+      "pillar": "bdar",
+      "author_key": "marina",
+      "content_type": "industry"
+    },
+    {
+      "keyword": "cookie banner sutikimas BDAR",
+      "status": "pending",
+      "post_type": "cluster",
+      "pillar": "bdar",
+      "author_key": "marina",
+      "content_type": "workflow"
+    },
+    {
+      "keyword": "NIS2 kam taikoma 2026",
+      "status": "pending",
+      "post_type": "cluster",
+      "pillar": "nis2",
+      "author_key": "justinas",
+      "content_type": "industry"
+    },
+    {
+      "keyword": "NIS2 incidentų pranešimas 24 valandos",
+      "status": "pending",
+      "post_type": "cluster",
+      "pillar": "nis2",
+      "author_key": "justinas",
+      "content_type": "roadmap"
+    },
+    {
+      "keyword": "DORA reglamentas finansinėms įmonėms",
+      "status": "pending",
+      "post_type": "cluster",
+      "pillar": "nis2",
+      "author_key": "justinas",
+      "content_type": "comparison"
+    },
+    {
+      "keyword": "kibernetinio saugumo auditas įmonei",
+      "status": "pending",
+      "post_type": "pillar",
+      "pillar": "sauga",
+      "author_key": "justinas",
+      "content_type": "roi"
+    },
+    {
+      "keyword": "DPIA rizikos vertinimas pavyzdys",
+      "status": "pending",
+      "post_type": "cluster",
+      "pillar": "bdar",
+      "author_key": "marina",
+      "content_type": "workflow"
+    },
+    {
+      "keyword": "duomenų pažeidimas 72 valandos",
+      "status": "pending",
+      "post_type": "pillar",
+      "pillar": "bdar",
+      "author_key": "marina",
+      "content_type": "case_study"
+    },
+    {
+      "keyword": "privatumo politika pavyzdys įmonei",
+      "status": "pending",
+      "post_type": "cluster",
+      "pillar": "bdar",
+      "author_key": "marina",
+      "content_type": "workflow"
+    },
+    {
+      "keyword": "darbuotojų duomenų apsauga",
+      "status": "pending",
+      "post_type": "cluster",
+      "pillar": "bdar",
+      "author_key": "marina",
+      "content_type": "mistakes"
+    },
+    {
+      "keyword": "duomenų tvarkytojo sutartis DPA",
+      "status": "pending",
+      "post_type": "cluster",
+      "pillar": "bdar",
+      "author_key": "marina",
+      "content_type": "workflow"
+    },
+    {
+      "keyword": "BDAR sutikimo formos reikalavimai",
+      "status": "pending",
+      "post_type": "cluster",
+      "pillar": "bdar",
+      "author_key": "marina",
+      "content_type": "technical_deep_dive"
+    },
+    {
+      "keyword": "ISO 27001 sertifikavimas Lietuvoje",
+      "status": "pending",
+      "post_type": "cluster",
+      "pillar": "sauga",
+      "author_key": "justinas",
+      "content_type": "comparison"
+    },
+    {
+      "keyword": "social engineering apsauga įmonėje",
+      "status": "pending",
+      "post_type": "cluster",
+      "pillar": "sauga",
+      "author_key": "justinas",
+      "content_type": "mistakes"
+    },
+    {
+      "keyword": "GDPR vs BDAR: skirtumai LT",
+      "status": "pending",
+      "post_type": "cluster",
+      "pillar": "bdar",
+      "author_key": "marina",
+      "content_type": "comparison"
+    }
   ]
 }

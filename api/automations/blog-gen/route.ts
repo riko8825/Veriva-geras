@@ -34,10 +34,10 @@ import {
 } from '../../../lib/uniqueness';
 import { verifyBlogTriggerAuth } from '../../../lib/auth';
 
-// Node.js runtime (NE Edge): blog-gen daro AI generavimą + ~10 GitHub commitų — tai
-// >25s, o Edge turi 25s hard limit (→ FUNCTION_INVOCATION_TIMEOUT). Node + Fluid Compute
-// leidžia iki maxDuration. Kodas — Web-standard Request/Response (Node runtime palaiko).
-export const maxDuration = 90;
+// Node.js runtime + Fluid Compute (NE Edge): blog-gen daro AI generavimą (8000 tokenų,
+// ~80-130s) + ~10 GitHub commitų. Edge 25s limitas netiktų. Fluid Compute Hobby leidžia
+// iki 300s. 180s = 140s AI (claude.ts) + ~30s GitHub + atsarga. Web-standard fetch export.
+export const maxDuration = 180;
 
 const GITHUB_API = 'https://api.github.com/repos/riko8825/Veriva-geras';
 

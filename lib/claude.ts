@@ -3,10 +3,11 @@
 //
 // Pavadinimas istorinis (originaliai Anthropic Claude), dabar OpenAI gpt-4.1.
 // Empirra projekte praeitos: gpt-4o-mini → gpt-4o (timeout) → Claude Sonnet 4.6 (no credits) → gpt-4.1 (current).
-// Vercel maxDuration=90s. Budget: 75s AI + ~15s GitHub commits = 90s.
+// Vercel maxDuration=180s (Fluid Compute, Hobby max 300s). Budget: 140s AI + ~30s GitHub.
+// 8000-token straipsnio generavimas gpt-4.1 gali truk >75s lėtu momentu (s28 testas: 78s).
 
 const RETRY_DELAYS: number[] = []
-const REQUEST_TIMEOUT_MS = 75_000
+const REQUEST_TIMEOUT_MS = 140_000
 
 export async function runPrompt(params: {
   system: string

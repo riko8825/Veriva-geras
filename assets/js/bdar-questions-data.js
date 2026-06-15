@@ -15,7 +15,10 @@ window.BDAR_SECTIONS = [
     title: 'Bendrieji duomenys apie organizaciją',
     questions: [
       { n: 1, id: 'org-pavadinimas', type: 'open', required: true, text: 'Organizacijos pavadinimas.' },
-      { n: 2, id: 'kontaktinis-asmuo', type: 'open', required: true, text: 'Kontaktinis asmuo, pareigos, el. paštas ir telefono numeris.', help: 'Nurodytu el. paštu atsiųsime Jūsų išvadą. Pateiktus kontaktinius duomenis tvarkome vadovaudamiesi mūsų privatumo politika ir Jūsų sutikimu, išreikštu pateikiant atsakymus į šį klausimyną.' },
+      { n: 2, id: 'kontaktinis-asmuo', type: 'open', required: true, text: 'Kontaktiniai duomenys.', help: 'Nurodytu el. paštu atsiųsime Jūsų išvadą. Pateiktus kontaktinius duomenis tvarkome vadovaudamiesi mūsų privatumo politika ir Jūsų sutikimu, išreikštu pateikiant atsakymus į šį klausimyną.', fields: [
+        { key: 'kontaktinis-asmuo-vardas', label: 'Atsakingas asmuo ir pareigos', inputType: 'text', required: true },
+        { key: 'kontaktinis-el-pastas', label: 'El. paštas', inputType: 'email', required: true },
+        { key: 'kontaktinis-telefonas', label: 'Telefono numeris', inputType: 'tel', required: false } ] },
       { n: 3, id: 'veikla', type: 'single', text: 'Kokią veiklą vykdo Jūsų organizacija?', options: [
         ['paslaugos','Paslaugos'],['prekyba','Prekyba'],['el-prekyba','Elektroninė prekyba'],['gamyba','Gamyba'],
         ['svietimas','Švietimas / mokymai'],['it','IT / technologijos'],['personalas','Personalo atranka'],

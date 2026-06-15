@@ -25,8 +25,8 @@ import { log } from '../../lib/logger'
 
 export const config = { runtime: 'edge' }
 
-// Email iš laisvo teksto (Q2: "Vardas, pareigos, email, tel"). Domeno galas — tik
-// raidės/skaičiai/brūkšnys, kad nepagautų trailing skyrybos (pvz. "email@x.lt," su kableliu).
+// Q2 dabar turi atskirą el. pašto lauką (kontaktinis-el-pastas). EMAIL_RE — pilna lauko
+// validacija (anchored) + fallback senesniam laisvo teksto formatui (kontaktinis-asmuo).
 const EMAIL_RE = /[^\s@,;]+@[^\s@,;]+\.[a-zA-Z]{2,}/
 const MAX_COMMENT_LEN = 1000 // P2-2: stored data poisoning apsauga
 const CONSENT_VERSION = '2026-06-07' // P2-1: consent įrodymo versija
@@ -75,8 +75,10 @@ function validate(p: Payload): { ok: true; email: string } | { ok: false; error:
   const orgName = String(p.answers['org-pavadinimas'] ?? '').trim()
   if (orgName.length < 2) return { ok: false, error: 'Nenurodytas organizacijos pavadinimas' }
 
-  const contact = String(p.answers['kontaktinis-asmuo'] ?? '').trim()
-  const emailMatch = contact.match(EMAIL_RE)
+  // Email — pirmiausia iš atskiro lauko (naujas Q2 formatas), fallback į laisvą tekstą.
+  const emailField = String(p.answers['kontaktinis-el-pastas'] ?? '').trim()
+  const contactLegacy = String(p.answers['kontaktinis-asmuo'] ?? '').trim()
+  const emailMatch = (emailField || contactLegacy).match(EMAIL_RE)
   if (!emailMatch) return { ok: false, error: 'Nenurodytas galiojantis el. paštas' }
 
   // Bent pusė vertinamų klausimų atsakyta (anti-garbage)

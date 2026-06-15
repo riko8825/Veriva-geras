@@ -62,7 +62,42 @@
     var labelId = 'qlabel-' + q.id;
     var inputId = 'qinput-' + q.id;
 
-    if (q.type === 'open') {
+    if (q.type === 'open' && q.fields && q.fields.length) {
+      // Keli atskiri laukai viename klausime (pvz. Q2: asmuo / el. paštas / tel.)
+      var glabelF = document.createElement('div');
+      glabelF.className = 'ba-q-label';
+      glabelF.id = labelId;
+      glabelF.innerHTML = '<span class="ba-q-num">' + q.n + '.</span>' + esc(q.text);
+      box.appendChild(glabelF);
+      appendHelp(box, q);
+
+      var grid = document.createElement('div');
+      grid.className = 'ba-fields';
+      q.fields.forEach(function (f) {
+        var fid = 'qinput-' + f.key;
+        var fl = document.createElement('label');
+        fl.className = 'ba-field-label';
+        fl.setAttribute('for', fid);
+        fl.textContent = f.label + (f.required ? ' *' : '');
+        var fi = document.createElement('input');
+        fi.type = f.inputType;
+        fi.className = 'ba-input';
+        fi.id = fid;
+        fi.setAttribute('data-input', f.key);
+        if (f.inputType === 'email') fi.setAttribute('inputmode', 'email');
+        if (f.inputType === 'tel') fi.setAttribute('inputmode', 'tel');
+        fi.addEventListener('input', function () {
+          answers[f.key] = fi.value.trim();
+          clearError(box);
+        });
+        var fwrap = document.createElement('div');
+        fwrap.className = 'ba-field';
+        fwrap.appendChild(fl);
+        fwrap.appendChild(fi);
+        grid.appendChild(fwrap);
+      });
+      box.appendChild(grid);
+    } else if (q.type === 'open') {
       // Tikras <label for> ↔ <input id> ryšys (P0-1)
       var label = document.createElement('label');
       label.className = 'ba-q-label';
@@ -72,10 +107,8 @@
       box.appendChild(label);
       appendHelp(box, q);
 
-      var input = q.id === 'kontaktinis-asmuo'
-        ? document.createElement('textarea')
-        : document.createElement('input');
-      if (input.tagName === 'INPUT') input.type = 'text';
+      var input = document.createElement('input');
+      input.type = 'text';
       input.className = 'ba-input';
       input.id = inputId;
       input.setAttribute('data-input', q.id);
@@ -200,14 +233,18 @@
     section.questions.forEach(function (q) {
       var box = document.querySelector('.ba-q[data-qid="' + q.id + '"]');
       var valid = true;
-      if (q.type === 'open') {
+      if (q.type === 'open' && q.fields && q.fields.length) {
+        q.fields.forEach(function (f) {
+          var fv = (answers[f.key] || '').trim();
+          if (f.required && fv.length < 2) { valid = false; setErrorText(box, 'Užpildykite privalomus laukus'); }
+          if (f.inputType === 'email' && fv && !EMAIL_RE.test(fv)) {
+            valid = false;
+            setErrorText(box, 'Nurodykite galiojantį el. paštą');
+          }
+        });
+      } else if (q.type === 'open') {
         var val = (answers[q.id] || '').trim();
         if (q.required && val.length < 2) { valid = false; setErrorText(box, 'Užpildykite šį lauką'); }
-        // kontaktinis asmuo turi turėti el. paštą
-        if (q.id === 'kontaktinis-asmuo' && val && !EMAIL_RE.test(val)) {
-          valid = false;
-          setErrorText(box, 'Nurodykite galiojantį el. paštą');
-        }
       } else if (q.type === 'single') {
         if (!answers[q.id]) { valid = false; setErrorText(box, 'Pasirinkite atsakymą'); }
       } else if (q.type === 'multi') {
@@ -281,6 +318,8 @@
   }
 
   function extractEmail() {
+    var direct = (answers['kontaktinis-el-pastas'] || '').trim();
+    if (direct) { var dm = direct.match(EMAIL_RE); if (dm) return dm[0]; }
     var c = answers['kontaktinis-asmuo'] || '';
     var m = c.match(EMAIL_RE);
     return m ? m[0] : '';

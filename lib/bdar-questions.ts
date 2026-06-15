@@ -21,6 +21,16 @@ export interface Option {
   score?: number
 }
 
+/** Sub-laukas „open" klausimui, kuris dalijasi į kelis atskirus įvedimo laukus (pvz. Q2). */
+export interface SubField {
+  /** Unikalus key answers žemėlapyje (pvz. "kontaktinis-el-pastas"). */
+  key: string
+  label: string
+  /** HTML input tipas — email/tel renderina specializuotą lauką + validaciją. */
+  inputType: 'email' | 'tel' | 'text'
+  required?: boolean
+}
+
 export interface Question {
   /** Originalus numeris klausimyne (1–42). */
   n: number
@@ -32,6 +42,8 @@ export interface Question {
   /** Ar yra papildomas komentaro/nuorodos laukas. */
   comment?: boolean
   commentLabel?: string
+  /** „open" klausimui — keli atskiri įvedimo laukai vietoj vieno. */
+  fields?: SubField[]
   /** Ar privalomas (open identity laukai). */
   required?: boolean
   /** Klausimo svoris bendrame score (default 1). Kritiniai = 2. */
@@ -88,8 +100,13 @@ export const SECTIONS: Section[] = [
         id: 'kontaktinis-asmuo',
         section: 'bendrieji',
         type: 'open',
-        text: 'Kontaktinis asmuo, pareigos, el. paštas ir telefono numeris.',
+        text: 'Kontaktiniai duomenys.',
         required: true,
+        fields: [
+          { key: 'kontaktinis-asmuo-vardas', label: 'Atsakingas asmuo ir pareigos', inputType: 'text', required: true },
+          { key: 'kontaktinis-el-pastas', label: 'El. paštas', inputType: 'email', required: true },
+          { key: 'kontaktinis-telefonas', label: 'Telefono numeris', inputType: 'tel', required: false },
+        ],
       },
       {
         n: 3,

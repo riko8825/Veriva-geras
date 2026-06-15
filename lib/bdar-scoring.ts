@@ -243,9 +243,19 @@ export function scoreAnswers(answers: Answers): ScoringResult {
     sectionScores,
     lead: {
       orgName: String(answers['org-pavadinimas'] ?? '').trim(),
-      contact: String(answers['kontaktinis-asmuo'] ?? '').trim(),
+      contact: buildContact(answers),
     },
   }
+}
+
+/** Q2 kontaktas — surenka iš atskirų laukų (naujas formatas) arba legacy laisvo teksto. */
+function buildContact(answers: Answers): string {
+  const name = String(answers['kontaktinis-asmuo-vardas'] ?? '').trim()
+  const email = String(answers['kontaktinis-el-pastas'] ?? '').trim()
+  const phone = String(answers['kontaktinis-telefonas'] ?? '').trim()
+  const parts = [name, email, phone].filter(Boolean)
+  if (parts.length > 0) return parts.join(', ')
+  return String(answers['kontaktinis-asmuo'] ?? '').trim()
 }
 
 function sectionTitle(id: string): string {

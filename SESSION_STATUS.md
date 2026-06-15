@@ -1,11 +1,59 @@
 # SESSION_STATUS
 
-**Data**: 2026-06-10
-**Sesijos tikslas**: Marinos BDAR klausimyno korekcijos (Q2/Q25/Q28/Q39) → naujas blog straipsnis (duomenų subjekto teisės) → blog automation atblokavimas (ESM crash + Edge timeout fix, env vars iš Empirra).
+**Data**: 2026-06-15
+**Sesijos tikslas**: Blog-gen cron sustabdymas (publish blokuotas) → GSC indeksavimo diagnozė → Q2 kontaktų laukų išskaidymas (asmuo/el.paštas/tel.) — email submit bug fix.
 
 ---
 
-## Paskutinė sesija: 2026-06-10 — blog-automation-unblock + marina-klausimynas + blog-straipsnis
+## Paskutinė sesija: 2026-06-15 — blog-cron-stop + gsc-diagnoze + Q2-laukai
+
+### Ką padarėme
+
+**3 darbai vienoje sesijoje.**
+
+**1. Blog-gen cron sustabdymas** (`41971ae`, push LIVE) — pašalintas `crons` laukas iš `vercel.json` (`0 8 * * 2,4`). Priežastis: publish grandinė blokuota (Telegram webhook→empirra.com), auto-generacija kūrė draft branch'us be naudos. Endpointas lieka — galima rankinis trigger.
+
+**2. GSC indeksavimo diagnozė** (curl, NE kodo pakeitimai) — user pateikė 2 GSC screenshot'us:
+- „Patvirtinimas: nepavyko" (4 seo URL) — validacija iš 2026-05-26, PRIEŠ s25 noindex'inimą. 3/4 dabar `index,follow`+200+sitemap'e ✅, 1 (`bdar-paslaugos-verslui`) sąmoningai `noindex`. **Faile nieko taisyti** — pasenusi validacija, reikia tik „PRADĖTI NAUJĄ PATVIRTINIMĄ" GSC'e (user action).
+- „Puslapis su peradresavimu" (9 URL) — visi 308, nė vieno sitemap'e (Google atrado iš senų nuorodų). 7/9 sąmoningi+korektiški. 2 turi 2-hop www grandinę (Vercel Domain-level, ne `vercel.json`) — Google priima iki 5 hops, sąmoningas s21 sprendimas. **Nieko taisyti.**
+
+**3. Q2 kontaktų laukų išskaidymas** (`d28318d`→rebase→`3599b8e`, push LIVE) — PAGRINDINIS. User: vieno Q2 textarea („Kontaktinis asmuo, pareigos, el. paštas ir telefonas") email regex lūždavo nuo skyrybos (`gmail. com` su tarpu) → negalima išsiųsti. Sprendimas: **3 atskiri laukai** (atsakingas asmuo / `type=email` el. paštas / `type=tel`).
+- **Naujas `SubField` tipas** (`lib/bdar-questions.ts`) — `open` klausimui `fields[]` su `key`/`label`/`inputType`/`required`.
+- **Email iš atskiro lauko** (`api/forms/bdar-audit.ts`) — `kontaktinis-el-pastas` tiesiogiai, NE regex iš laisvo teksto; fallback į legacy.
+- **`buildContact()`** (`lib/bdar-scoring.ts`) — `lead.contact` surenkamas iš 3 laukų (vardas, email, tel.) + legacy fallback.
+- **Frontend** (`bdar-auditas.js`) — multi-field render branch (`.ba-fields`), per-field validacija (privalomi + email), `extractEmail` iš naujo lauko. data.js mirror + CSS `.ba-fields` + cache-buster `v=20260615a`.
+- **Testai**: TSC 0, FE↔BE field key sync (4 failai ✅), production curl: `/bdar-auditas` 200, cache-buster LIVE, naujas `fields` LIVE data.js'e.
+
+### Kas liko / nepatvirtinta
+
+- **🟡 Q2 vizualus testas neatliktas** — 3 nauji laukai patvirtinti tik curl'u, ne realiu rendering'u (desktop/mobile). `.ba-fields` flex layout nepatikrintas vizualiai.
+- **🟡 Q2 E2E submit netestuotas** — neišsiųsta reali užklausa su naujais laukais → email/Supabase/scoring kelias su `kontaktinis-el-pastas` nepatvirtintas. Pirminė problema (negalima išsiųsti) NEpatvirtinta kad išspręsta production.
+- **🟡 `buildContact` legacy fallback netestuotas** — logiškai teisingas, nepaleistas.
+- **🟡 GSC: 2 user veiksmai** — „PRADĖTI NAUJĄ PATVIRTINIMĄ" (4 URL) + (opcionaliai) 2-hop www nieko netaisoma.
+- **🟡 Carry-over uncommit** — `contact.ts` IP fix + `migrations/004_data_retention.sql` lieka working tree (NEdeploy'inta šioje sesijoje).
+- **🔴 Telegram webhook→empirra.com** — blog publish blokeris nepaliestas (s28).
+
+### Kitas žingsnis
+
+1. **Q2 E2E + vizualus testas** — užpildyti `/bdar-auditas`, išsiųsti realią užklausą su 3 laukais, patvirtinti email gautas (→pinigine1@gmail.com) + Supabase lead + mobile rendering.
+2. **GSC „PRADĖTI NAUJĄ PATVIRTINIMĄ"** (user) — 4 seo URL; 3 patvirtins, `bdar-paslaugos-verslui` liks noindex.
+3. **Carry-over commit** — `contact.ts` IP fix + `migrations/004_data_retention.sql` (security-review).
+4. **Telegram webhook sprendimas** (s28 blokeris) — atskiras Veriva bot'as ARBA setWebhook→veriva.lt.
+
+### Production verifikacija (live, curl — NE vizuali/E2E)
+
+| Test | Statusas |
+|---|---|
+| `vercel.json` cron pašalintas (`41971ae`) | ✅ |
+| `/bdar-auditas` 200 + cache-buster `v=20260615a` LIVE | ✅ |
+| Naujas Q2 `fields` (3 laukai) LIVE data.js | ✅ |
+| TSC 0 + FE↔BE field key sync | ✅ |
+| **Q2 E2E submit (email→Supabase→scoring)** | ⬜ NETESTUOTA |
+| **Q2 vizualus rendering (desktop/mobile)** | ⬜ NETESTUOTA |
+
+---
+
+## Sesija #28: 2026-06-10 — blog-automation-unblock + marina-klausimynas + blog-straipsnis
 
 ### Ką padarėme
 
@@ -1825,3 +1873,4 @@ Vienas commit'as su:
 | 2026-05-11 (cookiebot-debug) | CookieDeclaration lentelės diagnostika + Cookiebot pricing patikra | — (zero code change) | Patikrinta: scripts placement OK, CDN endpoint'ai HTTP 200, cdreport.js?referer= grąžina pilną lentelę, headless Chrome render parodė DOM lentelę su Būtini(2)+Statistika(4). Root cause: Cookiebot crawl iš 2026-04-23 (PRIEŠ WP→Vercel migraciją) rodo seną WP versiją (wpEmojiSettings, _pk_id#, _pk_ses#, _ga, _ga_#, link į veriva.lt/privatumo-politika-2/ 404). `www.veriva.lt` automatinis aliasas apex'ui (Cookiebot grąžino "already registered with its variant"). Dashboard `Re-scan` mygtuko Premium UI NĖRA (3 ekranai patikrinti). Pricing tyrimas: Daily +€62-99/mėn/domain — neaktyvinti. Sprendimas: vartotojas siunčia support email su CBID `bc31b2c9-a2b7-44e8-a3a2-624b027ba646` + manual rescan prašymu, arba laukti auto-scan ~2026-05-23 |
 | 2026-05-11 (blog-automation-port) | Blog automation pipeline full port iš Empirra (3 endpoint'ai + 14 lib failai + topics.json + migration + vercel.json + docs) | UNCOMMITTED (code-done, deploy pending) | Solution-architect 11-sekcijų plano analizė; 14 lib failų (1748 lines TS): claude/github/telegram/pexels/blog-card/blog-template/blog-prompts/link-map/link-constraints/internal-links/sitemap-update/auth-node/timeout/flags — visi adapted Verivai (LT slugify, LT→EN Pexels translation, .bc card markup, LT diacritic regex, service: page targets, veriva.lt URLs); 3 API endpoint'ai (1278 lines TS): blog-gen 553 lines (LT validators × 10), telegram-webhook 319 lines (LT pranešimai, veriva_telegram_revise_state), blog-approve 406 lines (single blog.html path, branch-level topics.json update); topics.json 21 keywords (3 published + 18 pending); migrations/002_blog_automation.sql (veriva_telegram_revise_state + veriva_blog_runs, RLS, service_role only); vercel.json updated (builds array + crons "0 8 * * 2,4" + 60-90s maxDuration); docs/blog-automation-deploy.md 7-step guide ($0.05-0.08/post cost); 7/12 env vars push'inta į Veriva Vercel (OPENAI_API_KEY, SUPABASE_URL, RESEND_API_KEY + 4 gen secrets); 5 Sensitive vars CLI nepull'ina (GITHUB_TOKEN, PEXELS_API_KEY, SUPABASE_SERVICE_ROLE_KEY, TELEGRAM_BOT_TOKEN/CHAT_ID) — vartotojo input pending; TypeScript zero errors |
 | 2026-05-12 (bundle-push-hero-polish) | Bundle commit + push s12+s14 į production + hero polish iteracijos | `2512730`, `4ee35d1`, `caa5f01`, `d708d90`, `e88719f`, `c91c675`, `50d409c`, `9d1b367`, `f2f2cdb` | Bundle commit s12+s14 (43 files, +9136/-326) į origin/main. INC-001: Vercel build fail po pirmo push'o — CRON_SECRET trailing whitespace iš openssl rand -hex 32, fix: `vercel env rm` + `printf %s | tr -d \\n\\r\\t` + redeploy. Vercel webhook lag anomaly: 3 commits (d708d90+e88719f+50d409c) push'inta į GitHub bet missing Vercel deployments — force trigger empty commit (c91c675) reabsorbavo. Hero iteracijos: ticker baltas, .h-bottom margin-bottom 64/40, .btn-hero-secondary text-link→outlined button, nav padding 96→128/80→108, #hero overflow hidden→clip + min-height 720→780/640→700. Frontend-revizorius agent panaudotas paskutiniam fix'ui. Brief.html prilinkintas hero secondary CTA (buvo tik quiz result screen'e). 6 Vercel builds Ready (13-14s avg), production LIVE ant `f2f2cdb` |
+| 2026-06-15 (blog-cron-stop + gsc-diagnoze + Q2-laukai) | Blog-gen cron sustabdytas + GSC diagnozė + Q2 kontaktų laukų išskaidymas | `41971ae`, `d28318d`→rebase→`3599b8e` | (1) `vercel.json` crons laukas pašalintas — publish blokuotas (webhook→empirra), auto-gen be naudos. (2) GSC 2 screenshot diagnozė curl'u: „nepavyko" 4 URL = pasenusi 2026-05-26 validacija (3/4 dabar index+200+sitemap, 1 sąmoningai noindex), „peradresavimo" 9 URL = sąmoningi 308 (nė vienas sitemap'e); KODE NIEKO NETAISYTA, reikia tik GSC re-validate (user). (3) Q2 textarea→3 atskiri laukai (asmuo/`type=email`/`type=tel`): naujas `SubField` tipas, email iš `kontaktinis-el-pastas` lauko (ne regex iš laisvo teksto — `gmail. com` su tarpu lūždavo), `buildContact()` surenka lead.contact + legacy fallback, FE multi-field render+validacija, `.ba-fields` CSS, cache-buster v=20260615a. Rebase ant 5 SEO Bot auto-deploy commit'ų (0 konfliktų). TSC 0, FE↔BE sync, prod curl 200. Q2 E2E+vizualus NETESTUOTA |

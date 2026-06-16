@@ -81,6 +81,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/asmens-duomenu-rinkimas</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/bdar-6-straipsnis</loc>
     <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
@@ -153,7 +159,7 @@
     <loc>https://veriva.lt/seo/bendrasis-asmens-duomenu-tvarkymo-tikslas</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bendrasis-duomen-apsaugos-reglamentas-bdar-kas-tai</loc>

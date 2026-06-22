@@ -10,7 +10,7 @@
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@types/node": "^20.11.0",
+    "@types/node": "^26.0.0",
     "typescript": "^5.4.0",
     "vercel": "^39.0.0"
   },

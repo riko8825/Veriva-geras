@@ -73,7 +73,7 @@
     <loc>https://veriva.lt/seo/2026-bdar-apsauga-all-rights-reserved</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/apple-irenginiu-valdymo-mokymai</loc>
@@ -335,6 +335,12 @@
     <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/patik-kite-asmens-duomen-apsaug-profesionalams</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/privatumo-politika-en</loc>

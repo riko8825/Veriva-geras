@@ -300,7 +300,7 @@
     <loc>https://veriva.lt/seo/kod-l-bdar-laikymasis-svarbus-verslui</loc>
     <lastmod>2026-06-25</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/lietuvos-kibernetinio-saugumo-istatymas</loc>
@@ -341,6 +341,12 @@
     <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/organizacini-ir-technini-duomen-saugumo-priemoni-apra-as</loc>
+    <lastmod>2026-06-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/patik-kite-asmens-duomen-apsaug-profesionalams</loc>

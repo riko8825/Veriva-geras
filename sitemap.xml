@@ -346,7 +346,7 @@
     <loc>https://veriva.lt/seo/organizacini-ir-technini-duomen-saugumo-priemoni-apra-as</loc>
     <lastmod>2026-06-27</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/patik-kite-asmens-duomen-apsaug-profesionalams</loc>
@@ -411,6 +411,12 @@
     <loc>https://veriva.lt/seo/valdymo-sistemos-kibernetinio-saugumo-auditas</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/valstybin-duomen-apsaugos-inspekcija-vdai-2023</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/slapukai</loc>

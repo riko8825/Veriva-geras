@@ -49,3 +49,6 @@ debug-*.png
 
 # Laikini screenshot'ai (vizualinė QA)
 _shots/
+
+# Local data / questionnaires — not part of the live site
+*.xlsx

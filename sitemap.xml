@@ -64,7 +64,37 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/2026-bdar-apsauga-all-rights-reserved</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/apple-irenginiu-valdymo-mokymai</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/asmens-duomen-tvarkymo-sutartis-lt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/asmens-duomenu-apsauga</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/asmens-duomenu-ir-informacijos-apsauga</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/asmens-duomenu-rinkimas</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/asmens-duomenu-saugumas</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -78,13 +108,13 @@
     <loc>https://veriva.lt/seo/bdar-atitiktis</loc>
     <lastmod>2026-07-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-auditas</loc>
     <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-auditas-imonems</loc>
@@ -95,6 +125,11 @@
   <url>
     <loc>https://veriva.lt/seo/bdar-auditas-lietuvoje</loc>
     <lastmod>2026-05-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/bdar-baudos-lietuvoje</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -156,8 +191,23 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/bendrasis-asmens-duomenu-tvarkymo-tikslas</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/bendrasis-duomen-apsaugos-reglamentas-bdar-kas-tai</loc>
     <lastmod>2026-06-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/crm-duomenu-integravimas-rinkodaroje</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/domina-paslauga-susisiekite-konsultacijai</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -170,6 +220,36 @@
   <url>
     <loc>https://veriva.lt/seo/dpo-paslaugos</loc>
     <lastmod>2026-05-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/dpo-paslaugos-kaune</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/dpo-paslaugos-klaipedoje</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/dpo-paslaugos-panevezyje</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/dpo-paslaugos-siauliuose</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/dpo-paslaugos-vilniuje</loc>
+    <lastmod>2026-07-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -200,7 +280,7 @@
     <loc>https://veriva.lt/seo/duomenu-nutekejimo-zalos-atlyginimas</loc>
     <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/duomenu-pazeidimo-valdymas</loc>
@@ -233,6 +313,11 @@
   <url>
     <loc>https://veriva.lt/seo/duomenu-tvarkytojo-sutartis-dpa</loc>
     <lastmod>2026-06-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/gdpr-audit</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -291,6 +376,21 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/kod-l-bdar-laikymasis-svarbus-verslui</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/lietuvos-kibernetinio-saugumo-istatymas</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/ministerija-atkirto-palangos-merui-del-jo-duomenu</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/nacionalinio-kibernetinio-saugumo-centro-mokymai</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -326,8 +426,23 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/organizacini-ir-technini-duomen-saugumo-priemoni-apra-as</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/patik-kite-asmens-duomen-apsaug-profesionalams</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/poveikio-duomenu-apsaugai-vertinimas-pdav</loc>
     <lastmod>2026-06-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/privatumo-politika-en</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -349,8 +464,28 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/sam-reaguoja-auditori-pastabas-d-l-pacient-pav-jimo</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/signalizuoja-isaugusi-informacijos-poreiki</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/slapuk-politika-en</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/slapuku-sutikimo-atitiktis</loc>
     <lastmod>2026-06-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/specialisto-konsultacija</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -368,6 +503,11 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/valdymo-sistemos-kibernetinio-saugumo-auditas</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/valstybin-duomen-apsaugos-inspekcija-vdai-2023</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -477,6 +477,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/privatumo-reikalu-pareigunas-cpo</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/public-it-technologiju-proverzis-ir-saugumas</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -529,7 +535,7 @@
     <loc>https://veriva.lt/seo/valdoma-dpo-paslauga-dpo</loc>
     <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/valdymo-sistemos-kibernetinio-saugumo-auditas</loc>

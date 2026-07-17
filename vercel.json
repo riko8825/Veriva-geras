@@ -91,6 +91,15 @@
     { "source": "/mokymai/:slash*", "destination": "/", "permanent": true },
     { "source": "/bdar-atitiktis", "destination": "/seo/bdar-auditas-lietuvoje", "permanent": true },
     { "source": "/bdar-atitiktis/:slash*", "destination": "/seo/bdar-auditas-lietuvoje", "permanent": true },
+
+    { "source": "/seo/bdar-5-straipsnio-igyvendinimas", "destination": "/seo/bdar/straipsniai/5", "permanent": true },
+    { "source": "/seo/bdar-6-straipsnis", "destination": "/seo/bdar/straipsniai/6", "permanent": true },
+    { "source": "/seo/bdar-7-straipsnio-igyvendinimas", "destination": "/seo/bdar/straipsniai/7", "permanent": true },
+    { "source": "/seo/bdar-9-straipsnio-igyvendinimas", "destination": "/seo/bdar/straipsniai/9", "permanent": true },
+    { "source": "/seo/bdar-12-straipsnio-igyvendinimas", "destination": "/seo/bdar/straipsniai/12", "permanent": true },
+    { "source": "/seo/bdar-13-straipsnio-igyvendinimas", "destination": "/seo/bdar/straipsniai/13", "permanent": true },
+    { "source": "/seo/bdar-15-straipsnio-igyvendinimas", "destination": "/seo/bdar/straipsniai/15", "permanent": true },
+    { "source": "/seo/bdar-16-straipsnio-igyvendinimas", "destination": "/seo/bdar/straipsniai/16", "permanent": true },
     { "source": "/apie-imone", "destination": "/#apie", "permanent": true },
     { "source": "/apie-imone/:slash*", "destination": "/#apie", "permanent": true },
     { "source": "/apie", "destination": "/#apie", "permanent": true }

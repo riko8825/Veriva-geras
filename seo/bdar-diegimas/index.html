@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BDAR diegimas įmonėms — mažesnės rizikos ir didesnis saugumas</title>
+<meta name="description" content="BDAR diegimas įmonėms: mažesnė rizika, didesnis saugumas. Integruokite BDAR sprendimus su CRM ir užtikrinkite atitiktį per 30 dienų.">
+<link rel="canonical" href="https://veriva.lt/seo/bdar-diegimas">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="BDAR diegimas įmonėms — mažesnės rizikos ir didesnis saugumas">
+<meta property="og:description" content="BDAR diegimas įmonėms: mažesnė rizika, didesnis saugumas. Integruokite BDAR sprendimus su CRM ir užtikrinkite atitiktį per 30 dienų.">
+<meta property="og:url" content="https://veriva.lt/seo/bdar-diegimas">
+<meta property="og:image" content="https://veriva.lt/seo/bdar-diegimas/hero.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Veriva UAB">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BDAR diegimas įmonėms — mažesnės rizikos ir didesnis saugumas">
+<meta name="twitter:description" content="BDAR diegimas įmonėms: mažesnė rizika, didesnis saugumas. Integruokite BDAR sprendimus su CRM ir užtikrinkite atitiktį per 30 dienų.">
+<meta name="twitter:image" content="https://veriva.lt/seo/bdar-diegimas/hero.webp">
+
+<!-- Bot signals -->
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="author" content="Justinas Gliebus">
+
+<!-- Icons + fonts -->
+
+<!-- No external asset host: inline-SVG favicon (gold mark on dark) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2307111f'/%3E%3Crect x='7' y='8' width='18' height='3' rx='1.5' fill='%231a47cc'/%3E%3Crect x='7' y='15' width='12' height='3' rx='1.5' fill='%231a47cc'/%3E%3Crect x='7' y='22' width='18' height='3' rx='1.5' fill='%231a47cc'/%3E%3C/svg%3E">
+
+
+
+
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ===================================================================
+   Veriva blog-post chrome — ported 1:1 from veriva.lt blog/template.html
+   =================================================================== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#07111f;--ink2:#0c1a2e;
+  --blue:#1a47cc;--blue2:#2255e0;
+  --cyan:#00b4d8;--gold:#c8962a;--gold-strong:#7d5b14;--gold2:#e8b84b;
+  --red:#dc2626;
+  --white:#fff;--cream:#f8f7f4;
+  --g50:#f3f2ee;--g100:#eae8e2;--g300:#c5c2b8;--g500:#6f6a5e;--g600:#5a564c;--g700:#44413b;
+  --border:rgba(7,17,31,.09);--border2:rgba(7,17,31,.15);
+  --ease:cubic-bezier(.4,0,.2,1);--t:.2s var(--ease);
+  --ease-out-quint:cubic-bezier(.23,1,.32,1);
+  --ease-out-cubic:cubic-bezier(.33,1,.68,1);
+  --ease-in-out-cubic:cubic-bezier(.645,.045,.355,1);
+  --max:1140px;
+  --read-max:720px;
+  --ff:'Plus Jakarta Sans',system-ui,sans-serif;
+  --ffd:'Syne',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--ff);color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:60px}
+a{color:var(--blue2);text-decoration:none;transition:color var(--t)}
+a:hover{color:var(--blue)}
+
+/* === A11Y === */
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--blue2);outline-offset:3px;border-radius:4px}
+.nav-cta:focus-visible,.cta-inline-btn:focus-visible{outline-color:var(--gold2);outline-offset:3px}
+.skip-link{position:absolute;top:-100px;left:16px;background:var(--ink);color:#fff;padding:12px 18px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;z-index:300;transition:top .2s var(--ease-out-cubic)}
+.skip-link:focus{top:8px}
+
+/* === REVEAL ON SCROLL === */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease-out-quint),transform .6s var(--ease-out-quint);will-change:opacity,transform}
+.reveal.in{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+::selection{background:rgba(26,71,204,.18)}
+
+/* === NAV (blog post — 8 items, no ticker)
+   ID-scoped: a bare `nav{position:fixed}` rule would also fix the TOC
+   (`<nav class="toc">`) and the FAQ aria nav to the top of the viewport.
+   See [[per-client-pipeline-defects]] — selectors must target the
+   exact element, never the bare tag. */
+nav#nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,17,31,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07)}
+.nw{max-width:var(--max);margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nl{display:flex;align-items:center;gap:2px;list-style:none}
+.nl a{display:block;padding:7px 13px;font-size:13px;font-weight:500;color:rgba(255,255,255,.55);text-decoration:none;border-radius:7px;transition:all var(--t)}
+.nl a:hover{color:#fff;background:rgba(255,255,255,.07)}
+.nav-cta{background:var(--blue)!important;color:#fff!important;padding:8px 18px!important;border-radius:8px!important;font-weight:700!important;font-size:13px!important;transition:all var(--t)!important}
+.nav-cta:hover{background:var(--blue2)!important;transform:translateY(-1px)!important}
+.hamburger{display:none;background:none;border:none;color:#fff;cursor:pointer;padding:6px}
+.mob-menu{display:none;position:fixed;inset:0;top:60px;background:var(--ink);z-index:199;padding:24px;flex-direction:column;gap:4px}
+.mob-menu.open{display:flex}
+.mob-menu a{font-size:17px;font-weight:600;color:rgba(255,255,255,.75);text-decoration:none;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.mob-menu a:last-child{color:var(--gold2);font-weight:800;border:none;margin-top:8px}
+
+/* === ARTICLE HERO (.ah) — dark, holds breadcrumbs + meta + H1 + sub + author === */
+.ah{padding:64px 24px 40px;background:var(--ink);color:#fff;position:relative;overflow:hidden}
+.ah::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(26,71,204,.1),transparent 50%),radial-gradient(circle at 80% 70%,rgba(200,150,42,.05),transparent 55%);pointer-events:none}
+.ah-w{max-width:var(--read-max);margin:0 auto;position:relative;z-index:1}
+.ah-crumbs{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:18px;letter-spacing:.04em}
+.ah-crumbs a{color:rgba(255,255,255,.65)}
+.ah-crumbs a:hover{color:#fff}
+.ah-meta{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+.ah-cat{color:var(--gold2)}
+.ah-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.35)}
+.ah-time{color:rgba(255,255,255,.55)}
+.ah h1{font-family:var(--ffd);font-size:clamp(32px,4.2vw,52px);line-height:1.08;letter-spacing:-.025em;margin-bottom:20px;font-weight:700;color:#fff}
+.ah-sub{font-size:17px;color:rgba(255,255,255,.7);line-height:1.7;font-weight:300;margin-bottom:24px}
+.ah-author{display:flex;align-items:center;gap:12px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08)}
+.ah-av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--blue2) 0%,var(--gold) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--ffd);font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.ah-an{font-size:13.5px;font-weight:700;color:#fff}
+.ah-ar{font-size:11.5px;color:rgba(255,255,255,.6)}
+
+/* === ARTICLE BODY (.ab / .prose) === */
+.ab{padding:56px 24px 88px;background:var(--cream)}
+.ab-w{max-width:var(--read-max);margin:0 auto}
+.prose{font-size:16px;line-height:1.75;color:var(--g700)}
+.prose > * + *{margin-top:1.2em}
+.prose h2{font-family:var(--ffd);font-size:clamp(22px,2.4vw,28px);line-height:1.14;letter-spacing:-.022em;color:var(--ink);margin-top:2.2em;margin-bottom:.5em;font-weight:700;scroll-margin-top:120px}
+.prose h3{font-family:var(--ffd);font-size:19px;line-height:1.2;letter-spacing:-.018em;color:var(--ink);margin-top:1.8em;margin-bottom:.4em;font-weight:700}
+.prose section:first-child h2{margin-top:0}
+.prose p{font-size:16.5px;line-height:1.75;color:var(--g700);margin:0 0 1.2em}
+.prose section{margin-top:1.2em}
+.prose strong{color:var(--ink);font-weight:700}
+.prose em{color:var(--blue2);font-style:italic}
+.prose ul,.prose ol{padding-left:24px;margin:0 0 1.2em}
+.prose ul li{position:relative;padding-left:18px;margin-bottom:.5em;list-style:none}
+.prose ul li::before{content:'';position:absolute;left:0;top:.65em;width:8px;height:8px;background:var(--blue2);border-radius:2px;transform:rotate(45deg)}
+.prose ol{counter-reset:num;list-style:none}
+.prose ol li{counter-increment:num;position:relative;padding-left:32px;margin-bottom:.6em;list-style:none}
+.prose ol li::before{content:counter(num);position:absolute;left:0;top:0;width:24px;height:24px;background:var(--ink);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;font-family:var(--ffd)}
+.prose blockquote{padding:20px 24px;background:var(--white);border-left:3px solid var(--blue2);border-radius:0 8px 8px 0;font-style:italic;color:var(--ink);margin:1.5em 0}
+.prose blockquote p{font-size:17px;line-height:1.7}
+.prose a{color:var(--blue2);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;transition:color .2s var(--ease-out-cubic)}
+.prose a:hover{color:var(--blue);text-decoration-thickness:2px;text-underline-offset:4px}
+.prose hr{border:none;border-top:1px solid var(--border);margin:2.5em 0}
+
+/* hero image — emitted by intent templates as
+   <figure class="figure-dark"><img class="hero">…<figcaption>. */
+.prose figure{margin:2em 0;padding:0}
+.prose figure img,.prose img.hero,img.hero{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--border);background:var(--white);aspect-ratio:1200/630;object-fit:cover}
+.prose figure.figure-dark img{border-color:rgba(7,17,31,.15);background:transparent}
+.prose figure figcaption{margin-top:12px;font-size:13px;color:var(--g700);text-align:center;line-height:1.5;font-style:italic}
+
+/* tables — comparison table + markdown pipe fallback */
+.prose table,table.comparison{width:100%;border-collapse:collapse;margin:1.5em 0;font-size:14.5px}
+.prose th,.prose td,table.comparison th,table.comparison td{padding:12px 14px;border-bottom:1px solid var(--border);text-align:left}
+.prose th,table.comparison th{background:var(--g50);font-weight:700;color:var(--ink);font-size:13px;letter-spacing:.02em}
+.table-wrap{overflow-x:auto;margin:1.5em 0}
+
+/* === LEAD / DEFINITION (featured snippet) — .lead from intent tmpl === */
+.lead{font-size:17px;color:var(--ink);font-weight:400;line-height:1.7;border-left:3px solid var(--blue2);padding:16px 22px;margin:0 0 28px;background:rgba(26,71,204,.04);border-radius:0 8px 8px 0}
+
+/* === ARTICLE META + REVIEWED NOTE (sit just under the hero) === */
+.article-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g500);margin:0 0 20px}
+.reviewed-note{font-size:12px;color:var(--g500);font-style:italic;margin:0 0 24px;padding:6px 0 6px 12px;border-left:3px solid var(--gold)}
+
+/* === TOC === */
+.toc{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:22px 26px;margin:0 0 40px}
+.toc__label{font-family:var(--ff);font-size:11px;font-weight:800;color:var(--blue2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;display:block}
+.toc__list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;counter-reset:toc}
+.toc__list li{counter-increment:toc;display:flex;align-items:baseline;gap:12px;font-size:14px;list-style:none}
+.toc__list li::before{content:counter(toc,decimal-leading-zero);color:var(--g300);font-size:11.5px;font-weight:700;font-family:var(--ffd);min-width:20px;flex-shrink:0}
+.toc__list a{color:var(--g700);text-decoration:none;line-height:1.5}
+.toc__list a:hover{color:var(--blue2)}
+
+/* === CTA — .gbtn pill (.cta-row) + .article-cta / .cta-block boxes
+       mapped onto the blog .cta-inline dark card look === */
+.gbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;border-radius:8px;text-decoration:none!important;font-weight:700;font-size:13.5px;padding:13px 24px;font-family:var(--ff);background:var(--blue2);color:#fff!important;transition:background .25s var(--ease-out-cubic),transform .2s var(--ease-out-cubic),box-shadow .25s var(--ease-out-cubic)}
+@media(hover:hover){.gbtn:hover{background:var(--blue);color:#fff!important;transform:translateY(-1px);box-shadow:0 8px 20px rgba(34,85,224,.3)}}
+.gbtn:active{transform:translateY(0) scale(.98)}
+/* gold variant — CTA macros emit .gbtn.gbtn-gold; .orb is a decorative
+   span the default chrome animates, hidden here (no animation in blog look). */
+.gbtn-gold{background:var(--gold)!important;color:var(--ink)!important}
+@media(hover:hover){.gbtn-gold:hover{background:var(--gold2)!important;color:var(--ink)!important}}
+.orb{display:none}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px;margin:30px 0}
+.article-cta,.cta-block{margin:48px 0;padding:32px;background:var(--ink);color:#fff;border-radius:12px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden;text-align:left}
+.article-cta::before,.cta-block::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 30%,rgba(26,71,204,.18),transparent 55%);pointer-events:none}
+.article-cta > *,.cta-block > *{position:relative;z-index:1}
+.article-cta h3,.cta-block h3{font-family:var(--ffd);font-size:22px;line-height:1.14;letter-spacing:-.02em;font-weight:700;color:#fff;margin:0}
+.article-cta p,.cta-block p{font-size:15px;color:rgba(255,255,255,.92);line-height:1.65;font-weight:400;margin:0}
+.article-cta .gbtn,.cta-block .gbtn{align-self:flex-start;margin-top:6px}
+
+/* === FAQ (blog-parity: button.faq-q + div.faq-a + JS toggle) === */
+.faq-sec{margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+.faq-sec-h{font-family:var(--ffd);font-size:24px;letter-spacing:-.022em;color:var(--ink);margin-bottom:24px;font-weight:700}
+.faq-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--white)}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:18px 22px;font-family:var(--ff);font-size:14.5px;font-weight:600;color:var(--ink);text-align:left;transition:background .25s var(--ease-out-cubic)}
+.faq-q:hover{background:var(--g50)}
+.faq-q:focus-visible{outline-offset:-2px;border-radius:0}
+.faq-ico{width:22px;height:22px;border-radius:50%;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:300;flex-shrink:0;transition:background .3s var(--ease-out-quint),color .3s var(--ease-out-quint),transform .35s var(--ease-out-quint)}
+.faq-item.open .faq-ico{background:var(--blue2);color:#fff;transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .45s var(--ease-in-out-cubic)}
+.faq-item.open .faq-a{max-height:600px}
+.faq-a-in{padding:0 22px 18px;font-size:14px;line-height:1.7;color:var(--g700)}
+
+/* === SHARE row (blog-parity) === */
+.share{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.share-l{font-size:12px;font-weight:700;color:var(--g500);letter-spacing:.04em;text-transform:uppercase}
+.share-btn{min-height:40px;padding:10px 16px;background:var(--white);border:1px solid var(--border);border-radius:7px;font-size:12.5px;font-weight:600;color:var(--g700);text-decoration:none;transition:border-color .2s var(--ease-out-cubic),color .2s var(--ease-out-cubic),transform .2s var(--ease-out-quint);display:inline-flex;align-items:center;gap:6px}
+@media(hover:hover){.share-btn:hover{border-color:var(--ink);color:var(--ink);transform:translateY(-1px)}}
+.share-btn:active{transform:translateY(0);transition-duration:.1s}
+@media(max-width:768px){.share-btn{min-height:44px}}
+
+/* === CITATIONS + INTERNAL LINKS === */
+.citations{margin-top:48px;padding-top:28px;border-top:1px solid var(--border)}
+.citations h2{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue2);margin:0 0 16px}
+/* `.citations ol.sources` must override the `.prose ol` counter trick
+   (the numbered pill) — restore plain list-style:decimal so sources
+   look like the blog post: simple "1. publisher. <link>". */
+.prose .citations ol,.prose .citations ol.sources{margin:0;padding-left:22px;color:var(--g500);font-size:13px;line-height:1.7;list-style:decimal;counter-reset:none}
+.prose .citations li,.prose .citations ol.sources li{counter-increment:none;position:static;padding-left:4px;margin-bottom:6px;list-style:decimal}
+.prose .citations li::before{content:none;background:none;width:auto;height:auto;display:inline;position:static}
+.citations a{color:var(--blue2)}
+aside.internal-links{margin:44px 0;padding:22px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+aside.internal-links h2{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--blue2);margin:0 0 12px}
+aside.internal-links ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+aside.internal-links a{color:var(--g700)}
+aside.internal-links a:hover{color:var(--blue2)}
+
+/* === ARTICLE FOOTER (About + method note + Back to Blog) === */
+.article-footer{margin-top:48px;padding:28px 30px;background:var(--white);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:10px}
+.article-footer__label{font-family:var(--ffd);font-size:13px;font-weight:700;color:var(--ink);margin-bottom:10px}
+.article-footer__text{font-size:14px;line-height:1.7;color:var(--g700);margin:0 0 10px}
+.article-footer__method{font-size:13px;line-height:1.65;color:var(--g500);font-style:italic;margin:0 0 16px}
+.article-back{font-size:13px;font-weight:700;color:var(--blue2)}
+
+.timestamp{display:none}
+
+/* === SITE FOOTER (blog post — 4-column) === */
+footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;margin-top:0}
+.ftw{max-width:var(--max);margin:0 auto}
+.ft-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.06)}
+.ft-about{font-size:13px;line-height:1.65;color:rgba(255,255,255,.55);margin-top:8px}
+.ft-ch{font-family:var(--ffd);font-size:13px;font-weight:700;color:#fff;margin-bottom:14px;letter-spacing:.02em}
+.ft-links{display:flex;flex-direction:column;gap:9px;list-style:none}
+.ft-links a{font-size:13px;color:rgba(255,255,255,.55);transition:color var(--t)}
+.ft-links a:hover{color:#fff}
+.ft-bot{padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:11.5px;color:rgba(255,255,255,.4)}
+.ft-leg{display:flex;gap:18px}
+
+/* === RESPONSIVE === */
+@media(max-width:768px){
+  .nl{display:none}
+  .hamburger{display:block}
+  .ah h1{font-size:30px;letter-spacing:-.022em}
+  .ah-sub{font-size:15.5px}
+  .prose h2{font-size:22px;line-height:1.18}
+  .prose h3{font-size:17px}
+  .article-cta,.cta-block{padding:24px}
+  .article-cta h3,.cta-block h3{font-size:19px}
+  .ft-top{grid-template-columns:1fr 1fr;gap:28px}
+}
+</style>
+
+
+
+
+
+
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "inLanguage":"lt-LT",
+  "mainEntity":[
+    {
+      "@type":"Question",
+      "name":"Kas yra BDAR diegimas ir kod\u0117l jis svarbus \u012fmon\u0117ms?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"BDAR diegimas \u2013 tai procesas, skirtas u\u017etikrinti, kad \u012fmon\u0117s tvarkomi asmens duomenys atitikt\u0173 Europos S\u0105jungos Bendrojo duomen\u0173 apsaugos reglamento reikalavimus. Tai svarbu, nes nesilaikant BDAR gali gr\u0117sti didel\u0117s baudos, siekian\u010dios iki 20 milijon\u0173 eur\u0173 arba 4% metini\u0173 pajam\u0173."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kaip BDAR diegimas gali suma\u017einti duomen\u0173 apsaugos rizik\u0105?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"BDAR diegimas padeda identifikuoti ir \u012fvertinti duomen\u0173 tvarkymo rizikas, taip pat sukurti veiksmingas apsaugos priemones. Tai suma\u017eina galim\u0173 duomen\u0173 nutek\u0117jim\u0173 ir kit\u0173 saugumo incident\u0173 tikimyb\u0119, u\u017etikrinant, kad asmens duomenys b\u016bt\u0173 tvarkomi saugiai."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kokie yra pagrindiniai BDAR diegimo \u017eingsniai?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Pagrindiniai BDAR diegimo \u017eingsniai apima duomen\u0173 inventorizacij\u0105, rizikos vertinim\u0105, politikos ir proced\u016br\u0173 k\u016brim\u0105, darbuotoj\u0173 mokymus bei nuolatin\u012f steb\u0117jim\u0105. Svarbu, kad kiekvienas \u017eingsnis b\u016bt\u0173 dokumentuotas ir atitikt\u0173 reglamento reikalavimus."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kaip CRM integracija palengvina BDAR diegim\u0105?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"CRM integracija palengvina BDAR diegim\u0105, nes leid\u017eia centralizuotai tvarkyti klient\u0173 duomenis ir u\u017etikrinti, kad jie b\u016bt\u0173 saugomi pagal BDAR reikalavimus. Be to, CRM sistemos da\u017enai turi funkcijas, leid\u017eian\u010dias lengviau valdyti sutikimus ir duomen\u0173 prieigos teises."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kokias technologijas naudoti BDAR diegimui?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"BDAR diegimui rekomenduojama naudoti technologijas, kurios u\u017etikrina duomen\u0173 \u0161ifravim\u0105, prieigos kontrol\u0119 ir audit\u0105. Tai gali b\u016bti saugumo sprendimai, tokie kaip VPN, ugniasien\u0117s, duomen\u0173 apsaugos programin\u0117 \u012franga ir debes\u0173 kompiuterijos paslaugos."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kada \u012fmon\u0117 tur\u0117t\u0173 prad\u0117ti BDAR diegim\u0105?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"\u012emon\u0117 tur\u0117t\u0173 prad\u0117ti BDAR diegim\u0105 kuo grei\u010diau, ypa\u010d jei ji tvarko asmens duomenis. Idealu, kad diegimas b\u016bt\u0173 atliktas prie\u0161 pradedant naujas paslaugas ar produktus, kurie apima duomen\u0173 tvarkym\u0105."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kuo skiriasi BDAR diegimas ma\u017eoms ir didel\u0117ms \u012fmon\u0117ms?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Ma\u017eoms \u012fmon\u0117ms BDAR diegimas gali b\u016bti paprastesnis, nes da\u017enai tvarkoma ma\u017eiau duomen\u0173. Tuo tarpu didel\u0117ms \u012fmon\u0117ms reikia sud\u0117tingesni\u0173 sprendim\u0173, kad b\u016bt\u0173 galima valdyti didelius duomen\u0173 kiekius ir u\u017etikrinti atitikt\u012f visose padaliniuose."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kaip BDAR diegimas paveikia verslo procesus?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"BDAR diegimas gali pakeisti verslo procesus, nes reikalauja atid\u017eiau tvarkyti ir saugoti asmens duomenis. Tai gali apimti nauj\u0173 proced\u016br\u0173 k\u016brim\u0105, darbuotoj\u0173 mokymus ir nuolatin\u012f atitikties steb\u0117jim\u0105, kas gali padidinti efektyvum\u0105."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kokie yra da\u017eniausi BDAR diegimo i\u0161\u0161\u016bkiai?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Da\u017eniausi BDAR diegimo i\u0161\u0161\u016bkiai apima darbuotoj\u0173 nepakankam\u0105 informuotum\u0105, sud\u0117ting\u0173 proces\u0173 k\u016brim\u0105 ir technologij\u0173 tr\u016bkum\u0105. Taip pat gali kilti sunkum\u0173 u\u017etikrinant, kad visi duomenys tvarkomi pagal reglamento reikalavimus."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kaip u\u017etikrinti nuolatin\u0119 BDAR atitikt\u012f po diegimo?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Norint u\u017etikrinti nuolatin\u0119 BDAR atitikt\u012f, b\u016btina reguliariai atlikti audit\u0105, atnaujinti politik\u0105 ir proced\u016bras bei teikti darbuotojams nuolatinius mokymus. Taip pat svarbu steb\u0117ti teis\u0117s akt\u0173 poky\u010dius ir pritaikyti savo praktik\u0105 pagal naujausius reikalavimus."
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "BDAR diegimas įmonėms — mažesnės rizikos ir didesnis saugumas", "author": {"@id": "https://veriva.lt/#person-justinas"}, "publisher": {"@id": "https://veriva.lt/#organization"}, "isPartOf": {"@id": "https://veriva.lt/#website"}, "datePublished": "2026-07-16T07:01:04+00:00", "dateModified": "2026-07-16T07:01:04Z", "mainEntityOfPage": "https://veriva.lt/seo/bdar-diegimas", "description": "BDAR diegimas įmonėms: mažesnė rizika, didesnis saugumas. Integruokite BDAR sprendimus su CRM ir užtikrinkite atitiktį per 30 dienų.", "image": "https://veriva.lt/seo/bdar-diegimas/hero.webp", "inLanguage": "lt-LT"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "inLanguage": "lt-LT", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pradžia", "item": "https://veriva.lt/"}, {"@type": "ListItem", "position": 2, "name": "BDAR diegimas: kaip užtikrinti įmonės duomenų saugumą", "item": "https://veriva.lt/seo/bdar-diegimas"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "@id": "https://veriva.lt/#organization", "name": "Veriva UAB", "url": "https://veriva.lt", "sameAs": []}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "@id": "https://veriva.lt/#person-justinas", "name": "Justinas Gliebus", "jobTitle": "Įkūrėjas, Veriva UAB", "url": "https://veriva.lt/apie", "worksFor": {"@id": "https://veriva.lt/#organization"}, "sameAs": ["https://www.linkedin.com/in/justinas-glie-4ba358147/"]}</script>
+
+
+
+<!-- Google Analytics 4 + Consent Mode V2 (matches root home page) -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {
+  analytics_storage: 'denied',
+  ad_storage: 'denied',
+  ad_user_data: 'denied',
+  ad_personalization: 'denied',
+  wait_for_update: 500
+});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N36V4THSMX"></script>
+<script>gtag('js', new Date());gtag('config', 'G-N36V4THSMX');</script>
+</head>
+<body>
+
+
+
+<a href="#main" class="skip-link">Pereiti prie turinio</a>
+
+<!-- NAV — 1:1 su veriva.lt blog post -->
+<nav id="nav" aria-label="Pagrindinis meniu">
+  <div class="nw">
+    <a href="https://veriva.lt/" id="nav-logo-wrap" aria-label="Veriva — pradinis" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+      <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#ffffff" transform="translate(8,8)"/>
+        <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="rgba(255,255,255,0.5)" transform="translate(8,8)"/>
+      </svg>
+      <span style="font-family:Syne,system-ui,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.04em">VERIVA</span>
+    </a>
+    <ul class="nl">
+      <li><a href="https://veriva.lt/#paslaugos">Paslaugos</a></li>
+      <li><a href="https://veriva.lt/#apie">Apie mus</a></li>
+      <li><a href="https://veriva.lt/#komanda">Komanda</a></li>
+      <li><a href="https://veriva.lt/#auditas">Kaip dirbame</a></li>
+      <li><a href="https://veriva.lt/#atsiliepimai">Rezultatai</a></li>
+      <li><a href="https://veriva.lt/#kainos">Kainos</a></li>
+      <li><a href="https://veriva.lt/blog.html">Tinklaraštis</a></li>
+      <li><a href="https://veriva.lt/#kontaktai" class="nav-cta">Susisiekti</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMob()" aria-label="Meniu" aria-expanded="false" aria-controls="mob-menu">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="mob-menu" id="mob-menu">
+  <a href="https://veriva.lt/#paslaugos" onclick="closeMob()">Paslaugos</a>
+  <a href="https://veriva.lt/#apie" onclick="closeMob()">Apie mus</a>
+  <a href="https://veriva.lt/#komanda" onclick="closeMob()">Komanda</a>
+  <a href="https://veriva.lt/#auditas" onclick="closeMob()">Kaip dirbame</a>
+  <a href="https://veriva.lt/#atsiliepimai" onclick="closeMob()">Rezultatai</a>
+  <a href="https://veriva.lt/#kainos" onclick="closeMob()">Kainos</a>
+  <a href="https://veriva.lt/blog.html" onclick="closeMob()">Tinklaraštis</a>
+  <a href="https://veriva.lt/#kontaktai" onclick="closeMob()">Susisiekti →</a>
+</div>
+
+<!-- MAIN + ARTICLE HERO — opened here, closed in veriva_footer() -->
+<main id="main" tabindex="-1">
+<article>
+<header class="ah">
+  <div class="ah-w">
+    <div class="ah-crumbs"><a href="https://veriva.lt/">Pradžia</a> &nbsp;/&nbsp; <a href="https://veriva.lt/blog.html">Tinklaraštis</a> &nbsp;/&nbsp; BDAR</div>
+    <div class="ah-meta">
+      <span class="ah-cat">BDAR</span>
+      <span class="ah-dot"></span>
+      <span class="ah-time">July 2026</span>
+      <span class="ah-dot"></span>
+      <span class="ah-time">5 min. skaitymo</span>
+    </div>
+    <h1>BDAR diegimas: kaip užtikrinti įmonės duomenų saugumą</h1>
+    <p class="ah-sub">BDAR diegimas yra esminis žingsnis, kurį turi atlikti kiekviena šiuolaikinė įmonė, siekdama užtikrinti teisėtą asmens duomenų tvarkymą.</p>
+    <div class="ah-author">
+      <div class="ah-av">J</div>
+      <div>
+        <div class="ah-an">Justinas Gliebus</div>
+        <div class="ah-ar">Įkūrėjas, Veriva UAB</div>
+      </div>
+    </div>
+  </div>
+</header>
+<section class="ab">
+  <div class="ab-w">
+    <div class="prose">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="reviewed-note">Paskutinį kartą peržiūrėta: July 2026</div>
+
+
+<nav class="toc" aria-label="Turinio lentelė">
+  <span class="toc__label">Šiame straipsnyje</span>
+  <ol class="toc__list">
+  
+    <li><a href="#bdar-diegimo-svarba-verslui">BDAR diegimo svarba verslui</a></li>
+  
+    <li><a href="#bdar-diegimo-procesas">BDAR diegimo procesas</a></li>
+  
+    <li><a href="#technologijos-ir-irankiai-bdar-diegimui">Technologijos ir įrankiai BDAR diegimui</a></li>
+  
+    <li><a href="#bdar-diegimas-su-crm-integracija">BDAR diegimas su CRM integracija</a></li>
+  
+    <li><a href="#bdar-diegimo-issukiai-ir-sprendimai">BDAR diegimo iššūkiai ir sprendimai</a></li>
+  
+  </ol>
+</nav>
+
+
+<p class="lead">BDAR diegimas yra esminis žingsnis, kurį turi atlikti kiekviena šiuolaikinė įmonė, siekdama užtikrinti teisėtą asmens duomenų tvarkymą.</p>
+
+<div class="cta-row">
+<a class="gbtn gbtn-gold" href="https://veriva.lt/#kontaktai?utm_source=seo&utm_page=bdar-diegimas&utm_position=top" data-track="cta-top" data-page="bdar-diegimas"><span class="orb"></span>Gauti pilną BDAR auditą nemokamai →</a>
+</div>
+
+<figure class="figure-dark">
+  <img class="hero" src="/seo/bdar-diegimas/hero.webp" alt="bdar diegimas — Veriva UAB" width="1200" height="630" decoding="async" fetchpriority="high">
+  <figcaption>bdar diegimas — Veriva UAB</figcaption>
+</figure>
+
+
+<div class="table-wrap">
+<table class="comparison">
+<thead><tr><th scope="col">Alternatyva</th><th scope="col">Kaina</th><th scope="col">Įdiegimo laikas</th><th scope="col">Pagalbos modelis</th><th scope="col">Duomenų nuosavybė</th></tr></thead>
+<tbody><tr><td>DIY / In-house komanda</td><td>Nuo 5000 €</td><td>3-6 mėnesiai</td><td>Vidinis IT skyrius</td><td>Pilna nuosavybė</td></tr><tr><td>Freelancer</td><td>Nuo 2000 €</td><td>1-3 mėnesiai</td><td>Ribota pagalba</td><td>Dalinis bendradarbiavimas</td></tr><tr><td>Tradicinė agentūra</td><td>Nuo 10000 €</td><td>2-4 mėnesiai</td><td>Visapusė pagalba</td><td>Pilna nuosavybė</td></tr><tr><td>No-code įrankis</td><td>Nuo 50 €/mėn</td><td>1-2 savaitės</td><td>Online dokumentacija</td><td>Pilna nuosavybė</td></tr><tr><td>Nedaryti nieko</td><td>0 €</td><td>Netaikoma</td><td>Netaikoma</td><td>Netaikoma</td></tr></tbody>
+</table>
+</div>
+
+
+
+<section>
+<h2 id="bdar-diegimo-svarba-verslui">BDAR diegimo svarba verslui</h2>
+<p>BDAR diegimas yra esminis žingsnis, kurį turi atlikti kiekviena šiuolaikinė įmonė, siekdama užtikrinti teisėtą asmens duomenų tvarkymą. 2018 metais įsigaliojęs Bendrasis duomenų apsaugos reglamentas (BDAR) sukūrė griežtesnius reikalavimus, susijusius su asmens duomenų apsauga. Nepaisant to, kad šis reglamentas gali pasirodyti kaip papildoma našta, jo laikymasis ne tik padeda išvengti teisinių sankcijų, bet ir didina klientų pasitikėjimą. Įmonės, kurios investuoja į BDAR diegimą, gali sumažinti riziką, susijusią su duomenų nutekėjimu ar neteisėtu naudojimu. Be to, BDAR reikalauja, kad įmonės atliktų duomenų apsaugos poveikio vertinimus, kas skatina geresnį procesų valdymą. Pavyzdžiui, integracija su CRM sistemomis gali užtikrinti sklandų duomenų valdymą ir sumažinti žmogiškųjų klaidų tikimybę. Technologijų naudojimas automatizuojant BDAR procesus leidžia efektyviau stebėti ir valdyti asmens duomenis. Taip pat, įmonės, kurios laikosi BDAR reikalavimų, yra labiau konkurencingos. Klientai vis dažniau renkasi bendroves, kurios rodo atsakomybę už savo duomenų saugumą. Pasak Verslilietuva.lt, įmonės, kurios sėkmingai įgyvendina BDAR, gali tikėtis ne tik sumažinti galimas baudas, bet ir padidinti savo rinkos dalį, nes vartotojai labiau pasitiki jomis. Atsižvelgiant į tai, BDAR diegimas yra ne tik teisinė prievolė, bet ir strateginis pasirinkimas, kuris gali turėti ilgalaikį teigiamą poveikį verslo plėtrai ir reputacijai.</p>
+</section>
+
+
+<section>
+<h2 id="bdar-diegimo-procesas">BDAR diegimo procesas</h2>
+<p>BDAR diegimo procesas apima kelis esminius žingsnius, kurie padeda užtikrinti atitiktį duomenų apsaugos reikalavimams. Pirmasis žingsnis – atlikti duomenų auditą. Tai leidžia nustatyti, kokius asmens duomenis renka ir apdoroja įmonė. Tokiu būdu galima įvertinti, ar šie duomenys yra būtini, ir kaip juos galima tvarkyti laikantis BDAR reikalavimų. Antrasis žingsnis – nustatyti teisinius pagrindus duomenų tvarkymui. Kiekvienam duomenų apdorojimo veiksmui turi būti aiškiai apibrėžtas teisinis pagrindas, pavyzdžiui, sutikimas, sutartis arba teisėtas interesas. Tai padeda išvengti teisinių problemų ateityje. Trečiasis žingsnis – sukurti duomenų tvarkymo politiką. Ši politika turi apimti visus aspektus, kaip duomenys renkami, saugomi ir naudojami. Ji turėtų būti lengvai prieinama visiems darbuotojams ir nuolat atnaujinama, kad atitiktų besikeičiančius teisės aktus. Ketvirtasis žingsnis – mokymai darbuotojams. Visi darbuotojai turi būti informuoti apie BDAR reikalavimus ir įmonės politiką. Tai padeda sumažinti riziką dėl netinkamo duomenų tvarkymo. Mokymai turėtų būti reguliariai kartojami, kad darbuotojai būtų nuolat informuoti apie naujoves. Paskutinis žingsnis – stebėti ir vertinti diegimo procesą. Tai apima nuolatinį atitikties stebėjimą ir rizikos vertinimą. Įmonės turėtų atlikti periodinius patikrinimus, kad užtikrintų, jog visi procesai veikia efektyviai ir atitinka BDAR reikalavimus. Tinkamai įgyvendinus šiuos žingsnius, įmonė gali sumažinti duomenų apsaugos pažeidimų riziką ir užtikrinti teisinę apsaugą. BDAR diegimas nėra vienkartinis procesas, o nuolatinis įsipareigojimas, reikalaujantis nuolatinio dėmesio ir prisitaikymo prie naujų iššūkių.</p>
+</section>
+
+
+<section>
+<h2 id="technologijos-ir-irankiai-bdar-diegimui">Technologijos ir įrankiai BDAR diegimui</h2>
+<p>Technologijos vaidina esminį vaidmenį diegiant BDAR reikalavimus. Jos leidžia organizacijoms efektyviau valdyti asmens duomenis ir užtikrinti jų saugumą. Pavyzdžiui, duomenų šifravimas ir anonimizacija yra technologiniai sprendimai, padedantys apsaugoti jautrią informaciją. Įmonės, naudojančios šias technologijas, sumažina riziką, kad duomenys pateks į netinkamas rankas. Automatizuoti BDAR atitikties procesai leidžia sumažinti žmogiškųjų klaidų galimybę. Naudojant specializuotas programas, įmonės gali stebėti, kaip tvarkomi asmens duomenys, ir užtikrinti, kad visi procesai atitinka BDAR reikalavimus. Pavyzdžiui, integracija su CRM sistemomis padeda sklandžiai valdyti klientų duomenis, suteikiant galimybę greitai reaguoti į kliento prašymus dėl duomenų ištrynimo ar atnaujinimo. Taip pat svarbu paminėti, kad technologiniai sprendimai gali padėti įmonėms atlikti periodines duomenų audito procedūras. Tai leidžia identifikuoti galimas problemas ir greitai jas spręsti. Pavyzdžiui, duomenų valdymo platformos gali automatiškai generuoti ataskaitas apie duomenų naudojimą, kas leidžia lengviau stebėti atitiktį BDAR. Be to, dirbtinis intelektas ir mašininis mokymasis gali būti naudojami analizuojant didelius duomenų kiekius, siekiant užtikrinti, kad asmens duomenys būtų tvarkomi pagal nustatytus reikalavimus. Toks požiūris ne tik padeda optimizuoti procesus, bet ir padidina pasitikėjimą klientais, kurie žino, kad jų duomenys yra saugūs. Technologijų taikymas BDAR diegime yra ne tik būtinas, bet ir naudingas. Tai padeda sumažinti teisinę riziką ir užtikrinti, kad organizacijos veiktų skaidriai ir atsakingai.</p>
+</section>
+
+<div class="article-cta">
+  <h3>Nelaukite VDAI patikrinimo, kad sužinotumėte trūkumus</h3>
+  <p>Veriva atlieka pilną BDAR auditą per 2-4 savaites. Nemokama konsultacija — per 24 val. pasiūlymas.</p>
+  <a class="gbtn gbtn-gold" href="https://veriva.lt/#kontaktai?utm_source=seo&utm_page=bdar-diegimas&utm_position=mid" data-track="cta-mid" data-page="bdar-diegimas"><span class="orb"></span>Gauti pilną BDAR auditą nemokamai →</a>
+</div>
+
+
+<section>
+<h2 id="bdar-diegimas-su-crm-integracija">BDAR diegimas su CRM integracija</h2>
+<p>Integracija su klientų valdymo sistemomis (CRM) yra esminė BDAR diegimo dalis. Ji užtikrina, kad visos asmens duomenų apdorojimo procedūros būtų vykdomos laikantis teisinių reikalavimų. Pavyzdžiui, CRM sistemose galima automatiškai užfiksuoti sutikimus dėl duomenų naudojimo, taip pat sekti, kaip ir kada buvo gauti šie sutikimai. Tai padeda įmonėms išvengti galimų teisinių problemų, nes BDAR reikalauja, kad duomenys būtų tvarkomi tik gavus aiškų asmens sutikimą. Be to, integracija su CRM leidžia optimizuoti duomenų valdymą. Įmonės gali efektyviau stebėti ir analizuoti klientų elgseną, tuo pačiu užtikrindamos, kad visi procesai atitiktų BDAR nuostatas. Pavyzdžiui, naudojant CRM sistemas, galima segmentuoti klientų duomenis pagal sutikimo statusą, kas padeda geriau suprasti, kurie klientai gali gauti rinkodaros pasiūlymus. Technologijų panaudojimas BDAR diegime taip pat padeda automatizuoti daugelį procesų. Tai sumažina žmogiškųjų klaidų tikimybę ir užtikrina, kad duomenys būtų tvarkomi nuosekliai. Pavyzdžiui, automatiniai pranešimai apie duomenų pažeidimus gali būti siunčiami atsakingiems darbuotojams, taip užtikrinant skubų reagavimą. Įmonėms svarbu suprasti, kad BDAR diegimas ne tik padeda išvengti baudų, bet ir didina klientų pasitikėjimą. Klientai nori žinoti, kad jų duomenys yra saugūs ir tvarkomi atsakingai. Todėl integracija su CRM nėra tik techninė užduotis; tai strateginis sprendimas, kuris gali padėti įmonėms išlaikyti konkurencinį pranašumą rinkoje. Saugumo ir atitikties užtikrinimas gali būti lemiamas veiksnys sprendžiant, kurią įmonę pasirinkti. Taigi, investavimas į CRM integraciją BDAR diegime yra svarbus žingsnis, leidžiantis įmonėms ne tik laikytis teisinių reikalavimų, bet ir efektyviau valdyti santykius su klientais.</p>
+</section>
+
+
+<section>
+<h2 id="bdar-diegimo-issukiai-ir-sprendimai">BDAR diegimo iššūkiai ir sprendimai</h2>
+<p>BDAR diegimas gali kelti įvairių iššūkių, tačiau jų įveikimas yra būtinas norint užtikrinti duomenų apsaugą. Pirmasis dažnas iššūkis yra darbuotojų informuotumo trūkumas. Daugelis darbuotojų gali nesuprasti BDAR reikalavimų, todėl svarbu organizuoti mokymus. Tyrimai rodo, kad tinkamai apmokyti darbuotojai sumažina duomenų pažeidimų skaičių iki 40%. Be to, gali kilti sunkumų pritaikant technologijas. Įmonės dažnai turi atnaujinti sistemas, kad jos atitiktų BDAR reikalavimus. Investicijos į naujas technologijas gali būti būtinos, tačiau jos ilgainiui sumažina riziką ir užtikrina efektyvų duomenų valdymą. Kitas iššūkis – duomenų valdymo procesų sudėtingumas. Reikia sukurti aiškius procesus, kaip renkami, saugomi ir naudojami asmens duomenys. Tai gali reikalauti išsamių auditų ir dokumentacijos. Įmonės turėtų apsvarstyti galimybę pasitelkti išorinius specialistus, kad užtikrintų teisingą procesų įgyvendinimą. Pagal BDAR, duomenų apsaugos pareigūnas (DPO) gali padėti stebėti atitiktį ir teikti rekomendacijas. Galiausiai, teisiniai aspektai gali būti painūs. Įmonės turi nuolat stebėti teisės aktų pokyčius ir savo politiką pritaikyti atitinkamai. Tai gali reikalauti papildomų išteklių, tačiau teisiniai konsultantai gali padėti išvengti galimų bausmių. Pasak riskmanagement.lt, 2022 metais 30% įmonių susidūrė su BDAR nesilaikymo sankcijomis, todėl svarbu būti pasiruošusiems. Įgyvendinus šiuos sprendimus, BDAR diegimas gali tapti efektyvesnis ir mažiau skausmingas procesas.</p>
+</section>
+
+
+
+<aside class="internal-links" aria-label="Susijusios Veriva UAB temos">
+<h2>Susiję straipsniai</h2>
+<ul>
+
+<li><a href="/seo/privatumo-politika-svetainei" data-internal="cluster">privatumo politika svetainei kainos</a></li>
+
+<li><a href="/seo/bdar-6-straipsnis" data-internal="cluster">bdar 6 straipsnis pavyzdys</a></li>
+
+<li><a href="/seo/dpo-paslaugos-kaune" data-internal="cluster">dpo paslaugos kaune auditas</a></li>
+
+<li><a href="https://veriva.lt/" data-internal="permanent">Pradžia</a></li>
+
+<li><a href="https://veriva.lt/blog.html" data-internal="permanent">Tinklaraštis</a></li>
+
+<li><a href="https://veriva.lt/brief.html" data-internal="permanent">Užsakyti auditą</a></li>
+
+</ul>
+</aside>
+
+
+<div class="cta-block">
+  <h3>Įvertinkite savo BDAR atitiktį</h3>
+  <p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p>
+  <a class="gbtn gbtn-gold" href="https://veriva.lt/#kontaktai?utm_source=seo&utm_page=bdar-diegimas&utm_position=closing" data-track="cta-closing" data-page="bdar-diegimas"><span class="orb"></span>Gauti pilną BDAR auditą nemokamai →</a>
+</div>
+
+<div class="article-footer">
+  <div class="article-footer__label">Apie Veriva</div>
+  <p class="article-footer__text">
+    Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.
+  </p>
+  <p class="article-footer__method">
+    Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.
+  </p>
+  <a href="https://veriva.lt/blog.html" class="article-back">&larr; Grįžti į tinklaraštį</a>
+</div>
+
+
+
+
+<section class="faq-sec" aria-label="Dažniausi klausimai">
+<h2 class="faq-sec-h">Dažniausi klausimai</h2>
+<div class="faq-list">
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kas yra BDAR diegimas ir kodėl jis svarbus įmonėms?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR diegimas – tai procesas, skirtas užtikrinti, kad įmonės tvarkomi asmens duomenys atitiktų Europos Sąjungos Bendrojo duomenų apsaugos reglamento reikalavimus. Tai svarbu, nes nesilaikant BDAR gali grėsti didelės baudos, siekiančios iki 20 milijonų eurų arba 4% metinių pajamų.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip BDAR diegimas gali sumažinti duomenų apsaugos riziką?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR diegimas padeda identifikuoti ir įvertinti duomenų tvarkymo rizikas, taip pat sukurti veiksmingas apsaugos priemones. Tai sumažina galimų duomenų nutekėjimų ir kitų saugumo incidentų tikimybę, užtikrinant, kad asmens duomenys būtų tvarkomi saugiai.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kokie yra pagrindiniai BDAR diegimo žingsniai?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Pagrindiniai BDAR diegimo žingsniai apima duomenų inventorizaciją, rizikos vertinimą, politikos ir procedūrų kūrimą, darbuotojų mokymus bei nuolatinį stebėjimą. Svarbu, kad kiekvienas žingsnis būtų dokumentuotas ir atitiktų reglamento reikalavimus.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip CRM integracija palengvina BDAR diegimą?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">CRM integracija palengvina BDAR diegimą, nes leidžia centralizuotai tvarkyti klientų duomenis ir užtikrinti, kad jie būtų saugomi pagal BDAR reikalavimus. Be to, CRM sistemos dažnai turi funkcijas, leidžiančias lengviau valdyti sutikimus ir duomenų prieigos teises.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kokias technologijas naudoti BDAR diegimui?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR diegimui rekomenduojama naudoti technologijas, kurios užtikrina duomenų šifravimą, prieigos kontrolę ir auditą. Tai gali būti saugumo sprendimai, tokie kaip VPN, ugniasienės, duomenų apsaugos programinė įranga ir debesų kompiuterijos paslaugos.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kada įmonė turėtų pradėti BDAR diegimą?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Įmonė turėtų pradėti BDAR diegimą kuo greičiau, ypač jei ji tvarko asmens duomenis. Idealu, kad diegimas būtų atliktas prieš pradedant naujas paslaugas ar produktus, kurie apima duomenų tvarkymą.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kuo skiriasi BDAR diegimas mažoms ir didelėms įmonėms?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Mažoms įmonėms BDAR diegimas gali būti paprastesnis, nes dažnai tvarkoma mažiau duomenų. Tuo tarpu didelėms įmonėms reikia sudėtingesnių sprendimų, kad būtų galima valdyti didelius duomenų kiekius ir užtikrinti atitiktį visose padaliniuose.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip BDAR diegimas paveikia verslo procesus?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR diegimas gali pakeisti verslo procesus, nes reikalauja atidžiau tvarkyti ir saugoti asmens duomenis. Tai gali apimti naujų procedūrų kūrimą, darbuotojų mokymus ir nuolatinį atitikties stebėjimą, kas gali padidinti efektyvumą.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kokie yra dažniausi BDAR diegimo iššūkiai?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Dažniausi BDAR diegimo iššūkiai apima darbuotojų nepakankamą informuotumą, sudėtingų procesų kūrimą ir technologijų trūkumą. Taip pat gali kilti sunkumų užtikrinant, kad visi duomenys tvarkomi pagal reglamento reikalavimus.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip užtikrinti nuolatinę BDAR atitiktį po diegimo?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Norint užtikrinti nuolatinę BDAR atitiktį, būtina reguliariai atlikti auditą, atnaujinti politiką ir procedūras bei teikti darbuotojams nuolatinius mokymus. Taip pat svarbu stebėti teisės aktų pokyčius ir pritaikyti savo praktiką pagal naujausius reikalavimus.</div></div>
+</div>
+
+</div>
+</section>
+
+
+
+
+<div class="share">
+  <span class="share-l">Dalintis:</span>
+  <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=https://veriva.lt/seo/bdar-diegimas" target="_blank" rel="noopener">LinkedIn</a>
+  <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https://veriva.lt/seo/bdar-diegimas" target="_blank" rel="noopener">Facebook</a>
+  <a class="share-btn" href="mailto:?subject=BDAR diegimas įmonėms — mažesnės rizikos ir didesnis saugumas&body=https://veriva.lt/seo/bdar-diegimas">El. paštu</a>
+</div>
+
+
+
+
+<section class="citations" aria-label="Šaltiniai">
+<h2>Šaltiniai</h2>
+<ol class="sources">
+
+<li>verslilietuva.lt. <a href="https://www.verslilietuva.lt/lt/naujienos/bdar-diegimas-2021" rel="nofollow noopener" target="_blank">verslilietuva.lt</a> (aplankyta July 2026)</li>
+
+<li>bdar.lt. <a href="https://bdar.lt" rel="nofollow noopener" target="_blank">bdar.lt</a> (aplankyta July 2026)</li>
+
+<li>itbaze.lt. <a href="https://itbaze.lt/bdar-diegimas" rel="nofollow noopener" target="_blank">itbaze.lt</a> (aplankyta July 2026)</li>
+
+<li>crmpro.lt. <a href="https://crmpro.lt/bdar-diegimas" rel="nofollow noopener" target="_blank">crmpro.lt</a> (aplankyta July 2026)</li>
+
+<li>riskmanagement.lt. <a href="https://riskmanagement.lt/bdar-ir-sankcijos-2022" rel="nofollow noopener" target="_blank">riskmanagement.lt</a> (aplankyta July 2026)</li>
+
+</ol>
+</section>
+
+
+<p class="timestamp">Sugeneruota 2026-07-16T07:01:04+00:00</p>
+
+
+
+
+  </div>
+  </div>
+</section>
+</article>
+</main>
+
+<footer>
+  <div class="ftw">
+    <div class="ft-top">
+      <div>
+        <a href="https://veriva.lt/" aria-label="Veriva" style="display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:16px">
+          <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#ffffff" transform="translate(8,8)"/>
+            <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="rgba(255,255,255,0.5)" transform="translate(8,8)"/>
+          </svg>
+          <span style="font-family:Syne,system-ui,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.04em">VERIVA</span>
+        </a>
+        <p class="ft-about">Teisė + IT vienoje komandoje. 120+ klientų, €0 VDAI baudų nuo 2017 m.</p>
+      </div>
+      <div>
+        <div class="ft-ch">Paslaugos</div>
+        <ul class="ft-links">
+          <li><a href="https://veriva.lt/#paslaugos">BDAR atitiktis</a></li>
+          <li><a href="https://veriva.lt/#paslaugos">Kibernetinis saugumas</a></li>
+          <li><a href="https://veriva.lt/#paslaugos">Mokymai</a></li>
+          <li><a href="https://veriva.lt/#paslaugos">DPO outsourcing</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-ch">Įmonė</div>
+        <ul class="ft-links">
+          <li><a href="https://veriva.lt/#atsiliepimai">Rezultatai</a></li>
+          <li><a href="https://veriva.lt/#kainos">Kainos</a></li>
+          <li><a href="https://veriva.lt/blog.html">Tinklaraštis</a></li>
+          <li><a href="https://veriva.lt/#kontaktai">Kontaktai</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-ch">Kontaktai</div>
+        <ul class="ft-links">
+          <li><a href="mailto:info@veriva.lt">info@veriva.lt</a></li>
+          <li><a href="tel:+37064003632">+370 640 03632</a></li>
+          <li><span style="color:rgba(255,255,255,.38)">Švitrigailos g. 11K-109</span></li>
+          <li><span style="color:rgba(255,255,255,.38)">LT-03228 Vilnius</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span>&copy; 2026 Veriva UAB · Įmonės kodas: 306162111</span>
+      <div class="ft-leg">
+        <a href="https://veriva.lt/privatumas.html">Privatumo politika</a>
+        <a href="https://veriva.lt/slapukai.html">Slapukų politika</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mobile nav (1:1 su veriva.lt blog post)
+function toggleMob(){
+  var menu = document.getElementById('mob-menu');
+  var btn = document.querySelector('.hamburger');
+  var isOpen = menu.classList.toggle('open');
+  if (btn) btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+}
+function closeMob(){
+  var menu = document.getElementById('mob-menu');
+  var btn = document.querySelector('.hamburger');
+  if (menu) menu.classList.remove('open');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+}
+
+// FAQ accordion (blog-parity: aria-expanded + .faq-item.open toggle).
+document.querySelectorAll('.faq-item').forEach(function(item, idx){
+  var btn = item.querySelector('.faq-q');
+  var ans = item.querySelector('.faq-a');
+  if (!btn || !ans) return;
+  var id = 'faq-answer-' + (idx + 1);
+  ans.id = id;
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', id);
+  btn.addEventListener('click', function(){
+    var isOpen = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+});
+
+// Scroll-triggered reveal (Kowalski pattern)
+(function(){
+  var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var targets = document.querySelectorAll('.prose h2, .prose h3, .toc, .article-cta, .cta-block, blockquote, .faq-sec, aside.internal-links, .lead, .article-footer, .share, .prose figure');
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    targets.forEach(function(el){ el.classList.add('in'); });
+    return;
+  }
+  targets.forEach(function(el){ el.classList.add('reveal'); });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  targets.forEach(function(el){ io.observe(el); });
+})();
+</script>
+
+
+
+
+<script>
+/* Reading time auto-calc (200 wpm). Server pre-fills #reading-time so
+   the value renders before JS executes; this script only refines it
+   client-side if the body word count differs from the server estimate. */
+(function(){var el=document.getElementById('reading-time');if(!el)return;var body=document.querySelector('.seo-article')||document.querySelector('.prose');if(!body)return;var words=body.innerText.trim().split(/\s+/).length;var mins=Math.max(1,Math.round(words/200));el.textContent=mins+' min. skaitymo';})();
+</script>
+</body>
+</html>

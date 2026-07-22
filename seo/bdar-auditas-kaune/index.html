@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BDAR auditas Kaune verslui — užtikrintas atitikimas</title>
+<meta name="description" content="Bdar auditas kaune — a code-first system built, deployed, and validated for you, so the work runs without manual effort. Book a free audit.">
+<link rel="canonical" href="https://veriva.lt/seo/bdar-auditas-kaune">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="BDAR auditas Kaune verslui — užtikrintas atitikimas">
+<meta property="og:description" content="Bdar auditas kaune — a code-first system built, deployed, and validated for you, so the work runs without manual effort. Book a free audit.">
+<meta property="og:url" content="https://veriva.lt/seo/bdar-auditas-kaune">
+<meta property="og:image" content="https://veriva.lt/seo/bdar-auditas-kaune/hero.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Veriva UAB">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BDAR auditas Kaune verslui — užtikrintas atitikimas">
+<meta name="twitter:description" content="Bdar auditas kaune — a code-first system built, deployed, and validated for you, so the work runs without manual effort. Book a free audit.">
+<meta name="twitter:image" content="https://veriva.lt/seo/bdar-auditas-kaune/hero.webp">
+
+<!-- Bot signals -->
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="author" content="Justinas Gliebus">
+
+<!-- Icons + fonts -->
+
+<!-- No external asset host: inline-SVG favicon (gold mark on dark) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F1419'/%3E%3Crect x='7' y='8' width='18' height='3' rx='1.5' fill='%232D7A9E'/%3E%3Crect x='7' y='15' width='12' height='3' rx='1.5' fill='%232D7A9E'/%3E%3Crect x='7' y='22' width='18' height='3' rx='1.5' fill='%232D7A9E'/%3E%3C/svg%3E">
+
+
+
+
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ===================================================================
+   Veriva blog-post chrome — ported 1:1 from veriva.lt blog/template.html
+   =================================================================== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#07111f;--ink2:#0c1a2e;
+  --blue:#1a47cc;--blue2:#2255e0;
+  --cyan:#00b4d8;--gold:#c8962a;--gold-strong:#7d5b14;--gold2:#e8b84b;
+  --red:#dc2626;
+  --white:#fff;--cream:#f8f7f4;
+  --g50:#f3f2ee;--g100:#eae8e2;--g300:#c5c2b8;--g500:#6f6a5e;--g600:#5a564c;--g700:#44413b;
+  --border:rgba(7,17,31,.09);--border2:rgba(7,17,31,.15);
+  --ease:cubic-bezier(.4,0,.2,1);--t:.2s var(--ease);
+  --ease-out-quint:cubic-bezier(.23,1,.32,1);
+  --ease-out-cubic:cubic-bezier(.33,1,.68,1);
+  --ease-in-out-cubic:cubic-bezier(.645,.045,.355,1);
+  --max:1140px;
+  --read-max:720px;
+  --ff:'Plus Jakarta Sans',system-ui,sans-serif;
+  --ffd:'Syne',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--ff);color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:60px}
+a{color:var(--blue2);text-decoration:none;transition:color var(--t)}
+a:hover{color:var(--blue)}
+
+/* === A11Y === */
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--blue2);outline-offset:3px;border-radius:4px}
+.nav-cta:focus-visible,.cta-inline-btn:focus-visible{outline-color:var(--gold2);outline-offset:3px}
+.skip-link{position:absolute;top:-100px;left:16px;background:var(--ink);color:#fff;padding:12px 18px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;z-index:300;transition:top .2s var(--ease-out-cubic)}
+.skip-link:focus{top:8px}
+
+/* === REVEAL ON SCROLL === */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease-out-quint),transform .6s var(--ease-out-quint);will-change:opacity,transform}
+.reveal.in{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+::selection{background:rgba(26,71,204,.18)}
+
+/* === NAV (blog post — 8 items, no ticker)
+   ID-scoped: a bare `nav{position:fixed}` rule would also fix the TOC
+   (`<nav class="toc">`) and the FAQ aria nav to the top of the viewport.
+   See [[per-client-pipeline-defects]] — selectors must target the
+   exact element, never the bare tag. */
+nav#nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,17,31,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07)}
+.nw{max-width:var(--max);margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nl{display:flex;align-items:center;gap:2px;list-style:none}
+.nl a{display:block;padding:7px 13px;font-size:13px;font-weight:500;color:rgba(255,255,255,.55);text-decoration:none;border-radius:7px;transition:all var(--t)}
+.nl a:hover{color:#fff;background:rgba(255,255,255,.07)}
+.nav-cta{background:var(--blue)!important;color:#fff!important;padding:8px 18px!important;border-radius:8px!important;font-weight:700!important;font-size:13px!important;transition:all var(--t)!important}
+.nav-cta:hover{background:var(--blue2)!important;transform:translateY(-1px)!important}
+.hamburger{display:none;background:none;border:none;color:#fff;cursor:pointer;padding:6px}
+.mob-menu{display:none;position:fixed;inset:0;top:60px;background:var(--ink);z-index:199;padding:24px;flex-direction:column;gap:4px}
+.mob-menu.open{display:flex}
+.mob-menu a{font-size:17px;font-weight:600;color:rgba(255,255,255,.75);text-decoration:none;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.mob-menu a:last-child{color:var(--gold2);font-weight:800;border:none;margin-top:8px}
+
+/* === ARTICLE HERO (.ah) — dark, holds breadcrumbs + meta + H1 + sub + author === */
+.ah{padding:64px 24px 40px;background:var(--ink);color:#fff;position:relative;overflow:hidden}
+.ah::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(26,71,204,.1),transparent 50%),radial-gradient(circle at 80% 70%,rgba(200,150,42,.05),transparent 55%);pointer-events:none}
+.ah-w{max-width:var(--read-max);margin:0 auto;position:relative;z-index:1}
+.ah-crumbs{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:18px;letter-spacing:.04em}
+.ah-crumbs a{color:rgba(255,255,255,.65)}
+.ah-crumbs a:hover{color:#fff}
+.ah-meta{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+.ah-cat{color:var(--gold2)}
+.ah-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.35)}
+.ah-time{color:rgba(255,255,255,.55)}
+.ah h1{font-family:var(--ffd);font-size:clamp(32px,4.2vw,52px);line-height:1.08;letter-spacing:-.025em;margin-bottom:20px;font-weight:700;color:#fff}
+.ah-sub{font-size:17px;color:rgba(255,255,255,.7);line-height:1.7;font-weight:300;margin-bottom:24px}
+.ah-author{display:flex;align-items:center;gap:12px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08)}
+.ah-av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--blue2) 0%,var(--gold) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--ffd);font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.ah-an{font-size:13.5px;font-weight:700;color:#fff}
+.ah-ar{font-size:11.5px;color:rgba(255,255,255,.6)}
+
+/* === ARTICLE BODY (.ab / .prose) === */
+.ab{padding:56px 24px 88px;background:var(--cream)}
+.ab-w{max-width:var(--read-max);margin:0 auto}
+.prose{font-size:16px;line-height:1.75;color:var(--g700)}
+.prose > * + *{margin-top:1.2em}
+.prose h2{font-family:var(--ffd);font-size:clamp(22px,2.4vw,28px);line-height:1.14;letter-spacing:-.022em;color:var(--ink);margin-top:2.2em;margin-bottom:.5em;font-weight:700;scroll-margin-top:120px}
+.prose h3{font-family:var(--ffd);font-size:19px;line-height:1.2;letter-spacing:-.018em;color:var(--ink);margin-top:1.8em;margin-bottom:.4em;font-weight:700}
+.prose section:first-child h2{margin-top:0}
+.prose p{font-size:16.5px;line-height:1.75;color:var(--g700);margin:0 0 1.2em}
+.prose section{margin-top:1.2em}
+.prose strong{color:var(--ink);font-weight:700}
+.prose em{color:var(--blue2);font-style:italic}
+.prose ul,.prose ol{padding-left:24px;margin:0 0 1.2em}
+.prose ul li{position:relative;padding-left:18px;margin-bottom:.5em;list-style:none}
+.prose ul li::before{content:'';position:absolute;left:0;top:.65em;width:8px;height:8px;background:var(--blue2);border-radius:2px;transform:rotate(45deg)}
+.prose ol{counter-reset:num;list-style:none}
+.prose ol li{counter-increment:num;position:relative;padding-left:32px;margin-bottom:.6em;list-style:none}
+.prose ol li::before{content:counter(num);position:absolute;left:0;top:0;width:24px;height:24px;background:var(--ink);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;font-family:var(--ffd)}
+.prose blockquote{padding:20px 24px;background:var(--white);border-left:3px solid var(--blue2);border-radius:0 8px 8px 0;font-style:italic;color:var(--ink);margin:1.5em 0}
+.prose blockquote p{font-size:17px;line-height:1.7}
+.prose a{color:var(--blue2);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;transition:color .2s var(--ease-out-cubic)}
+.prose a:hover{color:var(--blue);text-decoration-thickness:2px;text-underline-offset:4px}
+.prose hr{border:none;border-top:1px solid var(--border);margin:2.5em 0}
+
+/* hero image — emitted by intent templates as
+   <figure class="figure-dark"><img class="hero">…<figcaption>. */
+.prose figure{margin:2em 0;padding:0}
+.prose figure img,.prose img.hero,img.hero{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--border);background:var(--white);aspect-ratio:1200/630;object-fit:cover}
+.prose figure.figure-dark img{border-color:rgba(7,17,31,.15);background:transparent}
+.prose figure figcaption{margin-top:12px;font-size:13px;color:var(--g700);text-align:center;line-height:1.5;font-style:italic}
+
+/* tables — comparison table + markdown pipe fallback */
+.prose table,table.comparison{width:100%;border-collapse:collapse;margin:1.5em 0;font-size:14.5px}
+.prose th,.prose td,table.comparison th,table.comparison td{padding:12px 14px;border-bottom:1px solid var(--border);text-align:left}
+.prose th,table.comparison th{background:var(--g50);font-weight:700;color:var(--ink);font-size:13px;letter-spacing:.02em}
+.table-wrap{overflow-x:auto;margin:1.5em 0}
+
+/* === LEAD / DEFINITION (featured snippet) — .lead from intent tmpl === */
+.lead{font-size:17px;color:var(--ink);font-weight:400;line-height:1.7;border-left:3px solid var(--blue2);padding:16px 22px;margin:0 0 28px;background:rgba(26,71,204,.04);border-radius:0 8px 8px 0}
+
+/* === ARTICLE META + REVIEWED NOTE (sit just under the hero) === */
+.article-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g500);margin:0 0 20px}
+.reviewed-note{font-size:12px;color:var(--g500);font-style:italic;margin:0 0 24px;padding:6px 0 6px 12px;border-left:3px solid var(--gold)}
+
+/* === TOC === */
+.toc{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:22px 26px;margin:0 0 40px}
+.toc__label{font-family:var(--ff);font-size:11px;font-weight:800;color:var(--blue2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;display:block}
+.toc__list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;counter-reset:toc}
+.toc__list li{counter-increment:toc;display:flex;align-items:baseline;gap:12px;font-size:14px;list-style:none}
+.toc__list li::before{content:counter(toc,decimal-leading-zero);color:var(--g300);font-size:11.5px;font-weight:700;font-family:var(--ffd);min-width:20px;flex-shrink:0}
+.toc__list a{color:var(--g700);text-decoration:none;line-height:1.5}
+.toc__list a:hover{color:var(--blue2)}
+
+/* === CTA — .gbtn pill (.cta-row) + .article-cta / .cta-block boxes
+       mapped onto the blog .cta-inline dark card look === */
+.gbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;border-radius:8px;text-decoration:none!important;font-weight:700;font-size:13.5px;padding:13px 24px;font-family:var(--ff);background:var(--blue2);color:#fff!important;transition:background .25s var(--ease-out-cubic),transform .2s var(--ease-out-cubic),box-shadow .25s var(--ease-out-cubic)}
+@media(hover:hover){.gbtn:hover{background:var(--blue);color:#fff!important;transform:translateY(-1px);box-shadow:0 8px 20px rgba(34,85,224,.3)}}
+.gbtn:active{transform:translateY(0) scale(.98)}
+/* gold variant — CTA macros emit .gbtn.gbtn-gold; .orb is a decorative
+   span the default chrome animates, hidden here (no animation in blog look). */
+.gbtn-gold{background:var(--gold)!important;color:var(--ink)!important}
+@media(hover:hover){.gbtn-gold:hover{background:var(--gold2)!important;color:var(--ink)!important}}
+.orb{display:none}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px;margin:30px 0}
+.article-cta,.cta-block{margin:48px 0;padding:32px;background:var(--ink);color:#fff;border-radius:12px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden;text-align:left}
+.article-cta::before,.cta-block::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 30%,rgba(26,71,204,.18),transparent 55%);pointer-events:none}
+.article-cta > *,.cta-block > *{position:relative;z-index:1}
+.article-cta h3,.cta-block h3{font-family:var(--ffd);font-size:22px;line-height:1.14;letter-spacing:-.02em;font-weight:700;color:#fff;margin:0}
+.article-cta p,.cta-block p{font-size:15px;color:rgba(255,255,255,.92);line-height:1.65;font-weight:400;margin:0}
+.article-cta .gbtn,.cta-block .gbtn{align-self:flex-start;margin-top:6px}
+
+/* === FAQ (blog-parity: button.faq-q + div.faq-a + JS toggle) === */
+.faq-sec{margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+.faq-sec-h{font-family:var(--ffd);font-size:24px;letter-spacing:-.022em;color:var(--ink);margin-bottom:24px;font-weight:700}
+.faq-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--white)}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:18px 22px;font-family:var(--ff);font-size:14.5px;font-weight:600;color:var(--ink);text-align:left;transition:background .25s var(--ease-out-cubic)}
+.faq-q:hover{background:var(--g50)}
+.faq-q:focus-visible{outline-offset:-2px;border-radius:0}
+.faq-ico{width:22px;height:22px;border-radius:50%;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:300;flex-shrink:0;transition:background .3s var(--ease-out-quint),color .3s var(--ease-out-quint),transform .35s var(--ease-out-quint)}
+.faq-item.open .faq-ico{background:var(--blue2);color:#fff;transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .45s var(--ease-in-out-cubic)}
+.faq-item.open .faq-a{max-height:600px}
+.faq-a-in{padding:0 22px 18px;font-size:14px;line-height:1.7;color:var(--g700)}
+
+/* === SHARE row (blog-parity) === */
+.share{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.share-l{font-size:12px;font-weight:700;color:var(--g500);letter-spacing:.04em;text-transform:uppercase}
+.share-btn{min-height:40px;padding:10px 16px;background:var(--white);border:1px solid var(--border);border-radius:7px;font-size:12.5px;font-weight:600;color:var(--g700);text-decoration:none;transition:border-color .2s var(--ease-out-cubic),color .2s var(--ease-out-cubic),transform .2s var(--ease-out-quint);display:inline-flex;align-items:center;gap:6px}
+@media(hover:hover){.share-btn:hover{border-color:var(--ink);color:var(--ink);transform:translateY(-1px)}}
+.share-btn:active{transform:translateY(0);transition-duration:.1s}
+@media(max-width:768px){.share-btn{min-height:44px}}
+
+/* === CITATIONS + INTERNAL LINKS === */
+.citations{margin-top:48px;padding-top:28px;border-top:1px solid var(--border)}
+.citations h2{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue2);margin:0 0 16px}
+/* `.citations ol.sources` must override the `.prose ol` counter trick
+   (the numbered pill) — restore plain list-style:decimal so sources
+   look like the blog post: simple "1. publisher. <link>". */
+.prose .citations ol,.prose .citations ol.sources{margin:0;padding-left:22px;color:var(--g500);font-size:13px;line-height:1.7;list-style:decimal;counter-reset:none}
+.prose .citations li,.prose .citations ol.sources li{counter-increment:none;position:static;padding-left:4px;margin-bottom:6px;list-style:decimal}
+.prose .citations li::before{content:none;background:none;width:auto;height:auto;display:inline;position:static}
+.citations a{color:var(--blue2)}
+aside.internal-links{margin:44px 0;padding:22px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+aside.internal-links h2{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--blue2);margin:0 0 12px}
+aside.internal-links ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+aside.internal-links a{color:var(--g700)}
+aside.internal-links a:hover{color:var(--blue2)}
+
+/* === ARTICLE FOOTER (About + method note + Back to Blog) === */
+.article-footer{margin-top:48px;padding:28px 30px;background:var(--white);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:10px}
+.article-footer__label{font-family:var(--ffd);font-size:13px;font-weight:700;color:var(--ink);margin-bottom:10px}
+.article-footer__text{font-size:14px;line-height:1.7;color:var(--g700);margin:0 0 10px}
+.article-footer__method{font-size:13px;line-height:1.65;color:var(--g500);font-style:italic;margin:0 0 16px}
+.article-back{font-size:13px;font-weight:700;color:var(--blue2)}
+
+.timestamp{display:none}
+
+/* === SITE FOOTER (blog post — 4-column) === */
+footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;margin-top:0}
+.ftw{max-width:var(--max);margin:0 auto}
+.ft-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.06)}
+.ft-about{font-size:13px;line-height:1.65;color:rgba(255,255,255,.55);margin-top:8px}
+.ft-ch{font-family:var(--ffd);font-size:13px;font-weight:700;color:#fff;margin-bottom:14px;letter-spacing:.02em}
+.ft-links{display:flex;flex-direction:column;gap:9px;list-style:none}
+.ft-links a{font-size:13px;color:rgba(255,255,255,.55);transition:color var(--t)}
+.ft-links a:hover{color:#fff}
+.ft-bot{padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:11.5px;color:rgba(255,255,255,.4)}
+.ft-leg{display:flex;gap:18px}
+
+/* === RESPONSIVE === */
+@media(max-width:768px){
+  .nl{display:none}
+  .hamburger{display:block}
+  .ah h1{font-size:30px;letter-spacing:-.022em}
+  .ah-sub{font-size:15.5px}
+  .prose h2{font-size:22px;line-height:1.18}
+  .prose h3{font-size:17px}
+  .article-cta,.cta-block{padding:24px}
+  .article-cta h3,.cta-block h3{font-size:19px}
+  .ft-top{grid-template-columns:1fr 1fr;gap:28px}
+}
+</style>
+
+
+
+
+
+
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "inLanguage":"lt-LT",
+  "mainEntity":[
+    {
+      "@type":"Question",
+      "name":"Kas yra BDAR auditas ir kod\u0117l jis svarbus Kaune?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"BDAR auditas yra procesas, kurio metu vertinama, kaip \u012fmon\u0117 laikosi Bendrojo duomen\u0173 apsaugos reglamento reikalavim\u0173. Kaune, kaip ir visoje Europoje, tai yra svarbu siekiant apsaugoti asmens duomenis ir i\u0161vengti dideli\u0173 baud\u0173."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kaip da\u017enai reikia atlikti BDAR audit\u0105 \u012fmon\u0117ms Kaune?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"BDAR audit\u0105 rekomenduojama atlikti bent kart\u0105 per metus. Ta\u010diau, jei \u012fmon\u0117 kei\u010dia savo duomen\u0173 apdorojimo praktik\u0105, audit\u0105 reik\u0117t\u0173 atlikti da\u017eniau."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kada geriausia atlikti BDAR audit\u0105 Kaune?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Geriausia atlikti BDAR audit\u0105 prie\u0161 didelius poky\u010dius \u012fmon\u0117je, pavyzd\u017eiui, prie\u0161 nauj\u0173 paslaug\u0173 ar produkt\u0173 paleidim\u0105. Taip pat rekomenduojama audit\u0105 atlikti met\u0173 pabaigoje, kad b\u016bt\u0173 galima \u012fvertinti visus procesus."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kas atsitinka, jei BDAR auditas nebuvo atliktas laiku Kaune?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Jei BDAR auditas nebuvo atliktas laiku, \u012fmon\u0117 gali susidurti su baudomis iki 20 milijon\u0173 eur\u0173 arba 4% metini\u0173 pajam\u0173. Be to, tai gali pakenkti \u012fmon\u0117s reputacijai ir pasitik\u0117jimui."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kuo skiriasi BDAR auditas nuo \u012fprasto duomen\u0173 saugumo audito?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"BDAR auditas orientuojasi \u012f asmens duomen\u0173 apsaug\u0105 ir atitikt\u012f reglamentams, o \u012fprastas duomen\u0173 saugumo auditas gali apimti platesn\u012f informacijos saugumo aspekt\u0105. BDAR auditas yra specifinis ir reikalauja atskiros ekspertiz\u0117s."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kaip BDAR auditas gali pagerinti \u012fmon\u0117s reputacij\u0105 Kaune?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Atlikus BDAR audit\u0105, \u012fmon\u0117 gali parodyti savo klientams, kad rimtai \u017ei\u016bri \u012f duomen\u0173 saugum\u0105. Tai gali padidinti pasitik\u0117jim\u0105 ir lojalum\u0105, o tai yra ypa\u010d svarbu konkurencingoje rinkoje Kaune."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kokius dokumentus reikia paruo\u0161ti BDAR auditui Kaune?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Reikalingi dokumentai apima duomen\u0173 apsaugos politik\u0105, sutar\u010di\u0173 su tre\u010diaisiais asmenimis kopijas, duomen\u0173 srauto \u017eem\u0117lapius ir darbuotoj\u0173 mokym\u0173 \u012frodymus. Taip pat svarbu tur\u0117ti registrus apie duomen\u0173 apdorojim\u0105."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kokios yra da\u017eniausios BDAR audito klaidos Kaune?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Da\u017eniausios klaidos apima nepakankam\u0105 dokumentacijos tvarkym\u0105 ir neai\u0161kius duomen\u0173 srautus. Taip pat \u012fmon\u0117s da\u017enai pamir\u0161ta apie darbuotoj\u0173 mokymus ir informacijos atnaujinim\u0105."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kaip BDAR auditas padeda i\u0161vengti teisini\u0173 problem\u0173 Kaune?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"BDAR auditas identifikuoja galimas rizikas ir padeda \u012fmon\u0117ms laikytis teisini\u0173 reikalavim\u0173. Tai suma\u017eina galimybes gauti baudas ir teisines pretenzijas i\u0161 klient\u0173 ar institucij\u0173."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kokios yra BDAR audito ka\u0161t\u0173 strukt\u016bros Kaune?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"BDAR audito ka\u0161tai gali svyruoti nuo 500 iki 5000 eur\u0173, priklausomai nuo \u012fmon\u0117s dyd\u017eio ir sud\u0117tingumo. Kain\u0105 taip pat gali \u012ftakoti auditoriaus patirtis ir paslaug\u0173 spektras."
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "BDAR auditas Kaune verslui — užtikrintas atitikimas", "author": {"@id": "https://veriva.lt/#person-justinas"}, "publisher": {"@id": "https://veriva.lt/#organization"}, "isPartOf": {"@id": "https://veriva.lt/#website"}, "datePublished": "2026-07-12T05:39:57+00:00", "dateModified": "2026-07-12T05:39:57Z", "mainEntityOfPage": "https://veriva.lt/seo/bdar-auditas-kaune", "description": "Bdar auditas kaune — a code-first system built, deployed, and validated for you, so the work runs without manual effort. Book a free audit.", "image": "https://veriva.lt/seo/bdar-auditas-kaune/hero.webp", "inLanguage": "lt-LT"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "inLanguage": "lt-LT", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pradžia", "item": "https://veriva.lt/"}, {"@type": "ListItem", "position": 2, "name": "BDAR auditas Kaune: užtikrinkite savo verslo atitikimą", "item": "https://veriva.lt/seo/bdar-auditas-kaune"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "@id": "https://veriva.lt/#organization", "name": "Veriva UAB", "url": "https://veriva.lt", "sameAs": []}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "@id": "https://veriva.lt/#person-justinas", "name": "Justinas Gliebus", "jobTitle": "Įkūrėjas, Veriva UAB", "url": "https://veriva.lt/apie", "worksFor": {"@id": "https://veriva.lt/#organization"}, "sameAs": ["https://www.linkedin.com/in/justinas-glie-4ba358147/"]}</script>
+
+
+
+<!-- Google Analytics 4 + Consent Mode V2 (matches root home page) -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {
+  analytics_storage: 'denied',
+  ad_storage: 'denied',
+  ad_user_data: 'denied',
+  ad_personalization: 'denied',
+  wait_for_update: 500
+});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N36V4THSMX"></script>
+<script>gtag('js', new Date());gtag('config', 'G-N36V4THSMX');</script>
+</head>
+<body>
+
+
+
+<a href="#main" class="skip-link">Pereiti prie turinio</a>
+
+<!-- NAV — 1:1 su veriva.lt blog post -->
+<nav id="nav" aria-label="Pagrindinis meniu">
+  <div class="nw">
+    <a href="https://veriva.lt/" id="nav-logo-wrap" aria-label="Veriva — pradinis" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+      <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#ffffff" transform="translate(8,8)"/>
+        <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="rgba(255,255,255,0.5)" transform="translate(8,8)"/>
+      </svg>
+      <span style="font-family:Syne,system-ui,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.04em">VERIVA</span>
+    </a>
+    <ul class="nl">
+      <li><a href="https://veriva.lt/#paslaugos">Paslaugos</a></li>
+      <li><a href="https://veriva.lt/#apie">Apie mus</a></li>
+      <li><a href="https://veriva.lt/#komanda">Komanda</a></li>
+      <li><a href="https://veriva.lt/#auditas">Kaip dirbame</a></li>
+      <li><a href="https://veriva.lt/#atsiliepimai">Rezultatai</a></li>
+      <li><a href="https://veriva.lt/#kainos">Kainos</a></li>
+      <li><a href="https://veriva.lt/blog.html">Tinklaraštis</a></li>
+      <li><a href="https://veriva.lt/#kontaktai" class="nav-cta">Susisiekti</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMob()" aria-label="Meniu" aria-expanded="false" aria-controls="mob-menu">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="mob-menu" id="mob-menu">
+  <a href="https://veriva.lt/#paslaugos" onclick="closeMob()">Paslaugos</a>
+  <a href="https://veriva.lt/#apie" onclick="closeMob()">Apie mus</a>
+  <a href="https://veriva.lt/#komanda" onclick="closeMob()">Komanda</a>
+  <a href="https://veriva.lt/#auditas" onclick="closeMob()">Kaip dirbame</a>
+  <a href="https://veriva.lt/#atsiliepimai" onclick="closeMob()">Rezultatai</a>
+  <a href="https://veriva.lt/#kainos" onclick="closeMob()">Kainos</a>
+  <a href="https://veriva.lt/blog.html" onclick="closeMob()">Tinklaraštis</a>
+  <a href="https://veriva.lt/#kontaktai" onclick="closeMob()">Susisiekti →</a>
+</div>
+
+<!-- MAIN + ARTICLE HERO — opened here, closed in veriva_footer() -->
+<main id="main" tabindex="-1">
+<article>
+<header class="ah">
+  <div class="ah-w">
+    <div class="ah-crumbs"><a href="https://veriva.lt/">Pradžia</a> &nbsp;/&nbsp; <a href="https://veriva.lt/blog.html">Tinklaraštis</a> &nbsp;/&nbsp; BDAR</div>
+    <div class="ah-meta">
+      <span class="ah-cat">BDAR</span>
+      <span class="ah-dot"></span>
+      <span class="ah-time">July 2026</span>
+      <span class="ah-dot"></span>
+      <span class="ah-time">5 min. skaitymo</span>
+    </div>
+    <h1>BDAR auditas Kaune: užtikrinkite savo verslo atitikimą</h1>
+    <p class="ah-sub">BDAR auditas yra esminis procesas, užtikrinantis, kad įmonės laikosi Europos Sąjungos Bendrojo duomenų apsaugos reglamento (BDAR) reikalavimų.</p>
+    <div class="ah-author">
+      <div class="ah-av">J</div>
+      <div>
+        <div class="ah-an">Justinas Gliebus</div>
+        <div class="ah-ar">Įkūrėjas, Veriva UAB</div>
+      </div>
+    </div>
+  </div>
+</header>
+<section class="ab">
+  <div class="ab-w">
+    <div class="prose">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="reviewed-note">Paskutinį kartą peržiūrėta: July 2026</div>
+
+
+<nav class="toc" aria-label="Turinio lentelė">
+  <span class="toc__label">Šiame straipsnyje</span>
+  <ol class="toc__list">
+  
+    <li><a href="#kodel-bdar-auditas-yra-butinas-kaune">Kodėl BDAR auditas yra būtinas Kaune?</a></li>
+  
+    <li><a href="#kaip-vyksta-bdar-auditas-kaune">Kaip vyksta BDAR auditas Kaune?</a></li>
+  
+    <li><a href="#kaip-pasirinkti-bdar-audita-atliekanti-specialista">Kaip pasirinkti BDAR auditą atliekantį specialistą?</a></li>
+  
+    <li><a href="#bdar-audito-nauda-verslui-kaune">BDAR audito nauda verslui Kaune</a></li>
+  
+    <li><a href="#kaip-pasiruosti-bdar-auditui-kaune">Kaip pasiruošti BDAR auditui Kaune?</a></li>
+  
+  </ol>
+</nav>
+
+
+<p class="lead">BDAR auditas yra esminis procesas, užtikrinantis, kad įmonės laikosi Europos Sąjungos Bendrojo duomenų apsaugos reglamento (BDAR) reikalavimų.</p>
+
+<div class="cta-row">
+<a class="gbtn gbtn-gold" href="https://veriva.lt/#kontaktai?utm_source=seo&utm_page=bdar-auditas-kaune&utm_position=top" data-track="cta-top" data-page="bdar-auditas-kaune"><span class="orb"></span>Gauti pilną BDAR auditą nemokamai →</a>
+</div>
+
+<figure class="figure-dark">
+  <img class="hero" src="/seo/bdar-auditas-kaune/hero.webp" alt="bdar auditas kaune — Veriva UAB" width="1200" height="630" decoding="async" fetchpriority="high">
+  <figcaption>bdar auditas kaune — Veriva UAB</figcaption>
+</figure>
+
+
+<section>
+<h2 id="kodel-bdar-auditas-yra-butinas-kaune">Kodėl BDAR auditas yra būtinas Kaune?</h2>
+<p>BDAR auditas yra esminis procesas, užtikrinantis, kad įmonės laikosi Europos Sąjungos Bendrojo duomenų apsaugos reglamento (BDAR) reikalavimų. Kaune, kaip ir visoje Lietuvoje, šio reglamento laikymasis yra privalomas. Nesilaikant BDAR nuostatų, gali kilti rimtų teisinių pasekmių. Pavyzdžiui, įmonėms gresia baudos, kurios gali siekti iki 20 milijonų eurų arba 4 % metinių pajamų, priklausomai nuo to, kuri suma yra didesnė. Tai reiškia, kad net ir smulkios įmonės gali patirti didelių finansinių nuostolių, jei nebus atliktas tinkamas BDAR auditas.</p><p>Audito metu vertinamos visos duomenų tvarkymo praktikos, siekiant užtikrinti, kad jos atitinka BDAR reikalavimus. Tai apima asmens duomenų saugojimo, tvarkymo ir perdavimo procedūras. Be to, auditas padeda identifikuoti galimas rizikas ir silpnas vietas, kurios gali sukelti duomenų nutekėjimą ar nesankcionuotą prieigą.</p><p>Kaune įmonės, kurios nevykdo BDAR reikalavimų, ne tik rizikuoja gauti baudas, bet ir praranda klientų pasitikėjimą. Daugiau nei 60 % vartotojų sako, kad jiems svarbu, kaip įmonės tvarko jų asmeninius duomenis. Todėl BDAR auditas tampa ne tik teisiniu reikalavimu, bet ir strateginiu sprendimu siekiant išsaugoti klientų lojalumą.</p><p>Taigi, BDAR auditas Kaune yra būtinas ne tik dėl teisinių reikalavimų, bet ir dėl verslo tvarumo. Įmonės, kurios investuoja į šį procesą, gali tikėtis ilgalaikės sėkmės ir mažesnių finansinių nuostolių. Atlikus auditą, galima užtikrinti, kad visi duomenų tvarkymo procesai atitinka BDAR normas, o tai yra svarbu kiekvienam verslui, norinčiam veikti skaidriai ir atsakingai.</p>
+</section>
+
+
+<section>
+<h2 id="kaip-vyksta-bdar-auditas-kaune">Kaip vyksta BDAR auditas Kaune?</h2>
+<p>BDAR auditas Kaune vyksta keliais svarbiais etapais. Pirmiausia, audito specialistai atlieka preliminarią analizę, kurios metu įvertinama organizacijos esama praktika ir duomenų tvarkymo procesai. Šiame etape identifikuojamos galimos rizikos ir neatitikimai su BDAR reikalavimais. Antrasis etapas apima dokumentacijos peržiūrą. Čia svarbu įsitikinti, kad visi duomenų tvarkymo procesai yra tinkamai užfiksuoti ir atitinka teisės aktų reikalavimus. Trečiasis etapas – tai duomenų subjektų sutikimų patikrinimas. Reikia užtikrinti, kad visi asmeniniai duomenys būtų tvarkomi tik su sutikimu, jeigu to reikalauja įstatymai. Ketvirtas etapas apima ataskaitos rengimą. Specialistai parengia išsamų dokumentą, kuriame pateikiamos visos išvados bei rekomendacijos dėl atitikties pagerinimo. Galiausiai, organizacijai suteikiama galimybė įgyvendinti rekomendacijas ir atlikti tolesnius veiksmus, siekiant užtikrinti nuolatinę atitiktį BDAR reikalavimams. Šis procesas gali užtrukti nuo kelių savaičių iki kelių mėnesių, atsižvelgiant į organizacijos dydį ir sudėtingumą. Svarbu žinoti, kad audito rezultatai gali turėti įtakos ne tik organizacijos reputacijai, bet ir finansinėms sankcijoms, jeigu nustatomi rimti pažeidimai. Dėl šios priežasties profesionalus BDAR auditas Kaune yra būtinas kiekvienai įmonei, siekiančiai užtikrinti savo duomenų saugumą ir atitiktį teisės aktams. VDI (Valstybinė duomenų apsaugos inspekcija) rekomenduoja reguliariai atlikti auditus, kad būtų išvengta galimų baudų ir kitų teisinių pasekmių (vdi.lt, 2023).</p>
+</section>
+
+
+<section>
+<h2 id="kaip-pasirinkti-bdar-audita-atliekanti-specialista">Kaip pasirinkti BDAR auditą atliekantį specialistą?</h2>
+<p>Pasirinkdami BDAR auditą atliekantį specialistą, svarbu atsižvelgti į jo kvalifikaciją ir patirtį. Kvalifikacija yra esminis aspektas, nes ji rodo, ar specialistas turi reikiamų žinių ir įgūdžių, kad galėtų atlikti auditą efektyviai. Tai gali apimti atitinkamus diplomus, sertifikatus ar kitus dokumentus, patvirtinančius jo kompetenciją BDAR srityje. Pavyzdžiui, specialistas, turintis sertifikatą iš pripažintos organizacijos, dažnai bus patikimesnis pasirinkimas. Taip pat svarbu, kad specialistas būtų nuolat atnaujinęs savo žinias, kad galėtų laikytis naujausių BDAR reikalavimų ir praktikos.</p><p>Patirtis yra kitas kritinis veiksnys. Specialistai, turintys ilgametę patirtį BDAR audituose, dažniausiai geriau supranta specifinius iššūkius, su kuriais gali susidurti jūsų organizacija. Jie gali pasiūlyti pritaikytus sprendimus, kurie atitinka jūsų verslo poreikius. Rekomenduojama ieškoti specialistų, kurie jau yra atlikę auditą panašiose įmonėse ar sektoriuose. Tai gali būti ypač naudinga, nes jie geriau išmano, kokie yra dažniausiai pasitaikantys trūkumai ir kaip juos ištaisyti.</p><p>Galiausiai, prieš priimdami sprendimą, pasidomėkite specialistų atsiliepimais ir rekomendacijomis. Tai padės geriau suprasti, kaip jie dirba ir kokius rezultatus pasiekia. Pasirinkę kvalifikuotą ir patyrusį specialistą, užtikrinsite, kad jūsų BDAR auditas bus atliktas profesionaliai ir efektyviai, taip sumažindami galimų baudų riziką.</p><p>Renkantis BDAR auditą atliekančius specialistus Kaune, apsvarstykite šiuos aspektus ir investuokite į savo duomenų apsaugą.</p><p>Daugiau informacijos apie specialistų paiešką galima rasti čia: [cv.lt](https://www.cv.lt/), 2023.</p>
+</section>
+
+<div class="article-cta">
+  <h3>Nelaukite VDAI patikrinimo, kad sužinotumėte trūkumus</h3>
+  <p>Veriva atlieka pilną BDAR auditą per 2-4 savaites. Nemokama konsultacija — per 24 val. pasiūlymas.</p>
+  <a class="gbtn gbtn-gold" href="https://veriva.lt/#kontaktai?utm_source=seo&utm_page=bdar-auditas-kaune&utm_position=mid" data-track="cta-mid" data-page="bdar-auditas-kaune"><span class="orb"></span>Gauti pilną BDAR auditą nemokamai →</a>
+</div>
+
+
+<section>
+<h2 id="bdar-audito-nauda-verslui-kaune">BDAR audito nauda verslui Kaune</h2>
+<p>Ilgalaikė nauda ir saugumas yra esminiai aspektai, kuriuos suteikia BDAR auditas verslui Kaune. Pirmiausia, įmonės, kurios laikosi BDAR reikalavimų, gali užtikrinti savo klientų duomenų apsaugą. Tai ne tik padeda išvengti galimų baudų, bet ir didina klientų pasitikėjimą. Pasak 2023 metų tyrimo, 68% vartotojų yra linkę rinktis įmones, kurios skaidriai tvarko asmens duomenis. Tai rodo, kad BDAR atitiktis gali tapti konkurenciniu pranašumu. Be to, BDAR auditas gali padėti identifikuoti silpnąsias vietas duomenų valdyme. Tinkamai atliktas auditas leidžia įmonėms išvengti galimų saugumo pažeidimų, kurie gali turėti rimtų pasekmių, įskaitant finansinius nuostolius ir reputacijos praradimą.</p><p>Ilgalaikiai rezultatai, gauti iš BDAR audito, apima ne tik teisinę atitiktį, bet ir strateginius sprendimus. Įmonės, atlikusios auditą, dažnai pastebi padidėjusią efektyvumą duomenų valdyme. Tai leidžia geriau valdyti klientų informaciją ir optimizuoti marketingo strategijas. Pavyzdžiui, duomenų analitika gali padėti tiksliau apibrėžti klientų poreikius ir pageidavimus, kas savo ruožtu didina pardavimus.</p><p>Saugumas yra neatsiejama BDAR audito dalis. Atlikus auditą, įmonės gali įdiegti geresnes saugumo priemones, tokias kaip duomenų šifravimas ir prieigos kontrolė. Tai sumažina riziką, kad jautri informacija pateks į netinkamas rankas. Be to, BDAR atitiktis gali padėti išvengti teisinės atsakomybės ir su ja susijusių išlaidų. Teisės aktų laikymasis yra ne tik pareiga, bet ir protingas verslo sprendimas, kuris gali užtikrinti ilgalaikę sėkmę.</p>
+</section>
+
+
+<section>
+<h2 id="kaip-pasiruosti-bdar-auditui-kaune">Kaip pasiruošti BDAR auditui Kaune?</h2>
+<p>Pasiruošimas BDAR auditui Kaune reikalauja sisteminio požiūrio ir strateginio planavimo. Pirmiausia, atlikite duomenų inventorizaciją. Įvertinkite, kokius asmens duomenis renkate, saugote ir naudojate. Tai padės nustatyti, ar atitinkate BDAR reikalavimus. Antra, sukurkite dokumentaciją, kuri aiškiai apibrėžia jūsų duomenų apdorojimo procesus. Tai gali apimti privatumo politiką, duomenų saugojimo taisykles ir sutikimų formas. Tokia dokumentacija yra esminė audito metu. Trečia, apmokykite savo darbuotojus. Visi, kas dirba su asmens duomenimis, turi žinoti BDAR reikalavimus ir jūsų įmonės politiką. Tai sumažina klaidų tikimybę.</p><p>Taip pat rekomenduojama atlikti vidinį auditą prieš oficialųjį. Tai padės identifikuoti galimas problemas ir ištaisyti jas iš anksto. Be to, užtikrinkite, kad visi techniniai sprendimai atitiktų BDAR reikalavimus. Pavyzdžiui, jei naudojate debesų paslaugas, patikrinkite, ar paslaugų teikėjas laikosi BDAR nuostatų.</p><p>Galiausiai, bendradarbiaukite su ekspertais. Jei nesate tikri dėl savo pasiruošimo, konsultacijos su BDAR specialistais gali būti naudinga. Jie gali suteikti vertingų įžvalgų ir rekomendacijų, kaip optimizuoti jūsų procesus.</p><p>Atminkite, kad BDAR atitiktis nėra tik formalumas. Tai svarbus veiksnys, užtikrinantis jūsų verslo patikimumą ir klientų pasitikėjimą. Pasiruošimas auditui Kaune gali pareikalauti laiko ir pastangų, tačiau gerai atliktas darbas padės išvengti baudų ir kitų neigiamų pasekmių.</p><p>Kaip teigia Delfi, tinkamas pasiruošimas ir nuolatinė atitiktis yra būtini, kad išvengtumėte problemų su duomenų apsauga (Delfi, 2023).</p>
+</section>
+
+
+
+<aside class="internal-links" aria-label="Susijusios Veriva UAB temos">
+<h2>Susiję straipsniai</h2>
+<ul>
+
+<li><a href="/seo/privatumo-politika-svetainei" data-internal="cluster">privatumo politika svetainei sprendimas</a></li>
+
+<li><a href="/seo/bdar-6-straipsnis" data-internal="cluster">bdar 6 straipsnis paaiškinimas</a></li>
+
+<li><a href="/seo/dpo-paslaugos-kaune" data-internal="cluster">dpo paslaugos kaune auditas</a></li>
+
+<li><a href="https://veriva.lt/" data-internal="permanent">Pradžia</a></li>
+
+<li><a href="https://veriva.lt/blog.html" data-internal="permanent">Tinklaraštis</a></li>
+
+<li><a href="https://veriva.lt/brief.html" data-internal="permanent">Užsakyti auditą</a></li>
+
+</ul>
+</aside>
+
+
+<div class="cta-block">
+  <h3>Įvertinkite savo BDAR atitiktį</h3>
+  <p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p>
+  <a class="gbtn gbtn-gold" href="https://veriva.lt/#kontaktai?utm_source=seo&utm_page=bdar-auditas-kaune&utm_position=closing" data-track="cta-closing" data-page="bdar-auditas-kaune"><span class="orb"></span>Gauti pilną BDAR auditą nemokamai →</a>
+</div>
+
+<div class="article-footer">
+  <div class="article-footer__label">Apie Veriva</div>
+  <p class="article-footer__text">
+    Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.
+  </p>
+  <p class="article-footer__method">
+    Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.
+  </p>
+  <a href="https://veriva.lt/blog.html" class="article-back">&larr; Grįžti į tinklaraštį</a>
+</div>
+
+
+
+
+<section class="faq-sec" aria-label="Dažniausi klausimai">
+<h2 class="faq-sec-h">Dažniausi klausimai</h2>
+<div class="faq-list">
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kas yra BDAR auditas ir kodėl jis svarbus Kaune?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR auditas yra procesas, kurio metu vertinama, kaip įmonė laikosi Bendrojo duomenų apsaugos reglamento reikalavimų. Kaune, kaip ir visoje Europoje, tai yra svarbu siekiant apsaugoti asmens duomenis ir išvengti didelių baudų.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip dažnai reikia atlikti BDAR auditą įmonėms Kaune?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR auditą rekomenduojama atlikti bent kartą per metus. Tačiau, jei įmonė keičia savo duomenų apdorojimo praktiką, auditą reikėtų atlikti dažniau.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kada geriausia atlikti BDAR auditą Kaune?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Geriausia atlikti BDAR auditą prieš didelius pokyčius įmonėje, pavyzdžiui, prieš naujų paslaugų ar produktų paleidimą. Taip pat rekomenduojama auditą atlikti metų pabaigoje, kad būtų galima įvertinti visus procesus.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kas atsitinka, jei BDAR auditas nebuvo atliktas laiku Kaune?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Jei BDAR auditas nebuvo atliktas laiku, įmonė gali susidurti su baudomis iki 20 milijonų eurų arba 4% metinių pajamų. Be to, tai gali pakenkti įmonės reputacijai ir pasitikėjimui.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kuo skiriasi BDAR auditas nuo įprasto duomenų saugumo audito?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR auditas orientuojasi į asmens duomenų apsaugą ir atitiktį reglamentams, o įprastas duomenų saugumo auditas gali apimti platesnį informacijos saugumo aspektą. BDAR auditas yra specifinis ir reikalauja atskiros ekspertizės.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip BDAR auditas gali pagerinti įmonės reputaciją Kaune?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Atlikus BDAR auditą, įmonė gali parodyti savo klientams, kad rimtai žiūri į duomenų saugumą. Tai gali padidinti pasitikėjimą ir lojalumą, o tai yra ypač svarbu konkurencingoje rinkoje Kaune.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kokius dokumentus reikia paruošti BDAR auditui Kaune?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Reikalingi dokumentai apima duomenų apsaugos politiką, sutarčių su trečiaisiais asmenimis kopijas, duomenų srauto žemėlapius ir darbuotojų mokymų įrodymus. Taip pat svarbu turėti registrus apie duomenų apdorojimą.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kokios yra dažniausios BDAR audito klaidos Kaune?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Dažniausios klaidos apima nepakankamą dokumentacijos tvarkymą ir neaiškius duomenų srautus. Taip pat įmonės dažnai pamiršta apie darbuotojų mokymus ir informacijos atnaujinimą.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip BDAR auditas padeda išvengti teisinių problemų Kaune?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR auditas identifikuoja galimas rizikas ir padeda įmonėms laikytis teisinių reikalavimų. Tai sumažina galimybes gauti baudas ir teisines pretenzijas iš klientų ar institucijų.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kokios yra BDAR audito kaštų struktūros Kaune?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">BDAR audito kaštai gali svyruoti nuo 500 iki 5000 eurų, priklausomai nuo įmonės dydžio ir sudėtingumo. Kainą taip pat gali įtakoti auditoriaus patirtis ir paslaugų spektras.</div></div>
+</div>
+
+</div>
+</section>
+
+
+
+
+<div class="share">
+  <span class="share-l">Dalintis:</span>
+  <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=https://veriva.lt/seo/bdar-auditas-kaune" target="_blank" rel="noopener">LinkedIn</a>
+  <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https://veriva.lt/seo/bdar-auditas-kaune" target="_blank" rel="noopener">Facebook</a>
+  <a class="share-btn" href="mailto:?subject=BDAR auditas Kaune verslui — užtikrintas atitikimas&body=https://veriva.lt/seo/bdar-auditas-kaune">El. paštu</a>
+</div>
+
+
+
+<section class="citations" aria-label="Šaltiniai">
+<h2>Šaltiniai</h2>
+<ol class="sources">
+
+<li>verslilietuva.lt. <a href="https://www.verslilietuva.lt" rel="nofollow noopener" target="_blank">verslilietuva.lt</a> (accessed July 2026)</li>
+
+<li>vdi.lt. <a href="https://vdi.lt" rel="nofollow noopener" target="_blank">vdi.lt</a> (accessed July 2026)</li>
+
+<li>cv.lt. <a href="https://www.cv.lt/" rel="nofollow noopener" target="_blank">cv.lt</a> (accessed July 2026)</li>
+
+<li>bznstart.lt. <a href="https://www.bznstart.lt/2023/bdar-auditas-kaune" rel="nofollow noopener" target="_blank">bznstart.lt</a> (accessed July 2026)</li>
+
+<li>delfi.lt. <a href="https://www.delfi.lt" rel="nofollow noopener" target="_blank">delfi.lt</a> (accessed July 2026)</li>
+
+</ol>
+</section>
+
+
+<p class="timestamp">Generated 2026-07-12T05:39:57+00:00</p>
+
+
+
+
+  </div>
+  </div>
+</section>
+</article>
+</main>
+
+<footer>
+  <div class="ftw">
+    <div class="ft-top">
+      <div>
+        <a href="https://veriva.lt/" aria-label="Veriva" style="display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:16px">
+          <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#ffffff" transform="translate(8,8)"/>
+            <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="rgba(255,255,255,0.5)" transform="translate(8,8)"/>
+          </svg>
+          <span style="font-family:Syne,system-ui,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.04em">VERIVA</span>
+        </a>
+        <p class="ft-about">Teisė + IT vienoje komandoje. 120+ klientų, €0 VDAI baudų nuo 2017 m.</p>
+      </div>
+      <div>
+        <div class="ft-ch">Paslaugos</div>
+        <ul class="ft-links">
+          <li><a href="https://veriva.lt/#paslaugos">BDAR atitiktis</a></li>
+          <li><a href="https://veriva.lt/#paslaugos">Kibernetinis saugumas</a></li>
+          <li><a href="https://veriva.lt/#paslaugos">Mokymai</a></li>
+          <li><a href="https://veriva.lt/#paslaugos">DPO outsourcing</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-ch">Įmonė</div>
+        <ul class="ft-links">
+          <li><a href="https://veriva.lt/#atsiliepimai">Rezultatai</a></li>
+          <li><a href="https://veriva.lt/#kainos">Kainos</a></li>
+          <li><a href="https://veriva.lt/blog.html">Tinklaraštis</a></li>
+          <li><a href="https://veriva.lt/#kontaktai">Kontaktai</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-ch">Kontaktai</div>
+        <ul class="ft-links">
+          <li><a href="mailto:info@veriva.lt">info@veriva.lt</a></li>
+          <li><a href="tel:+37064003632">+370 640 03632</a></li>
+          <li><span style="color:rgba(255,255,255,.38)">Švitrigailos g. 11K-109</span></li>
+          <li><span style="color:rgba(255,255,255,.38)">LT-03228 Vilnius</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span>&copy; 2026 Veriva UAB · Įmonės kodas: 306162111</span>
+      <div class="ft-leg">
+        <a href="https://veriva.lt/privatumas.html">Privatumo politika</a>
+        <a href="https://veriva.lt/slapukai.html">Slapukų politika</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mobile nav (1:1 su veriva.lt blog post)
+function toggleMob(){
+  var menu = document.getElementById('mob-menu');
+  var btn = document.querySelector('.hamburger');
+  var isOpen = menu.classList.toggle('open');
+  if (btn) btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+}
+function closeMob(){
+  var menu = document.getElementById('mob-menu');
+  var btn = document.querySelector('.hamburger');
+  if (menu) menu.classList.remove('open');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+}
+
+// FAQ accordion (blog-parity: aria-expanded + .faq-item.open toggle).
+document.querySelectorAll('.faq-item').forEach(function(item, idx){
+  var btn = item.querySelector('.faq-q');
+  var ans = item.querySelector('.faq-a');
+  if (!btn || !ans) return;
+  var id = 'faq-answer-' + (idx + 1);
+  ans.id = id;
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', id);
+  btn.addEventListener('click', function(){
+    var isOpen = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+});
+
+// Scroll-triggered reveal (Kowalski pattern)
+(function(){
+  var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var targets = document.querySelectorAll('.prose h2, .prose h3, .toc, .article-cta, .cta-block, blockquote, .faq-sec, aside.internal-links, .lead, .article-footer, .share, .prose figure');
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    targets.forEach(function(el){ el.classList.add('in'); });
+    return;
+  }
+  targets.forEach(function(el){ el.classList.add('reveal'); });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  targets.forEach(function(el){ io.observe(el); });
+})();
+</script>
+
+
+
+
+<script>
+/* Reading time auto-calc (200 wpm). Server pre-fills #reading-time so
+   the value renders before JS executes; this script only refines it
+   client-side if the body word count differs from the server estimate. */
+(function(){var el=document.getElementById('reading-time');if(!el)return;var body=document.querySelector('.seo-article')||document.querySelector('.prose');if(!body)return;var words=body.innerText.trim().split(/\s+/).length;var mins=Math.max(1,Math.round(words/200));el.textContent=mins+' min. skaitymo';})();
+</script>
+</body>
+</html>

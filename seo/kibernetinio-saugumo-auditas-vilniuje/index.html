@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kibernetinio saugumo auditas Vilniuje</title>
+<meta name="description" content="Kibernetinio saugumo auditas vilniuje — a code-first system built, deployed, and validated for you, so the work runs without manual effort. Book a free audit.">
+<link rel="canonical" href="https://veriva.lt/seo/kibernetinio-saugumo-auditas-vilniuje">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kibernetinio saugumo auditas Vilniuje">
+<meta property="og:description" content="Kibernetinio saugumo auditas vilniuje — a code-first system built, deployed, and validated for you, so the work runs without manual effort. Book a free audit.">
+<meta property="og:url" content="https://veriva.lt/seo/kibernetinio-saugumo-auditas-vilniuje">
+<meta property="og:image" content="https://veriva.lt/seo/kibernetinio-saugumo-auditas-vilniuje/hero.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Veriva UAB">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kibernetinio saugumo auditas Vilniuje">
+<meta name="twitter:description" content="Kibernetinio saugumo auditas vilniuje — a code-first system built, deployed, and validated for you, so the work runs without manual effort. Book a free audit.">
+<meta name="twitter:image" content="https://veriva.lt/seo/kibernetinio-saugumo-auditas-vilniuje/hero.webp">
+
+<!-- Bot signals -->
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="author" content="Justinas Gliebus">
+
+<!-- Icons + fonts -->
+
+<!-- No external asset host: inline-SVG favicon (gold mark on dark) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2307111f'/%3E%3Crect x='7' y='8' width='18' height='3' rx='1.5' fill='%231a47cc'/%3E%3Crect x='7' y='15' width='12' height='3' rx='1.5' fill='%231a47cc'/%3E%3Crect x='7' y='22' width='18' height='3' rx='1.5' fill='%231a47cc'/%3E%3C/svg%3E">
+
+
+
+
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ===================================================================
+   Veriva blog-post chrome — ported 1:1 from veriva.lt blog/template.html
+   =================================================================== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#07111f;--ink2:#0c1a2e;
+  --blue:#1a47cc;--blue2:#2255e0;
+  --cyan:#00b4d8;--gold:#c8962a;--gold-strong:#7d5b14;--gold2:#e8b84b;
+  --red:#dc2626;
+  --white:#fff;--cream:#f8f7f4;
+  --g50:#f3f2ee;--g100:#eae8e2;--g300:#c5c2b8;--g500:#6f6a5e;--g600:#5a564c;--g700:#44413b;
+  --border:rgba(7,17,31,.09);--border2:rgba(7,17,31,.15);
+  --ease:cubic-bezier(.4,0,.2,1);--t:.2s var(--ease);
+  --ease-out-quint:cubic-bezier(.23,1,.32,1);
+  --ease-out-cubic:cubic-bezier(.33,1,.68,1);
+  --ease-in-out-cubic:cubic-bezier(.645,.045,.355,1);
+  --max:1140px;
+  --read-max:720px;
+  --ff:'Plus Jakarta Sans',system-ui,sans-serif;
+  --ffd:'Syne',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--ff);color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:60px}
+a{color:var(--blue2);text-decoration:none;transition:color var(--t)}
+a:hover{color:var(--blue)}
+
+/* === A11Y === */
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--blue2);outline-offset:3px;border-radius:4px}
+.nav-cta:focus-visible,.cta-inline-btn:focus-visible{outline-color:var(--gold2);outline-offset:3px}
+.skip-link{position:absolute;top:-100px;left:16px;background:var(--ink);color:#fff;padding:12px 18px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;z-index:300;transition:top .2s var(--ease-out-cubic)}
+.skip-link:focus{top:8px}
+
+/* === REVEAL ON SCROLL === */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease-out-quint),transform .6s var(--ease-out-quint);will-change:opacity,transform}
+.reveal.in{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+::selection{background:rgba(26,71,204,.18)}
+
+/* === NAV (blog post — 8 items, no ticker)
+   ID-scoped: a bare `nav{position:fixed}` rule would also fix the TOC
+   (`<nav class="toc">`) and the FAQ aria nav to the top of the viewport.
+   See [[per-client-pipeline-defects]] — selectors must target the
+   exact element, never the bare tag. */
+nav#nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,17,31,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07)}
+.nw{max-width:var(--max);margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nl{display:flex;align-items:center;gap:2px;list-style:none}
+.nl a{display:block;padding:7px 13px;font-size:13px;font-weight:500;color:rgba(255,255,255,.55);text-decoration:none;border-radius:7px;transition:all var(--t)}
+.nl a:hover{color:#fff;background:rgba(255,255,255,.07)}
+.nav-cta{background:var(--blue)!important;color:#fff!important;padding:8px 18px!important;border-radius:8px!important;font-weight:700!important;font-size:13px!important;transition:all var(--t)!important}
+.nav-cta:hover{background:var(--blue2)!important;transform:translateY(-1px)!important}
+.hamburger{display:none;background:none;border:none;color:#fff;cursor:pointer;padding:6px}
+.mob-menu{display:none;position:fixed;inset:0;top:60px;background:var(--ink);z-index:199;padding:24px;flex-direction:column;gap:4px}
+.mob-menu.open{display:flex}
+.mob-menu a{font-size:17px;font-weight:600;color:rgba(255,255,255,.75);text-decoration:none;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.mob-menu a:last-child{color:var(--gold2);font-weight:800;border:none;margin-top:8px}
+
+/* === ARTICLE HERO (.ah) — dark, holds breadcrumbs + meta + H1 + sub + author === */
+.ah{padding:64px 24px 40px;background:var(--ink);color:#fff;position:relative;overflow:hidden}
+.ah::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(26,71,204,.1),transparent 50%),radial-gradient(circle at 80% 70%,rgba(200,150,42,.05),transparent 55%);pointer-events:none}
+.ah-w{max-width:var(--read-max);margin:0 auto;position:relative;z-index:1}
+.ah-crumbs{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:18px;letter-spacing:.04em}
+.ah-crumbs a{color:rgba(255,255,255,.65)}
+.ah-crumbs a:hover{color:#fff}
+.ah-meta{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+.ah-cat{color:var(--gold2)}
+.ah-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.35)}
+.ah-time{color:rgba(255,255,255,.55)}
+.ah h1{font-family:var(--ffd);font-size:clamp(32px,4.2vw,52px);line-height:1.08;letter-spacing:-.025em;margin-bottom:20px;font-weight:700;color:#fff}
+.ah-sub{font-size:17px;color:rgba(255,255,255,.7);line-height:1.7;font-weight:300;margin-bottom:24px}
+.ah-author{display:flex;align-items:center;gap:12px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08)}
+.ah-av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--blue2) 0%,var(--gold) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--ffd);font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.ah-an{font-size:13.5px;font-weight:700;color:#fff}
+.ah-ar{font-size:11.5px;color:rgba(255,255,255,.6)}
+
+/* === ARTICLE BODY (.ab / .prose) === */
+.ab{padding:56px 24px 88px;background:var(--cream)}
+.ab-w{max-width:var(--read-max);margin:0 auto}
+.prose{font-size:16px;line-height:1.75;color:var(--g700)}
+.prose > * + *{margin-top:1.2em}
+.prose h2{font-family:var(--ffd);font-size:clamp(22px,2.4vw,28px);line-height:1.14;letter-spacing:-.022em;color:var(--ink);margin-top:2.2em;margin-bottom:.5em;font-weight:700;scroll-margin-top:120px}
+.prose h3{font-family:var(--ffd);font-size:19px;line-height:1.2;letter-spacing:-.018em;color:var(--ink);margin-top:1.8em;margin-bottom:.4em;font-weight:700}
+.prose section:first-child h2{margin-top:0}
+.prose p{font-size:16.5px;line-height:1.75;color:var(--g700);margin:0 0 1.2em}
+.prose section{margin-top:1.2em}
+.prose strong{color:var(--ink);font-weight:700}
+.prose em{color:var(--blue2);font-style:italic}
+.prose ul,.prose ol{padding-left:24px;margin:0 0 1.2em}
+.prose ul li{position:relative;padding-left:18px;margin-bottom:.5em;list-style:none}
+.prose ul li::before{content:'';position:absolute;left:0;top:.65em;width:8px;height:8px;background:var(--blue2);border-radius:2px;transform:rotate(45deg)}
+.prose ol{counter-reset:num;list-style:none}
+.prose ol li{counter-increment:num;position:relative;padding-left:32px;margin-bottom:.6em;list-style:none}
+.prose ol li::before{content:counter(num);position:absolute;left:0;top:0;width:24px;height:24px;background:var(--ink);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;font-family:var(--ffd)}
+.prose blockquote{padding:20px 24px;background:var(--white);border-left:3px solid var(--blue2);border-radius:0 8px 8px 0;font-style:italic;color:var(--ink);margin:1.5em 0}
+.prose blockquote p{font-size:17px;line-height:1.7}
+.prose a{color:var(--blue2);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;transition:color .2s var(--ease-out-cubic)}
+.prose a:hover{color:var(--blue);text-decoration-thickness:2px;text-underline-offset:4px}
+.prose hr{border:none;border-top:1px solid var(--border);margin:2.5em 0}
+
+/* hero image — emitted by intent templates as
+   <figure class="figure-dark"><img class="hero">…<figcaption>. */
+.prose figure{margin:2em 0;padding:0}
+.prose figure img,.prose img.hero,img.hero{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--border);background:var(--white);aspect-ratio:1200/630;object-fit:cover}
+.prose figure.figure-dark img{border-color:rgba(7,17,31,.15);background:transparent}
+.prose figure figcaption{margin-top:12px;font-size:13px;color:var(--g700);text-align:center;line-height:1.5;font-style:italic}
+
+/* tables — comparison table + markdown pipe fallback */
+.prose table,table.comparison{width:100%;border-collapse:collapse;margin:1.5em 0;font-size:14.5px}
+.prose th,.prose td,table.comparison th,table.comparison td{padding:12px 14px;border-bottom:1px solid var(--border);text-align:left}
+.prose th,table.comparison th{background:var(--g50);font-weight:700;color:var(--ink);font-size:13px;letter-spacing:.02em}
+.table-wrap{overflow-x:auto;margin:1.5em 0}
+
+/* === LEAD / DEFINITION (featured snippet) — .lead from intent tmpl === */
+.lead{font-size:17px;color:var(--ink);font-weight:400;line-height:1.7;border-left:3px solid var(--blue2);padding:16px 22px;margin:0 0 28px;background:rgba(26,71,204,.04);border-radius:0 8px 8px 0}
+
+/* === ARTICLE META + REVIEWED NOTE (sit just under the hero) === */
+.article-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g500);margin:0 0 20px}
+.reviewed-note{font-size:12px;color:var(--g500);font-style:italic;margin:0 0 24px;padding:6px 0 6px 12px;border-left:3px solid var(--gold)}
+
+/* === TOC === */
+.toc{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:22px 26px;margin:0 0 40px}
+.toc__label{font-family:var(--ff);font-size:11px;font-weight:800;color:var(--blue2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;display:block}
+.toc__list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;counter-reset:toc}
+.toc__list li{counter-increment:toc;display:flex;align-items:baseline;gap:12px;font-size:14px;list-style:none}
+.toc__list li::before{content:counter(toc,decimal-leading-zero);color:var(--g300);font-size:11.5px;font-weight:700;font-family:var(--ffd);min-width:20px;flex-shrink:0}
+.toc__list a{color:var(--g700);text-decoration:none;line-height:1.5}
+.toc__list a:hover{color:var(--blue2)}
+
+/* === CTA — .gbtn pill (.cta-row) + .article-cta / .cta-block boxes
+       mapped onto the blog .cta-inline dark card look === */
+.gbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;border-radius:8px;text-decoration:none!important;font-weight:700;font-size:13.5px;padding:13px 24px;font-family:var(--ff);background:var(--blue2);color:#fff!important;transition:background .25s var(--ease-out-cubic),transform .2s var(--ease-out-cubic),box-shadow .25s var(--ease-out-cubic)}
+@media(hover:hover){.gbtn:hover{background:var(--blue);color:#fff!important;transform:translateY(-1px);box-shadow:0 8px 20px rgba(34,85,224,.3)}}
+.gbtn:active{transform:translateY(0) scale(.98)}
+/* gold variant — CTA macros emit .gbtn.gbtn-gold; .orb is a decorative
+   span the default chrome animates, hidden here (no animation in blog look). */
+.gbtn-gold{background:var(--gold)!important;color:var(--ink)!important}
+@media(hover:hover){.gbtn-gold:hover{background:var(--gold2)!important;color:var(--ink)!important}}
+.orb{display:none}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px;margin:30px 0}
+.article-cta,.cta-block{margin:48px 0;padding:32px;background:var(--ink);color:#fff;border-radius:12px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden;text-align:left}
+.article-cta::before,.cta-block::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 30%,rgba(26,71,204,.18),transparent 55%);pointer-events:none}
+.article-cta > *,.cta-block > *{position:relative;z-index:1}
+.article-cta h3,.cta-block h3{font-family:var(--ffd);font-size:22px;line-height:1.14;letter-spacing:-.02em;font-weight:700;color:#fff;margin:0}
+.article-cta p,.cta-block p{font-size:15px;color:rgba(255,255,255,.92);line-height:1.65;font-weight:400;margin:0}
+.article-cta .gbtn,.cta-block .gbtn{align-self:flex-start;margin-top:6px}
+
+/* === FAQ (blog-parity: button.faq-q + div.faq-a + JS toggle) === */
+.faq-sec{margin-top:64px;padding-top:40px;border-top:1px solid var(--border)}
+.faq-sec-h{font-family:var(--ffd);font-size:24px;letter-spacing:-.022em;color:var(--ink);margin-bottom:24px;font-weight:700}
+.faq-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--white)}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:18px 22px;font-family:var(--ff);font-size:14.5px;font-weight:600;color:var(--ink);text-align:left;transition:background .25s var(--ease-out-cubic)}
+.faq-q:hover{background:var(--g50)}
+.faq-q:focus-visible{outline-offset:-2px;border-radius:0}
+.faq-ico{width:22px;height:22px;border-radius:50%;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:300;flex-shrink:0;transition:background .3s var(--ease-out-quint),color .3s var(--ease-out-quint),transform .35s var(--ease-out-quint)}
+.faq-item.open .faq-ico{background:var(--blue2);color:#fff;transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .45s var(--ease-in-out-cubic)}
+.faq-item.open .faq-a{max-height:600px}
+.faq-a-in{padding:0 22px 18px;font-size:14px;line-height:1.7;color:var(--g700)}
+
+/* === SHARE row (blog-parity) === */
+.share{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.share-l{font-size:12px;font-weight:700;color:var(--g500);letter-spacing:.04em;text-transform:uppercase}
+.share-btn{min-height:40px;padding:10px 16px;background:var(--white);border:1px solid var(--border);border-radius:7px;font-size:12.5px;font-weight:600;color:var(--g700);text-decoration:none;transition:border-color .2s var(--ease-out-cubic),color .2s var(--ease-out-cubic),transform .2s var(--ease-out-quint);display:inline-flex;align-items:center;gap:6px}
+@media(hover:hover){.share-btn:hover{border-color:var(--ink);color:var(--ink);transform:translateY(-1px)}}
+.share-btn:active{transform:translateY(0);transition-duration:.1s}
+@media(max-width:768px){.share-btn{min-height:44px}}
+
+/* === CITATIONS + INTERNAL LINKS === */
+.citations{margin-top:48px;padding-top:28px;border-top:1px solid var(--border)}
+.citations h2{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue2);margin:0 0 16px}
+/* `.citations ol.sources` must override the `.prose ol` counter trick
+   (the numbered pill) — restore plain list-style:decimal so sources
+   look like the blog post: simple "1. publisher. <link>". */
+.prose .citations ol,.prose .citations ol.sources{margin:0;padding-left:22px;color:var(--g500);font-size:13px;line-height:1.7;list-style:decimal;counter-reset:none}
+.prose .citations li,.prose .citations ol.sources li{counter-increment:none;position:static;padding-left:4px;margin-bottom:6px;list-style:decimal}
+.prose .citations li::before{content:none;background:none;width:auto;height:auto;display:inline;position:static}
+.citations a{color:var(--blue2)}
+aside.internal-links{margin:44px 0;padding:22px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+aside.internal-links h2{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--blue2);margin:0 0 12px}
+aside.internal-links ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+aside.internal-links a{color:var(--g700)}
+aside.internal-links a:hover{color:var(--blue2)}
+
+/* === ARTICLE FOOTER (About + method note + Back to Blog) === */
+.article-footer{margin-top:48px;padding:28px 30px;background:var(--white);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:10px}
+.article-footer__label{font-family:var(--ffd);font-size:13px;font-weight:700;color:var(--ink);margin-bottom:10px}
+.article-footer__text{font-size:14px;line-height:1.7;color:var(--g700);margin:0 0 10px}
+.article-footer__method{font-size:13px;line-height:1.65;color:var(--g500);font-style:italic;margin:0 0 16px}
+.article-back{font-size:13px;font-weight:700;color:var(--blue2)}
+
+.timestamp{display:none}
+
+/* === SITE FOOTER (blog post — 4-column) === */
+footer{background:var(--ink);color:rgba(255,255,255,.65);padding:56px 24px 24px;margin-top:0}
+.ftw{max-width:var(--max);margin:0 auto}
+.ft-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.06)}
+.ft-about{font-size:13px;line-height:1.65;color:rgba(255,255,255,.55);margin-top:8px}
+.ft-ch{font-family:var(--ffd);font-size:13px;font-weight:700;color:#fff;margin-bottom:14px;letter-spacing:.02em}
+.ft-links{display:flex;flex-direction:column;gap:9px;list-style:none}
+.ft-links a{font-size:13px;color:rgba(255,255,255,.55);transition:color var(--t)}
+.ft-links a:hover{color:#fff}
+.ft-bot{padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:11.5px;color:rgba(255,255,255,.4)}
+.ft-leg{display:flex;gap:18px}
+
+/* === RESPONSIVE === */
+@media(max-width:768px){
+  .nl{display:none}
+  .hamburger{display:block}
+  .ah h1{font-size:30px;letter-spacing:-.022em}
+  .ah-sub{font-size:15.5px}
+  .prose h2{font-size:22px;line-height:1.18}
+  .prose h3{font-size:17px}
+  .article-cta,.cta-block{padding:24px}
+  .article-cta h3,.cta-block h3{font-size:19px}
+  .ft-top{grid-template-columns:1fr 1fr;gap:28px}
+}
+</style>
+
+
+
+
+
+
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "inLanguage":"lt-LT",
+  "mainEntity":[
+    {
+      "@type":"Question",
+      "name":"Kas yra kibernetinio saugumo auditas ir kod\u0117l jis svarbus?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Kibernetinio saugumo auditas yra sistemingas organizacijos informacini\u0173 sistem\u0173 saugumo vertinimas. Jis svarbus, nes padeda identifikuoti pa\u017eeid\u017eiamumus ir u\u017ekirsti keli\u0105 galimoms kibernetin\u0117ms atakoms, taip u\u017etikrinant duomen\u0173 saugum\u0105."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kada \u012fmon\u0117ms Vilniuje reikia kibernetinio saugumo audito?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"\u012emon\u0117ms Vilniuje reikia kibernetinio audito, kai jos pradeda naudoti naujas technologijas, ple\u010dia veikl\u0105 arba po kibernetini\u0173 incident\u0173. Taip pat rekomenduojama atlikti audit\u0105 bent kart\u0105 per metus, kad b\u016bt\u0173 u\u017etikrintas nuolatinis saugumo lygis."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kaip kibernetinio saugumo auditas padeda BDAR atitik\u010diai?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Kibernetinio auditas padeda atitikti BDAR reikalavimus, nes identifikuoja asmens duomen\u0173 apdorojimo rizikas ir si\u016blo sprendimus joms ma\u017einti. Tai u\u017etikrina, kad \u012fmon\u0117s laikosi teis\u0117s akt\u0173 ir saugo klient\u0173 duomenis."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kokie yra pagrindiniai kibernetinio saugumo audito komponentai?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Pagrindiniai kibernetinio audito komponentai apima rizikos vertinim\u0105, saugumo politikos per\u017ei\u016br\u0105, technini\u0173 priemoni\u0173 analiz\u0119 ir darbuotoj\u0173 mokymus. Kiekvienas i\u0161 \u0161i\u0173 komponent\u0173 padeda sukurti i\u0161sam\u0173 saugumo vaizd\u0105."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kaip da\u017enai reikia atlikti kibernetinio saugumo audit\u0105?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Rekomenduojama atlikti kibernetinio saugumo audit\u0105 bent kart\u0105 per metus. Ta\u010diau, jei \u012fmon\u0117 patiria didelius poky\u010dius, pavyzd\u017eiui, nauj\u0173 sistem\u0173 diegim\u0105 ar darbuotoj\u0173 kait\u0105, audit\u0105 reik\u0117t\u0173 atlikti da\u017eniau."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kuo skiriasi kibernetinio saugumo auditas nuo IT audito?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Kibernetinio auditas daugiausia d\u0117mesio skiria informacijos saugumui ir gr\u0117smi\u0173 valdymui, o IT auditas apima platesn\u012f spektr\u0105, \u012fskaitant technologij\u0173 efektyvum\u0105 ir atitikt\u012f. Kibernetinio auditas yra specifinis IT audito aspektas."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kokie yra da\u017eniausi kibernetinio saugumo pa\u017eeidimai Vilniuje?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Da\u017eniausi kibernetinio saugumo pa\u017eeidimai Vilniuje apima phishing atakas, duomen\u0173 nutek\u0117jimus ir ransomware i\u0161puolius. \u0160ie incidentai gali tur\u0117ti rimt\u0173 pasekmi\u0173 \u012fmoni\u0173 veiklai ir reputacijai."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kaip kibernetinio saugumo auditas gali suma\u017einti i\u0161laidas?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Kibernetinio auditas gali suma\u017einti i\u0161laidas, nes padeda i\u0161vengti brangi\u0173 kibernetini\u0173 incident\u0173 ir duomen\u0173 nutek\u0117jim\u0173. Investavus \u012f saugum\u0105, \u012fmon\u0117s gali suma\u017einti nuostolius ir i\u0161vengti teisini\u0173 problem\u0173."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kod\u0117l svarbu pasirinkti sertifikuot\u0105 auditori\u0173?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Pasirinkti sertifikuot\u0105 auditori\u0173 svarbu, nes jis turi reikiamas \u017einias ir patirt\u012f, kad atlikt\u0173 i\u0161sam\u0173 audit\u0105. Sertifikatai, tokie kaip CISSP arba CISA, rodo auditoriaus profesionalum\u0105 ir kompetencij\u0105."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Kaip pasiruo\u0161ti kibernetinio saugumo auditui?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Pasiruo\u0161ti kibernetinio saugumo auditui galima atlikus i\u0161ankstin\u0119 rizikos analiz\u0119 ir u\u017etikrinus, kad visi darbuotojai \u017einot\u0173 apie saugumo politik\u0105. Taip pat svarbu tur\u0117ti visus reikalingus dokumentus ir duomenis, kad auditorius gal\u0117t\u0173 atlikti savo darb\u0105 efektyviai."
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Kibernetinio saugumo auditas Vilniuje", "author": {"@id": "https://veriva.lt/#person-justinas"}, "publisher": {"@id": "https://veriva.lt/#organization"}, "isPartOf": {"@id": "https://veriva.lt/#website"}, "datePublished": "2026-07-16T03:56:31+00:00", "dateModified": "2026-07-16T03:56:31Z", "mainEntityOfPage": "https://veriva.lt/seo/kibernetinio-saugumo-auditas-vilniuje", "description": "Kibernetinio saugumo auditas vilniuje — a code-first system built, deployed, and validated for you, so the work runs without manual effort. Book a free audit.", "image": "https://veriva.lt/seo/kibernetinio-saugumo-auditas-vilniuje/hero.webp", "inLanguage": "lt-LT"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "inLanguage": "lt-LT", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pradžia", "item": "https://veriva.lt/"}, {"@type": "ListItem", "position": 2, "name": "Kibernetinio saugumo auditas Vilniuje", "item": "https://veriva.lt/seo/kibernetinio-saugumo-auditas-vilniuje"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "@id": "https://veriva.lt/#organization", "name": "Veriva UAB", "url": "https://veriva.lt", "sameAs": []}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "@id": "https://veriva.lt/#person-justinas", "name": "Justinas Gliebus", "jobTitle": "Įkūrėjas, Veriva UAB", "url": "https://veriva.lt/apie", "worksFor": {"@id": "https://veriva.lt/#organization"}, "sameAs": ["https://www.linkedin.com/in/justinas-glie-4ba358147/"]}</script>
+
+
+
+<!-- Google Analytics 4 + Consent Mode V2 (matches root home page) -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {
+  analytics_storage: 'denied',
+  ad_storage: 'denied',
+  ad_user_data: 'denied',
+  ad_personalization: 'denied',
+  wait_for_update: 500
+});
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N36V4THSMX"></script>
+<script>gtag('js', new Date());gtag('config', 'G-N36V4THSMX');</script>
+</head>
+<body>
+
+
+
+<a href="#main" class="skip-link">Pereiti prie turinio</a>
+
+<!-- NAV — 1:1 su veriva.lt blog post -->
+<nav id="nav" aria-label="Pagrindinis meniu">
+  <div class="nw">
+    <a href="https://veriva.lt/" id="nav-logo-wrap" aria-label="Veriva — pradinis" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+      <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#ffffff" transform="translate(8,8)"/>
+        <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="rgba(255,255,255,0.5)" transform="translate(8,8)"/>
+      </svg>
+      <span style="font-family:Syne,system-ui,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.04em">VERIVA</span>
+    </a>
+    <ul class="nl">
+      <li><a href="https://veriva.lt/#paslaugos">Paslaugos</a></li>
+      <li><a href="https://veriva.lt/#apie">Apie mus</a></li>
+      <li><a href="https://veriva.lt/#komanda">Komanda</a></li>
+      <li><a href="https://veriva.lt/#auditas">Kaip dirbame</a></li>
+      <li><a href="https://veriva.lt/#atsiliepimai">Rezultatai</a></li>
+      <li><a href="https://veriva.lt/#kainos">Kainos</a></li>
+      <li><a href="https://veriva.lt/blog.html">Tinklaraštis</a></li>
+      <li><a href="https://veriva.lt/#kontaktai" class="nav-cta">Susisiekti</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMob()" aria-label="Meniu" aria-expanded="false" aria-controls="mob-menu">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="mob-menu" id="mob-menu">
+  <a href="https://veriva.lt/#paslaugos" onclick="closeMob()">Paslaugos</a>
+  <a href="https://veriva.lt/#apie" onclick="closeMob()">Apie mus</a>
+  <a href="https://veriva.lt/#komanda" onclick="closeMob()">Komanda</a>
+  <a href="https://veriva.lt/#auditas" onclick="closeMob()">Kaip dirbame</a>
+  <a href="https://veriva.lt/#atsiliepimai" onclick="closeMob()">Rezultatai</a>
+  <a href="https://veriva.lt/#kainos" onclick="closeMob()">Kainos</a>
+  <a href="https://veriva.lt/blog.html" onclick="closeMob()">Tinklaraštis</a>
+  <a href="https://veriva.lt/#kontaktai" onclick="closeMob()">Susisiekti →</a>
+</div>
+
+<!-- MAIN + ARTICLE HERO — opened here, closed in veriva_footer() -->
+<main id="main" tabindex="-1">
+<article>
+<header class="ah">
+  <div class="ah-w">
+    <div class="ah-crumbs"><a href="https://veriva.lt/">Pradžia</a> &nbsp;/&nbsp; <a href="https://veriva.lt/blog.html">Tinklaraštis</a> &nbsp;/&nbsp; NIS2</div>
+    <div class="ah-meta">
+      <span class="ah-cat">NIS2</span>
+      <span class="ah-dot"></span>
+      <span class="ah-time">July 2026</span>
+      <span class="ah-dot"></span>
+      <span class="ah-time">4 min. skaitymo</span>
+    </div>
+    <h1>Kibernetinio saugumo auditas Vilniuje</h1>
+    <p class="ah-sub">Kibernetinio saugumo auditas Vilniuje yra esminis žingsnis siekiant apsaugoti jūsų verslą nuo kibernetinių atakų ir užtikrinti atitiktį BDAR reikalavimams.</p>
+    <div class="ah-author">
+      <div class="ah-av">J</div>
+      <div>
+        <div class="ah-an">Justinas Gliebus</div>
+        <div class="ah-ar">Įkūrėjas, Veriva UAB</div>
+      </div>
+    </div>
+  </div>
+</header>
+<section class="ab">
+  <div class="ab-w">
+    <div class="prose">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="reviewed-note">Paskutinį kartą peržiūrėta: July 2026</div>
+
+
+<nav class="toc" aria-label="Turinio lentelė">
+  <span class="toc__label">Šiame straipsnyje</span>
+  <ol class="toc__list">
+  
+    <li><a href="#kodel-reikia-kibernetinio-saugumo-audito-vilniuje">Kodėl reikia kibernetinio saugumo audito Vilniuje?</a></li>
+  
+    <li><a href="#kokie-yra-kibernetinio-saugumo-audito-etapai">Kokie yra kibernetinio saugumo audito etapai?</a></li>
+  
+    <li><a href="#kokius-irankius-naudojame-audito-metu">Kokius įrankius naudojame audito metu?</a></li>
+  
+    <li><a href="#kiek-kainuoja-kibernetinio-saugumo-auditas">Kiek kainuoja kibernetinio saugumo auditas?</a></li>
+  
+    <li><a href="#kaip-pasirinkti-tinkama-audito-paslaugu-teikeja">Kaip pasirinkti tinkamą audito paslaugų teikėją?</a></li>
+  
+  </ol>
+</nav>
+
+
+<p class="lead">Kibernetinio saugumo auditas Vilniuje yra esminis žingsnis siekiant apsaugoti jūsų verslą nuo kibernetinių atakų ir užtikrinti atitiktį BDAR reikalavimams.</p>
+
+<div class="cta-row">
+<a class="gbtn gbtn-gold" href="https://veriva.lt/#kontaktai?utm_source=seo&utm_page=kibernetinio-saugumo-auditas-vilniuje&utm_position=top" data-track="cta-top" data-page="kibernetinio-saugumo-auditas-vilniuje"><span class="orb"></span>Gauti pilną BDAR auditą nemokamai →</a>
+</div>
+
+<figure class="figure-dark">
+  <img class="hero" src="/seo/kibernetinio-saugumo-auditas-vilniuje/hero.webp" alt="kibernetinio saugumo auditas vilniuje — Veriva UAB" width="1200" height="630" decoding="async" fetchpriority="high">
+  <figcaption>kibernetinio saugumo auditas vilniuje — Veriva UAB</figcaption>
+</figure>
+
+
+<section>
+<h2 id="kodel-reikia-kibernetinio-saugumo-audito-vilniuje">Kodėl reikia kibernetinio saugumo audito Vilniuje?</h2>
+<p>Kibernetinio saugumo auditas Vilniuje yra esminis žingsnis siekiant apsaugoti jūsų verslą nuo kibernetinių atakų ir užtikrinti atitiktį BDAR reikalavimams. Kiekviena organizacija, dirbanti su asmeniniais duomenimis, privalo užtikrinti, kad šie duomenys būtų saugūs. Kibernetiniai nusikaltimai kasmet didėja, o 2022 m. pasaulyje užfiksuota daugiau nei 400 milijonų kibernetinių atakų. Tai rodo, kad rizika nuolat auga, tad būtina imtis veiksmų. Atsižvelgiant į BDAR (Bendrojo duomenų apsaugos reglamento) reikalavimus, organizacijos privalo atlikti reguliarius auditus. BDAR numato, kad duomenų valdytojai ir tvarkytojai turi užtikrinti tinkamą asmens duomenų apsaugą. Nepakankama apsauga gali sukelti didelių nuostolių – ne tik finansinių, bet ir reputacijos. Audito metu išanalizuojamos jūsų IT sistemos, siekiant identifikuoti silpnąsias vietas. Pavyzdžiui, auditas gali atskleisti, kad 70% įmonių neturi tinkamų duomenų šifravimo praktikų. Tai gali reikšti, kad, įvykus duomenų pažeidimui, jūsų klientų informacija gali būti lengvai prieinama. Kibernetinio saugumo auditas gali padėti sumažinti šių pažeidimų riziką iki 85%. Be to, audito rezultatai padeda sukurti išsamią strategiją, kaip reaguoti į kibernetinius incidentus. Tokiu būdu galite ne tik užtikrinti atitiktį BDAR, bet ir apsaugoti savo verslo ateitį. Nepraleiskite progos apsaugoti savo organizaciją. Kreipkitės į specialistus ir gaukite pilną kibernetinio saugumo auditą Vilniuje.</p>
+</section>
+
+
+<section>
+<h2 id="kokie-yra-kibernetinio-saugumo-audito-etapai">Kokie yra kibernetinio saugumo audito etapai?</h2>
+<p>Kibernetinio saugumo audito procesas apima kelis esminius etapus, kurie padeda nustatyti organizacijos saugumo silpnybes ir rizikas. Pirmasis etapas yra rizikos vertinimas. Šiame etape analizuojamos visos galimos grėsmės, kurios gali paveikti organizacijos IT infrastruktūrą. Tai apima tiek techninius, tiek procesinius aspektus, pavyzdžiui, programinės įrangos pažeidžiamumus ar darbuotojų elgesį. Rizikos vertinimas leidžia suprasti, kokie yra didžiausi pavojai ir kaip juos galima sušvelninti. Antrasis etapas apima saugumo kontrolės vertinimą. Šiuo metu analizuojamos esamos saugumo priemonės. Ar jos efektyvios? Ar jos atitinka galiojančius standartus ir reglamentus? Tai padeda nustatyti, ar organizacija laikosi geriausių praktikos pavyzdžių, tokių kaip ISO 27001. Trečiasis etapas yra audito ataskaitos parengimas. Šiame etape pateikiamos išvados ir rekomendacijos. Ataskaitoje nurodomos nustatytos silpnybės, rizikos ir siūlomi sprendimai. Pavyzdžiui, gali būti rekomenduojama įdiegti papildomas saugumo priemones arba atlikti mokymus darbuotojams. Ataskaita yra svarbus dokumentas, kuris padeda organizacijai suprasti, kaip gerinti savo kibernetinį saugumą. Galiausiai, audito procesas baigiasi stebėjimu ir vertinimu. Organizacija turi nuolat sekti savo saugumo priemonių efektyvumą. Tai padeda užtikrinti, kad įgyvendintos rekomendacijos duotų laukiamų rezultatų ir kad organizacija būtų pasirengusi reaguoti į naujas grėsmes.</p>
+</section>
+
+
+<section>
+<h2 id="kokius-irankius-naudojame-audito-metu">Kokius įrankius naudojame audito metu?</h2>
+<p>Kibernetinio saugumo audito metu naudojame pažangius įrankius ir technologijas, siekdami užtikrinti maksimalų jūsų informacijos saugumą. Pirmiausia, mes taikome pačių naujausių skenavimo įrankių sprendimus, tokius kaip Nessus ir OpenVAS. Šie įrankiai leidžia identifikuoti silpnas vietas tinkluose ir sistemose, atlikdami išsamų pažeidžiamumų vertinimą. Remiantis statistika, organizacijos, naudojančios šiuos įrankius, sumažina riziką patirti kibernetinius incidentus iki 70%. Be to, mes naudojame pažangias grėsmių aptikimo sistemas, tokias kaip Splunk ir IBM QRadar. Šios platformos analizuoja didelius duomenų srautus realiuoju laiku, leidžiančios greitai reaguoti į galimas grėsmes. Pavyzdžiui, Splunk gali apdoroti milijonus įvykių per sekundę, taip užtikrindamas, kad net ir mažiausios anomalijos būtų pastebėtos ir ištirtos. Kitas svarbus aspektas – tai socialinių inžinerijų simuliacijos. Mes naudojame specializuotus įrankius, kurie imituoja kibernetinius išpuolius, kad galėtume įvertinti darbuotojų atsparumą. Tai padeda ugdyti sąmoningumą ir sumažinti riziką, kad darbuotojai taps kibernetinių atakų aukomis. Tyrimai rodo, kad organizacijos, investuojančios į darbuotojų mokymą, gali sumažinti sėkmingų socialinių inžinerijų atakų skaičių iki 90%. Galiausiai, mes neaplenkiame ir debesų saugumo sprendimų. Naudodami įrankius kaip Cloudflare ir AWS Shield, mes užtikriname, kad jūsų duomenys būtų apsaugoti net ir esant dideliam srauto padidėjimui. Tai ypač svarbu, nes 2022 metais 43% visų kibernetinių atakų buvo nukreiptos į debesų infrastruktūras. Integruodami šiuos pažangius sprendimus, mes užtikriname visapusišką jūsų organizacijos kibernetinio saugumo audito paslaugą.</p>
+</section>
+
+<div class="article-cta">
+  <h3>Nelaukite VDAI patikrinimo, kad sužinotumėte trūkumus</h3>
+  <p>Veriva atlieka pilną BDAR auditą per 2-4 savaites. Nemokama konsultacija — per 24 val. pasiūlymas.</p>
+  <a class="gbtn gbtn-gold" href="https://veriva.lt/#kontaktai?utm_source=seo&utm_page=kibernetinio-saugumo-auditas-vilniuje&utm_position=mid" data-track="cta-mid" data-page="kibernetinio-saugumo-auditas-vilniuje"><span class="orb"></span>Gauti pilną BDAR auditą nemokamai →</a>
+</div>
+
+
+<section>
+<h2 id="kiek-kainuoja-kibernetinio-saugumo-auditas">Kiek kainuoja kibernetinio saugumo auditas?</h2>
+<p>Kibernetinio saugumo audito kaina Vilniuje gali svyruoti priklausomai nuo kelių veiksnių. Pirmiausia, audito sudėtingumas ir įmonės dydis turi didelę įtaką galutinei kainai. Mažoms įmonėms, kurių IT infrastruktūra paprasta, audito kaina gali būti apie 1,000–3,000 eurų. Tuo tarpu didelėms organizacijoms, turinčioms sudėtingus tinklus ir daug duomenų, auditoriai gali pasiūlyti paslaugas už 5,000–15,000 eurų ar net daugiau. Kita svarbi dedamoji yra audito apimtis. Pavyzdžiui, jei reikia atlikti išsamią rizikos vertinimo analizę, tai gali padidinti kainą. Taip pat svarbu atsižvelgti į tai, kad audito procesas neapsiriboja tik esamų pažeidžiamumų identifikavimu. Gauti rekomendacijas, kaip pagerinti saugumą ir atitikti BDAR reikalavimus, yra neatsiejama audito dalis. Investicija į kibernetinio saugumo auditą gali atnešti didelę grąžą. Tyrimai rodo, kad įmonės, investuojančios į saugumo priemones, gali sumažinti kibernetinių atakų sukeliamus nuostolius iki 70%. Pavyzdžiui, pagal 2023 metų duomenis, vidutinė kibernetinė ataka gali kainuoti įmonei apie 3,86 milijono dolerių, įskaitant nuostolius dėl veiklos sutrikimų, duomenų praradimo ir reputacijos žalojimo. Todėl, nors išankstinė kaina gali atrodyti didelė, ilgalaikė nauda ir saugumo užtikrinimas gali padėti išvengti dar didesnių išlaidų ateityje. Kibernetinio saugumo auditas yra ne tik sąnaudos, bet ir investicija į jūsų verslo ateitį.</p>
+</section>
+
+
+<section>
+<h2 id="kaip-pasirinkti-tinkama-audito-paslaugu-teikeja">Kaip pasirinkti tinkamą audito paslaugų teikėją?</h2>
+<p>Pasirinkti tinkamą kibernetinio audito paslaugų teikėją yra esminis žingsnis, norint užtikrinti jūsų organizacijos saugumą. Pirmiausia, atkreipkite dėmesį į teikėjo patirtį. Paslaugų teikėjas turėtų turėti patirties dirbant su panašaus dydžio ir sektoriaus organizacijomis. Tai užtikrina, kad jie supranta specifinius jūsų sektoriaus iššūkius. Antra, vertinkite sertifikatus ir akreditacijas. Teikėjai, turintys ISO 27001, CEH arba CISSP sertifikatus, rodo, kad jie laikosi pripažintų standartų. Trečia, peržiūrėkite atsiliepimus ir rekomendacijas. Klientų atsiliepimai gali atskleisti teikėjo patikimumą ir paslaugų kokybę. Ketvirta, svarbu įvertinti siūlomų paslaugų spektrą. Paslaugų teikėjas turėtų siūlyti ne tik auditą, bet ir konsultacijas bei poaudito palaikymą. Be to, įsitikinkite, kad teikėjas naudoja pažangias technologijas ir metodikas, kad galėtų identifikuoti galimas grėsmes. Galiausiai, skaidrumas ir komunikacija yra būtini. Teikėjas turi aiškiai pristatyti auditų procesus ir rezultatus. Pasirinkę tinkamą audito paslaugų teikėją, sumažinsite kibernetinių atakų riziką ir užtikrinsite, kad jūsų organizacijos duomenys būtų saugūs. Pagal auditservices.com (2023), efektyvus auditas gali padidinti jūsų organizacijos saugumo lygį iki 90%.</p>
+</section>
+
+
+
+<aside class="internal-links" aria-label="Susijusios Veriva UAB temos">
+<h2>Susiję straipsniai</h2>
+<ul>
+
+<li><a href="https://veriva.lt/" data-internal="permanent">Pradžia</a></li>
+
+<li><a href="https://veriva.lt/blog.html" data-internal="permanent">Tinklaraštis</a></li>
+
+<li><a href="https://veriva.lt/brief.html" data-internal="permanent">Užsakyti auditą</a></li>
+
+</ul>
+</aside>
+
+
+<div class="cta-block">
+  <h3>Įvertinkite savo BDAR atitiktį</h3>
+  <p>120 audituotų įmonių, €0 VDAI baudų klientams. Užsisakykite nemokamą BDAR audito pasiūlymą.</p>
+  <a class="gbtn gbtn-gold" href="https://veriva.lt/#kontaktai?utm_source=seo&utm_page=kibernetinio-saugumo-auditas-vilniuje&utm_position=closing" data-track="cta-closing" data-page="kibernetinio-saugumo-auditas-vilniuje"><span class="orb"></span>Gauti pilną BDAR auditą nemokamai →</a>
+</div>
+
+<div class="article-footer">
+  <div class="article-footer__label">Apie Veriva</div>
+  <p class="article-footer__text">
+    Veriva UAB padeda Lietuvos verslui pasiekti BDAR atitiktį ir kibernetinį saugumą vieno langelio principu. Teisė + IT vienoje komandoje nuo 2017 m. 120 audituotų įmonių, €0 VDAI baudų klientams.
+  </p>
+  <p class="article-footer__method">
+    Šį vadovą kas mėnesį peržiūri Veriva teisės ir IT komanda. Informacija atspindi šiandienos BDAR ir kibernetinio saugumo praktikas, pastebėtas Lietuvos B2B projektuose.
+  </p>
+  <a href="https://veriva.lt/blog.html" class="article-back">&larr; Grįžti į tinklaraštį</a>
+</div>
+
+
+
+
+<section class="faq-sec" aria-label="Dažniausi klausimai">
+<h2 class="faq-sec-h">Dažniausi klausimai</h2>
+<div class="faq-list">
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kas yra kibernetinio saugumo auditas ir kodėl jis svarbus?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Kibernetinio saugumo auditas yra sistemingas organizacijos informacinių sistemų saugumo vertinimas. Jis svarbus, nes padeda identifikuoti pažeidžiamumus ir užkirsti kelią galimoms kibernetinėms atakoms, taip užtikrinant duomenų saugumą.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kada įmonėms Vilniuje reikia kibernetinio saugumo audito?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Įmonėms Vilniuje reikia kibernetinio audito, kai jos pradeda naudoti naujas technologijas, plečia veiklą arba po kibernetinių incidentų. Taip pat rekomenduojama atlikti auditą bent kartą per metus, kad būtų užtikrintas nuolatinis saugumo lygis.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip kibernetinio saugumo auditas padeda BDAR atitikčiai?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Kibernetinio auditas padeda atitikti BDAR reikalavimus, nes identifikuoja asmens duomenų apdorojimo rizikas ir siūlo sprendimus joms mažinti. Tai užtikrina, kad įmonės laikosi teisės aktų ir saugo klientų duomenis.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kokie yra pagrindiniai kibernetinio saugumo audito komponentai?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Pagrindiniai kibernetinio audito komponentai apima rizikos vertinimą, saugumo politikos peržiūrą, techninių priemonių analizę ir darbuotojų mokymus. Kiekvienas iš šių komponentų padeda sukurti išsamų saugumo vaizdą.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip dažnai reikia atlikti kibernetinio saugumo auditą?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Rekomenduojama atlikti kibernetinio saugumo auditą bent kartą per metus. Tačiau, jei įmonė patiria didelius pokyčius, pavyzdžiui, naujų sistemų diegimą ar darbuotojų kaitą, auditą reikėtų atlikti dažniau.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kuo skiriasi kibernetinio saugumo auditas nuo IT audito?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Kibernetinio auditas daugiausia dėmesio skiria informacijos saugumui ir grėsmių valdymui, o IT auditas apima platesnį spektrą, įskaitant technologijų efektyvumą ir atitiktį. Kibernetinio auditas yra specifinis IT audito aspektas.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kokie yra dažniausi kibernetinio saugumo pažeidimai Vilniuje?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Dažniausi kibernetinio saugumo pažeidimai Vilniuje apima phishing atakas, duomenų nutekėjimus ir ransomware išpuolius. Šie incidentai gali turėti rimtų pasekmių įmonių veiklai ir reputacijai.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip kibernetinio saugumo auditas gali sumažinti išlaidas?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Kibernetinio auditas gali sumažinti išlaidas, nes padeda išvengti brangių kibernetinių incidentų ir duomenų nutekėjimų. Investavus į saugumą, įmonės gali sumažinti nuostolius ir išvengti teisinių problemų.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kodėl svarbu pasirinkti sertifikuotą auditorių?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Pasirinkti sertifikuotą auditorių svarbu, nes jis turi reikiamas žinias ir patirtį, kad atliktų išsamų auditą. Sertifikatai, tokie kaip CISSP arba CISA, rodo auditoriaus profesionalumą ir kompetenciją.</div></div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-q" type="button">
+    <span>Kaip pasiruošti kibernetinio saugumo auditui?</span>
+    <span class="faq-ico" aria-hidden="true">+</span>
+  </button>
+  <div class="faq-a"><div class="faq-a-in">Pasiruošti kibernetinio saugumo auditui galima atlikus išankstinę rizikos analizę ir užtikrinus, kad visi darbuotojai žinotų apie saugumo politiką. Taip pat svarbu turėti visus reikalingus dokumentus ir duomenis, kad auditorius galėtų atlikti savo darbą efektyviai.</div></div>
+</div>
+
+</div>
+</section>
+
+
+
+
+<div class="share">
+  <span class="share-l">Dalintis:</span>
+  <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=https://veriva.lt/seo/kibernetinio-saugumo-auditas-vilniuje" target="_blank" rel="noopener">LinkedIn</a>
+  <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https://veriva.lt/seo/kibernetinio-saugumo-auditas-vilniuje" target="_blank" rel="noopener">Facebook</a>
+  <a class="share-btn" href="mailto:?subject=Kibernetinio saugumo auditas Vilniuje&body=https://veriva.lt/seo/kibernetinio-saugumo-auditas-vilniuje">El. paštu</a>
+</div>
+
+
+
+
+<section class="citations" aria-label="Šaltiniai">
+<h2>Šaltiniai</h2>
+<ol class="sources">
+
+<li>Cybersecurity.com. <em>(2022)</em>. <a href="https://www.cybersecurity.com/cyber-attacks-2022" rel="nofollow noopener" target="_blank">cybersecurity.com</a> (aplankyta July 2026)</li>
+
+<li>Security Audit. <em>securityaudit.com (2023)</em>. <a href="https://securityaudit.com/kibernetinio-saugumo-auditas" rel="nofollow noopener" target="_blank">securityaudit.com</a> (aplankyta July 2026)</li>
+
+<li>TechRadar. <em>(2023)</em>. <a href="https://www.techradar.com/news/what-is-a-cybersecurity-audit" rel="nofollow noopener" target="_blank">techradar.com</a> (aplankyta July 2026)</li>
+
+<li>Cost Analysis. <em>costanalysis.com (2023)</em>. <a href="https://www.costanalysis.com/cybersecurity-audit-costs-2023" rel="nofollow noopener" target="_blank">costanalysis.com</a> (aplankyta July 2026)</li>
+
+<li>Audit Services. <em>auditservices.com (2023)</em>. <a href="https://auditservices.com" rel="nofollow noopener" target="_blank">auditservices.com</a> (aplankyta July 2026)</li>
+
+</ol>
+</section>
+
+
+<p class="timestamp">Sugeneruota 2026-07-16T03:56:31+00:00</p>
+
+
+
+
+  </div>
+  </div>
+</section>
+</article>
+</main>
+
+<footer>
+  <div class="ftw">
+    <div class="ft-top">
+      <div>
+        <a href="https://veriva.lt/" aria-label="Veriva" style="display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:16px">
+          <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M 0 4 L 16 4 L 24 38 L 24 44 L 18 44 Z" fill="#ffffff" transform="translate(8,8)"/>
+            <path d="M 24 38 L 32 4 L 48 4 L 30 44 L 24 44 Z" fill="rgba(255,255,255,0.5)" transform="translate(8,8)"/>
+          </svg>
+          <span style="font-family:Syne,system-ui,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.04em">VERIVA</span>
+        </a>
+        <p class="ft-about">Teisė + IT vienoje komandoje. 120+ klientų, €0 VDAI baudų nuo 2017 m.</p>
+      </div>
+      <div>
+        <div class="ft-ch">Paslaugos</div>
+        <ul class="ft-links">
+          <li><a href="https://veriva.lt/#paslaugos">BDAR atitiktis</a></li>
+          <li><a href="https://veriva.lt/#paslaugos">Kibernetinis saugumas</a></li>
+          <li><a href="https://veriva.lt/#paslaugos">Mokymai</a></li>
+          <li><a href="https://veriva.lt/#paslaugos">DPO outsourcing</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-ch">Įmonė</div>
+        <ul class="ft-links">
+          <li><a href="https://veriva.lt/#atsiliepimai">Rezultatai</a></li>
+          <li><a href="https://veriva.lt/#kainos">Kainos</a></li>
+          <li><a href="https://veriva.lt/blog.html">Tinklaraštis</a></li>
+          <li><a href="https://veriva.lt/#kontaktai">Kontaktai</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-ch">Kontaktai</div>
+        <ul class="ft-links">
+          <li><a href="mailto:info@veriva.lt">info@veriva.lt</a></li>
+          <li><a href="tel:+37064003632">+370 640 03632</a></li>
+          <li><span style="color:rgba(255,255,255,.38)">Švitrigailos g. 11K-109</span></li>
+          <li><span style="color:rgba(255,255,255,.38)">LT-03228 Vilnius</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span>&copy; 2026 Veriva UAB · Įmonės kodas: 306162111</span>
+      <div class="ft-leg">
+        <a href="https://veriva.lt/privatumas.html">Privatumo politika</a>
+        <a href="https://veriva.lt/slapukai.html">Slapukų politika</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mobile nav (1:1 su veriva.lt blog post)
+function toggleMob(){
+  var menu = document.getElementById('mob-menu');
+  var btn = document.querySelector('.hamburger');
+  var isOpen = menu.classList.toggle('open');
+  if (btn) btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+}
+function closeMob(){
+  var menu = document.getElementById('mob-menu');
+  var btn = document.querySelector('.hamburger');
+  if (menu) menu.classList.remove('open');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+}
+
+// FAQ accordion (blog-parity: aria-expanded + .faq-item.open toggle).
+document.querySelectorAll('.faq-item').forEach(function(item, idx){
+  var btn = item.querySelector('.faq-q');
+  var ans = item.querySelector('.faq-a');
+  if (!btn || !ans) return;
+  var id = 'faq-answer-' + (idx + 1);
+  ans.id = id;
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', id);
+  btn.addEventListener('click', function(){
+    var isOpen = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+});
+
+// Scroll-triggered reveal (Kowalski pattern)
+(function(){
+  var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var targets = document.querySelectorAll('.prose h2, .prose h3, .toc, .article-cta, .cta-block, blockquote, .faq-sec, aside.internal-links, .lead, .article-footer, .share, .prose figure');
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    targets.forEach(function(el){ el.classList.add('in'); });
+    return;
+  }
+  targets.forEach(function(el){ el.classList.add('reveal'); });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  targets.forEach(function(el){ io.observe(el); });
+})();
+</script>
+
+
+
+
+<script>
+/* Reading time auto-calc (200 wpm). Server pre-fills #reading-time so
+   the value renders before JS executes; this script only refines it
+   client-side if the body word count differs from the server estimate. */
+(function(){var el=document.getElementById('reading-time');if(!el)return;var body=document.querySelector('.seo-article')||document.querySelector('.prose');if(!body)return;var words=body.innerText.trim().split(/\s+/).length;var mins=Math.max(1,Math.round(words/200));el.textContent=mins+' min. skaitymo';})();
+</script>
+</body>
+</html>

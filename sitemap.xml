@@ -684,6 +684,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/duomenu-nutekejimo-prevencija</loc>
+    <lastmod>2026-07-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/duomenu-nutekejimo-zalos-atlyginimas</loc>
     <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
@@ -842,7 +848,7 @@
     <loc>https://veriva.lt/seo/kibernetinio-saugumo-istatymas</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/kibernetinio-saugumo-istatymas-aktuali-redakcija</loc>
@@ -871,6 +877,12 @@
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/kibernetinis-incidentas-ka-daryti</loc>
+    <lastmod>2026-07-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/kod-l-bdar-laikymasis-svarbus-verslui</loc>
@@ -970,7 +982,7 @@
     <loc>https://veriva.lt/seo/nis2-esminiai-subjektai</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-kam-taikoma</loc>
@@ -981,6 +993,12 @@
   <url>
     <loc>https://veriva.lt/seo/nis2-reikalavimai</loc>
     <lastmod>2026-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/nis2-svarbus-subjektai</loc>
+    <lastmod>2026-07-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -1129,7 +1147,7 @@
     <loc>https://veriva.lt/seo/tis2-baudos-lietuva</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/tis2-incidentu-valdymas</loc>

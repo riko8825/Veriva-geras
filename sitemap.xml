@@ -359,6 +359,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/bdar-bankams</loc>
+    <lastmod>2026-07-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/bdar-baudos-lietuvoje</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -398,8 +404,20 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/bdar-draudimo-bendrovems</loc>
+    <lastmod>2026-07-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/bdar-e-parduotuvei</loc>
     <lastmod>2026-07-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/bdar-hr-imonems</loc>
+    <lastmod>2026-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -567,7 +585,7 @@
     <loc>https://veriva.lt/seo/cra-kibernetinis-atsparumas</loc>
     <lastmod>2026-07-26</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/crm-automation-thailand</loc>
@@ -755,7 +773,7 @@
     <loc>https://veriva.lt/seo/es-skaitmeninis-paketas-atitiktis</loc>
     <lastmod>2026-07-26</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/free-website-audit-thailand</loc>
@@ -1077,7 +1095,7 @@
     <loc>https://veriva.lt/seo/produktu-kibernetinio-atsparumo-aktas</loc>
     <lastmod>2026-07-26</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/public-it-technologiju-proverzis-ir-saugumas</loc>

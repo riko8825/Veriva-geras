@@ -362,7 +362,7 @@
     <loc>https://veriva.lt/seo/bdar-bankams</loc>
     <lastmod>2026-07-26</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-baudos-lietuvoje</loc>
@@ -407,7 +407,7 @@
     <loc>https://veriva.lt/seo/bdar-draudimo-bendrovems</loc>
     <lastmod>2026-07-26</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-e-parduotuvei</loc>
@@ -419,7 +419,7 @@
     <loc>https://veriva.lt/seo/bdar-hr-imonems</loc>
     <lastmod>2026-07-26</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-igyvendinimas</loc>
@@ -1013,6 +1013,12 @@
     <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/nis2-energetikos-sektorius</loc>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-esminiai-subjektai</loc>

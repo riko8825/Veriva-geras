@@ -428,6 +428,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/bdar-ir-darbuotoju-duomenys</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/bdar-ir-tiesejos-rinkodara</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/bdar-klinikoms</loc>
     <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
@@ -512,7 +524,7 @@
     <loc>https://veriva.lt/seo/bdar-pazeidimo-pranesimas</loc>
     <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-verslui</loc>
@@ -843,7 +855,7 @@
     <loc>https://veriva.lt/seo/kas-yra-bdar-lietuva</loc>
     <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/kas-yra-dpo</loc>

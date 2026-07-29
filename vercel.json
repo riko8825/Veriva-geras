@@ -101,6 +101,12 @@
     { "source": "/seo/bdar-15-straipsnio-igyvendinimas", "destination": "/seo/bdar/straipsniai/15", "permanent": true },
     { "source": "/seo/bdar-16-straipsnio-igyvendinimas", "destination": "/seo/bdar/straipsniai/16", "permanent": true },
     { "source": "/seo/duomenu-nutekejimo-prevencija-imoneje", "destination": "/seo/duomenu-nutekejimo-prevencija", "permanent": true },
+    { "source": "/privatumo-politika-2", "destination": "/privatumas", "permanent": true },
+    { "source": "/privatumo-politika-2/:slash*", "destination": "/privatumas", "permanent": true },
+    { "source": "/bdar-atitikties-uztikrinimas-ir-konsultacijos", "destination": "/seo/bdar-auditas-lietuvoje", "permanent": true },
+    { "source": "/bdar-atitikties-uztikrinimas-ir-konsultacijos/:slash*", "destination": "/seo/bdar-auditas-lietuvoje", "permanent": true },
+    { "source": "/kitos-paslaugos", "destination": "/#paslaugos", "permanent": true },
+    { "source": "/kitos-paslaugos/:slash*", "destination": "/#paslaugos", "permanent": true },
     { "source": "/apie-imone", "destination": "/#apie", "permanent": true },
     { "source": "/apie-imone/:slash*", "destination": "/#apie", "permanent": true },
     { "source": "/apie", "destination": "/#apie", "permanent": true }

@@ -454,6 +454,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/bdar-tikrinimo-sarasas</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/bdar-verslui</loc>
     <lastmod>2026-07-16</lastmod>
     <changefreq>monthly</changefreq>
@@ -578,7 +584,7 @@
     <loc>https://veriva.lt/seo/dpo-paslauga-vilnius</loc>
     <lastmod>2026-07-29</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/dpo-paslaugos</loc>
@@ -626,7 +632,7 @@
     <loc>https://veriva.lt/seo/duomenu-apsaugos-pareigunas-kaunas</loc>
     <lastmod>2026-07-29</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/duomenu-apsaugos-poveikio-vertinimas</loc>
@@ -745,7 +751,7 @@
     <loc>https://veriva.lt/seo/kibernetinio-saugumo-auditas-vilniuje</loc>
     <lastmod>2026-07-29</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/kibernetinio-saugumo-istatymas</loc>
@@ -863,6 +869,12 @@
     <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/nis2-vertinimo-irankis</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/nksc-registracija-tis2</loc>

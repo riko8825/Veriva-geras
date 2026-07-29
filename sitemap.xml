@@ -617,11 +617,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/seo/duomenu-apsaugos-pareiguno-paslaugos-bvpz</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://veriva.lt/seo/duomenu-apsaugos-poveikio-vertinimas</loc>
     <lastmod>2026-07-18</lastmod>
     <changefreq>monthly</changefreq>
@@ -648,11 +643,6 @@
   <url>
     <loc>https://veriva.lt/seo/duomenu-pazeidimo-valdymas</loc>
     <lastmod>2026-06-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://veriva.lt/seo/duomenu-privatumo-politika</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -694,11 +684,6 @@
   <url>
     <loc>https://veriva.lt/seo/informacijos-saugumo-igaliotinis</loc>
     <lastmod>2026-07-23</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://veriva.lt/seo/ivairoves-ir-itraukties-politika</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

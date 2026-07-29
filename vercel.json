@@ -100,6 +100,7 @@
     { "source": "/seo/bdar-13-straipsnio-igyvendinimas", "destination": "/seo/bdar/straipsniai/13", "permanent": true },
     { "source": "/seo/bdar-15-straipsnio-igyvendinimas", "destination": "/seo/bdar/straipsniai/15", "permanent": true },
     { "source": "/seo/bdar-16-straipsnio-igyvendinimas", "destination": "/seo/bdar/straipsniai/16", "permanent": true },
+    { "source": "/seo/duomenu-nutekejimo-prevencija-imoneje", "destination": "/seo/duomenu-nutekejimo-prevencija", "permanent": true },
     { "source": "/apie-imone", "destination": "/#apie", "permanent": true },
     { "source": "/apie-imone/:slash*", "destination": "/#apie", "permanent": true },
     { "source": "/apie", "destination": "/#apie", "permanent": true }

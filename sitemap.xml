@@ -281,6 +281,12 @@
     <loc>https://veriva.lt/seo/bdar-atitikties-auditas-nemokamas</loc>
     <lastmod>2026-08-03</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/bdar-atitikties-gap-analize</loc>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
@@ -485,6 +491,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/bdar-konsultacijos-nuotoliniu-budu</loc>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/bdar-mazoms-imonems</loc>
     <lastmod>2026-07-16</lastmod>
     <changefreq>monthly</changefreq>
@@ -523,7 +535,7 @@
     <loc>https://veriva.lt/seo/bdar-specialistas</loc>
     <lastmod>2026-08-03</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-sutikimo-forma-sablonas</loc>

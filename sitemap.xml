@@ -119,7 +119,7 @@
     <loc>https://veriva.lt/seo/bdar-10-straipsnis</loc>
     <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-11-straipsnio-igyvendinimas</loc>
@@ -156,6 +156,12 @@
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/bdar-22-straipsnis</loc>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-23-straipsnio-igyvendinimas</loc>
@@ -275,7 +281,7 @@
     <loc>https://veriva.lt/seo/bdar-6-straipsnis-1-dalis</loc>
     <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-7-straipsnis</loc>

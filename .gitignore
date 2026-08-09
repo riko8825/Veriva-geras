@@ -52,3 +52,7 @@ _shots/
 
 # Local data / questionnaires — not part of the live site
 *.xlsx
+
+# Engine-side rerender backup artifacts (never part of the live site)
+*.inflated.bak
+*.preswap.bak

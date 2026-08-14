@@ -74,6 +74,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/asmeniniu-irenginiu-naudojimo-politika</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/asmens-duomen-tvarkymo-sutartis-lt</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -865,7 +871,7 @@
     <loc>https://veriva.lt/seo/duomenu-saugojimo-politika</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/duomenu-tvarkymo-registras-ropa</loc>
@@ -1186,7 +1192,7 @@
     <loc>https://veriva.lt/seo/ropa-registras</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/sam-reaguoja-auditori-pastabas-d-l-pacient-pav-jimo</loc>
@@ -1213,7 +1219,7 @@
     <loc>https://veriva.lt/seo/slapuku-ir-privatumo-politika</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/slapuku-sutikimo-atitiktis</loc>
@@ -1267,6 +1273,12 @@
     <lastmod>2026-07-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/vaizdo-stebejimo-politika</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/valdoma-dpo-paslauga-dpo</loc>

@@ -621,13 +621,13 @@
     <loc>https://veriva.lt/seo/bdar-straipsniu-paaiskinimas</loc>
     <lastmod>2026-08-13</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-straipsniu-pazeidimai</loc>
     <lastmod>2026-08-13</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-sutikimo-forma-sablonas</loc>
@@ -860,6 +860,12 @@
     <loc>https://veriva.lt/seo/duomenu-privatumo-politika</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/duomenu-saugojimo-politika</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/duomenu-tvarkymo-registras-ropa</loc>
@@ -1144,8 +1150,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/privatumo-politika-en</loc>
+    <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/privatumo-politika-svetainei</loc>
@@ -1176,6 +1183,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/ropa-registras</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/sam-reaguoja-auditori-pastabas-d-l-pacient-pav-jimo</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -1195,6 +1208,12 @@
     <loc>https://veriva.lt/seo/slapuk-politika-en</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/slapuku-ir-privatumo-politika</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/slapuku-sutikimo-atitiktis</loc>

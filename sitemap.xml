@@ -124,7 +124,7 @@
     <loc>https://veriva.lt/seo/atsarginiu-kopiju-politika</loc>
     <lastmod>2026-08-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-10-straipsnio-igyvendinimas</loc>
@@ -734,6 +734,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/data-protection-officer-dpo-services</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/di-aktas-atitiktis</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
@@ -788,15 +794,15 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/dpo-paslaugos-kaune</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/dpo-paslaugos-klaipedoje</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/dpo-paslaugos-panevezyje</loc>

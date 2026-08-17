@@ -737,7 +737,7 @@
     <loc>https://veriva.lt/seo/data-protection-officer-dpo-services</loc>
     <lastmod>2026-08-17</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/di-aktas-atitiktis</loc>
@@ -796,13 +796,13 @@
     <loc>https://veriva.lt/seo/dpo-paslaugos-kaune</loc>
     <lastmod>2026-08-17</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/dpo-paslaugos-klaipedoje</loc>
     <lastmod>2026-08-17</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/dpo-paslaugos-panevezyje</loc>
@@ -812,9 +812,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/dpo-paslaugos-siauliuose</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-08-17</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/dpo-paslaugos-vilniuje</loc>
@@ -947,6 +947,12 @@
     <loc>https://veriva.lt/seo/ivairoves-ir-itraukties-politika</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/kada-privalomas-dpo</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/kas-yra-bdar-lietuva</loc>

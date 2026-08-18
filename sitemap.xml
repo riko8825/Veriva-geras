@@ -778,6 +778,12 @@
     <loc>https://veriva.lt/seo/dpo-atsakomybes</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/dpo-funkcijos</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
@@ -788,6 +794,12 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/dpo-mokymai</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/dpo-pagal-bdar</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

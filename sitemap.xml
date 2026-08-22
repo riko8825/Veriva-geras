@@ -1170,10 +1170,16 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/seo/nis2-pasto-paslaugu-teikejams</loc>
+    <loc>https://veriva.lt/seo/nis2-kosmoso-sektoriui</loc>
     <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/nis2-pasto-paslaugu-teikejams</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-reikalavimai</loc>
@@ -1183,6 +1189,12 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-skaitmeniniu-paslaugu-teikejams</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/nis2-subjektu-registracija</loc>
     <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -1206,10 +1218,16 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://veriva.lt/seo/nis2-vandens-tiekimo-imonems</loc>
+    <loc>https://veriva.lt/seo/nis2-valdymo-atsakomybe</loc>
     <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/nis2-vandens-tiekimo-imonems</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-vertinimo-irankis</loc>

@@ -983,22 +983,46 @@
     <loc>https://veriva.lt/seo/iso-27001-auditas</loc>
     <lastmod>2026-08-23</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/iso-27001-konsultacijos</loc>
     <lastmod>2026-08-23</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/iso-27001-mokymai</loc>
     <lastmod>2026-08-23</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/iso-27001-politika</loc>
+    <lastmod>2026-08-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/iso-27701-auditas</loc>
+    <lastmod>2026-08-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/iso-27701-duomenu-tvarkytojams</loc>
+    <lastmod>2026-08-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/iso-27701-duomenu-valdytojams</loc>
+    <lastmod>2026-08-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/iso-27701-konsultacijos</loc>
     <lastmod>2026-08-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

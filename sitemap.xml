@@ -980,6 +980,30 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/iso-27001-auditas</loc>
+    <lastmod>2026-08-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/iso-27001-konsultacijos</loc>
+    <lastmod>2026-08-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/iso-27001-mokymai</loc>
+    <lastmod>2026-08-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/iso-27001-politika</loc>
+    <lastmod>2026-08-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/ivairoves-ir-itraukties-politika</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -1006,7 +1030,7 @@
     <loc>https://veriva.lt/seo/kas-yra-nis2-direktyva</loc>
     <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/kibernetines-higienos-mokymai</loc>
@@ -1191,7 +1215,7 @@
     <loc>https://veriva.lt/seo/nis2-pereinamasis-laikotarpis</loc>
     <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-reikalavimai</loc>
@@ -1227,7 +1251,7 @@
     <loc>https://veriva.lt/seo/nis2-tiekimo-grandines-valdymas</loc>
     <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-transporto-sektorius</loc>

@@ -897,7 +897,7 @@
     <loc>https://veriva.lt/seo/duomenu-apsaugos-rizikos-analize</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/duomenu-nutekejimas-imones-pareigos</loc>
@@ -1356,6 +1356,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/nuotoliniai-kibernetinio-saugumo-kursai</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/organizacini-ir-technini-duomen-saugumo-priemoni-apra-as</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -1364,6 +1370,12 @@
     <loc>https://veriva.lt/seo/patik-kite-asmens-duomen-apsaug-profesionalams</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/phishing-simuliacijos-testas-darbuotojams</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/poveikio-duomenu-apsaugai-vertinimas-pdav</loc>
@@ -1420,13 +1432,13 @@
     <loc>https://veriva.lt/seo/rizikos-valdymo-konsultacija</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/rizikos-valdymo-politika-verslui</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/ropa-registras</loc>
@@ -1449,12 +1461,18 @@
     <loc>https://veriva.lt/seo/saugumo-samoningumo-mokymai</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/signalizuoja-isaugusi-informacijos-poreiki</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/slaptazodziu-saugumo-mokymai</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/slapuk-politika-en</loc>

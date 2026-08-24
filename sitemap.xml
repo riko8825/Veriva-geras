@@ -925,6 +925,12 @@
     <loc>https://veriva.lt/seo/duomenu-saugumo-incidentas</loc>
     <lastmod>2026-08-23</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/duomenu-saugumo-pazeidimo-pasekmes</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
@@ -972,7 +978,7 @@
     <loc>https://veriva.lt/seo/incidentu-valdymo-mokymai</loc>
     <lastmod>2026-08-23</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/informacijos-saugumo-igaliotinis</loc>
@@ -1072,6 +1078,12 @@
     <loc>https://veriva.lt/seo/kibernetines-higienos-mokymai</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/kibernetinio-incidento-pranesimo-terminas</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/kibernetinio-saugumo-auditas</loc>

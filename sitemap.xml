@@ -1075,6 +1075,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/kaip-apmokyti-darbuotojus-kibernetinio-saugumo</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/kaip-pasitikrinti-ar-nutekejo-duomenys-registru-centras</loc>
     <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
@@ -1164,6 +1170,12 @@
   <url>
     <loc>https://veriva.lt/seo/kibernetinio-saugumo-mokymai</loc>
     <lastmod>2026-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/kibernetinio-saugumo-mokymu-programa-imonei</loc>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -1359,7 +1371,7 @@
     <loc>https://veriva.lt/seo/nuotoliniai-kibernetinio-saugumo-kursai</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/organizacini-ir-technini-duomen-saugumo-priemoni-apra-as</loc>
@@ -1375,7 +1387,7 @@
     <loc>https://veriva.lt/seo/phishing-simuliacijos-testas-darbuotojams</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/poveikio-duomenu-apsaugai-vertinimas-pdav</loc>
@@ -1472,7 +1484,7 @@
     <loc>https://veriva.lt/seo/slaptazodziu-saugumo-mokymai</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/slapuk-politika-en</loc>

@@ -313,6 +313,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/bdar-6-straipsnis</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/bdar-6-straipsnis-1-dalis</loc>
     <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
@@ -448,6 +454,12 @@
     <lastmod>2026-07-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/bdar-baudos</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-baudos-lietuvoje</loc>
@@ -842,9 +854,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/dpo-paslaugos</loc>
-    <lastmod>2026-07-18</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/dpo-paslaugos-kaune</loc>
@@ -1457,6 +1469,12 @@
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/ropa-pavyzdys</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/ropa-registras</loc>

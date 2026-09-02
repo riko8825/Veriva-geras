@@ -316,7 +316,7 @@
     <loc>https://veriva.lt/seo/bdar-6-straipsnis</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-6-straipsnis-1-dalis</loc>
@@ -459,7 +459,7 @@
     <loc>https://veriva.lt/seo/bdar-baudos</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-baudos-lietuvoje</loc>
@@ -856,7 +856,7 @@
     <loc>https://veriva.lt/seo/dpo-paslaugos</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/dpo-paslaugos-kaune</loc>
@@ -890,9 +890,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/duomenu-apsaugos-pareigunas</loc>
-    <lastmod>2026-05-23</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/duomenu-apsaugos-pareigunas-kaunas</loc>
@@ -983,9 +983,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/duomenu-tvarkymo-sutartis</loc>
-    <lastmod>2026-05-26</lastmod>
+    <lastmod>2026-09-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/duomenu-tvarkytojo-sutartis-dpa</loc>
@@ -1024,9 +1024,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/informacijos-saugumo-politika</loc>
-    <lastmod>2026-07-18</lastmod>
+    <lastmod>2026-09-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/internal-gdpr-documentation</loc>
@@ -1135,9 +1135,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/kibernetinio-saugumo-auditas</loc>
-    <lastmod>2026-07-18</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/kibernetinio-saugumo-auditas-kaune</loc>
@@ -1187,9 +1187,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/kibernetinio-saugumo-mokymai</loc>
-    <lastmod>2026-07-18</lastmod>
+    <lastmod>2026-09-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/kibernetinio-saugumo-mokymu-programa-imonei</loc>
@@ -1243,9 +1243,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-atitiktis</loc>
-    <lastmod>2026-07-18</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-auditas-kaina</loc>
@@ -1291,9 +1291,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-kam-taikoma</loc>
-    <lastmod>2026-07-18</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-kontrolinis-sarasas</loc>
@@ -1402,6 +1402,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/phishing-mokymai-darbuotojams</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/phishing-simuliacijos-testas-darbuotojams</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
@@ -1474,7 +1480,7 @@
     <loc>https://veriva.lt/seo/ropa-pavyzdys</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/ropa-registras</loc>
@@ -1552,9 +1558,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/tis2-istatymas</loc>
-    <lastmod>2026-07-18</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/tis2-riziku-vertinimas</loc>

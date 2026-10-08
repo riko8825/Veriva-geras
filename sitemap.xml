@@ -445,15 +445,15 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-auditas-kaune</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-auditas-klaipedoje</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-auditas-lietuvoje</loc>
@@ -463,21 +463,21 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-auditas-panevezyje</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-auditas-siauliuose</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-auditas-vilniuje</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-bankams</loc>
@@ -504,9 +504,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-buhalterijoms</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-didelems-imonems</loc>
@@ -1503,6 +1503,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/privatumo-politika-sablonas</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/privatumo-politika-svetainei</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -1598,6 +1604,12 @@
     <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/slapuku-politika-sablonas</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/slapuku-sutikimo-atitiktis</loc>

@@ -831,9 +831,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/di-atitikties-vertinimas</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/domina-paslauga-susisiekite-konsultacijai</loc>
@@ -848,15 +848,21 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/dora-auditas</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/dora-ir-bdar-rysys</loc>
+    <lastmod>2026-10-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/dora-ir-nis2-skirtumai</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-10-11</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/dpo-atsakomybes</loc>
@@ -1271,9 +1277,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/kibernetinio-saugumo-politika</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/kibernetinio-saugumo-vadovas-kaina</loc>
@@ -1327,9 +1333,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-baudos</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-direktyva-kam-taikoma</loc>

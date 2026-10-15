@@ -991,9 +991,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/duomenu-nutekejimo-prevencija</loc>
-    <lastmod>2026-07-25</lastmod>
+    <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/duomenu-nutekejimo-zalos-atlyginimas</loc>
@@ -1255,9 +1255,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/kibernetinio-saugumo-istatymas</loc>
-    <lastmod>2026-07-24</lastmod>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/kibernetinio-saugumo-istatymas-aktuali-redakcija</loc>
@@ -1289,15 +1289,15 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/kibernetinio-saugumo-vadovas-kaina</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/kibernetinis-incidentas-ka-daryti</loc>
-    <lastmod>2026-07-25</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/kod-l-bdar-laikymasis-svarbus-verslui</loc>
@@ -1357,9 +1357,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-esminiai-subjektai</loc>
-    <lastmod>2026-07-24</lastmod>
+    <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-incidentu-pranesimas</loc>
@@ -1465,9 +1465,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/nksc-registracija-tis2</loc>
-    <lastmod>2026-07-24</lastmod>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/nuotoliniai-kibernetinio-saugumo-kursai</loc>
@@ -1648,6 +1648,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/socialines-inzinerijos-mokymai</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/specialisto-konsultacija</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -1666,15 +1672,15 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/tis2-baudos-lietuva</loc>
-    <lastmod>2026-07-24</lastmod>
+    <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/tis2-incidentu-valdymas</loc>
-    <lastmod>2026-07-24</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/tis2-istatymas</loc>
@@ -1684,9 +1690,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/tis2-riziku-vertinimas</loc>
-    <lastmod>2026-07-24</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/tis2-subjektai-lietuva</loc>
@@ -1719,9 +1725,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/valdomas-kibernetinis-saugumas</loc>
-    <lastmod>2026-07-24</lastmod>
+    <lastmod>2026-10-12</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/valdymo-sistemos-kibernetinio-saugumo-auditas</loc>

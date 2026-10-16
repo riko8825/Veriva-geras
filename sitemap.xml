@@ -802,9 +802,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/cra-kibernetinis-atsparumas</loc>
-    <lastmod>2026-07-26</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/crm-duomenu-integravimas-rinkodaroje</loc>
@@ -947,6 +947,12 @@
     <lastmod>2026-07-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/dsa-reglamentas-atitiktis</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/duomenu-apsaugos-pareigunas</loc>

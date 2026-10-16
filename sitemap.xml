@@ -813,9 +813,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/darbuotoju-kibernetinio-saugumo-testavimas</loc>
-    <lastmod>2026-07-25</lastmod>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/data-protection-officer-dpo-services</loc>
@@ -1166,6 +1166,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/it-saugumo-politika-imones</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/ivairoves-ir-itraukties-politika</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -1208,8 +1214,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/kibernetines-higienos-mokymai</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/kibernetinio-incidento-pranesimo-terminas</loc>
@@ -1308,6 +1315,12 @@
     <loc>https://veriva.lt/seo/lietuvos-kibernetinio-saugumo-istatymas</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/mica-reglamentas-bdar</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/ministerija-atkirto-palangos-merui-del-jo-duomenu</loc>

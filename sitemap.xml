@@ -738,6 +738,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/bdar-transporto-imonems</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/bdar-verslui</loc>
     <lastmod>2026-08-03</lastmod>
     <changefreq>monthly</changefreq>
@@ -1079,9 +1085,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/es-skaitmeninis-paketas-atitiktis</loc>
-    <lastmod>2026-07-26</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/gdpr-audit</loc>
@@ -1164,6 +1170,12 @@
     <lastmod>2026-08-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/iso-27701-privatumo-valdymas</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/isorinis-kibernetinio-saugumo-vadovas</loc>
@@ -1570,9 +1582,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/produktu-kibernetinio-atsparumo-aktas</loc>
-    <lastmod>2026-07-26</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/public-it-technologiju-proverzis-ir-saugumas</loc>

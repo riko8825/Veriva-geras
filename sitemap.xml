@@ -931,6 +931,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/dpo-paslauga-maz-imone</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/dpo-paslauga-vilnius</loc>
     <lastmod>2026-07-29</lastmod>
     <changefreq>monthly</changefreq>
@@ -1400,9 +1406,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-energetikos-sektorius</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-esminiai-subjektai</loc>
@@ -1478,9 +1484,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-sveikatos-sektorius</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-tiekimo-grandines-valdymas</loc>
@@ -1490,9 +1496,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-transporto-sektorius</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-10-20</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/nis2-valdymo-atsakomybe</loc>

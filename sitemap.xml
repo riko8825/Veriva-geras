@@ -574,9 +574,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-ir-darbuotoju-duomenys</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-ir-socialiniai-tinklai</loc>
@@ -589,6 +589,12 @@
     <lastmod>2026-07-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/bdar-ir-vaizdo-stebesena</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-klinikoms</loc>
@@ -721,9 +727,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-pazeidimo-pranesimas</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-10-20</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-specialistas</loc>
@@ -1238,9 +1244,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/kas-yra-bdar-lietuva</loc>
-    <lastmod>2026-07-27</lastmod>
+    <lastmod>2026-10-20</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/kas-yra-dpo</loc>

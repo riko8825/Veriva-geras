@@ -658,9 +658,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-konsultacijos-nuotoliniu-budu</loc>
-    <lastmod>2026-08-04</lastmod>
+    <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-logistikos-imonems</loc>
@@ -734,6 +734,12 @@
   <url>
     <loc>https://veriva.lt/seo/bdar-pazeidimo-pranesimas</loc>
     <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/bdar-priezira-po-diegimo</loc>
+    <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

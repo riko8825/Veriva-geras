@@ -738,6 +738,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://veriva.lt/seo/bdar-priezinos-paslauga</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://veriva.lt/seo/bdar-priezira-po-diegimo</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -1259,6 +1265,12 @@
     <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/kas-atsakingas-uz-bdar-imoneje</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/kas-yra-bdar-lietuva</loc>

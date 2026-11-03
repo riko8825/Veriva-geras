@@ -374,9 +374,9 @@
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-8-straipsnis</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-11-03</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/bdar-81-straipsnis</loc>
@@ -1393,6 +1393,12 @@
     <loc>https://veriva.lt/seo/lietuvos-kibernetinio-saugumo-istatymas</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://veriva.lt/seo/metine-bdar-prieziura</loc>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veriva.lt/seo/mica-reglamentas-bdar</loc>
